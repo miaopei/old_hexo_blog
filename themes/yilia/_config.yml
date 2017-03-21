@@ -8,14 +8,14 @@ menu:
 # SubNav
 subnav:
   github: "https://github.com/miaopei"
+  mail: "miaopei163@163.com"
   weibo: "3922739561"
-  #rss: "#"
+  rss: /atom.xml
   #zhihu: "#"
   #qq: "#"
   #weixin: "#"
   #jianshu: "#"
   #douban: "#"
-  mail: "miaopei163@163.com"
   #facebook: "#"
   #google: "#"
   #twitter: "#"
