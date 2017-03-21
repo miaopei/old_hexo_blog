@@ -2,7 +2,7 @@
 
 menu:
   主页: /
-  所有文章: /archives
+  文章存档: /archives
   #随笔: /tags/随笔/
 
 # SubNav
@@ -76,7 +76,7 @@ style:
 # slider的设置
 slider:
   # 是否默认展开tags板块
-  showTags: false
+  showTags: true
 
 # 智能菜单
 # 如不需要，将该对应项置为false
@@ -85,7 +85,7 @@ slider:
 #  friends: false
 smart_menu:
   innerArchive: '所有文章'
-  friends: '友链'
+  #friends: '友链'
   aboutme: '关于我'
 
 friends:
