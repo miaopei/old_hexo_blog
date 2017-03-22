@@ -28,6 +28,10 @@ rss: /atom.xml
 # 请将您的 url 设为 http://yoursite.com/blog 并把 root 设为 /blog/。
 root: 
 
+# 站点建立时间
+# 这个时间将在站点的底部显示，例如 © 2013 - 2015。
+#since: 2016
+
 # Content
 
 # 文章太长，截断按钮文字
@@ -65,6 +69,15 @@ share_jia: true
 #是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
 #若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
 duoshuo: miaopei
+
+# 多说评论显示 UA
+# 要启用此功能，需要配置 duoshuo_info 这个字段。
+# 只要设置 ua_enable 为 true 即可显示 UA 信息。 admin_enable 是用于显示 「博主」 文字，表明评论者是博主，此字段需要同时配置 user_id 和 admin_nickname 字段。 请访问 多说，登录并访问「我的主页」获取 user_id ， 此 ID 是 网址最后那串数字。
+duoshuo_info:
+  ua_enable: true
+  admin_enable: true
+  user_id: 6394979150515406000
+  admin_nickname: 博主
 
 # 样式定制 - 一般不需要修改，除非有很强的定制欲望…
 style:
