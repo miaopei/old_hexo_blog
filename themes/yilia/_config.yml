@@ -58,10 +58,7 @@ weixin: /assets/img/weixin.jpg
 # Miscellaneous
 baidu_analytics: '0f8adb589aa030cb55af215d357749f5'
 google_analytics: ''
-favicon: /favicon.png
-
-# 统计
-baidu_tongji: true
+favicon: /favicon.ico
 
 #你的头像url
 avatar: http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg
