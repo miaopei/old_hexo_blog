@@ -11,6 +11,8 @@ reward: true
 
 ------
 
+<!-- more -->
+
 ```bash
 # 开启Docker守护进程调试模式
 $ sudo docker daemon -D
