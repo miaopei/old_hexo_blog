@@ -2,7 +2,8 @@
 
 menu:
   主页: /
-  文章存档: /archives
+  归档: /archives
+  分类: /categories
   #随笔: /tags/随笔/
 
 # SubNav
