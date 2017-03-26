@@ -15,6 +15,15 @@
           <a class="article-more-a" href="<%- url_for(post.path) %>#more"><%= theme.excerpt_link %> >></a>
         <% } %>
       <% } else { %>
+        
+        <!-- Table of Contents -->
+        <% if (!index && post.toc){ %>
+          <div id="toc" class="toc-article">
+            <strong class="toc-title">文章目录</strong>
+            <%- toc(post.content) %>
+          </div>
+        <% } %>
+        
         <%- post.content %>
       <% } %>
 
