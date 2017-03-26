@@ -13,6 +13,8 @@ tags: hexo
 
 [hexo创建个人博客（附加插入音乐、分享、评论、标签页、搜索）](http://www.jianshu.com/p/a52b68794a6b)
 
+<!-- more -->
+
 [Hexo 博客中插入音乐/视频](http://www.jianshu.com/p/53e0d2a617da)
 
 [Hexo高级教程之代码高亮](http://blog.csdn.net/melordljm/article/details/51991389)
