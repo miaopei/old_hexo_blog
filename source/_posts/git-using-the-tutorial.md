@@ -1,5 +1,6 @@
 ---
 title:  "Git使用指南"
+date: 2017-01-27 18:02:52
 description: "git"
 category: "git"
 tag: git

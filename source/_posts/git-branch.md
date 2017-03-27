@@ -1,5 +1,6 @@
 ---
 title:  "Git分支管理策略"
+date: 2017-01-27 18:02:52
 description: "git"
 category: "git"
 tag: git

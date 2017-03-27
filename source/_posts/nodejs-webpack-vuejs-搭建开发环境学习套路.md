@@ -6,8 +6,11 @@ tags:
   - vuejs
   - webpack
 toc: true
+reward: true
 ---
 
+### 官方文档
+ 
 [官方手册](http://vuejs.org/v2/guide/)
 
 [中文官网](https://cn.vuejs.org/)
@@ -15,6 +18,10 @@ toc: true
 [vuejs 2.0 中文文档](https://vuefe.cn/v2/guide/)
 
 以上是提供的一些官方资料，下面开始我们的套路吧：
+
+<!-- more -->
+
+### 环境构建
 
 1. 新建一个目录`vuepro`
 2. 初始化

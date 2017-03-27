@@ -1,5 +1,6 @@
 ---
 title:  "常用Git命令清单"
+date: 2017-01-27 18:02:52
 description: "git"
 category: "git"
 tags: git
