@@ -10,7 +10,7 @@ reward: true
 ---
 
 ### 官方文档
- 
+
 [官方手册](http://vuejs.org/v2/guide/)
 
 [中文官网](https://cn.vuejs.org/)
@@ -23,8 +23,8 @@ reward: true
 
 ### 环境构建
 
-1. 新建一个目录`vuepro`
-2. 初始化
+1.新建一个目录`vuepro`
+2.初始化
 
 ```bash
 $ cd vuepro
@@ -33,13 +33,13 @@ $ cd vuepro
 $ npm init
 ```
 
-1. 安装模块，先装这么多，有需要再安装
+3.安装模块，先装这么多，有需要再安装
 
 ```bash
 $ npm install vue webpack babel-loader babel-core babel-preset-env babel-cli babel-preset-es2015 html-webpack-plugin --save-dev
 ```
 
-1. 创建良好的目录层级
+4.创建良好的目录层级
 
 ```bash
 $ mkdir src
@@ -50,7 +50,7 @@ $ cd src && mkdir -p html jssrc webapp
 
 `html`放置模板文件，`jssrc`放置js文件，最终编译好的文件放置在`webapp`目录里，这个目录也就是我们网站的目录。
 
-1. 在项目根目录下创建webpack配置文件：`webpack.config.js`
+5.在项目根目录下创建webpack配置文件：`webpack.config.js`
 
 ```js
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -93,7 +93,7 @@ module.exports =
 }
 ```
 
-1. 同样在根目录下创建babel配置文件：`.babelrc`
+6.同样在根目录下创建babel配置文件：`.babelrc`
 
 ```text
 {
