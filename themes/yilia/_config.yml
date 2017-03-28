@@ -3,6 +3,7 @@
 menu:
   主页: /
   归档: /archives
+  #关于: /about
   #分类: /categories
   #随笔: /tags/随笔/
 
