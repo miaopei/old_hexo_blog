@@ -7,6 +7,7 @@ tags:
   - webpack
 toc: true
 reward: true
+updated: 2017-03-28 18:25:52
 ---
 
 ### 官方文档
@@ -16,6 +17,16 @@ reward: true
 [中文官网](https://cn.vuejs.org/)
 
 [vuejs 2.0 中文文档](https://vuefe.cn/v2/guide/)
+
+[ECMAScript 6 入门](http://es6.ruanyifeng.com/)
+
+[node.js相关的中文文档及教程](http://cnodejs.org/topic/528c9a38d2b3893f2abb6eeb)
+
+[Node.js中文网API](http://nodejs.cn/api/)
+
+[Webpack 中文指南](http://webpackdoc.com/)
+
+[webpack2.2中文文档](http://www.css88.com/doc/webpack2/)
 
 以上是提供的一些官方资料，下面开始我们的套路吧：
 
