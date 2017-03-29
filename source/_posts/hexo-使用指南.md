@@ -246,7 +246,7 @@ $ hexo publish drafts hexo-使用指南
 
 ​		   [使用七牛为Hexo存储图片](http://blog.shiqichan.com/use-qiniu-store-image-for-hexo/)
 
-  		   [hexo主题中添加相册功能](http://www.cnblogs.com/xljzlw/p/5137622.html)
+  		       [hexo主题中添加相册功能](http://www.cnblogs.com/xljzlw/p/5137622.html)
 
 ​		   [为 Hexo 主题添加多种图片样式(主题不错考虑移植)](http://wuchong.me/blog/2014/12/13/hexo-theme-creating-image-styles/?utm_source=tuicool&utm_medium=referral#)
 
