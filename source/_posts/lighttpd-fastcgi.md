@@ -4,7 +4,7 @@ date: 2017-03-31 12:34:28
 tags: 
   - lighttpd
   - FastCGI
-toc： true
+toc: true
 ---
 
 ### 简介
@@ -12,6 +12,8 @@ toc： true
 `lighttpd` 提供了一种外部程序调用的接口，即 `FastCGI` 接口。这是一种独立于平台和服务器的接口，它介于Web应用程序和Web服务器之间。
 
 这就意味着能够在 `Apache` 服务器上运行的 `FastCGI` 程序，也一定可以无缝的在 `lighttpd` 上使用。
+
+<!-- more -->
 
 ### FastCGI介绍
 
