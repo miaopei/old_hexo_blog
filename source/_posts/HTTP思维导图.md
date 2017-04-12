@@ -19,42 +19,42 @@ source from 《HTTP权威指南》
 
 
 
-### 1. 概述-Summary
+### 概述-Summary
 
 ### <img src="http://yrq110.me/img/http/HTTP-1.svg">
 
-### 2. 报文-Message
+### 报文-Message
 
 <img src="http://yrq110.me/img/http/HTTP-2.svg">
 
-### 3. 连接-Connection
+### 连接-Connection
 
 <img src="http://yrq110.me/img/http/HTTP-3.svg">
 
-### 4. 代理-Proxy
+### 代理-Proxy
 
 <img src="http://yrq110.me/img/http/HTTP-4.svg">
 
-### 5. 缓存-Cache
+### 缓存-Cache
 
 <img src="http://yrq110.me/img/http/HTTP-5.svg">
 
-### 6. 网关、隧道与中继-Gateway、Tunnel and Relay
+### 网关、隧道与中继-Gateway、Tunnel and Relay
 
 <img src="http://yrq110.me/img/http/HTTP-6.svg">
 
-### 7. 识别-Identification
+### 识别-Identification
 
 <img src="http://yrq110.me/img/http/HTTP-7.svg">
 
-### 8. 认证-Authentication
+### 认证-Authentication
 
 <img src="http://yrq110.me/img/http/HTTP-8.svg">
 
-### 9. 安全-Security
+### 安全-Security
 
 <img src="http://yrq110.me/img/http/HTTP-9.svg">
 
-### 10. 实体与编码-Entity and Encoding
+### 实体与编码-Entity and Encoding
 
 <img src="http://yrq110.me/img/http/HTTP-10.svg">
