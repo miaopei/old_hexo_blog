@@ -13,15 +13,11 @@ HTTP mindmap整理
 
 source from 《HTTP权威指南》
 
-
-
 <!-- more -->
-
-
 
 ### 概述-Summary
 
-### <img src="http://yrq110.me/img/http/HTTP-1.svg">
+<img src="http://yrq110.me/img/http/HTTP-1.svg">
 
 ### 报文-Message
 
