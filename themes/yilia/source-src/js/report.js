@@ -17,7 +17,7 @@ if (window.BJ_REPORT) {
 		uin: window.location.origin,          
 		combo: 0,                             
 		delay: 1000,                          
-		url: "//litten.me:9005/badjs/",       
+		//url: "//litten.me:9005/badjs/",       
 		ignore: [/Script error/i],           
 		random: 1,                            
 		repeat: 500000,                         
