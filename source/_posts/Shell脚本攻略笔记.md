@@ -22,7 +22,8 @@ $ echo 'Hello world !'
 $ echo -e "1\t2\t3"
 ```
 
-<--! more -->
+<!-- more -->
+
 
 打印彩色输出：
 
