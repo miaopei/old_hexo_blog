@@ -23,7 +23,7 @@ toc: true
 * 带有genisoimage(旧版是mkisofs)的linux发行版（此次使用的是Ubuntu 16.04 server版）
 * Ubuntu官网通用镜像ISO文件
 
-<<!-- more -->>
+<!-- more -->
 
 ## 2、操作过程：
 
