@@ -310,28 +310,26 @@ list(filter(not_empty, ['A', '', 'B', None, 'C', '  ']))
 
 用Python来实现这个算法，可以先构造一个从`3`开始的奇数序列：
 
-```
+```python
 def _odd_iter():
     n = 1
     while True:
         n = n + 2
         yield n
-
 ```
 
 注意这是一个生成器，并且是一个无限序列。
 
 然后定义一个筛选函数：
 
-```
+```python
 def _not_divisible(n):
     return lambda x: x % n > 0
-
 ```
 
 最后，定义一个生成器，不断返回下一个素数：
 
-```
+```python
 def primes():
     yield 2
     it = _odd_iter() # 初始序列
@@ -339,14 +337,13 @@ def primes():
         n = next(it) # 返回序列的第一个数
         yield n
         it = filter(_not_divisible(n), it) # 构造新序列
-
 ```
 
 这个生成器先返回第一个素数`2`，然后，利用`filter()`不断产生筛选后的新的序列。
 
 由于`primes()`也是一个无限序列，所以调用时需要设置一个退出循环的条件：
 
-```
+```python
 # 打印1000以内的素数:
 for n in primes():
     if n < 1000:
@@ -360,6 +357,594 @@ for n in primes():
 **小结**
 
 `filter()`的作用是从一个序列中筛出符合条件的元素。由于`filter()`使用了惰性计算，所以只有在取`filter()`结果的时候，才会真正筛选并每次返回下一个筛出的元素。
+
+#### sorted
+
+**排序算法**
+
+排序也是在程序中经常用到的算法。无论使用冒泡排序还是快速排序，排序的核心是比较两个元素的大小。如果是数字，我们可以直接比较，但如果是字符串或者两个dict呢？直接比较数学上的大小是没有意义的，因此，比较的过程必须通过函数抽象出来。
+
+Python内置的`sorted()`函数就可以对list进行排序：
+
+```python
+>>> sorted([36, 5, -12, 9, -21])
+[-21, -12, 5, 9, 36]
+```
+
+此外，`sorted()`函数也是一个高阶函数，它还可以接收一个`key`函数来实现自定义的排序，例如按绝对值大小排序：
+
+```python
+>>> sorted([36, 5, -12, 9, -21], key=abs)
+[5, 9, -12, -21, 36]
+```
+
+key指定的函数将作用于list的每一个元素上，并根据key函数返回的结果进行排序。对比原始的list和经过`key=abs`处理过的list：
+
+```python
+list = [36, 5, -12, 9, -21]
+
+keys = [36, 5,  12, 9,  21]
+```
+
+然后`sorted()`函数按照keys进行排序，并按照对应关系返回list相应的元素：
+
+```python
+keys排序结果 => [5, 9,  12,  21, 36]
+                |  |    |    |   |
+最终结果     => [5, 9, -12, -21, 36]
+```
+
+我们再看一个字符串排序的例子：
+
+```python
+>>> sorted(['bob', 'about', 'Zoo', 'Credit'])
+['Credit', 'Zoo', 'about', 'bob']
+```
+
+默认情况下，对字符串排序 大小比较的，由于`'Z' < 'a'`，结果，大写字母`Z`会排在小写字母`a`的前面。
+
+现在，我们提出排序应该忽略大小写，按照字母序排序。要实现这个算法，不必对现有代码大加改动，只要我们能用一个key函数把字符串映射为忽略大小写排序即可。忽略大小写来比较两个字符串，实际上就是先把字符串都变成大写（或者都变成小写），再比较。
+
+这样，我们给`sorted`传入key函数，即可实现忽略大小写的排序：
+
+```python
+>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower)
+['about', 'bob', 'Credit', 'Zoo']
+```
+
+要进行反向排序，不必改动key函数，可以传入第三个参数`reverse=True`：
+
+```python
+>>> sorted(['bob', 'about', 'Zoo', 'Credit'], key=str.lower, reverse=True)
+['Zoo', 'Credit', 'bob', 'about']
+```
+
+从上述例子可以看出，高阶函数的抽象能力是非常强大的，而且，核心代码可以保持得非常简洁。
+
+**小结**
+
+`sorted()`也是一个高阶函数。用`sorted()`排序的关键在于实现一个映射函数。
+
+### 返回函数
+
+#### 函数作为返回值
+
+高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。
+
+我们来实现一个可变参数的求和。通常情况下，求和的函数是这样定义的：
+
+```python
+def calc_sum(*args):
+    ax = 0
+    for n in args:
+        ax = ax + n
+    return ax
+```
+
+但是，如果不需要立刻求和，而是在后面的代码中，根据需要再计算怎么办？可以不返回求和的结果，而是返回求和的函数：
+
+```python
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+```
+
+当我们调用`lazy_sum()`时，返回的并不是求和结果，而是求和函数：
+
+```python
+>>> f = lazy_sum(1, 3, 5, 7, 9)
+>>> f
+<function lazy_sum.<locals>.sum at 0x101c6ed90>
+```
+
+调用函数`f`时，才真正计算求和的结果：
+
+```python
+>>> f()
+25
+```
+
+在这个例子中，我们在函数`lazy_sum`中又定义了函数`sum`，并且，内部函数`sum`可以引用外部函数`lazy_sum`的参数和局部变量，当`lazy_sum`返回函数`sum`时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。
+
+请再注意一点，当我们调用`lazy_sum()`时，每次调用都会返回一个新的函数，即使传入相同的参数：
+
+```python
+>>> f1 = lazy_sum(1, 3, 5, 7, 9)
+>>> f2 = lazy_sum(1, 3, 5, 7, 9)
+>>> f1==f2
+False
+```
+
+`f1()`和`f2()`的调用结果互不影响。
+
+#### 闭包
+
+注意到返回的函数在其定义内部引用了局部变量`args`，所以，当一个函数返回了一个函数后，其内部的局部变量还被新函数引用，所以，闭包用起来简单，实现起来可不容易。
+
+另一个需要注意的问题是，返回的函数并没有立刻执行，而是直到调用了`f()`才执行。我们来看一个例子：
+
+```python
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()
+```
+
+在上面的例子中，每次循环，都创建了一个新的函数，然后，把创建的3个函数都返回了。
+
+你可能认为调用`f1()`，`f2()`和`f3()`结果应该是`1`，`4`，`9`，但实际结果是：
+
+```python
+>>> f1()
+9
+>>> f2()
+9
+>>> f3()
+9
+```
+
+全部都是`9`！原因就在于返回的函数引用了变量`i`，但它并非立刻执行。等到3个函数都返回时，它们所引用的变量`i`已经变成了`3`，因此最终结果为`9`。
+
+<p style="color:red;">返回闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量。</p>
+
+如果一定要引用循环变量怎么办？方法是再创建一个函数，用该函数的参数绑定循环变量当前的值，无论该循环变量后续如何更改，已绑定到函数参数的值不变：
+
+```python
+def count():
+    def f(j):
+        def g():
+            return j*j
+        return g
+    fs = []
+    for i in range(1, 4):
+        fs.append(f(i)) # f(i)立刻被执行，因此i的当前值被传入f()
+    return fs
+```
+
+再看看结果：
+
+```python
+>>> f1, f2, f3 = count()
+>>> f1()
+1
+>>> f2()
+4
+>>> f3()
+9
+```
+
+缺点是代码较长，可利用lambda函数缩短代码。
+
+#### 小结
+
+一个函数可以返回一个计算结果，也可以返回一个函数。
+
+返回一个函数时，牢记该函数并未执行，返回函数中不要引用任何可能会变化的变量。
+
+### 匿名函数
+
+当我们在传入函数时，有些时候，不需要显式地定义函数，直接传入匿名函数更方便。
+
+在Python中，对匿名函数提供了有限支持。还是以`map()`函数为例，计算f(x)=x2时，除了定义一个`f(x)`的函数外，还可以直接传入匿名函数：
+
+```python
+>>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+
+通过对比可以看出，匿名函数`lambda x: x * x`实际上就是：
+
+```python
+def f(x):
+    return x * x
+```
+
+关键字`lambda`表示匿名函数，冒号前面的`x`表示函数参数。
+
+匿名函数有个限制，就是只能有一个表达式，不用写`return`，返回值就是该表达式的结果。
+
+用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：
+
+```python
+>>> f = lambda x: x * x
+>>> f
+<function <lambda> at 0x101c6ef28>
+>>> f(5)
+25
+```
+
+同样，也可以把匿名函数作为返回值返回，比如：
+
+```python
+def build(x, y):
+    return lambda: x * x + y * y
+```
+
+#### 小结
+
+Python对匿名函数的支持有限，只有一些简单的情况下可以使用匿名函数。
+
+### 装饰器
+
+由于函数也是一个对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数。
+
+```python
+>>> def now():
+...     print('2015-3-25')
+...
+>>> f = now
+>>> f()
+2015-3-25
+```
+
+函数对象有一个`__name__`属性，可以拿到函数的名字：
+
+```python
+>>> now.__name__
+'now'
+>>> f.__name__
+'now'
+```
+
+现在，假设我们要增强`now()`函数的功能，比如，在函数调用前后自动打印日志，但又不希望修改`now()`函数的定义，这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。
+
+本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下：
+
+```python
+def log(func):
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+```
+
+观察上面的`log`，因为它是一个decorator，所以接受一个函数作为参数，并返回一个函数。我们要借助Python的@语法，把decorator置于函数的定义处：
+
+```python
+@log
+def now():
+    print('2015-3-25')
+```
+
+调用`now()`函数，不仅会运行`now()`函数本身，还会在运行`now()`函数前打印一行日志：
+
+```python
+>>> now()
+call now():
+2015-3-25
+```
+
+把`@log`放到`now()`函数的定义处，相当于执行了语句：
+
+```python
+now = log(now)
+```
+
+由于`log()`是一个decorator，返回一个函数，所以，原来的`now()`函数仍然存在，只是现在同名的`now`变量指向了新的函数，于是调用`now()`将执行新函数，即在`log()`函数中返回的`wrapper()`函数。
+
+`wrapper()`函数的参数定义是`(*args, **kw)`，因此，`wrapper()`函数可以接受任意参数的调用。在`wrapper()`函数内，首先打印日志，再紧接着调用原始函数。
+
+如果decorator本身需要传入参数，那就需要编写一个返回decorator的高阶函数，写出来会更复杂。比如，要自定义log的文本：
+
+```python
+def log(text):
+    def decorator(func):
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+```
+
+这个3层嵌套的decorator用法如下：
+
+```python
+@log('execute')
+def now():
+    print('2015-3-25')
+```
+
+执行结果如下：
+
+```python
+>>> now()
+execute now():
+2015-3-25
+```
+
+和两层嵌套的decorator相比，3层嵌套的效果是这样的：
+
+```python
+>>> now = log('execute')(now)
+```
+
+我们来剖析上面的语句，首先执行`log('execute')`，返回的是`decorator`函数，再调用返回的函数，参数是`now`函数，返回值最终是`wrapper`函数。
+
+以上两种decorator的定义都没有问题，但还差最后一步。因为我们讲了函数也是对象，它有`__name__`等属性，但你去看经过decorator装饰之后的函数，它们的`__name__`已经从原来的`'now'`变成了`'wrapper'`：
+
+```python
+>>> now.__name__
+'wrapper'
+```
+
+因为返回的那个`wrapper()`函数名字就是`'wrapper'`，所以，需要把原始函数的`__name__`等属性复制到`wrapper()`函数中，否则，有些依赖函数签名的代码执行就会出错。
+
+不需要编写`wrapper.__name__ = func.__name__`这样的代码，Python内置的`functools.wraps`就是干这个事的，所以，一个完整的decorator的写法如下：
+
+```python
+import functools
+
+def log(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+```
+
+或者针对带参数的decorator：
+
+```python
+import functools
+
+def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+```
+
+`import functools`是导入`functools`模块。模块的概念稍候讲解。现在，只需记住在定义`wrapper()`的前面加上`@functools.wraps(func)`即可。
+
+#### 小结
+
+在面向对象（OOP）的设计模式中，decorator被称为装饰模式。OOP的装饰模式需要通过继承和组合来实现，而Python除了能支持OOP的decorator外，直接从语法层次支持decorator。Python的decorator可以用函数实现，也可以用类实现。
+
+decorator可以增强函数的功能，定义起来虽然有点复杂，但使用起来非常灵活和方便。
+
+请编写一个decorator，能在函数调用的前后打印出`'begin call'`和`'end call'`的日志。
+
+再思考一下能否写出一个`@log`的decorator，使它既支持：
+
+```python
+@log
+def f():
+    pass
+```
+
+又支持：
+
+```python
+@log('execute')
+def f():
+    pass
+```
+
+```python
+#Answer 1    
+def log(func):
+    def wrapper(*args, **kw):
+        print('begin call %s():' % func.__name__)
+        func(*args, **kw)
+        print('end call %s():' % func.__name__)
+    return wrapper
+
+@log
+def now():
+    print('2017-4-25')
+
+#执行结果：
+>>> now()
+begin call now():
+2017-4-25
+end call now():
+
+#Answer 2    
+import functools
+
+def log(strorfunc):
+    if isinstance(strorfunc,str):
+        def decorator(func):
+            @functools.wraps(func)
+            def wrapper(*args, **kw):
+                print('%s %s():' % (strorfunc, func.__name__))
+                func(*args, **kw)
+            return wrapper
+        return decorator
+    else:
+        @functools.wraps(strorfunc)
+        def wrapper(*args, **kw):
+            print('begin call %s():' %  strorfunc.__name__)
+            strorfunc(*args, **kw)
+            print('end call %s():' % strorfunc.__name__)
+        return wrapper
+
+@log
+def now():
+    print('2017-4-25')
+
+#执行结果：
+>>> now()
+begin call now():
+2017-4-25
+end call now():
+
+@log('execute')
+def now():
+    print('2017-4-25')
+
+#执行结果：
+>>> now()
+execute now():
+2017-4-25
+
+#心得
+
+#练习巩固了我对廖大大本讲主要内容的理解，分两种情况：
+#1#如果decorator本身不用传入参数的话，只是接受一个函数（当然也可以把接受的函数作为参数，为了区别，我们暂且将他们分开），并返回一个函数的话，当使用@log时即把目标函数接入；
+#2#如果decorator本身需要传入参数，那我们首先就需要在外层嵌套一个传入参数的接口，然后再接受函数并返回一个函数，内层则就是重复第一种情况，当时用@log('要传入的参数')，log('要传入的参数')就相当于第一种情况的log，也许这样说你还不是很能理解，我把廖大大的代码稍微做一点点改变，只改变下函数的名称：
+#1. 装饰器本身不用传入参数，只接收函数func
+def decorator(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+
+@decorator
+def f():
+    pass
+
+#2. 装饰器本身需要传入参数，再接收函数func 
+def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator 
+
+@log('execute')
+def f():
+    pass
+
+#其中第二种情况@log('execute')就是传入了字符串参数的decorator，传入参数之后就完全等同于第一种情况的@decorator，log只是在第一种情况下作为实现传入字符串参数功能的外层，可以发现第二种情况的内层完全和第一种情况相同。线性的把第二种情况展开：首先log()传入字符串参数，然后返回decorator接受目标函数func，返回wrapper，最后wrapper输出内容并运行目标函数。明显传入字符串参数之后完全和第一种情况一致。
+```
+
+### 偏函数
+
+Python的`functools`模块提供了很多有用的功能，其中一个就是偏函数（Partial function）。要注意，这里的偏函数和数学意义上的偏函数不一样。
+
+在介绍函数参数的时候，我们讲到，通过设定参数的默认值，可以降低函数调用的难度。而偏函数也可以做到这一点。举例如下：
+
+`int()`函数可以把字符串转换为整数，当仅传入字符串时，`int()`函数默认按十进制转换：
+
+```python
+>>> int('12345')
+12345
+```
+
+但`int()`函数还提供额外的`base`参数，默认值为`10`。如果传入`base`参数，就可以做N进制的转换：
+
+```python
+>>> int('12345', base=8)
+5349
+>>> int('12345', 16)
+74565
+```
+
+假设要转换大量的二进制字符串，每次都传入`int(x, base=2)`非常麻烦，于是，我们想到，可以定义一个`int2()`的函数，默认把`base=2`传进去：
+
+```python
+def int2(x, base=2):
+    return int(x, base)
+```
+
+这样，我们转换二进制就非常方便了：
+
+```python
+>>> int2('1000000')
+64
+>>> int2('1010101')
+85
+```
+
+`functools.partial`就是帮助我们创建一个偏函数的，不需要我们自己定义`int2()`，可以直接使用下面的代码创建一个新的函数`int2`：
+
+```python
+>>> import functools
+>>> int2 = functools.partial(int, base=2)
+>>> int2('1000000')
+64
+>>> int2('1010101')
+85
+```
+
+所以，简单总结`functools.partial`的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。
+
+注意到上面的新的`int2`函数，仅仅是把`base`参数重新设定默认值为`2`，但也可以在函数调用时传入其他值：
+
+```python
+>>> int2('1000000', base=10)
+1000000
+```
+
+最后，创建偏函数时，实际上可以接收函数对象、`*args`和`**kw`这3个参数，当传入：
+
+```python
+int2 = functools.partial(int, base=2)
+```
+
+实际上固定了int()函数的关键字参数`base`，也就是：
+
+```python
+int2('10010')
+```
+
+相当于：
+
+```python
+kw = { 'base': 2 }
+int('10010', **kw)
+```
+
+当传入：
+
+```python
+max2 = functools.partial(max, 10)
+```
+
+实际上会把`10`作为`*args`的一部分自动加到左边，也就是：
+
+```python
+max2(5, 6, 7)
+```
+
+相当于：
+
+```python
+args = (10, 5, 6, 7)
+max(*args)
+```
+
+结果为`10`。
+
+#### 小结
+
+当函数的参数个数太多，需要简化时，使用`functools.partial`可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。
 
 
 
