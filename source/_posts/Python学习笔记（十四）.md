@@ -399,6 +399,8 @@ def application(environ, start_response):
 
 复杂的Web应用程序，光靠一个WSGI函数来处理还是太底层了，我们需要在WSGI之上再抽象出Web框架，进一步简化Web开发。
 
+
+
 ### 使用Web框架
 
 了解了WSGI框架，我们发现：其实一个Web App，就是写一个WSGI的处理函数，针对每个HTTP请求进行响应。
@@ -631,7 +633,7 @@ $ pip install jinja2
 </html>
 ```
 
-登录失败的模板呢？我们在`form.html`中加了一点条件判断，把`form.html`重用为登录失败的模板。
+录失败的模板呢？我们在`form.html`中加了一点条件判断，把`form.html`重用为登录失败的模板。
 
 最后，一定要把模板放到正确的`templates`目录下，`templates`和`app.py`在同级目录下：
 
@@ -645,11 +647,11 @@ $ pip install jinja2
 
 使用模板的另一大好处是，模板改起来很方便，而且，改完保存后，刷新浏览器就能看到最新的效果，这对于调试HTML、CSS和JavaScript的前端工程师来说实在是太重要了。
 
-在Jinja2模板中，我们用`{{ name }}`表示一个需要替换的变量。很多时候，还需要循环、条件判断等指令语句，在Jinja2中，用`{% ... %}`表示指令。
+在Jinja2模板中，我们用`{{ name }}`表示一个需要替换的变量。很多时候，还需要循环、条件判断等指令语句，在Jinja2中，用`{\% ... \%}`表示指令。
 
 比如循环输出页码：
 
-```python
+```html
 {% for i in page_list %}
     <a href="/page/{{ i }}">{{ i }}</a>
 {% endfor %}
@@ -660,14 +662,11 @@ $ pip install jinja2
 除了Jinja2，常见的模板还有：
 
 - [Mako](http://www.makotemplates.org/)：用`<% ... %>`和`${xxx}`的一个模板；
-- [Cheetah](http://www.cheetahtemplate.org/)：也是用`<% ... %>`和`${xxx}`的一个模板；
-- [Django](https://www.djangoproject.com/)：Django是一站式框架，内置一个用`{% ... %}`和`{{ xxx }}`的模板。
+- [Cheetah](http://www.cheetahtemplate.org/)：也是用`<\% ... \%>`和`${xxx}`的一个模板；
+- [Django](https://www.djangoproject.com/)：Django是一站式框架，内置一个用`{\% ... \%}`和`{{ xxx }}`的模板。
 
 #### 小结
 
 有了MVC，我们就分离了Python代码和HTML代码。HTML代码全部放到模板里，写起来更有效率。
-
-
-
 
 
