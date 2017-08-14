@@ -24,7 +24,7 @@ JavaScript数据类型有：
 * 变量
 * strict模式
 
-<--more-->
+<!--more-->
 
 注意：
 
