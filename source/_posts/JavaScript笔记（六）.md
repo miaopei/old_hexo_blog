@@ -1,5 +1,5 @@
 ---
-title: JavaScript笔记（五）
+title: JavaScript笔记（六）
 date: 2017-07-10 19:57:35
 tags: JavaScript
 reward: true
