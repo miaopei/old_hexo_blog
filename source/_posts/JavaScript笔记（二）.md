@@ -1,5 +1,5 @@
 ---
-title: JavaScript（二）
+title: JavaScript笔记（二）
 date: 2017-07-04 19:57:35
 tags: JavaScript
 reward: true
