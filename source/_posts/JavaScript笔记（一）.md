@@ -7,6 +7,7 @@ categories: JavaScript
 toc: true
 ---
 
+
 # JavaScript笔记
 
 ## 数据类型和变量
@@ -22,6 +23,8 @@ JavaScript数据类型有：
 * 对象
 * 变量
 * strict模式
+
+<--more-->
 
 注意：
 
