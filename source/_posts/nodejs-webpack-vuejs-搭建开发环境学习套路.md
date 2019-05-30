@@ -150,7 +150,7 @@ index.htm l如下：
 </head>
 <body>
     <div id="me">
-        我的年龄是{{age}}
+        我的年龄是{age}
     </div>
 </body>
 </html>
@@ -215,7 +215,7 @@ $ npm run build
 </head>
 <body>
     <div id="me">
-        我的年龄是{{age}}
+        我的年龄是{age}
     </div>
 <script type="text/javascript" src="js/index.js?43c73980e35f1569ef72"></script></body>
 </html>

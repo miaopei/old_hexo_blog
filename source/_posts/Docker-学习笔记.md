@@ -117,13 +117,13 @@ $ sudo docker inspect daemon_dave
 > docker inspect命令会对容器进行详细的检查，然后返回其配置信息，包括名称、命令、网络配置以及很多有用的数据。可以使用`-f`或者`--format`标志来选定查看结果。
 
 ```bash
-$ sudo docker inspect --format='{{ .State.Running }}' daemon_dave
+$ sudo docker inspect --format='{.State.Running}' daemon_dave
 ```
 
 > 查看多个容器
 
 ```bash
-$ sudo docker inspect --format '{{.Name}} {{.State.Running}}' daemon_dave Micheal_container
+$ sudo docker inspect --format '{.Name} {.State.Running}' daemon_dave Micheal_container
 ```
 
 **删除容器**
