@@ -1,7 +1,7 @@
 ---
 title: WebSocket教程
 date: 2017-05-16 14:15:08
-tags: js
+tags: WebSocket
 reward: true
 categories: 前端
 toc: true

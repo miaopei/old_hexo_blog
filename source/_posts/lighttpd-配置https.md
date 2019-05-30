@@ -3,7 +3,7 @@ title: lighttpd 配置https
 date: 2017-03-31 12:34:28
 tags: 
   - lighttpd
-  - https
+  - http
 toc: true
 ---
 
