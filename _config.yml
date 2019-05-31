@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Micheal
-subtitle: 记录学习的技能和遇到的问题
-description: 做自己爱做的事儿，爱自己在做的事儿!
+title: Mr.Miaow
+subtitle: 天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精
+description: 滴水石穿，不是力量大，而是功夫深!
 author: 苗沛
 language: zh-CN
 timezone: Asia/Shanghai
@@ -115,5 +115,5 @@ jsonContent:
       link: false
       permalink: false
       excerpt: false
-      categories: false
+      categories: true
       tags: true
