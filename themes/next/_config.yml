@@ -35,8 +35,10 @@ cache:
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
+  #small: /images/favicon-16x16-next.png
+  #medium: /images/favicon-32x32-next.png
+  small: /images/cat_16px_1165145_easyicon.net.ico
+  medium: /images/cat_32px_1165145_easyicon.net.ico
   apple_touch_icon: /images/apple-touch-icon-next.png
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
@@ -49,7 +51,7 @@ rss:
 
 footer:
   # Specify the date when the site was setup. If not defined, current year will be used.
-  since: 2015
+  #since: 2015
 
   # Icon between year and copyright info.
   icon:
@@ -158,12 +160,12 @@ baidu_push: false
 # External url should start with http:// or https://
 menu:
   home: / || home
-  #about: /about/ || user
-  #tags: /tags/ || tags
-  #categories: /categories/ || th
+  about: /about/ || user
+  tags: /tags/ || tags
+  categories: /categories/ || th
   archives: /archives/ || archive
-  #schedule: /schedule/ || calendar
-  #sitemap: /sitemap.xml || sitemap
+  #schedule: /schedule/ || calendar # 日程表
+  #sitemap: /sitemap.xml || sitemap # 转点地图
   #commonweal: /404/ || heartbeat
 
 # Enable / Disable menu icons / item badges.
@@ -173,12 +175,12 @@ menu_settings:
 
 
 # ---------------------------------------------------------------
-# Scheme Settings
+# Scheme Settings 切换主题
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
-#scheme: Mist
+#scheme: Muse
+scheme: Mist
 #scheme: Pisces
 #scheme: Gemini
 
@@ -187,9 +189,6 @@ scheme: Muse
 # Sidebar Settings
 # See: https://theme-next.org/docs/theme-settings/sidebar
 # ---------------------------------------------------------------
-sidebar:
-    position: left
-    #position: right
 
 # Posts / Categories / Tags in sidebar.
 site_state: true
@@ -200,9 +199,11 @@ site_state: true
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
-  #GitHub: https://github.com/yourname || github
+  GitHub: https://github.com/miaopei || github
+  简书: https://www.jianshu.com/u/a5516555e760 || jedi-order
+  掘金: https://juejin.im/user/5811a3ec67f3560057d6ff16 || wolf-pack-battalion
+  #Weibo: 3922739561 || weibo
   #E-Mail: mailto:yourname@gmail.com || envelope
-  #Weibo: https://weibo.com/yourname || weibo
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -230,7 +231,7 @@ avatar:
   # In theme directory (source/images): /images/avatar.gif
   # In site directory (source/uploads): /uploads/avatar.gif
   # You can also use other linking images.
-  url: #/images/avatar.gif
+  url: http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg #/images/avatar.gif
   # If true, the avatar would be dispalyed in circle.
   rounded: false
   # The value of opacity should be choose from 0 to 1 to set the opacity of the avatar.
@@ -247,7 +248,7 @@ toc:
   wrap: false
   # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
   expand_all: false
-  # Maximum heading depth of generated toc. You can set it in one post through `toc_max_depth` in Front-matter.
+  # Maximum heading depth of generated toc. You can set it in one post through `toc_max_depth` in Front Matter.
   max_depth: 6
 
 sidebar:
@@ -331,6 +332,15 @@ post_meta:
   categories: true
 
 # Post wordcount display settings
+# Dependencies: https://github.com/willin/hexo-wordcount
+post_wordcount:
+    item_text: true
+    wordcount: true
+    min2read: true
+    totalcount: true
+    separated_meta: true
+
+# Post wordcount display settings
 # Dependencies: https://github.com/theme-next/hexo-symbols-count-time
 symbols_count_time:
   separated_meta: true
@@ -359,7 +369,7 @@ wechat_subscriber:
 # Reward (Donate)
 reward_settings:
   # If true, reward would be displayed in every article by default.
-  # You can show or hide reward in a specific article throuth `reward: true | false` in Front-matter.
+  # You can show or hide reward in a specific article throuth `reward: true | false` in Front Matter.
   enable: false
   animation: false
   #comment: Donate comment here
@@ -415,7 +425,7 @@ custom_logo:
 # Code Highlight theme
 # Available values: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night
+highlight_theme: normal
 
 # Enable "cheers" for archive page.
 cheers: true
@@ -501,14 +511,14 @@ math:
   enable: false
 
   # Default (true) will load mathjax / katex script on demand.
-  # That is it only render those page which has `mathjax: true` in Front-matter.
+  # That is it only render those page which has `mathjax: true` in Front Matter.
   # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.
   per_page: true
 
   engine: mathjax
   #engine: katex
 
-  # hexo-renderer-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
+  # hexo-rendering-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
   mathjax:
     cdn: //cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML
     #cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML
@@ -544,7 +554,7 @@ quicklink:
   enable: false
 
   # Quicklink (quicklink.umd.js script) is loaded on demand
-  # Add `quicklink: true` in Front-matter of the page or post you need
+  # Add `quicklink: true` in Front Matter of the page or post you need
   # Home page and archive page can be controlled through home and archive options below
   home: true
   archive: true
@@ -973,7 +983,7 @@ motion:
 # Choose only one variant, do not need to install both.
 # To install 2.x: https://github.com/theme-next/theme-next-fancybox
 # To install 3.x: https://github.com/theme-next/theme-next-fancybox3
-fancybox: true
+fancybox: false
 
 # Polyfill to remove click delays on browsers with touch UIs.
 # Dependencies: https://github.com/theme-next/theme-next-fastclick
@@ -983,9 +993,10 @@ fastclick: false
 # Dependencies: https://github.com/theme-next/theme-next-jquery-lazyload
 lazyload: false
 
+# 添加网页顶部进度加载条
 # Progress bar in the top during page loading.
 # Dependencies: https://github.com/theme-next/theme-next-pace
-pace: false
+pace: true
 # Themes list:
 # pace-theme-big-counter | pace-theme-bounce | pace-theme-barber-shop | pace-theme-center-atom
 # pace-theme-center-circle | pace-theme-center-radar | pace-theme-center-simple | pace-theme-corner-indicator
@@ -995,7 +1006,7 @@ pace_theme: pace-theme-minimal
 # Canvas-nest
 # Dependencies: https://github.com/theme-next/theme-next-canvas-nest
 canvas_nest:
-  enable: false
+  enable: true
   onmobile: true # display on mobile or not
   color: "0,0,255" # RGB values, use ',' to separate
   opacity: 0.5 # the opacity of line: 0~1
