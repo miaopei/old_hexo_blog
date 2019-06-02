@@ -45,6 +45,10 @@
 </span>
 </div>
 
+{% if theme.footer.runtime.enable %}
+  {% include 'web-runtime.swig' %}
+{% endif %}
+
 <!--
 {% if theme.footer.powered.enable %}
   <div class="powered-by">{#

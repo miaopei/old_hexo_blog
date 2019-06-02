@@ -76,7 +76,7 @@ tag_generator:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: yilia
-theme: next
+theme: next3
 
 # Extensions
 #plugins:
@@ -99,6 +99,21 @@ deploy:
   type: git
   repo: https://github.com/miaopei/miaopei.github.io.git
   branch: master
+
+# https://github.com/theme-next/hexo-symbols-count-time 
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+
+# Algolia Search API Key
+algolia:
+  applicationID: '5HERDWLKZV'
+  apiKey: '7876dff207d78e6df0721656b26ee0af'
+  indexName: 'hexo-algolia'
+
 
 jsonContent:
     meta: false
