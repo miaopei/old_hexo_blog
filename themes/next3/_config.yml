@@ -198,10 +198,10 @@ site_state: true
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/miaopei || github
-  简书: https://www.jianshu.com/u/a5516555e760 || jedi-order
-  掘金: https://juejin.im/user/5811a3ec67f3560057d6ff16 || wolf-pack-battalion
+  E-Mail: miaopei163@163.com || envelope
+  #简书: https://www.jianshu.com/u/a5516555e760 || jedi-order
+  #掘金: https://juejin.im/user/5811a3ec67f3560057d6ff16 || wolf-pack-battalion
   #Weibo: 3922739561 || weibo
-  #E-Mail: mailto:yourname@gmail.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -435,7 +435,7 @@ custom_logo:
 # Code Highlight theme
 # Available values: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night
+highlight_theme: normal
 
 # Enable "cheers" for archive page.
 cheers: true
