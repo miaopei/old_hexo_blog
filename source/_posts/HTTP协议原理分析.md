@@ -1,10 +1,11 @@
 ---
 title: HTTP协议原理分析
-date: 2017-04-13 12:26:05
 tags: http
 reward: true
 categories: http
 toc: true
+abbrlink: 53357
+date: 2017-04-13 12:26:05
 ---
 
 文章来自[深入理解HTTP协议、HTTP协议原理分析](http://blog.csdn.net/lmh12506/article/details/7794512)

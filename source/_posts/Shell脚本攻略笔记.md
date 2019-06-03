@@ -1,10 +1,11 @@
 ---
 title: Shell脚本攻略笔记
-date: 2017-05-15 15:40:41
 tags: shell
 reward: true
 categories: Shell
 toc: true
+abbrlink: 54508
+date: 2017-05-15 15:40:41
 ---
 
 ## 1. 基本命令

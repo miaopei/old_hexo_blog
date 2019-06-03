@@ -1,9 +1,10 @@
 ---
-title:  "Git工作流程"
-date: 2017-01-27 18:02:52
-description: "git"
-category: "git"
+title: Git工作流程
+description: git
+category: git
 tag: git
+abbrlink: 43354
+date: 2017-01-27 18:02:52
 ---
 
 Git 作为一个源码管理系统，不可避免涉及到多人协作。

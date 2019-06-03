@@ -1,10 +1,11 @@
 ---
 title: lighttpd 配置https
-date: 2017-03-31 12:34:28
-tags: 
+tags:
   - lighttpd
   - http
 toc: true
+abbrlink: 45254
+date: 2017-03-31 12:34:28
 ---
 
 ### 确定安装的lighttpd支持ssl

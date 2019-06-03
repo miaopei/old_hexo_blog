@@ -368,8 +368,8 @@ reward_settings:
   #comment: Donate comment here
 
 reward:
-  #wechatpay: /images/wechatpay.png
-  #alipay: /images/alipay.png
+  wechatpay: /images/wechatpay.jpg
+  alipay: /images/alipay.jpg
   #bitcoin: /images/bitcoin.png
 
 # Related popular posts
@@ -864,7 +864,7 @@ busuanzi_count:
 # See: https://theme-next.org/docs/third-party-services/search-services#Algolia-Search
 # Dependencies: https://github.com/theme-next/theme-next-algolia-instant-search
 algolia_search:
-  enable: true
+  enable: false
   hits:
     per_page: 10
   labels:
@@ -875,7 +875,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto

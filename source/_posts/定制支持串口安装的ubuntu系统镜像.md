@@ -1,10 +1,11 @@
 ---
 title: 定制支持串口安装的ubuntu系统镜像
-date: 2017-05-15 15:48:06
 tags: ubuntu
 reward: true
 categories: Ubuntu
 toc: true
+abbrlink: 63378
+date: 2017-05-15 15:48:06
 ---
 
 ## 1、所需环境：

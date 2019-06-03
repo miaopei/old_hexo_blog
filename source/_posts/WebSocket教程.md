@@ -1,10 +1,11 @@
 ---
 title: WebSocket教程
-date: 2017-05-16 14:15:08
 tags: WebSocket
 reward: true
 categories: 前端
 toc: true
+abbrlink: 60575
+date: 2017-05-16 14:15:08
 ---
 
 转自[阮一峰网络编程](http://www.ruanyifeng.com/blog/2017/05/websocket.html)

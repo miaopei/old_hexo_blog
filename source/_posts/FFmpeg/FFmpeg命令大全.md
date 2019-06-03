@@ -1,10 +1,11 @@
 ---
 title: FFmpeg命令大全
-date: 2019-05-04 10:14:50
 tags: FFmpeg
 reward: true
 categories: FFmpeg
 toc: true
+abbrlink: 39639
+date: 2019-05-04 10:14:50
 ---
 
 ## 1. 前言

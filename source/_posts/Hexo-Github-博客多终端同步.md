@@ -1,8 +1,9 @@
 ---
 title: Hexo + Github 博客多终端同步
-date: 2017-03-20 04:20:57
 tags: hexo
 reward: true
+abbrlink: 5385
+date: 2017-03-20 04:20:57
 ---
 
 [原文链接](http://blog.csdn.net/Monkey_LZL/article/details/60870891)

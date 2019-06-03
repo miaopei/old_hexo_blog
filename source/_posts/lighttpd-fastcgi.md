@@ -1,10 +1,11 @@
 ---
 title: lighttpd+fastcgi
-date: 2017-03-31 12:34:28
-tags: 
+tags:
   - lighttpd
   - FastCGI
 toc: true
+abbrlink: 930
+date: 2017-03-31 12:34:28
 ---
 
 ### 简介

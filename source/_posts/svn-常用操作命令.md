@@ -1,9 +1,10 @@
 ---
 title: svn 常用操作命令
-date: 2017-03-29 16:23:27
 tags: svn
 toc: true
 reward: true
+abbrlink: 1543
+date: 2017-03-29 16:23:27
 ---
 
 ## 检出

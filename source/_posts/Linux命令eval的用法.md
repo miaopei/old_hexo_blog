@@ -1,10 +1,11 @@
 ---
 title: Linux命令eval的用法
-date: 2017-04-13 19:50:19
 tags: Linux Shell
 reward: true
 categories: Shell
 toc: true
+abbrlink: 10960
+date: 2017-04-13 19:50:19
 ---
 
 ## eval command-line

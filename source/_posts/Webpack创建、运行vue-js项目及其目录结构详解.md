@@ -1,10 +1,11 @@
 ---
 title: Webpack创建、运行vue.js项目及其目录结构详解
-date: 2017-04-10 18:18:27
 tags: webpack
 reward: true
 categories: Docker
 toc: true
+abbrlink: 65145
+date: 2017-04-10 18:18:27
 ---
 
 ### 项目环境搭建：

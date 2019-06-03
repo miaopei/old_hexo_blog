@@ -1,9 +1,10 @@
 ---
-title:  "Git远程操作详解"
-date: 2017-01-27 18:02:52
-description: "git"
-category: "git"
+title: Git远程操作详解
+description: git
+category: git
 tag: git
+abbrlink: 48745
+date: 2017-01-27 18:02:52
 ---
 
 Git是目前最流行的版本管理系统，学会Git几乎成了开发者的必备技能。

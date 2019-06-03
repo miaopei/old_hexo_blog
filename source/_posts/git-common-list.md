@@ -1,9 +1,10 @@
 ---
-title:  "常用Git命令清单"
-date: 2017-01-27 18:02:52
-description: "git"
-category: "git"
+title: 常用Git命令清单
+description: git
+category: git
 tags: git
+abbrlink: 60426
+date: 2017-01-27 18:02:52
 ---
 
 我每天使用 Git ，但是很多命令记不住。

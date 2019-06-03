@@ -1,10 +1,11 @@
 ---
 title: HTTP思维导图
-date: 2017-04-12 15:41:58
 tags: http
 reward: true
 categories: http
 toc: true
+abbrlink: 19471
+date: 2017-04-12 15:41:58
 ---
 
 文章来自[HTTP思维导图](http://yrq110.me/2017/03/04/20170304-http-mindmap/)。

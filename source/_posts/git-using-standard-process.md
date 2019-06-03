@@ -1,9 +1,10 @@
 ---
-title:  "Git使用规范流程"
-date: 2017-01-27 18:02:52
-description: "git"
-category: "git"
+title: Git使用规范流程
+description: git
+category: git
 tag: git
+abbrlink: 24537
+date: 2017-01-27 18:02:52
 ---
 
 团队开发中，遵循一个合理、清晰的Git使用流程，是非常重要的。

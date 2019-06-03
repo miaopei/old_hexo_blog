@@ -1,8 +1,9 @@
 ---
 title: Google Rss 加载失败解决
-date: 2017-03-21 03:46:09
 tags: rss
 reward: true
+abbrlink: 58433
+date: 2017-03-21 03:46:09
 ---
 
 > 博客在google浏览器中使用RSS会出现RSS源码，原因是google浏览器没有安装RSS插件。

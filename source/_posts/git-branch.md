@@ -1,9 +1,10 @@
 ---
-title:  "Git分支管理策略"
-date: 2017-01-27 18:02:52
-description: "git"
-category: "git"
+title: Git分支管理策略
+description: git
+category: git
 tag: git
+abbrlink: 18461
+date: 2017-01-27 18:02:52
 ---
 
 如果你严肃对待编程，就必定会使用"版本管理系统"（Version Control System）。

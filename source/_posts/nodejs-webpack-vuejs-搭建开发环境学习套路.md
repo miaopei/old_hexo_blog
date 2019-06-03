@@ -1,9 +1,10 @@
 ---
 title: nodejs+webpack+vuejs 搭建开发环境学习套路
-date: 2017-03-27 18:02:52
 tags: nodejs
 toc: true
 reward: true
+abbrlink: 34396
+date: 2017-03-27 18:02:52
 updated: 2017-03-28 18:25:52
 ---
 

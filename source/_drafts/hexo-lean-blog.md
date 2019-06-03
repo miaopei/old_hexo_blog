@@ -1,6 +1,7 @@
 ---
 title: hexo_lean_blog
 tags: hexo
+abbrlink: 9949
 ---
 
 [Hexo 文章&草稿](http://blog.csdn.net/wizardforcel/article/details/40684575)

@@ -1,6 +1,8 @@
 ---
 title: about
-date: 2017-03-20 23:33:09
+date: 2018-07-29 11:04:52
+type: page
+comments: false
 ---
 
 <div style="font-size:12px;border-bottom: #ddd 1px solid; BORDER-LEFT: #ddd 1px solid; BACKGROUND: #f6f6f6; HEIGHT: 120px; BORDER-TOP: #ddd 1px solid; BORDER-RIGHT: #ddd 1px solid">
