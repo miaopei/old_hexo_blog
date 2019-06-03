@@ -59,7 +59,7 @@ footer:
     # `heart` is recommended with animation in red (#ff0000).
     name: user
     # If you want to animate the icon, set it to true.
-    animated: false
+    animated: true
     # Change the color of icon, using Hex Code.
     color: "#808080"
 
@@ -68,13 +68,13 @@ footer:
 
   powered:
     # Hexo link (Powered by Hexo).
-    enable: true
+    enable: false
     # Version info of Hexo after Hexo link (vX.X.X).
     version: true
 
   theme:
     # Theme & scheme info link (Theme - NexT.scheme).
-    enable: true
+    enable: false
     # Version info of NexT after scheme info (vX.X.X).
     version: true
 
@@ -82,10 +82,10 @@ footer:
   # http://www.beian.miit.gov.cn
   beian:
     enable: false
-    icp: 
+    icp:
 
   # Any custom text can be defined here.
-  #custom_text: Hosted by <a href="https://pages.coding.me" class="theme-link" rel="noopener" target="_blank">Coding Pages</a>
+  # custom_text: Hosted by <a target="_blank" rel="external nofollow" href="https://pages.coding.me">Coding Pages</a>
 
 # Creative Commons 4.0 International License.
 # See: https://creativecommons.org/share-your-work/licensing-types-examples
@@ -105,28 +105,27 @@ github_banner:
   permalink: https://github.com/yourname
   title: Follow me on GitHub
 
-
 # ---------------------------------------------------------------
 # SEO Settings
 # ---------------------------------------------------------------
 
 # Disable Baidu transformation on mobile devices.
-disable_baidu_transformation: false
+disable_baidu_transformation: true
 
 # Set a canonical link tag in your hexo, you could use it for your SEO of blog.
 # See: https://support.google.com/webmasters/answer/139066
 # Tips: Before you open this tag, remember set up your URL in hexo _config.yml (e.g. url: http://yourdomain.com)
 canonical: true
 
-# Change headers hierarchy on site-subtitle (will be main site description) and on all post / page titles for better SEO-optimization.
-seo: false
+# Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
+seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
 index_with_subtitle: false
 
 # Automatically add external URL with BASE64 encrypt & decrypt.
-exturl: false
+exturl: true
 
 # Google Webmaster tools verification.
 # See: https://www.google.com/webmasters
@@ -145,8 +144,7 @@ exturl: false
 #baidu_site_verification:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
-baidu_push: false
-
+baidu_push: true
 
 # ---------------------------------------------------------------
 # Menu Settings
@@ -160,10 +158,10 @@ baidu_push: false
 # External url should start with http:// or https://
 menu:
   home: / || home
-  about: /about/ || user
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
+  about: /about/ || user
   #schedule: /schedule/ || calendar # 日程表
   #sitemap: /sitemap.xml || sitemap # 转点地图
   #commonweal: /404/ || heartbeat
@@ -200,10 +198,10 @@ site_state: true
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/miaopei || github
-  简书: https://www.jianshu.com/u/a5516555e760 || jedi-order
-  掘金: https://juejin.im/user/5811a3ec67f3560057d6ff16 || wolf-pack-battalion
+  E-Mail: miaopei163@163.com || envelope
+  #简书: https://www.jianshu.com/u/a5516555e760 || jedi-order
+  #掘金: https://juejin.im/user/5811a3ec67f3560057d6ff16 || wolf-pack-battalion
   #Weibo: 3922739561 || weibo
-  #E-Mail: mailto:yourname@gmail.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -217,6 +215,10 @@ social_icons:
   enable: true
   icons_only: false
   transition: false
+  # Dependencies: exturl: true in Tags Settings section below.
+  # To encrypt links above use https://www.base64encode.org
+  # Example encoded link: `GitHub: aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQ= || github`
+  exturl: true
 
 # Blog rolls
 links_icon: link
@@ -248,7 +250,7 @@ toc:
   wrap: false
   # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
   expand_all: false
-  # Maximum heading depth of generated toc. You can set it in one post through `toc_max_depth` in Front Matter.
+  # Maximum heading depth of generated toc. You can set it in one post through `toc_max_depth` in Front-matter.
   max_depth: 6
 
 sidebar:
@@ -280,7 +282,7 @@ back2top:
   # Back to top in sidebar.
   sidebar: false
   # Scroll percent label in b2t button.
-  scrollpercent: false
+  scrollpercent: true
 
 # A button to open designated chat widget in sidebar.
 # Firstly, you need enable the chat service you want to activate its sidebar button.
@@ -304,7 +306,7 @@ text_align:
   mobile: justify
 
 # Automatically scroll page to section which is under <!-- more --> mark.
-scroll_to_more: true
+scroll_to_more: false
 
 # Automatically saving scroll position on each post / page in cookies.
 save_scroll: false
@@ -315,7 +317,7 @@ excerpt_description: true
 # Automatically Excerpt (Not recommend).
 # Use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Read more button
@@ -332,20 +334,11 @@ post_meta:
   categories: true
 
 # Post wordcount display settings
-# Dependencies: https://github.com/willin/hexo-wordcount
-post_wordcount:
-    item_text: true
-    wordcount: true
-    min2read: true
-    totalcount: true
-    separated_meta: true
-
-# Post wordcount display settings
 # Dependencies: https://github.com/theme-next/hexo-symbols-count-time
 symbols_count_time:
   separated_meta: true
   item_text_post: true
-  item_text_total: false
+  item_text_total: true
   awl: 4
   wpm: 275
 
@@ -354,22 +347,22 @@ codeblock:
   border_radius:
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Show text copy result
-    show_result: false
+    show_result: true
     # Style: only 'flat' is currently available, leave it blank if you prefer default theme
-    style:
+    style: flat
 
 # Wechat Subscriber
 wechat_subscriber:
   enable: false
-  #qcode: /path/to/your/wechatqcode e.g. /uploads/wechat-qcode.jpg
-  #description: e.g. subscribe to my blog by scanning my public wechat account
+  #qcode: /images/wechat.png
+  #description: 扫码关注, 一起进步.
 
 # Reward (Donate)
 reward_settings:
   # If true, reward would be displayed in every article by default.
-  # You can show or hide reward in a specific article throuth `reward: true | false` in Front Matter.
+  # You can show or hide reward in a specific article throuth `reward: true | false` in Front-matter.
   enable: false
   animation: false
   #comment: Donate comment here
@@ -392,6 +385,23 @@ related_posts:
     #isImage: false
     #isExcerpt: false
 
+# Declare license on posts
+post_copyright:
+  enable: true
+  license: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a>
+
+# Hide single post or posts in specific categories on the home page
+#  If `hide_post` is `true`, you need to add `hide: true` in your post which you want to hide on the home page.
+#  If you enabled the item `hide_categories`, you need just list the categories which you want to hide on the home page under `categories`.
+hide:
+  hide_post: true
+  hide_categories:
+    enable: true
+    categories:
+#     - categorie1
+#     - categorie2
+      - notes
+
 # Post edit
 # Dependencies: https://github.com/hexojs/hexo-deployer-git
 post_edit:
@@ -405,27 +415,27 @@ post_edit:
 # ---------------------------------------------------------------
 
 # Reduce padding / margin indents on devices with narrow width.
-mobile_layout_economy: false
+mobile_layout_economy: true
 
 # Android Chrome header panel color ($brand-bg / $headband-bg => $black-deep).
 android_chrome_color: "#222"
 
 # Hide sticky headers and color the menu bar on Safari (iOS / macOS).
-safari_rainbow: false
+safari_rainbow: true
 
 # Optimize the display of scrollbars on webkit based browsers.
-custom_scrollbar: false
+custom_scrollbar: true
 
 # Custom Logo
 # Do not support Scheme Mist currently.
 custom_logo:
   enable: false
-  image: #/uploads/custom-logo.jpg
+  image: /images/favicon.png
 
 # Code Highlight theme
 # Available values: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night bright
+highlight_theme: normal
 
 # Enable "cheers" for archive page.
 cheers: true
@@ -433,7 +443,7 @@ cheers: true
 # TagCloud settings for tags page.
 tagcloud:
   # If true, font size, font color and amount of tags can be customized
-  enable: false
+  enable: true
   # All values below are same as default, change them by yourself
   min: 12 # min font size in px
   max: 30 # max font size in px
@@ -455,7 +465,6 @@ tagcloud:
 
 font:
   enable: false
-
   # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
   host:
 
@@ -508,17 +517,17 @@ font:
 
 # Math Equations Render Support
 math:
-  enable: false
+  enable: true
 
   # Default (true) will load mathjax / katex script on demand.
-  # That is it only render those page which has `mathjax: true` in Front Matter.
+  # That is it only render those page which has `mathjax: true` in Front-matter.
   # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.
   per_page: true
 
   engine: mathjax
   #engine: katex
 
-  # hexo-rendering-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
+  # hexo-renderer-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
   mathjax:
     cdn: //cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML
     #cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML
@@ -540,21 +549,21 @@ math:
 
 # Han Support
 # Dependencies: https://github.com/theme-next/theme-next-han
-han: false
+han: true
 
 # Pangu Support
 # Dependencies: https://github.com/theme-next/theme-next-pangu
 # For more information: https://github.com/vinta/pangu.js
-pangu: false
+pangu: true
 
 # Quicklink Support
 # Dependencies: https://github.com/theme-next/theme-next-quicklink
 # Visit https://github.com/GoogleChromeLabs/quicklink for details
 quicklink:
-  enable: false
+  enable: true
 
   # Quicklink (quicklink.umd.js script) is loaded on demand
-  # Add `quicklink: true` in Front Matter of the page or post you need
+  # Add `quicklink: true` in Front-matter of the page or post you need
   # Home page and archive page can be controlled through home and archive options below
   home: true
   archive: true
@@ -583,13 +592,6 @@ bookmark:
   # If auto, save the reading position when closing the page or clicking the bookmark-icon.
   # If manual, only save it by clicking the bookmark-icon.
   save: auto
-
-# Reading progress bar
-# Dependencies: https://github.com/theme-next/theme-next-reading-progress
-reading_progress:
-  enable: false
-  color: "#37c6c0"
-  height: 2px
 
 # Google Calendar
 # Share your recent schedule to others via calendar page.
@@ -637,8 +639,8 @@ disqusjs:
 # Changyan
 changyan:
   enable: false
-  appid:
-  appkey:
+  #appid: cytaVTd4I
+  #appkey: prod_c2732c0059532a660fbf0c70b4617d81
 
 # Valine
 # You can get your appid and appkey from https://leancloud.cn
@@ -690,7 +692,7 @@ gitalk:
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en, es-ES, fr, ru, zh-CN, zh-TW
-  language:
+  language: zh-CN
 
 
 # ---------------------------------------------------------------
@@ -752,22 +754,24 @@ needmoreshare2:
       networks: Weibo,Wechat,Douban,QQZone,Twitter,Facebook
 
 
-# ---------------------------------------------------------------
-# Statistics and Analytics
-# See: https://theme-next.org/docs/third-party-services/statistics-and-analytics
-# ---------------------------------------------------------------
-
-# Baidu Analytics ID
-#baidu_analytics:
-
-# Growingio Analytics ID
-# Copyright 2015-2018 GrowingIO, Inc. More info available at https://www.growingio.com
-#growingio_analytics: #your projectId
+# Google Webmaster tools verification setting
+# See: https://www.google.com/webmasters/
+#google_site_verification: google4a5fd63f3c32d92a
 
 # Google Analytics
-#google_analytics:
-#  tracking_id:
-#  localhost_ignored: true
+#google_analytics: UA-123903823-1
+
+# Bing Webmaster tools verification setting
+# See: https://www.bing.com/webmaster/
+#bing_site_verification: B20FD41D37BDF09482C7EAD94C26289A
+
+# Yandex Webmaster tools verification setting
+# See: https://webmaster.yandex.ru/
+#yandex_site_verification: 3ffa819ee672741f
+
+# Baidu Webmaster tools verification setting
+# See: https://ziyuan.baidu.com/site/
+#baidu_site_verification: iYZdH2c2rk
 
 # CNZZ count
 #cnzz_siteid:
@@ -837,10 +841,10 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
 busuanzi_count:
-  enable: false
-  total_visitors: true
+  enable: true
+  total_visitors: false
   total_visitors_icon: user
-  total_views: true
+  total_views: false
   total_views_icon: eye
   post_views: true
   post_views_icon: eye
@@ -850,7 +854,6 @@ busuanzi_count:
 
 # Tencent MTA ID
 #tencent_mta:
-
 
 # ---------------------------------------------------------------
 # Search Services
@@ -930,7 +933,7 @@ note:
 tabs:
   enable: true
   transition:
-    tabs: false
+    tabs: true
     labels: true
   border_radius: 0
 
@@ -949,11 +952,22 @@ pdf:
 
 # Mermaid tag
 mermaid:
-  enable: false
+  enable: true
   # Available themes: default | dark | forest | neutral
   theme: forest
   cdn: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
   #cdn: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js
+
+# Reading progress bar
+# Dependencies: https://github.com/theme-next/theme-next-reading-progress
+reading_progress:
+  enable: true
+  color: "#37c6c0"
+  height: 2px
+
+# DaoVoice Online contact
+daovoice: false
+daovoice_app_id: 5f944d0e
 
 
 # ---------------------------------------------------------------
@@ -987,11 +1001,11 @@ fancybox: true
 
 # Polyfill to remove click delays on browsers with touch UIs.
 # Dependencies: https://github.com/theme-next/theme-next-fastclick
-fastclick: false
+fastclick: true
 
 # Vanilla JavaScript plugin for lazyloading images.
 # Dependencies: https://github.com/theme-next/theme-next-jquery-lazyload
-lazyload: false
+lazyload: true
 
 # 添加网页顶部进度加载条
 # Progress bar in the top during page loading.

@@ -26,12 +26,15 @@
       <div class="site-overview-wrap sidebar-panel{% if not display_toc or toc(page.content).length <= 1 %} sidebar-panel-active{% endif %}">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            {% if theme.avatar.url %}
-              <img class="site-author-image" itemprop="image"
-                src="{{ url_for( theme.avatar.url | default(theme.images + '/avatar.gif') ) }}"
-                alt="{{ author }}"/>
-            {% endif %}
-              <p class="site-author-name" itemprop="name">{{ author }}</p>
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              {% if theme.avatar.url %}
+                <img class="site-author-image" itemprop="image"
+                  src="{{ url_for( theme.avatar.url | default(theme.images + '/avatar.gif') ) }}"
+                  alt="{{ author }}"/>
+              {% endif %}
+                <p class="site-author-name" itemprop="name">{{ author }}</p>
+            </a>
               <div class="site-description motion-element" itemprop="description">{{ description }}</div>
           </div>
 

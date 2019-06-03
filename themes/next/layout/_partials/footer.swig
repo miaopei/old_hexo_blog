@@ -68,8 +68,12 @@
 #}</div>
 {% endif %}
 
+{% if theme.footer.theme.enable and theme.footer.custom_text %}
+  <span class="post-meta-divider">|</span>
+{% endif %}
+
 {% if theme.footer.custom_text %}
-  <div class="footer-custom">{#
+  <div class="theme-info">{#
   #}{{ theme.footer.custom_text }}{#
 #}</div>
 {% endif %}
