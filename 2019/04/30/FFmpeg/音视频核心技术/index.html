@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <meta name="keywords" content="FFmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频核心技术">
+<meta property="og:url" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-01.png">
+<meta property="og:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-02.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放器架构.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/渲染流程.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg处理音视频流程.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg基本信息查询命令.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg录屏命令.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/分解与复用-01.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/多媒体格式转换.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/SDL渲染基本原理.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放音频基本流程.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放器线程模型.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/Android架构.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/java调用c方法二.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/注册Native方法的最佳时机.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/原始类型的Signature.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/类的Signature.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/例子.png">
+<meta property="og:updated_time" content="2019-06-03T08:10:56.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="音视频核心技术">
+<meta name="twitter:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-01.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>音视频核心技术 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">音视频核心技术
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-30 14:14:50" itemprop="dateCreated datePublished" datetime="2019-04-30T14:14:50+08:00">2019-04-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/imageFFmpeg/FFmpeg音视频架构-01.png">
+
+
+
+<a id="more"></a>
+
+
+
+<img src="/imageFFmpeg/FFmpeg音视频架构-02.png">
+
+<h2 id="1-学习大纲"><a href="#1-学习大纲" class="headerlink" title="1. 学习大纲"></a>1. 学习大纲</h2><p><strong>FFmpeg 常用命令</strong>：</p>
+<ul>
+<li>视频录制命令</li>
+<li>多媒体文件的分解/复用命令</li>
+<li>裁剪与合并命令</li>
+<li>图片/视频互转命令</li>
+<li>直播相关命令</li>
+<li>各种滤镜命令</li>
+</ul>
+<p><strong>FFmpeg 基本开发</strong>：</p>
+<ul>
+<li>C 语言回顾</li>
+<li>FFmpeg 核心概念与常用结构体</li>
+<li>实战 - 多媒体文件的分解与复用</li>
+<li>实战 - 多媒体格式的互转</li>
+<li>实战 - 从 MP4 裁剪一段视频</li>
+<li>作业 - 实现一个简单的小咖秀</li>
+</ul>
+<p><strong>音视频编解码实战</strong>：</p>
+<ul>
+<li>实战 - H264 解码</li>
+<li>实战 - H264 编码</li>
+<li>实战 - 音频 AAC 解码</li>
+<li>实战 - 音频 AAC 编码</li>
+<li>实战 - 视频转图片</li>
+</ul>
+<p><strong>音视频渲染实战</strong>：</p>
+<ul>
+<li>SDL 事件处理</li>
+<li>SDL 视频文理渲染</li>
+<li>SDL 音频渲染</li>
+<li>实战1 - 实现 YUV 视频播放</li>
+<li>实战2 - YUV 视频倍数播放</li>
+<li>实战3 - 实现 PCM 播放器</li>
+</ul>
+<p><strong>FFmpeg 开发播放器核心功能</strong>：</p>
+<ul>
+<li>实战 - 实现 MP4 文件的视频播放</li>
+<li>实战 - 实现 MP4 文件的音频播放</li>
+<li>实战 - 实现一个初级播放器</li>
+<li>实战 - 音视频同步</li>
+<li>实战 - 实现播放器内核</li>
+</ul>
+<p><strong>Android 中实战 FFmpeg</strong>：</p>
+<ul>
+<li>编译 Android 端可以使用的 FFmpeg</li>
+<li>Java 与 C 语言相互调用</li>
+<li>实战 - Android 调用 FFmpeg</li>
+</ul>
+<p><strong>学习建议</strong>：</p>
+<ul>
+<li>牢牢抓住音视频的处理机制，了解其本质</li>
+<li>勤加练习，熟能生巧</li>
+<li>待着问题去学习，事半功倍</li>
+</ul>
+<p><strong>音视频的广泛应用</strong>：</p>
+<ul>
+<li>直播类：音视频会议、教育直播、娱乐/游戏直播</li>
+<li>短视频：抖音、快手、小咖秀</li>
+<li>网络视频：优酷、腾讯视频、爱奇艺等</li>
+<li>音视频通话：微信、QQ、Skype等</li>
+<li>视频监控</li>
+<li>人工智能：人脸识别，智能音箱等，更关注算法</li>
+</ul>
+<p><strong>播放器架构</strong>：</p>
+<img src="_asset/播放器架构.png">
+
+<p><strong>渲染流程</strong>：</p>
+<img src="_asset/渲染流程.png">
+
+<p><strong>FFmpeg 都能做啥</strong>：</p>
+<ul>
+<li>FFmpeg 是一个非常优秀的多媒体框架</li>
+<li>FFmpeg 可以运行在 Linux、Mac、Windows 等平台上</li>
+<li>能够解码、编码、转码、复用、解复用、过滤音视频数据</li>
+</ul>
+<p><strong>FFmpeg 下载便于与安装</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://git.ffmpeg.org/ffmpeg.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> config -- <span class="built_in">help</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-FFmpeg-常用命令实战"><a href="#2-FFmpeg-常用命令实战" class="headerlink" title="2. FFmpeg 常用命令实战"></a>2. FFmpeg 常用命令实战</h2><p>我们按使用目的可以将 FFMPEG 命令分成以下几类：</p>
+<ul>
+<li>基本信息查询命令</li>
+<li>录制</li>
+<li>分解 / 复用</li>
+<li>处理原始数据</li>
+<li>滤镜</li>
+<li>切割与合并</li>
+<li>图／视互转</li>
+<li>直播相关</li>
+</ul>
+<p>除了 FFMPEG 的基本信息查询命令外，其它命令都按下图所示的流程处理音视频。</p>
+<img src="_asset/FFmpeg处理音视频流程.png">
+
+<img src="_asset/FFmpeg基本信息查询命令.png">
+
+<img src="_asset/FFmpeg录屏命令.png">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ffplay -s 2560x1600 -pix_fmt uyvy422 out.yuv</span></span><br></pre></td></tr></table></figure>
+
+<img src="_asset/分解与复用-01.png">
+
+<img src="_asset/多媒体格式转换.png">
+
+<h2 id="3-初级开发内容"><a href="#3-初级开发内容" class="headerlink" title="3. 初级开发内容"></a>3. 初级开发内容</h2><ul>
+<li>FFmpeg 日志的使用及目录的操作</li>
+<li>介绍 FFmpeg 的基本概念及常用的结构体</li>
+<li>对复用/解复用及流程操作的各种实践</li>
+</ul>
+<p>FFmpeg 代码结构：</p>
+<ul>
+<li>libavcodec： 提供了一系列编码器的实现。</li>
+<li>libavformat： 实现在流协议，容器格式及其本IO访问。</li>
+<li>libavutil： 包括了hash器，解码器和各类工具函数。</li>
+<li>libavfilter： 提供了各种音视频过滤器。</li>
+<li>libavdevice： 提供了访问捕获设备和回放设备的接口。</li>
+<li>libswresample： 实现了混音和重采样。</li>
+<li>libswscale： 实现了色彩转换和缩放工能。</li>
+</ul>
+<h3 id="3-1-FFmpeg-日志系统"><a href="#3-1-FFmpeg-日志系统" class="headerlink" title="3.1 FFmpeg 日志系统"></a>3.1 FFmpeg 日志系统</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">av_log_set_level(AV_LOG_DEBUG)</span><br><span class="line">    </span><br><span class="line">av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"...%s\n"</span>, op)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>AV_LOG_ERROR</li>
+<li>AV_LOG_WARNING</li>
+<li>AV_LOG_INFO</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    av_log_set_level(AV_LOG_DEBUG);</span><br><span class="line"></span><br><span class="line">    av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"hello world: %s!\n"</span>, <span class="string">"aaa"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-FFmpeg-文件与目录操作"><a href="#3-2-FFmpeg-文件与目录操作" class="headerlink" title="3.2 FFmpeg 文件与目录操作"></a>3.2 FFmpeg 文件与目录操作</h3><p>文件的删除与重命名：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">avpriv_io_delete()</span><br><span class="line">    </span><br><span class="line">avpriv_io_move(src, dst)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    ret = avpriv_io_delete(<span class="string">"./mytestfile.txt"</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Failed to delete file mytestfile.txt\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ret = avpriv_io_move(<span class="string">"111.txt"</span>, <span class="string">"222.txt"</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Filed to rename\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> clang -g -o ffmpeg_del ffmpeg_file.c `pkg-config --libs libavformat`</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pkg-config --libs libavformat 指令可以搜索libavformat库所在路径</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> pkg-config --libs libavformat</span></span><br><span class="line">-L/usr/local/ffmpeg/lib -lavformat</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-FFmpeg-操作目录重要函数"><a href="#3-3-FFmpeg-操作目录重要函数" class="headerlink" title="3.3 FFmpeg 操作目录重要函数"></a>3.3 FFmpeg 操作目录重要函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># </span><br><span class="line">avio_open_dir()</span><br><span class="line">avio_read_dir()</span><br><span class="line">avio_close_dir()</span><br></pre></td></tr></table></figure>
+
+<p>操作目录重要结构体：</p>
+<ul>
+<li><p>AVIODirContext</p>
+<p>操作目录的上下文</p>
+</li>
+<li><p>AVIODirEntry</p>
+<p>目录项。用于存放文件名，文件大小等信息</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    av_log_set_level(AV_LOG_INFO);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    AVIODirContext *ctx = <span class="literal">NULL</span>;</span><br><span class="line">    AVIODirEntry *entry = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    ret = avio_open_dir(&amp;ctx, <span class="string">"./"</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Cant open dir:%s\n"</span>, av_err2str(ret));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        ret = avio_read_dir(ctx, &amp;entry);</span><br><span class="line">        <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Cant read dir: %s\n"</span>, av_err2str(ret));</span><br><span class="line">            <span class="keyword">goto</span> __fail;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!entry) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"%l2"</span>PRId64<span class="string">" %s\n"</span>,</span><br><span class="line">               entry-&gt;size,</span><br><span class="line">               entry-&gt;name);</span><br><span class="line"></span><br><span class="line">        avio_free_directory_entry(&amp;entry);</span><br><span class="line">    &#125;</span><br><span class="line">__fail:</span><br><span class="line">    avio_close_dir(&amp;ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> clang -g -o list ffmpeg_list.c `pkg-config --libs libavformat libavutil`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-多媒体文件的基本概念"><a href="#3-4-多媒体文件的基本概念" class="headerlink" title="3.4 多媒体文件的基本概念"></a>3.4 多媒体文件的基本概念</h3><ul>
+<li>多媒体文件其实是个容器</li>
+<li>在容器里有很多流（Stream/Track)</li>
+<li>每种流是由不同的编码器编码的</li>
+<li>从流中读出的数据称为包</li>
+<li>在一个包中包含着一个或多个帧</li>
+</ul>
+<p>几个重要的结构体：</p>
+<ul>
+<li>AVFormatContext</li>
+<li>AVStream</li>
+<li>AVPacket</li>
+</ul>
+<p>FFmpeg 操作流数据的基本步骤：</p>
+<p>解复用 —&gt; 获取流 —&gt; 读取数据包 —&gt;  释放资源</p>
+<h3 id="3-5-实战-打印音-视频信息"><a href="#3-5-实战-打印音-视频信息" class="headerlink" title="3.5 [实战] 打印音/视频信息"></a>3.5 [实战] 打印音/视频信息</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">av_register_all()</span><br><span class="line">avformat_open_input() / avformat_close_input()</span><br><span class="line">av_dump_format()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    av_log_set_level(AV_LOG_INFO);</span><br><span class="line"></span><br><span class="line">    AVFormatContext *fmt_ctx = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    av_register_all();</span><br><span class="line"></span><br><span class="line">    ret = avformat_open_input(&amp;fmt_ctx, <span class="string">"./test.mp4"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Can't open file: %s\n"</span>, av_err2str(ret));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    av_dump_format(fmt_ctx, <span class="number">0</span>, <span class="string">"./test.mp4"</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    avformat_close_input(&amp;fmt_ctx);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-实战-抽取音频数据"><a href="#3-6-实战-抽取音频数据" class="headerlink" title="3.6 [实战] 抽取音频数据"></a>3.6 [实战] 抽取音频数据</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">av_init_packet()</span><br><span class="line">av_find_best_stream()</span><br><span class="line">av_read_frame() / av_packet_unref()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">int</span> audio_index;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> *src = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">char</span> *dst = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    av_log_set_level(AV_LOG_INFO);</span><br><span class="line"></span><br><span class="line">    AVPacket pkt;</span><br><span class="line">    AVFormatContext *fmt_ctx = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    av_register_all();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. read two params form console</span></span><br><span class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">3</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"eg: %s in_file out_file\n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    src = argv[<span class="number">1</span>];</span><br><span class="line">    dst = argv[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">if</span> (!src || !dst) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"src or dst is null\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ret = avformat_open_input(&amp;fmt_ctx, src, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Can't open file: %s\n"</span>, av_err2str(ret));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FILE *dst_fd = fopen(dst, <span class="string">"wb"</span>);</span><br><span class="line">    <span class="keyword">if</span> (dst_fd) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Can't open out file!\n"</span>);</span><br><span class="line">        avformat_close_input(&amp;fmt_ctx);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    av_dump_format(fmt_ctx, <span class="number">0</span>, src, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. get stream</span></span><br><span class="line">    ret = av_find_best_stream(fmt_ctx, AVMEDIA_TYPE_AUDIO, <span class="number">-1</span>, <span class="number">-1</span>, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Can't find the best stream!\n"</span>);</span><br><span class="line">        avformat_close_input(&amp;fmt_ctx);</span><br><span class="line">        fclose(dst_fd);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    audio_index = ret;</span><br><span class="line">    av_init_packet(&amp;pkt);</span><br><span class="line">    <span class="keyword">while</span>(av_read_frame(fmt_ctx, &amp;pkt) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (pkt.stream_index == audio_index) &#123;</span><br><span class="line">            <span class="comment">// 3. write audio data to aac file.</span></span><br><span class="line">            len = fwrite(pkt.data, <span class="number">1</span>, pkt.size, dst_fd);</span><br><span class="line">            <span class="keyword">if</span> (len != pkt.size) &#123;</span><br><span class="line">                av_log(<span class="literal">NULL</span>, AV_LOG_WARNING, <span class="string">"warning, length of data is not equal size of pkt!\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        av_packet_unref(&amp;pkt);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    avformat_close_input(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">if</span> (dst_fd) &#123;</span><br><span class="line">        fclose(dst_fd);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lang -g -o extra_audio extra_audio.c `pkg-config --libs libavutil libavformat`</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./extra_audio test.mp4 killer.aa</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-实战-抽取视频数据"><a href="#3-7-实战-抽取视频数据" class="headerlink" title="3.7 [实战] 抽取视频数据"></a>3.7 [实战] 抽取视频数据</h3><ul>
+<li>Start code</li>
+<li>SPS/PPS</li>
+<li>codec -&gt; extradata</li>
+</ul>
+<h3 id="3-8-实战-将-MP4-转成-FLV-格式"><a href="#3-8-实战-将-MP4-转成-FLV-格式" class="headerlink" title="3.8 [实战] 将 MP4 转成 FLV 格式"></a>3.8 [实战] 将 MP4 转成 FLV 格式</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">avformat_alloc_output_context2() / avformat_free_context();</span><br><span class="line">avformat_new_stream();</span><br><span class="line">avcodec_parameters_copy();</span><br><span class="line">avformat_write_header();</span><br><span class="line">av_write_frame() / av_interleaved_write_frame();</span><br><span class="line">av_write_trailer()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-9-实战-从-MP4-截取一段视频"><a href="#3-9-实战-从-MP4-截取一段视频" class="headerlink" title="3.9 [实战] 从 MP4 截取一段视频"></a>3.9 [实战] 从 MP4 截取一段视频</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">av_seek_frame()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-10-实战-一个简单的小咖秀"><a href="#3-10-实战-一个简单的小咖秀" class="headerlink" title="3.10 [实战] 一个简单的小咖秀"></a>3.10 [实战] 一个简单的小咖秀</h3><ul>
+<li><p>将两个媒体文件中分别抽取音频与视频轨</p>
+</li>
+<li><p>将音频与视频轨合并成一个新文件</p>
+</li>
+<li><p>对音频与视频轨进行裁剪</p>
+<h2 id="4-FFmpeg-中级开发内容"><a href="#4-FFmpeg-中级开发内容" class="headerlink" title="4. FFmpeg 中级开发内容"></a>4. FFmpeg 中级开发内容</h2></li>
+<li><p>FFmpeg H264 解码</p>
+</li>
+<li><p>FFmpeg H264 编码</p>
+</li>
+<li><p>FFmpeg AAC 解码</p>
+</li>
+<li><p>FFmpeg AAC 编码</p>
+</li>
+</ul>
+<h3 id="4-1-FFmpeg-H264-解码"><a href="#4-1-FFmpeg-H264-解码" class="headerlink" title="4.1 FFmpeg H264 解码"></a>4.1 FFmpeg H264 解码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>常用数据结构：</p>
+<ul>
+<li><p>AVCodec 编码器结构体</p>
+</li>
+<li><p>AVCodecContext 编码器上下文</p>
+</li>
+<li><p>AVFrame 解码后的帧</p>
+<p>结构体内存的分配与释放：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">av_frame_alloc / av_frame_free();</span><br><span class="line">avcodec_alloc_context3();</span><br><span class="line">avcodec_free_context();</span><br></pre></td></tr></table></figure>
+
+<p>解码步骤：</p>
+<ul>
+<li>查找解码器（avcodec_find_decoder）</li>
+<li>打开解码器（avcodec_open2）</li>
+<li>解码（avcodec_decode_video2）</li>
+</ul>
+<h3 id="4-2-FFmpeg-H264-编码"><a href="#4-2-FFmpeg-H264-编码" class="headerlink" title="4.2 FFmpeg H264 编码"></a>4.2 FFmpeg H264 编码</h3><p>H264编码流程：</p>
+<ul>
+<li>查找编码器（avcodec_find_encoder_by_name）</li>
+<li>设置参数，打开编码器（avcondec_open2）</li>
+<li>编码（avcondec_encode_video2）</li>
+</ul>
+<h3 id="4-3-视频转图片"><a href="#4-3-视频转图片" class="headerlink" title="4.3 视频转图片"></a>4.3 视频转图片</h3><p>TODO</p>
+<h3 id="4-4-FFmpeg-AAC-编码"><a href="#4-4-FFmpeg-AAC-编码" class="headerlink" title="4.4 FFmpeg AAC 编码"></a>4.4 FFmpeg AAC 编码</h3><ul>
+<li>编码流程与视频相同</li>
+<li>编码函数 avcodec_encodec_audio2</li>
+</ul>
+<h2 id="5-SDL-介绍"><a href="#5-SDL-介绍" class="headerlink" title="5. SDL 介绍"></a>5. SDL 介绍</h2><blockquote>
+<p><a href="[http://www.libsdl.org](http://www.libsdl.org/)">SDL 官网</a></p>
+</blockquote>
+<ul>
+<li>SDL（Simple DirectMedia Layer） 是一套<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU5JTk2JThCJUU2JTk0JUJFJUU1JThFJTlGJUU1JUE3JThCJUU3JUEyJUJD" title="https://zh.wikipedia.org/wiki/%E9%96%8B%E6%94%BE%E5%8E%9F%E5%A7%8B%E7%A2%BC">开放源代码<i class="fa fa-external-link"></i></span>的<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JUI3JUE4JUU1JUI5JUIzJUU1JThGJUIw" title="https://zh.wikipedia.org/wiki/%E8%B7%A8%E5%B9%B3%E5%8F%B0">跨平台<i class="fa fa-external-link"></i></span><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUE0JTlBJUU1JUFBJTkyJUU5JUFCJTk0" title="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%AA%92%E9%AB%94">多媒体<i class="fa fa-external-link"></i></span>开发<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTg3JUJEJUU1JUJDJThGJUU1JUJBJUFC" title="https://zh.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">库<i class="fa fa-external-link"></i></span></li>
+<li>由 C 语言实现的跨平台的媒体开源库</li>
+<li>多用于开发游戏、模拟器、媒体播放器等多媒体应用领域</li>
+</ul>
+<p>语法与子系统：</p>
+<p>SDL将功能分成下列数个子系统（subsystem）：</p>
+<ul>
+<li><strong>Video（图像）</strong>—图像控制以及线程（thread）和事件管理（event）。</li>
+<li><strong>Audio（声音）</strong>—声音控制</li>
+<li><strong>Joystick（摇杆）</strong>—游戏摇杆控制</li>
+<li><strong>CD-ROM（光盘驱动器）</strong>—光盘媒体控制</li>
+<li><strong>Window Management（视窗管理）</strong>－与视窗程序设计集成</li>
+<li><strong>Event（事件驱动）</strong>－处理事件驱动</li>
+</ul>
+<p>以下是一支用C语言写成、非常简单的SDL示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Headers</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SDL.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Main function</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Initialize SDL</span></span><br><span class="line">    <span class="keyword">if</span>(SDL_Init(SDL_INIT_EVERYTHING) == <span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">return</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Delay 2 seconds</span></span><br><span class="line">    SDL_Delay(<span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Quit SDL</span></span><br><span class="line">    SDL_Quit();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述程序会加载所有SDL子系统（出错则退出程序），然后暂停两秒，最后关闭SDL并退出程序。</p>
+<h3 id="5-1-SDL-编译与安装"><a href="#5-1-SDL-编译与安装" class="headerlink" title="5.1 SDL 编译与安装"></a>5.1 SDL 编译与安装</h3><ul>
+<li>下载 SDL 源码</li>
+<li>生成Makefile configure –prefix=/usr/local</li>
+<li>安装 sudo make -j 8 &amp;&amp; make install</li>
+</ul>
+<h3 id="5-2-使用-SDL-基本步骤"><a href="#5-2-使用-SDL-基本步骤" class="headerlink" title="5.2 使用 SDL 基本步骤"></a>5.2 使用 SDL 基本步骤</h3><ul>
+<li>添加头文件 #include &lt;SDL.h&gt;</li>
+<li>初始化 SDL</li>
+<li>退出 SDL</li>
+</ul>
+<p>SDL 渲染窗口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDL_Init() / SDL_Quit();</span><br><span class="line">SDL_CreateWindow() / SDL_DestoryWindow();</span><br><span class="line">SDL_CreateRender();  <span class="comment">// 创建渲染器</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> clang -g -o first_sdl first_sdl.c `pkg-config --libs sdl2`</span></span><br></pre></td></tr></table></figure>
+
+<p>SDL 渲染窗口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateRender() / SDL_DestoryRenderer();</span><br><span class="line">SDL_RenderClear();</span><br><span class="line">SDL_RenderPresent();</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-SDL-事件基本原理"><a href="#5-3-SDL-事件基本原理" class="headerlink" title="5.3 SDL 事件基本原理"></a>5.3 SDL 事件基本原理</h3><ul>
+<li>SDL 将所有的事件都存放在一个队列中</li>
+<li>所有对事件的操作，其实就是队列的操作</li>
+</ul>
+<p>SDL 事件种类：</p>
+<ul>
+<li>SDL_WindowEvent：窗口事件</li>
+<li>SDL_KeyboardEvent：键盘事件</li>
+<li>SDL_MouseMotionEvent：鼠标事件</li>
+<li>自定义事件</li>
+</ul>
+<p>SDL 事件处理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDL_PollEvent(); <span class="comment">// 轮询检测</span></span><br><span class="line">SDL_WaitEvent(); <span class="comment">// 常用的方式</span></span><br><span class="line">SDL_WaitEventTimeout();</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-文理渲染"><a href="#5-4-文理渲染" class="headerlink" title="5.4 文理渲染"></a>5.4 文理渲染</h3><p>SDL 渲染基本原理：</p>
+<img src="_asset/SDL渲染基本原理.png">
+
+<p>SDL 文理相关 API：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateTexture();</span><br><span class="line">- format: YUV, RGB</span><br><span class="line">- access: Texture 类型， Target， Stream</span><br><span class="line"></span><br><span class="line">SDL_DestroyTexture();</span><br></pre></td></tr></table></figure>
+
+<p>SDL 渲染相关 API：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SDL_SetRenderTarget();</span><br><span class="line">SDL_RenderClear();</span><br><span class="line">SDL_RenderCopy();</span><br><span class="line">SDL_RenderPresent();</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-5-实战-YUV-视频播放器"><a href="#5-5-实战-YUV-视频播放器" class="headerlink" title="5.5 [实战] YUV 视频播放器"></a>5.5 [实战] YUV 视频播放器</h3><p>创建线程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateThread();</span><br><span class="line">- fn: 线程执行函数</span><br><span class="line">- name: 线程名</span><br><span class="line">- data: 执行函数参数</span><br></pre></td></tr></table></figure>
+
+<p>SDL 更新文理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_UpdateTexture();</span><br><span class="line">SDL_UpdateYUVTexture();</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-6-SDL-播放音频"><a href="#5-6-SDL-播放音频" class="headerlink" title="5.6 SDL 播放音频"></a>5.6 SDL 播放音频</h3><p>播放音频基本流程：</p>
+<img src="_asset/播放音频基本流程.png">
+
+<p>播放音频的基本原则：</p>
+<ul>
+<li>声卡向你要数据而不是你主动推给声卡</li>
+<li>数据的多少由音频参数决定的</li>
+</ul>
+<p>SDL 音频 API：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDL_OpenAudio() / SDL_CloseAudio();</span><br><span class="line">SDL_PauseAudio();</span><br><span class="line">SDL_MixAudio();</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-7-实现-PCM-播放器"><a href="#5-7-实现-PCM-播放器" class="headerlink" title="5.7 实现 PCM 播放器"></a>5.7 实现 PCM 播放器</h3><p>TODO</p>
+<h2 id="6-最简单的播放器"><a href="#6-最简单的播放器" class="headerlink" title="6. 最简单的播放器"></a>6. 最简单的播放器</h2><ul>
+<li>该播放器只实现视频播放</li>
+<li>将 FFmpeg 与 SDL 结合到一起</li>
+<li>通过 FFmpeg 解码视频数据</li>
+<li>通过 SDL 进行渲染</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> clang -g -o player2 player2.c `pkg-config --cflags --libs sdl2 libavformat libavutil libswscale libavcodec libswresample`</span></span><br></pre></td></tr></table></figure>
+
+<p>最简单的播放器之二：</p>
+<ul>
+<li>可以同时播放音频与视频</li>
+<li>使用队列存放音频包</li>
+</ul>
+<h3 id="6-1-多线程与锁"><a href="#6-1-多线程与锁" class="headerlink" title="6.1 多线程与锁"></a>6.1 多线程与锁</h3><p>为什么要用多线程：</p>
+<ul>
+<li>多线程的好处</li>
+<li>多线程带来的问题</li>
+</ul>
+<p>线程的互斥与同步：</p>
+<ul>
+<li><p>互斥</p>
+</li>
+<li><p>同步</p>
+<p>大的任务分为很多小任务通过信号协调</p>
+</li>
+</ul>
+<p>锁与信号量：</p>
+<ul>
+<li>锁的种类</li>
+<li>通过信号进行同步</li>
+</ul>
+<p>锁的中种类：</p>
+<ul>
+<li>读写锁</li>
+<li>自旋锁</li>
+<li>可重入锁</li>
+</ul>
+<p>SDL 线程的创建：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateThread();</span><br><span class="line">SDL_WaitThread();</span><br></pre></td></tr></table></figure>
+
+<p>SDL 锁：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateMutex() / SDL_DestroyMutex();  <span class="comment">// 创建互斥量</span></span><br><span class="line">SDL_LockMutex() / SDL_UnlockMutex();	 <span class="comment">// 锁互斥量于解锁互斥量</span></span><br></pre></td></tr></table></figure>
+
+<p>SDL 条件变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateCond() / SDL_DestroyCond();</span><br><span class="line">SDL_CondWait() / SDL_CondSignal();</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-锁与条件变量的使用"><a href="#6-2-锁与条件变量的使用" class="headerlink" title="6.2 锁与条件变量的使用"></a>6.2 锁与条件变量的使用</h3><p>TODO</p>
+<h3 id="6-3-播放器线程模型"><a href="#6-3-播放器线程模型" class="headerlink" title="6.3 播放器线程模型"></a>6.3 播放器线程模型</h3><img src="_asset/播放器线程模型.png">
+
+<h3 id="6-4-线程的退出机制"><a href="#6-4-线程的退出机制" class="headerlink" title="6.4 线程的退出机制"></a>6.4 线程的退出机制</h3><ul>
+<li>主线程接收到退出事件</li>
+<li>解复用线程在循环分流时对 quit 进行判断</li>
+<li>视频解码线程从视频流队列中取包时对 quit 进行判断</li>
+<li>音视解码从音频流队列中取包时对 quit 进行判断</li>
+<li>音视循环解码时对 quit 进行判断</li>
+<li>在收到信号变量消息时对 quit 进行判断</li>
+</ul>
+<h2 id="6-5-音视频同步"><a href="#6-5-音视频同步" class="headerlink" title="6.5 音视频同步"></a>6.5 音视频同步</h2><p>时间戳：</p>
+<ul>
+<li>PTS：Presentation timestamp  渲染时间戳</li>
+<li>DTS：Decoding timestamp 解码时间戳</li>
+<li>I（intra）/ B（bidirectional）/ P（predicted）帧</li>
+</ul>
+<p>时间戳顺序：</p>
+<ul>
+<li>实际帧顺序：I B B P</li>
+<li>存放帧顺序：I P B B</li>
+<li>解码时间戳：1 4 2 3</li>
+<li>展示时间戳：1 2 3 4</li>
+</ul>
+<p>从哪儿获得 PTS：</p>
+<ul>
+<li>AVPacket 中的 PTS</li>
+<li>AVFrame 中的 PTS</li>
+<li>av_frame_get_best_effort_timestamp()</li>
+</ul>
+<p>时间基：</p>
+<ul>
+<li>tbr：帧率</li>
+<li>tbn：time base of stream 流的时间基</li>
+<li>tbc：time base of codec 解码的时间基</li>
+</ul>
+<p>计算当前帧的 PTS：</p>
+<ul>
+<li><code>PTS = PTS * av_q2d(video_stream-&gt;time_base)</code></li>
+<li><code>av_q2d(AVRotional a){ return a.num / (double)a.den; }</code></li>
+</ul>
+<p>计算下一帧的 PTS：</p>
+<ul>
+<li>video_clock：预测的下一帧视频的 PTS</li>
+<li>frame_delay：1/tbr</li>
+<li>audio_clock：音频当前播放的时间戳</li>
+</ul>
+<p>音视频同步方式：</p>
+<ul>
+<li>视频同步到音频</li>
+<li>音频同步到视频</li>
+<li>音频和视频都同步到系统时钟  </li>
+</ul>
+<p>视频播放的基本思路：</p>
+<ul>
+<li>一般的做法，展示第一帧视频帧后，获得要显示的下一个视频帧的 PTS，然后设置一个定时器，当定时器超时时后，刷新新的视屏帧，如此反复操作。</li>
+</ul>
+<h2 id="7-如何在-Android-下使用-FFmpeg"><a href="#7-如何在-Android-下使用-FFmpeg" class="headerlink" title="7. 如何在 Android 下使用 FFmpeg"></a>7. 如何在 Android 下使用 FFmpeg</h2><p>Android 架构：</p>
+<img src="_asset/Android架构.png">
+
+<p>内容：</p>
+<ul>
+<li>Java 与 C 之间的相互调用</li>
+<li>Android 下 FFmpeg 的编译</li>
+<li>Android 下如何使用FFmpeg</li>
+</ul>
+<p>第一个 JNI 程序：</p>
+<p>TODO</p>
+<p>JNI 基本概念：</p>
+<ul>
+<li>JNIEnv</li>
+<li>JavaVM  一个Android APP只有一个 JavaVM， 一个 JavaVM 可以有多个JNIEnv</li>
+<li>线程  一个线程对应一个JNIEnv</li>
+</ul>
+<p>Java调用C/C++ 方法一：</p>
+<ul>
+<li><p>在Java层定义 native 关键字函数</p>
+</li>
+<li><p>方法一：在C/C++层创建</p>
+<p>Java_packname_classname_methodname 函数</p>
+</li>
+</ul>
+<p>Java调用C/C++方法二：</p>
+<img src="_asset/java调用c方法二.png">
+
+<img src="_asset/注册Native方法的最佳时机.png">
+
+<p>什么是Signature：</p>
+<ul>
+<li>Java与C/C++ 相互调用时，表式函数参数的描述符</li>
+<li>输入参数放在（）内，输出参数放在（）外</li>
+<li>多个参数之间顺序存放，且用 “；” 分割</li>
+</ul>
+<img src="_asset/原始类型的Signature.png">
+
+<img src="_asset/类的Signature.png">
+
+ <img src="_asset/例子.png">
+
+<p>C/C++ 调用 Java 方法：</p>
+<ul>
+<li>FindClass</li>
+<li>GetMethodID / GetFieldID</li>
+<li>NewObject</li>
+<li><code>Call&lt;TYPE&gt;Method / [G/S]et&lt;type&gt;Field</code></li>
+</ul>
+<h3 id="7-1-实战-Android-下的播放器"><a href="#7-1-实战-Android-下的播放器" class="headerlink" title="7.1 [实战] Android 下的播放器"></a>7.1 [实战] Android 下的播放器</h3><p>TODO</p>
+<h2 id="8-IOS-下使用-FFmpeg"><a href="#8-IOS-下使用-FFmpeg" class="headerlink" title="8. IOS 下使用 FFmpeg"></a>8. IOS 下使用 FFmpeg</h2><p>TODO</p>
+<h2 id="9-音视频进阶"><a href="#9-音视频进阶" class="headerlink" title="9. 音视频进阶"></a>9. 音视频进阶</h2><ul>
+<li>FFmpeg Filter 的使用 </li>
+<li>FFmpeg 裁剪与优化</li>
+<li>视频渲染（OpenGL / Metal）</li>
+<li>声音的特效</li>
+<li>网络传输</li>
+<li>Webrtc - 实时互动、直播、P2P音视频传输</li>
+<li>AR技术</li>
+<li>OpenCV</li>
+</ul>
+<p>行业痛点：</p>
+<ul>
+<li>回音消除</li>
+<li>降噪</li>
+<li>视频秒开</li>
+<li>多人多视频实时互动</li>
+<li>PC端/APP/网页实时视频互通</li>
+<li>实时互动与大并发负载</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="苗沛 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FFmpeg/" rel="tag"> <i class="fa fa-tag"></i> FFmpeg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/23/FFmpeg/移动端音视频入门/" rel="next" title="音视频入门知识">
+                <i class="fa fa-chevron-left"></i> 音视频入门知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/04/FFmpeg/FFmpeg命令大全/" rel="prev" title="FFmpeg命令大全">
+                FFmpeg命令大全 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-学习大纲"><span class="nav-number">1.</span> <span class="nav-text">1. 学习大纲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-FFmpeg-常用命令实战"><span class="nav-number">2.</span> <span class="nav-text">2. FFmpeg 常用命令实战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-初级开发内容"><span class="nav-number">3.</span> <span class="nav-text">3. 初级开发内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-FFmpeg-日志系统"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 FFmpeg 日志系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-FFmpeg-文件与目录操作"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 FFmpeg 文件与目录操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-FFmpeg-操作目录重要函数"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 FFmpeg 操作目录重要函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-多媒体文件的基本概念"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 多媒体文件的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-实战-打印音-视频信息"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 [实战] 打印音/视频信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-实战-抽取音频数据"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 [实战] 抽取音频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-实战-抽取视频数据"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 [实战] 抽取视频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-实战-将-MP4-转成-FLV-格式"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 [实战] 将 MP4 转成 FLV 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-实战-从-MP4-截取一段视频"><span class="nav-number">3.9.</span> <span class="nav-text">3.9 [实战] 从 MP4 截取一段视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-实战-一个简单的小咖秀"><span class="nav-number">3.10.</span> <span class="nav-text">3.10 [实战] 一个简单的小咖秀</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-FFmpeg-中级开发内容"><span class="nav-number">4.</span> <span class="nav-text">4. FFmpeg 中级开发内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-FFmpeg-H264-解码"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 FFmpeg H264 解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-FFmpeg-H264-编码"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 FFmpeg H264 编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-视频转图片"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 视频转图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-FFmpeg-AAC-编码"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 FFmpeg AAC 编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-SDL-介绍"><span class="nav-number">5.</span> <span class="nav-text">5. SDL 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-SDL-编译与安装"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 SDL 编译与安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-使用-SDL-基本步骤"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 使用 SDL 基本步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-SDL-事件基本原理"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 SDL 事件基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-文理渲染"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 文理渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-实战-YUV-视频播放器"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 [实战] YUV 视频播放器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-SDL-播放音频"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 SDL 播放音频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-7-实现-PCM-播放器"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 实现 PCM 播放器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-最简单的播放器"><span class="nav-number">6.</span> <span class="nav-text">6. 最简单的播放器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-多线程与锁"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 多线程与锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-锁与条件变量的使用"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 锁与条件变量的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-播放器线程模型"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 播放器线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-线程的退出机制"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 线程的退出机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-音视频同步"><span class="nav-number">7.</span> <span class="nav-text">6.5 音视频同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-如何在-Android-下使用-FFmpeg"><span class="nav-number">8.</span> <span class="nav-text">7. 如何在 Android 下使用 FFmpeg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-实战-Android-下的播放器"><span class="nav-number">8.1.</span> <span class="nav-text">7.1 [实战] Android 下的播放器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-IOS-下使用-FFmpeg"><span class="nav-number">9.</span> <span class="nav-text">8. IOS 下使用 FFmpeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-音视频进阶"><span class="nav-number">10.</span> <span class="nav-text">9. 音视频进阶</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">223k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">3:23</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+   <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

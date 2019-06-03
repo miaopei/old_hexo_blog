@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <meta name="description" content="转自阮一峰网络编程 WebSocket 是一种网络通信协议，很多高级功能都需要它。 为什么需要 WebSocker初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？ 答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。">
+<meta name="keywords" content="WebSocket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebSocket教程">
+<meta property="og:url" content="http://miaopei.github.io/2017/05/16/WebSocket教程/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="转自阮一峰网络编程 WebSocket 是一种网络通信协议，很多高级功能都需要它。 为什么需要 WebSocker初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？ 答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i.imgur.com/5mUfWtm.jpg">
+<meta property="og:image" content="http://i.imgur.com/Qutxs2j.png">
+<meta property="og:image" content="http://i.imgur.com/UWC2xr3.jpg">
+<meta property="og:image" content="http://i.imgur.com/a51CR69.png">
+<meta property="og:image" content="http://i.imgur.com/WMUStsh.jpg">
+<meta property="og:image" content="http://i.imgur.com/KfZKSmD.png">
+<meta property="og:updated_time" content="2019-06-03T08:10:56.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebSocket教程">
+<meta name="twitter:description" content="转自阮一峰网络编程 WebSocket 是一种网络通信协议，很多高级功能都需要它。 为什么需要 WebSocker初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？ 答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。">
+<meta name="twitter:image" content="http://i.imgur.com/5mUfWtm.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2017/05/16/WebSocket教程/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WebSocket教程 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2017/05/16/WebSocket教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">WebSocket教程
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-16 14:15:08" itemprop="dateCreated datePublished" datetime="2017-05-16T14:15:08+08:00">2017-05-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转自<span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTcvMDUvd2Vic29ja2V0Lmh0bWw=" title="http://www.ruanyifeng.com/blog/2017/05/websocket.html">阮一峰网络编程<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3dlYnNvY2tldC5vcmcv" title="http://websocket.org/">WebSocket<i class="fa fa-external-link"></i></span> 是一种网络通信协议，很多高级功能都需要它。</p>
+<h2 id="为什么需要-WebSocker"><a href="#为什么需要-WebSocker" class="headerlink" title="为什么需要 WebSocker"></a>为什么需要 WebSocker</h2><p>初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？</p>
+<p>答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。</p>
+<a id="more"></a>
+
+
+
+<p>举例来说，我们想了解今天的天气，只能是客户端向服务器发出请求，服务器返回查询结果。HTTP 协议做不到服务器主动向客户端推送信息。</p>
+<p><img src="http://i.imgur.com/5mUfWtm.jpg" alt></p>
+<p>这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端要获知就非常麻烦。我们只能使用<span class="exturl" data-url="aHR0cHM6Ly93d3cucHVibnViLmNvbS9ibG9nLzIwMTQtMTItMDEtaHR0cC1sb25nLXBvbGxpbmcv" title="https://www.pubnub.com/blog/2014-12-01-http-long-polling/">“轮询”<i class="fa fa-external-link"></i></span>：每隔一段时候，就发出一个询问，了解服务器有没有新的信息。最典型的场景就是聊天室。</p>
+<p>轮询的效率低，非常浪费资源（因为必须不停连接，或者 HTTP 连接始终打开）。因此，工程师们一直在思考，有没有更好的方法。WebSocket 就是这样发明的。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>WebSocket 协议在2008年诞生，2011年成为国际标准。所有浏览器都已经支持了。</p>
+<p>它的最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUHVzaF90ZWNobm9sb2d5" title="https://en.wikipedia.org/wiki/Push_technology">服务器推送技术<i class="fa fa-external-link"></i></span>的一种。</p>
+<p><img src="http://i.imgur.com/Qutxs2j.png" alt></p>
+<p>其他特点包括：</p>
+<p>（1）建立在 TCP 协议之上，服务器端的实现比较容易。</p>
+<p>（2）与 HTTP 协议有着良好的兼容性。默认端口也是80和443，并且握手阶段采用 HTTP 协议，因此握手时不容易屏蔽，能通过各种 HTTP 代理服务器。</p>
+<p>（3）数据格式比较轻量，性能开销小，通信高效。</p>
+<p>（4）可以发送文本，也可以发送二进制数据。</p>
+<p>（5）没有同源限制，客户端可以与任意服务器通信。</p>
+<p>（6）协议标识符是 <code>ws</code>（如果加密，则为 <code>wss</code> ），服务器网址就是 URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws://example.com:80/some/path</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://i.imgur.com/UWC2xr3.jpg" alt></p>
+<h2 id="客户端的简单示例"><a href="#客户端的简单示例" class="headerlink" title="客户端的简单示例"></a>客户端的简单示例</h2><p>WebSocket 的用法相当简单。</p>
+<p>下面是一个网页脚本的例子（点击<span class="exturl" data-url="aHR0cDovL2pzYmluLmNvbS9tdXFhbWlxaW11L2VkaXQ/anMsY29uc29sZQ==" title="http://jsbin.com/muqamiqimu/edit?js,console">这里<i class="fa fa-external-link"></i></span>看运行结果），基本上一眼就能明白。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">"wss://echo.websocket.org"</span>);</span><br><span class="line"></span><br><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Connection open ..."</span>); </span><br><span class="line">  ws.send(<span class="string">"Hello WebSockets!"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log( <span class="string">"Received Message: "</span> + evt.data);</span><br><span class="line">  ws.close();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Connection closed."</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端的-API"><a href="#客户端的-API" class="headerlink" title="客户端的 API"></a>客户端的 API</h2><p>WebSocket 客户端的 API 如下。</p>
+<h3 id="WebSocket-构造函数"><a href="#WebSocket-构造函数" class="headerlink" title="WebSocket 构造函数"></a>WebSocket 构造函数</h3><p>WebSocket 对象作为一个构造函数，用于新建 WebSocket 实例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行上面语句之后，客户端就会与服务器进行连接。</p>
+<p>实例对象的所有属性和方法清单，参见<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvZW4tVVMvZG9jcy9XZWIvQVBJL1dlYlNvY2tldA==" title="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">这里<i class="fa fa-external-link"></i></span>。</p>
+<h3 id="webSocket-readyState"><a href="#webSocket-readyState" class="headerlink" title="webSocket.readyState"></a>webSocket.readyState</h3><p><code>readyState</code> 属性返回实例对象的当前状态，共有四种。</p>
+<ul>
+<li>CONNECTING：值为0，表示正在连接。</li>
+<li>OPEN：值为1，表示连接成功，可以通信了。</li>
+<li>CLOSING：值为2，表示连接正在关闭。</li>
+<li>CLOSED：值为3，表示连接已经关闭，或者打开连接失败。</li>
+</ul>
+<p>下面是一个示例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (ws.readyState) &#123;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CONNECTING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.OPEN:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSING:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> WebSocket.CLOSED:</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// this never happens</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-onopen"><a href="#webSocket-onopen" class="headerlink" title="webSocket.onopen"></a>webSocket.onopen</h3><p>实例对象的 <code>onopen</code> 属性，用于指定连接成功后的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果要指定多个回调函数，可以使用addEventListener`方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ws.addEventListener(<span class="string">'open'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  ws.send(<span class="string">'Hello Server!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-onclose"><a href="#webSocket-onclose" class="headerlink" title="webSocket.onclose"></a>webSocket.onclose</h3><p>实例对象的<code>onclose</code>属性，用于指定连接关闭后的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"close"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = event.code;</span><br><span class="line">  <span class="keyword">var</span> reason = event.reason;</span><br><span class="line">  <span class="keyword">var</span> wasClean = event.wasClean;</span><br><span class="line">  <span class="comment">// handle close event</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-onmessage"><a href="#webSocket-onmessage" class="headerlink" title="webSocket.onmessage"></a>webSocket.onmessage</h3><p>实例对象的 <code>onmessage</code> 属性，用于指定收到服务器数据后的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ws.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> data = event.data;</span><br><span class="line">  <span class="comment">// 处理数据</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>注意，服务器数据可能是文本，也可能是二进制数据（ <code>blob</code> 对象或 <code>Arraybuffer</code> 对象）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> event.data === <span class="built_in">String</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received data string"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(event.data <span class="keyword">instanceof</span> <span class="built_in">ArrayBuffer</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> buffer = event.data;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Received arraybuffer"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了动态判断收到的数据类型，也可以使用<code>binaryType</code>属性，显式指定收到的二进制数据类型。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 收到的是 blob 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"blob"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.size);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到的是 ArrayBuffer 数据</span></span><br><span class="line">ws.binaryType = <span class="string">"arraybuffer"</span>;</span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.data.byteLength);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-send"><a href="#webSocket-send" class="headerlink" title="webSocket.send( )"></a>webSocket.send( )</h3><p>实例对象的 <code>send( )</code> 方法用于向服务器发送数据。</p>
+<p>发送文本的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ws.send(<span class="string">'your message'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>发送 Blob 对象的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file = <span class="built_in">document</span></span><br><span class="line">  .querySelector(<span class="string">'input[type="file"]'</span>)</span><br><span class="line">  .files[<span class="number">0</span>];</span><br><span class="line">ws.send(file);</span><br></pre></td></tr></table></figure>
+
+<p>发送 ArrayBuffer 对象的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sending canvas ImageData as ArrayBuffer</span></span><br><span class="line"><span class="keyword">var</span> img = canvas_context.getImageData(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">320</span>);</span><br><span class="line"><span class="keyword">var</span> binary = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(img.data.length);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; img.data.length; i++) &#123;</span><br><span class="line">  binary[i] = img.data[i];</span><br><span class="line">&#125;</span><br><span class="line">ws.send(binary.buffer);</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-bufferedAmount"><a href="#webSocket-bufferedAmount" class="headerlink" title="webSocket.bufferedAmount"></a>webSocket.bufferedAmount</h3><p>实例对象的 <code>bufferedAmount</code> 属性，表示还有多少字节的二进制数据没有发送出去。它可以用来判断发送是否结束。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="keyword">new</span> <span class="built_in">ArrayBuffer</span>(<span class="number">10000000</span>);</span><br><span class="line">socket.send(data);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (socket.bufferedAmount === <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="comment">// 发送完毕</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 发送还没结束</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="webSocket-onerror"><a href="#webSocket-onerror" class="headerlink" title="webSocket.onerror"></a>webSocket.onerror</h3><p>实例对象的<code>onerror</code>属性，用于指定报错时的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">socket.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">socket.addEventListener(<span class="string">"error"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// handle error event</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务端的实现"><a href="#服务端的实现" class="headerlink" title="服务端的实现"></a>服务端的实现</h2><p>WebSocket 服务器的实现，可以查看维基百科的<span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ29tcGFyaXNvbl9vZl9XZWJTb2NrZXRfaW1wbGVtZW50YXRpb25z" title="https://en.wikipedia.org/wiki/Comparison_of_WebSocket_implementations">列表<i class="fa fa-external-link"></i></span>。</p>
+<p>常用的 Node 实现有以下三种。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3VXZWJTb2NrZXRzL3VXZWJTb2NrZXRz" title="https://github.com/uWebSockets/uWebSockets">µWebSockets<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3NvY2tldC5pby8=" title="http://socket.io/">Socket.IO<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZXR1cnRsZTMyL1dlYlNvY2tldC1Ob2Rl" title="https://github.com/theturtle32/WebSocket-Node">WebSocket-Node<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p>具体的用法请查看它们的文档，这里不详细介绍了。</p>
+<h2 id="WebSocketd"><a href="#WebSocketd" class="headerlink" title="WebSocketd"></a>WebSocketd</h2><p>下面，我要推荐一款非常特别的 WebSocket 服务器：<span class="exturl" data-url="aHR0cDovL3dlYnNvY2tldGQuY29tLw==" title="http://websocketd.com/">Websocketd<i class="fa fa-external-link"></i></span>。</p>
+<p>它的最大特点，就是后台脚本不限语言，标准输入（stdin）就是 WebSocket 的输入，标准输出（stdout）就是 WebSocket 的输出。</p>
+<p><img src="http://i.imgur.com/a51CR69.png" alt></p>
+<p>举例来说，下面是一个 Bash 脚本 <code>counter.sh</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 1</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 2</span><br><span class="line">sleep 1</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 3</span><br></pre></td></tr></table></figure>
+
+<p>命令行下运行这个脚本，会输出1、2、3，每个值之间间隔1秒。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ bash ./counter.sh</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>现在，启动<code>websocketd</code>，指定这个脚本作为服务。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ websocketd --port=8080 bash ./counter.sh</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令会启动一个 WebSocket 服务器，端口是 <code>8080</code> 。每当客户端连接这个服务器，就会执行 <code>counter.sh</code> 脚本，并将它的输出推送给客户端。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080/'</span>);</span><br><span class="line"></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(event.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面是客户端的 JavaScript 代码，运行之后会在控制台依次输出1、2、3。</p>
+<p>有了它，就可以很方便地将命令行的输出，发给浏览器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ websocketd --port=8080 ls</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令会执行<code>ls</code>命令，从而将当前目录的内容，发给浏览器。使用这种方式实时监控服务器，简直是轻而易举（<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWItdm1zdGF0cw==" title="https://github.com/joewalnes/web-vmstats">代码<i class="fa fa-external-link"></i></span>）。</p>
+<p><img src="http://i.imgur.com/WMUStsh.jpg" alt></p>
+<p>更多的用法可以参考<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWJzb2NrZXRkL3RyZWUvbWFzdGVyL2V4YW1wbGVzL2Jhc2g=" title="https://github.com/joewalnes/websocketd/tree/master/examples/bash">官方示例<i class="fa fa-external-link"></i></span>。</p>
+<ul>
+<li>Bash 脚本<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWJzb2NrZXRkL2Jsb2IvbWFzdGVyL2V4YW1wbGVzL2Jhc2gvZ3JlZXRlci5zaA==" title="https://github.com/joewalnes/websocketd/blob/master/examples/bash/greeter.sh">读取客户端输入<i class="fa fa-external-link"></i></span>的例子</li>
+<li>五行代码实现一个最简单的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWJzb2NrZXRkL2Jsb2IvbWFzdGVyL2V4YW1wbGVzL2Jhc2gvY2hhdC5zaA==" title="https://github.com/joewalnes/websocketd/blob/master/examples/bash/chat.sh">聊天服务器<i class="fa fa-external-link"></i></span></li>
+</ul>
+<p><img src="http://i.imgur.com/KfZKSmD.png" alt></p>
+<p>websocketd 的实质，就是命令行的 WebSocket 代理。只要命令行可以执行的程序，都可以通过它与浏览器进行 WebSocket 通信。下面是一个 Node 实现的回声服务 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWJzb2NrZXRkL2Jsb2IvbWFzdGVyL2V4YW1wbGVzL25vZGVqcy9ncmVldGVyLmpz" title="https://github.com/joewalnes/websocketd/blob/master/examples/nodejs/greeter.js"><code>greeter.js</code><i class="fa fa-external-link"></i></span>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.setEncoding(<span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line">process.stdin.on(<span class="string">'readable'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> chunk = process.stdin.read();</span><br><span class="line">  <span class="keyword">if</span> (chunk !== <span class="literal">null</span>) &#123;</span><br><span class="line">    process.stdout.write(<span class="string">'data: '</span> + chunk);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>启动这个脚本的命令如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ websocketd --port=8080 node ./greeter.js</span><br></pre></td></tr></table></figure>
+
+<p>官方仓库还有其他<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2pvZXdhbG5lcy93ZWJzb2NrZXRkL3RyZWUvbWFzdGVyL2V4YW1wbGVz" title="https://github.com/joewalnes/websocketd/tree/master/examples">各种语言<i class="fa fa-external-link"></i></span>的例子。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><span class="exturl" data-url="aHR0cDovL2NqaWhyaWcuY29tL2Jsb2cvaG93LXRvLXVzZS13ZWJzb2NrZXRzLw==" title="http://cjihrig.com/blog/how-to-use-websockets/">How to Use WebSockets<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cudHV0b3JpYWxzcG9pbnQuY29tL3dlYnNvY2tldHMvd2Vic29ja2V0c19zZW5kX3JlY2VpdmVfbWVzc2FnZXMuaHRt" title="https://www.tutorialspoint.com/websockets/websockets_send_receive_messages.htm">WebSockets - Send &amp; Receive Messages<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaHRtbDVyb2Nrcy5jb20vZW4vdHV0b3JpYWxzL3dlYnNvY2tldHMvYmFzaWNzLw==" title="https://www.html5rocks.com/en/tutorials/websockets/basics/">Introducing WebSockets: Bringing Sockets to the Web<i class="fa fa-external-link"></i></span></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="苗沛 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WebSocket/" rel="tag"> <i class="fa fa-tag"></i> WebSocket</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/15/定制支持串口安装的ubuntu系统镜像/" rel="next" title="定制支持串口安装的ubuntu系统镜像">
+                <i class="fa fa-chevron-left"></i> 定制支持串口安装的ubuntu系统镜像
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/20/vimHotKey/" rel="prev" title="Vim 快捷键">
+                Vim 快捷键 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要-WebSocker"><span class="nav-number">1.</span> <span class="nav-text">为什么需要 WebSocker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端的简单示例"><span class="nav-number">3.</span> <span class="nav-text">客户端的简单示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端的-API"><span class="nav-number">4.</span> <span class="nav-text">客户端的 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket-构造函数"><span class="nav-number">4.1.</span> <span class="nav-text">WebSocket 构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-readyState"><span class="nav-number">4.2.</span> <span class="nav-text">webSocket.readyState</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-onopen"><span class="nav-number">4.3.</span> <span class="nav-text">webSocket.onopen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-onclose"><span class="nav-number">4.4.</span> <span class="nav-text">webSocket.onclose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-onmessage"><span class="nav-number">4.5.</span> <span class="nav-text">webSocket.onmessage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-send"><span class="nav-number">4.6.</span> <span class="nav-text">webSocket.send( )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-bufferedAmount"><span class="nav-number">4.7.</span> <span class="nav-text">webSocket.bufferedAmount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webSocket-onerror"><span class="nav-number">4.8.</span> <span class="nav-text">webSocket.onerror</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端的实现"><span class="nav-number">5.</span> <span class="nav-text">服务端的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocketd"><span class="nav-number">6.</span> <span class="nav-text">WebSocketd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">223k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">3:23</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+   <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

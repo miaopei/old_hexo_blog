@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+
+
+  <meta name="description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
+<meta name="keywords" content="FFmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频入门知识">
+<meta property="og:url" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/泛娱乐化直播架构.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/实时互动直播架构.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/CDN网络.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/nginx-trmp配置.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/FFMPEG直播命令.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/测试流媒体服务器.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/声音三要素.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音量与音调.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音色.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/人类听觉范围.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/听觉-发声范围.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频量化过程.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/量化基本概念.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码率计算.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频压缩技术.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频冗余信息.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/频域掩蔽效应.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/时域掩蔽效应.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频编码过程.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/常见的音频编码器.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频编码器性能对比.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC介绍.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC规格.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC规格描述.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC格式.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC编码库那个好.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264基本概念.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/GOF.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/SPS与PPS.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频花屏卡顿的原因.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频都有哪些视频编码器.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264压缩技术.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264宏块划分.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/宏块划分完成.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/子块划分.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/帧分组.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/组内宏块查找.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/运动估算.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/运动矢量与补偿压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/帧内预测.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/计算帧内预测残差值.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/预测模式与残差值压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/DCT压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/压缩后的结果.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/VLC压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/CABAC压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264结构图.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264编码分层.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码流基本概念一.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码流基本概念二.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALUnit.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/切片与宏.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264切片.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264码流分层.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALType一.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALType二.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NAL类型介绍.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/单一NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/组合NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/分片NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/FUHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/图像除了RGB还是有YUV.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV常见格式.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV420.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV存储格式.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/小结.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频小结.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频小结.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/后续.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识01.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识02.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识03.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/行业痛点-01.png">
+<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/行业痛点-02.png">
+<meta property="og:updated_time" content="2019-06-03T08:10:56.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="音视频入门知识">
+<meta name="twitter:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
+<meta name="twitter:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/泛娱乐化直播架构.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>音视频入门知识 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">音视频入门知识
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-23 10:14:50" itemprop="dateCreated datePublished" datetime="2019-04-23T10:14:50+08:00">2019-04-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-万人直播架构讲解"><a href="#1-万人直播架构讲解" class="headerlink" title="1. 万人直播架构讲解"></a>1. 万人直播架构讲解</h2><p>直播产品的种类：</p>
+<ul>
+<li><p>泛娱乐化直播</p>
+<p>花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播</p>
+</li>
+<li><p>实时互动直播</p>
+<p>音视频会议、教育直播等，像 思科、全时、声网</p>
+</li>
+</ul>
+<p>泛娱乐化直播架构</p>
+<blockquote>
+<p>信令服务器：创建房间、聊天、礼物。。。。</p>
+<p>美女主播 –信令–&gt; 信令服务器</p>
+<p>信令服务器–rtmp流地址–&gt;美女主播</p>
+<p>美女主播 –推流–&gt; 流媒体云CDN</p>
+<p>观众 –信令–&gt; 信令服务器：将观众加入到美女主播间</p>
+<p>信令服务器–rmtp流地址–&gt; 观众</p>
+<p>观众 &lt;–拉流–&gt; 流媒体云CDN</p>
+</blockquote>
+<a id="more"></a>
+
+
+
+<p>泛娱乐化直播架构</p>
+<p>基于TCP协议实现</p>
+<ol>
+<li>发送信令到信令服务器, 服务器收到\执行后, 返回给共享端一个流媒体云的地址</li>
+<li>共享端采集自己音视频数据, 形成rtmp流, 推送到CDN网络(推流)</li>
+<li>获取流媒体云地址</li>
+<li>拉流</li>
+</ol>
+<img src="_asset/泛娱乐化直播架构.png">
+
+<p>实时互动直播架构</p>
+<p>基于UDP实现</p>
+<ol>
+<li>自有网络: UDP没有自有网络, 需自己搭建</li>
+<li>多个节点: 为了保障服务的稳定性以及负载均衡</li>
+<li>控制中心: 每个节点定期(心跳)向控制中心报告健康程度, 控制中心根据响应的数据做出决策</li>
+<li>内总线: 数据安全性\吞吐量等可靠性得以保障</li>
+<li>媒体服务器: 将RTP协议的数据转换成RTMP协议的数据</li>
+<li>CDN网络: 根据用户需求进行拉流</li>
+</ol>
+<img src="_asset/实时互动直播架构.png">
+
+<h2 id="2-CDN网络介绍"><a href="#2-CDN网络介绍" class="headerlink" title="2. CDN网络介绍"></a>2. CDN网络介绍</h2><blockquote>
+<p>CDN网络是为了解决什么问题而出现的？</p>
+<p>总结为一句话：CDN网络是为了解决用户访问网络资源慢而出现的一个技术，两个原因：</p>
+<ol>
+<li>网络链路太长</li>
+<li>人为因素（南电信北联通，利益相关）</li>
+</ol>
+</blockquote>
+<p>CDN构成：</p>
+<p>边缘结点：用户从边缘节点上获取数据</p>
+<p>二级节点：主干网节点，主要用于缓存、减转源站压力</p>
+<p>源站：CP(内容提供方)将内容放到源站</p>
+<p>查找顺序：边缘结点-&gt;二级节点-&gt;源站</p>
+<img src="_asset/CDN网络.png">
+
+<h2 id="3-亲手搭建一套简单的直播系统"><a href="#3-亲手搭建一套简单的直播系统" class="headerlink" title="3. 亲手搭建一套简单的直播系统"></a>3. 亲手搭建一套简单的直播系统</h2><p>安装nginx 配置rtmp</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install nginx-full --with-rtmp-module</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">(这一步卡了我好久，安装nginx提示一直找不到nginx-full,网上相关的教程没更新，原因在于nginx仓库已搬迁)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> brew tap denji/nginx</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nginx -s reload 重启</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nginx  启动</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf</span></span><br></pre></td></tr></table></figure>
+
+<img src="_asset/nginx-trmp配置.png">
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 推流</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ffmpeg -re -i out.mp4 -c copy -f flv rtmp://server/live/streamName</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 拉流</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ffmpeg -i rtmp://server/live/streamName -c copy dump.flv</span></span><br></pre></td></tr></table></figure>
+
+<img src="_asset/FFMPEG直播命令.png">
+
+<img src="_asset/测试流媒体服务器.png">
+
+<h2 id="4-音频基础知识"><a href="#4-音频基础知识" class="headerlink" title="4. 音频基础知识"></a>4. 音频基础知识</h2><img src="_asset/声音三要素.png">
+
+<p>图一音量：甲乙的振动频率相同、振幅不同。图二音调：甲乙振幅相同、频率不同</p>
+<img src="_asset/音量与音调.png">
+
+<img src="_asset/音色.png">
+
+<img src="_asset/人类听觉范围.png">
+
+<img src="_asset/听觉-发声范围.png">
+
+<h2 id="5-音频的量化与编码"><a href="#5-音频的量化与编码" class="headerlink" title="5. 音频的量化与编码"></a>5. 音频的量化与编码</h2><p>模拟信号进行采样，采样时分频率的从模拟信号获取数据波形值，采样后，进行数据量化，量化后进行编码，把采样的十进制转化为计算机的二进制，也就是数字信号。</p>
+<p>模拟数据——》采样——》量化——》编码——》数字信号</p>
+<img src="_asset/音频量化过程.png">
+
+<p>采样大小决定了音频的振幅的高度，采样时指一个采样用多少bit存放，常用的是16bit</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> bit：位     一个二进制数据0或1，是1bit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> byte：字节  存储空间的基本计量单位，如：MySQL中定义 VARCHAR(45) 即是指 45个字节；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1 Byte = 8 Bit = 1 字节</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2^8 = 256, 2^16 = 65535</span></span><br></pre></td></tr></table></figure>
+
+<p>aac通常44.1k采样率</p>
+<p>采样率:采样频率8k/秒、16k/秒、32k/秒、44.1k/秒、48k/秒</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMzUxNjky" title="https://www.zhihu.com/question/20351692">什么是音频的采样率？采样率和音质有没有关系？<i class="fa fa-external-link"></i></span> - 知乎</p>
+</blockquote>
+<img src="_asset/量化基本概念.png">
+
+<p>人能听到的声音范围是20hz-2whz</p>
+<p>码率 = 采样率 x 采样大小 x 声道数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 宽带速率的单位用 bps(或b/s)表示</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1 B = 8 b   1 B/s = 8 b/s</span></span><br></pre></td></tr></table></figure>
+
+<img src="_asset/码率计算.png">
+
+<p>原始的wav文件，大小是1411.2Kb/s</p>
+<p>做完aaclc的编码，大小是128Kb/s</p>
+<p>如果是aache-vr这种编码，大小是32Kb/s</p>
+<h2 id="6-音频压缩技术讲解"><a href="#6-音频压缩技术讲解" class="headerlink" title="6. 音频压缩技术讲解"></a>6. 音频压缩技术讲解</h2><p>音频压缩技术</p>
+<p>1、消除冗余数据（有损压缩技术）。</p>
+<p>压缩的主要方法是去除采集到的音频冗余信息，所谓冗余信息包括人耳听觉范围外的音频信号以及被掩蔽掉的音频信号</p>
+<p>信号的掩蔽可分为频域掩蔽和时域掩蔽</p>
+<p>频域掩蔽：一个强纯音会掩蔽在其附近同时发声的弱纯音。也称同时掩蔽</p>
+<p>时域掩蔽：在时间上相邻的声音之间也有掩蔽现象，主要原因是人的大脑处理信息需要花费时间。</p>
+<p>同步掩蔽效应和不同频率声音的频率和相对竟是有关，而时间掩蔽则仅仅和时间有关。如果两个声音在时间上特别接近，分辨会有困难（如两个声音音量相差较大且两个声音间隔时间低于5毫秒，则其中弱的那个声音会听不到）。</p>
+<p>2、哈夫曼无损编码</p>
+<img src="_asset/音频压缩技术.png">
+
+<p>音频压缩：频域，时域。</p>
+<ul>
+<li><p>频域: 截取人耳能听到的频率范围，滤掉响度低的声音，去掉某个高频周围低频的声音；</p>
+</li>
+<li><p>时域: 滤掉某个长时间说话中的低音</p>
+</li>
+</ul>
+<img src="_asset/音频冗余信息.png">
+
+<img src="_asset/频域掩蔽效应.png">
+
+<img src="_asset/时域掩蔽效应.png">
+
+<img src="_asset/音频编码过程.png">
+
+<h2 id="7-音频编解码器选型"><a href="#7-音频编解码器选型" class="headerlink" title="7. 音频编解码器选型"></a>7. 音频编解码器选型</h2><p>网上测评结果：音频编解码器 opus &gt; aac &gt; vorbis </p>
+<p>音频编解码器：</p>
+<p>1：opus，</p>
+<ul>
+<li>口模型：实时互动，对实时性要求非常高 </li>
+<li>耳模型：高保真，对质量要求非常高</li>
+</ul>
+<p>至于什么时候使用那个模型，由opus自己内部来决定，同时，他是性能最好的，压缩率最好。</p>
+<p>2：AAC，经常用于泛娱乐化直播，因为其对实时性要求不是很高但是对音质要求可能较高，所以，选用AAC，当然也可以选用opus的耳模型</p>
+<p>3：sppex，最大的特点就是不仅可以编码音频，还可以对音频进行降噪，优化，尽可能的获取原音频数据</p>
+<p>4：G.711(722)，主要用于音视频会议，为了和固话进行相应的融合</p>
+<img src="_asset/常见的音频编码器.png">
+
+<img src="_asset/音频编码器性能对比.png">
+
+<h2 id="8-AAC-讲解"><a href="#8-AAC-讲解" class="headerlink" title="8. AAC 讲解"></a>8. AAC 讲解</h2><p>cdn，rtmp  支持 aac</p>
+<p>AAC 产生的目的是取代 MP3 格式：</p>
+<p>AAC 相对优点：压缩率高，损耗低</p>
+<img src="_asset/AAC介绍.png">
+
+<img src="_asset/AAC规格.png">
+
+<p>aac 三种类型<br>aac<br>aacv1: aac+sbr(频率复用-高频部分采样率高，低频部分采样率低)<br>aacv2: aac+sbr+ps(声道关联，一个声道采集全部，一个声道只采集相对不同的声音)</p>
+<p>AAC规格描述（AAC、AAC HE、AAC HE V2）–&gt; AAC+SBR=AAC HE V1, AAC + SBR + PS = AAC HE V2</p>
+<img src="_asset/AAC规格描述.png">
+
+<p>AAC格式：</p>
+<p>1、ADIF(Audio Data Interchange Format):只能从头开始解码，常用在磁盘文件中。</p>
+<p>2、ADTS(Audio Data Transport Stream)：这种格式每一帧都有一个同步字，可以在音频流的任何位置开始解码，它似于数据流格式（缺点：文件比ADIF大，优点:每个帧都可以被单独解码播放）</p>
+<img src="_asset/AAC格式.png">
+
+<p>aac 编码库 ffmpeg AAC，libfdk AAC</p>
+<img src="_asset/AAC编码库那个好.png">
+
+<h2 id="9-视频基本知识"><a href="#9-视频基本知识" class="headerlink" title="9. 视频基本知识"></a>9. 视频基本知识</h2><p>I帧：关键帧，采用帧内压缩技术</p>
+<p>P帧：向前参考帧，压缩时只参考前一个帧，属于帧间压缩技术</p>
+<p>B帧：双向参考帧，压缩时即参考前一帧也参考后一帧，属于帧间压缩技术</p>
+<p>一般实时互动都不会使用 B 帧</p>
+<img src="_asset/H264基本概念.png">
+
+<p>GOF(group of frame): 一组帧，可以将一段时间内画面变化不大的所有帧划为一组帧</p>
+<img src="_asset/GOF.png">
+
+<p>SPS与PPS（这两种都划为 I 帧）：</p>
+<ul>
+<li><p>SPS(Sequence Parameter Set): </p>
+<p>序列参数集，存放帧数、参考帧数目、解码图像尺寸、帧场编码模式选择标识等。</p>
+</li>
+<li><p>PPS(Picture Parameter Set):</p>
+<p>图像参数集，存放熵编码模式选择标识、片组数目、初始量化参数和去方块滤波系统数调整标识等</p>
+</li>
+</ul>
+<img src="_asset/SPS与PPS.png">
+
+<p>视频花屏/卡顿原因：</p>
+<p>1、如果 GOP 分组中的 P 帧丢失会造成解码端的图像发生错误（于是形成了花屏）。</p>
+<p>2、为了避免花屏问题的发生，一般如果发现 P 帧或者I帧丢失，就不显示本 GOP 内的所有帧，直到下一个 I 帧来后重新刷新图像（因为丢了一组数据，所以形成了卡顿）</p>
+<img src="_asset/视频花屏卡顿的原因.png">
+
+<p>视频编码器：</p>
+<p>1、x264/x265。</p>
+<p>2、openH264(支持 SVC（分层传输） 技术)。</p>
+<p>3、vp8/vp9</p>
+<img src="_asset/视频都有哪些视频编码器.png">
+
+<h2 id="10-H264-宏块的划分与帧分组"><a href="#10-H264-宏块的划分与帧分组" class="headerlink" title="10. H264 宏块的划分与帧分组"></a>10. H264 宏块的划分与帧分组</h2><p>H264压缩技术</p>
+<ol>
+<li>帧内预测压缩，解决的是空域数据冗余问题（将一幅图里的人眼不是很敏感的色彩、光亮等数据剔除）</li>
+<li>帧间预测压缩，解决的是时域数据冗余问题（将一组图里面连续的重复性高的帧剔除）</li>
+<li>整数离散余弦变换(DCT)，将空间上的相关性变为频域上无关的数据然后进行量化</li>
+<li>CABAC压缩，也叫上下文适应无损压缩</li>
+</ol>
+<img src="_asset/H264压缩技术.png">
+
+<p>宏块的划分与分组：</p>
+<p>H264宏块划分与子块划分：宏块里面可以再包含很多子块</p>
+<img src="_asset/H264宏块划分.png">
+
+<img src="_asset/宏块划分完成.png">
+
+<p>子块划分：</p>
+<img src="_asset/子块划分.png">
+
+<p>帧分组(一组连续的图片，一幅图片为一帧)</p>
+<img src="_asset/帧分组.png">
+
+<h2 id="11-视频压缩技术详解"><a href="#11-视频压缩技术详解" class="headerlink" title="11. 视频压缩技术详解"></a>11. 视频压缩技术详解</h2><ul>
+<li><p>帧间预测: </p>
+<p>解决时间数据冗余，比较相邻两帧不同给出运动矢量 + 残差值</p>
+</li>
+<li><p>帧内预测: </p>
+<p>解决空间数据冗余，每一个宏块有一个预测模式，然后讲预测后的图像与原图比较算差值，最后存储预测模式和差值即可。帧内压缩是针对于 I 帧的</p>
+</li>
+</ul>
+<h3 id="11-1-帧间预测"><a href="#11-1-帧间预测" class="headerlink" title="11.1 帧间预测"></a>11.1 帧间预测</h3><p>组内宏块查找：</p>
+<img src="_asset/组内宏块查找.png">
+
+<img src="_asset/运动估算.png">
+
+<img src="_asset/运动矢量与补偿压缩.png">
+
+<h3 id="11-2-帧内预测"><a href="#11-2-帧内预测" class="headerlink" title="11.2 帧内预测"></a>11.2 帧内预测</h3><img src="_asset/帧内预测.png">
+
+<img src="_asset/计算帧内预测残差值.png">
+
+<img src="_asset/预测模式与残差值压缩.png">
+
+<h3 id="11-3-DCT-压缩"><a href="#11-3-DCT-压缩" class="headerlink" title="11.3 DCT 压缩"></a>11.3 DCT 压缩</h3><img src="_asset/DCT压缩.png">
+
+<img src="_asset/压缩后的结果.png">
+
+<h3 id="11-4-VLC-压缩"><a href="#11-4-VLC-压缩" class="headerlink" title="11.4 VLC 压缩"></a>11.4 VLC 压缩</h3><img src="_asset/VLC压缩.png">
+
+<h3 id="11-5-CABAC-压缩"><a href="#11-5-CABAC-压缩" class="headerlink" title="11.5 CABAC 压缩"></a>11.5 CABAC 压缩</h3><img src="_asset/CABAC压缩.png">
+
+<h2 id="12-H264-结构与码流"><a href="#12-H264-结构与码流" class="headerlink" title="12. H264 结构与码流"></a>12. H264 结构与码流</h2><p>H264编码分层：</p>
+<p>1、NAL层（Network Abstraction Layer）, 视频数据网络抽象层。</p>
+<p>2、VCL层（Video Coding Layer），视频数据编码层，对原始数据进行压缩</p>
+<p>码流基本概念：</p>
+<p>1、SODB（String Of Data Bits）,原始数据比特流，长度不一定是8的倍数，它是由VCL层产生的。</p>
+<p>2、RBSP（Raw Byte Sequence Payload,SODB+trailing bits），算法是在SODB最后一位补1，不按字节对齐则补0。</p>
+<p>3、EBSP(Encapsulate Byte Sequence Payload)，需到两个连续的0x00就增加一个0x03。</p>
+<p>4、NALU，NAL Header(1B)+EBSP</p>
+<img src="_asset/H264结构图.png">
+
+<p>以太网最大传输字节 1500 字节。</p>
+<img src="_asset/H264编码分层.png">
+
+<img src="_asset/码流基本概念一.png">
+
+<img src="_asset/码流基本概念二.png">
+
+<p>一个H264帧最少要有一个切片(NAL Unit)</p>
+<img src="_asset/NALUnit.png">
+
+<p>切片与宏块的关系：</p>
+<ul>
+<li>每个切片都包括切片头和切片数据，</li>
+<li>每个切片数据又包括了很多宏块，</li>
+<li>每个宏块又包括了宏块的类型、宏块的预测、编码的残渣数据等</li>
+</ul>
+<img src="_asset/切片与宏.png">
+
+<img src="_asset/H264切片.png">
+
+<img src="_asset/H264码流分层.png">
+
+<h2 id="13-NAL-单元详解"><a href="#13-NAL-单元详解" class="headerlink" title="13. NAL 单元详解"></a>13. NAL 单元详解</h2><img src="_asset/NALHeader.png">
+
+<p>5 - 关键帧</p>
+<p>7- SPS 序列参数集</p>
+<p>8- PPS 图像参数集</p>
+<img src="_asset/NALType一.png">
+
+<img src="_asset/NALType二.png">
+
+<img src="_asset/NAL类型介绍.png">
+
+<img src="_asset/单一NALU的RTP包.png">
+
+<img src="_asset/组合NALU的RTP包.png">
+
+<p>如：</p>
+<p>P帧B帧很多都是单一类型。</p>
+<p>SPS和PPS这两个NAL单元一般放在同一个RTP包里头</p>
+<img src="_asset/分片NALU的RTP包.png">
+
+<img src="_asset/FUHeader.png">
+
+<h2 id="14-YUV-讲解"><a href="#14-YUV-讲解" class="headerlink" title="14. YUV 讲解"></a>14. YUV 讲解</h2><img src="_asset/图像除了RGB还是有YUV.png">
+
+<img src="_asset/YUV.png">
+
+<p>YUV常见格式：YUV4:2:0、YUV4:2:2、YUV4:4:4</p>
+<p>RGB8:8:8</p>
+<img src="_asset/YUV常见格式.png">
+
+<img src="_asset/YUV420.png">
+
+<ul>
+<li>UV 混存则为packed(打包存储)，</li>
+<li>UV分开存则为planar(平面存储) </li>
+</ul>
+<img src="_asset/YUV存储格式.png">
+
+<h2 id="15-总结"><a href="#15-总结" class="headerlink" title="15. 总结"></a>15. 总结</h2><img src="_asset/小结.png">
+
+<img src="_asset/音频小结.png">
+
+<img src="_asset/视频小结.png">
+
+<p>rtmp 实时消息传输: tcp/ip 应用层协议  推送/直播  基本数据单元为消息</p>
+<p>1B 消息类型  2B 长度  3B 时间 4B  流id 消息体</p>
+<p>传输时 消息回被拆分成消息块 chunk chunk header + chunk data</p>
+<p>flv: 大块音视频 加入标记头信息   延迟表现和大规模并发成熟 </p>
+<p>HLS：分成5-10s 用m3u8索引管理 用于朋友圈分享  </p>
+<p>m3u8索引： 直播信号源–视频编码器（后台视频处理）–流切片器–各种ts媒体文件（分发模块）–索引文件（数据库）–客户端</p>
+<p>cdn网络 为了解决用户访问资源慢出现的技术</p>
+<p>边缘节点  二级节点（大城市） 源站</p>
+<p>搭建流媒体服务：</p>
+<p>准备流媒体服务器 linux max 编译安装nginx服务  配置rtmp服务并启动nginx服务</p>
+<p>声音三要素：音调 音量 音色</p>
+<p>音频量化(模数转换)：模拟数据 采样  量化 编码  数字信号  == 0101001110</p>
+<p>码率 = 采样率（1.6w/44.1/48k）x 采样大小(8位-电话/16位-常见) x 声道数（单/双）</p>
+<p>音频压缩： 有损消除冗余数据   哈夫曼无损编码</p>
+<p>音频编码： 时域转频域—心里声学模型—量化编码—比特流格式化—比特流</p>
+<p>音频编解码 ： opus（口 耳 实时互动 最快）  aac(直播用 次快)  speed(回音 降噪等)   g.711（固话）</p>
+<p>aac : 取代mp3 加入 sir ps 技术  </p>
+<p>aac lc 128k / aac he v2 64k /  aac he v2 32k/</p>
+<p>aac 格式 ： adif 从头开始解码，用在磁盘文件中  adts 每一帧都有一个同步字，可以在任何位置解码</p>
+<p>aac 编码库 ： libfdk_aac &gt; ffmpeg aac &gt;libfaac&gt; libvo_aacenc</p>
+<p>H264： I帧 关键 帧内压缩  / p帧 向前参考1帧 / B帧 双向参考帧</p>
+<p>sps: 序列参数集/pps:图像参数集 </p>
+<p>GOF： 一组帧数  p帧丢失 会花屏卡顿</p>
+<p>视频编码器： x264/x265 /open h264(svc)/vp8/vp9</p>
+<p>h264 压缩技术-编码原理： 帧内预测压缩，空域冗余数据/帧间预测压缩，时域冗余数据/dcp整数离散余炫变换，傅立叶变换/cabac压缩</p>
+<p>h264结构：视频序列–图像–片–宏块–子快</p>
+<p>h264编码分层：nal 视频数据网络抽象层–vcl 视频数据编码层</p>
+<p>码率：sodb 原始比特流 / rbsp sodb最后补1 / ebsp 起始码增加一个起始位0x03 /  nalu nal+ebsp</p>
+<p>nal unit = nalu 头部 + 一个切片（头/数据） 切片 </p>
+<p>yuv格式：4：4:4/4:4:2/4：2:0 （平坦编码 /半平坦编码）</p>
+<img src="_asset/后续.png">
+
+<img src="_asset/音视频知识01.png">
+
+<img src="_asset/音视频知识02.png">
+
+<img src="_asset/音视频知识03.png">
+
+<img src="_asset/行业痛点-01.png">
+
+<img src="_asset/行业痛点-02.png">
+
+
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="苗沛 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FFmpeg/" rel="tag"> <i class="fa fa-tag"></i> FFmpeg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/20/vimHotKey/" rel="next" title="Vim 快捷键">
+                <i class="fa fa-chevron-left"></i> Vim 快捷键
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/30/FFmpeg/音视频核心技术/" rel="prev" title="音视频核心技术">
+                音视频核心技术 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-万人直播架构讲解"><span class="nav-number">1.</span> <span class="nav-text">1. 万人直播架构讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CDN网络介绍"><span class="nav-number">2.</span> <span class="nav-text">2. CDN网络介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-亲手搭建一套简单的直播系统"><span class="nav-number">3.</span> <span class="nav-text">3. 亲手搭建一套简单的直播系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-音频基础知识"><span class="nav-number">4.</span> <span class="nav-text">4. 音频基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-音频的量化与编码"><span class="nav-number">5.</span> <span class="nav-text">5. 音频的量化与编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-音频压缩技术讲解"><span class="nav-number">6.</span> <span class="nav-text">6. 音频压缩技术讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-音频编解码器选型"><span class="nav-number">7.</span> <span class="nav-text">7. 音频编解码器选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-AAC-讲解"><span class="nav-number">8.</span> <span class="nav-text">8. AAC 讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-视频基本知识"><span class="nav-number">9.</span> <span class="nav-text">9. 视频基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-H264-宏块的划分与帧分组"><span class="nav-number">10.</span> <span class="nav-text">10. H264 宏块的划分与帧分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-视频压缩技术详解"><span class="nav-number">11.</span> <span class="nav-text">11. 视频压缩技术详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-帧间预测"><span class="nav-number">11.1.</span> <span class="nav-text">11.1 帧间预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-帧内预测"><span class="nav-number">11.2.</span> <span class="nav-text">11.2 帧内预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-3-DCT-压缩"><span class="nav-number">11.3.</span> <span class="nav-text">11.3 DCT 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-4-VLC-压缩"><span class="nav-number">11.4.</span> <span class="nav-text">11.4 VLC 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-5-CABAC-压缩"><span class="nav-number">11.5.</span> <span class="nav-text">11.5 CABAC 压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-H264-结构与码流"><span class="nav-number">12.</span> <span class="nav-text">12. H264 结构与码流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-NAL-单元详解"><span class="nav-number">13.</span> <span class="nav-text">13. NAL 单元详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-YUV-讲解"><span class="nav-number">14.</span> <span class="nav-text">14. YUV 讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-总结"><span class="nav-number">15.</span> <span class="nav-text">15. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">223k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">3:23</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+   <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
