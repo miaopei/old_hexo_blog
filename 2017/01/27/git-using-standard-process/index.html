@@ -673,8 +673,8 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/27/git-workflow/" rel="next" title="Git工作流程">
-                <i class="fa fa-chevron-left"></i> Git工作流程
+              <a href="/2017/01/27/git-common-list/" rel="next" title="常用Git命令清单">
+                <i class="fa fa-chevron-left"></i> 常用Git命令清单
               </a>
             
           </div>
@@ -683,8 +683,8 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/20/Hexo-Github-博客多终端同步/" rel="prev" title="Hexo + Github 博客多终端同步">
-                Hexo + Github 博客多终端同步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/27/git-workflow/" rel="prev" title="Git工作流程">
+                Git工作流程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1212,27 +1212,31 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
   
     
 
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '',
-      clientSecret: '',
-      repo: 'gitment-comments',
-      owner: '',
-      admin: ,
-      id: ,
-      labels: ,
-      perPage: ,
-      pagerDirection: '',
-      createIssueManually: ,
-      distractionFreeMode: 
-      })
-    gitalk.render('gitalk-container')           
-  </script>
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
 
   
 
