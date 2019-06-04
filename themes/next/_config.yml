@@ -87,6 +87,18 @@ footer:
   # Any custom text can be defined here.
   # custom_text: Hosted by <a target="_blank" rel="external nofollow" href="https://pages.coding.me">Coding Pages</a>
 
+  # web run time
+  # 这是网站开始运行的时间，展示网站运行了多长时间。
+  # 格式, 2018-02-13 15:00:00. 如果个数只有一位，需要补零。
+  runtime:
+    enable: true
+    year: 2016
+    month: 12
+    day: 23
+    hour: 15
+    minute: 00
+    second: 00
+
 # Creative Commons 4.0 International License.
 # See: https://creativecommons.org/share-your-work/licensing-types-examples
 # Available values of license: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero
@@ -337,10 +349,13 @@ post_meta:
 # Dependencies: https://github.com/theme-next/hexo-symbols-count-time
 symbols_count_time:
   separated_meta: true
+  #文章中的显示是否显示文字（本文字数|阅读时长）
   item_text_post: true
+  #网页底部的显示是否显示文字（站点总字数|站点阅读时长）
   item_text_total: true
   awl: 4
   wpm: 275
+  suffix: mins.
 
 codeblock:
   # Manual define the border radius in codeblock, leave it blank for the default value: 1
@@ -363,7 +378,7 @@ wechat_subscriber:
 reward_settings:
   # If true, reward would be displayed in every article by default.
   # You can show or hide reward in a specific article throuth `reward: true | false` in Front-matter.
-  enable: false
+  enable: true
   animation: false
   #comment: Donate comment here
 
@@ -647,16 +662,16 @@ changyan:
 # More info available at https://valine.js.org
 valine:
   enable: false # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version.
-  appid:  # your leancloud application appid
-  appkey:  # your leancloud application appkey
+  appid: XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz # your leancloud application appid
+  appkey: qU7onoX7aRWpLf04JedNtwXo # your leancloud application appkey
   notify: false # mail notifier, See: https://github.com/xCss/Valine/wiki
   verify: false # Verification code
-  placeholder: Just go go # comment box placeholder
+  placeholder: ヾﾉ≧∀≦)o快来评论一下吧! # comment box placeholder
   avatar: mm # gravatar style
   guest_info: nick,mail,link # custom comment header
   pageSize: 10 # pagination size
-  language: # language, available values: en, zh-cn
-  visitor: false # leancloud-counter-security is not supported for now. When visitor is set to be true, appid and appkey are recommended to be the same as leancloud_visitors' for counter compatibility. Article reading statistic https://valine.js.org/visitor.html
+  language: zh-cn # language, available values: en, zh-cn
+  visitor: true # leancloud-counter-security is not supported for now. When visitor is set to be true, appid and appkey are recommended to be the same as leancloud_visitors' for counter compatibility. Article reading statistic https://valine.js.org/visitor.html
   comment_count: true # if false, comment count will only be displayed in post page, not in home page
 
 # LiveRe comments system
@@ -672,22 +687,22 @@ gitment:
   lazy: false # Comments lazy loading with a button
   cleanly: false # Hide 'Powered by ...' on footer, and more
   language: # Force language, or auto switch by theme
-  github_user: # MUST HAVE, Your Github Username
-  github_repo: # MUST HAVE, The name of the repo you use to store Gitment comments
-  client_id: # MUST HAVE, Github client id for the Gitment
-  client_secret: # EITHER this or proxy_gateway, Github access secret token for the Gitment
+  github_user: miaopei # MUST HAVE, Your Github Username
+  github_repo: gitment-comments # MUST HAVE, The name of the repo you use to store Gitment comments
+  client_id: c34383649797acabe788 # MUST HAVE, Github client id for the Gitment
+  client_secret: 002bcf283d8390dfd74571042ba20fafcb36b90c # EITHER this or proxy_gateway, Github access secret token for the Gitment
   proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
   redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
 
 # Gitalk
 # Demo: https://gitalk.github.io
 gitalk:
-  enable: false
-  github_id:  # Github repo owner
-  repo:  # Repository name to store issues
-  client_id:  # Github Application Client ID
-  client_secret:  # Github Application Client Secret
-  admin_user:  # GitHub repo owner and collaborators, only these guys can initialize github issues
+  enable: true
+  github_id: miaopei # Github repo owner
+  repo: gitment-comments # Repository name to store issues
+  client_id: 8c7770a2f56149bd67f7 # Github Application Client ID
+  client_secret: 1f8bcd6210eaf36b727bcf0546a16cb68dc9012a # Github Application Client Secret
+  admin_user: miaopei # GitHub repo owner and collaborators, only these guys can initialize github issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
@@ -846,7 +861,7 @@ busuanzi_count:
   total_visitors_icon: user
   total_views: false
   total_views_icon: eye
-  post_views: true
+  post_views: false
   post_views_icon: eye
 
 # Tencent analytics ID
@@ -875,7 +890,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/theme-next/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto
@@ -1046,19 +1061,6 @@ canvas_ribbon:
   size: 300
   alpha: 0.6
   zIndex: -1
-
-# web run time
-# 这是网站开始运行的时间，展示网站运行了多长时间。
-# 格式, 2018-02-13 15:00:00. 如果个数只有一位，需要补零。
-runtime:
-  enable: true
-  year: 2018
-  month: 02
-  day: 13
-  hour: 15
-  minute: 00
-  second: 00
-
 
 #! ---------------------------------------------------------------
 #! DO NOT EDIT THE FOLLOWING SETTINGS

@@ -10,6 +10,10 @@
       </div>
     </div>
 
+  {% elif theme.gitalk.enable %}
+    <div class="comments" id="gitalk-container">
+    </div>
+
   {% elif theme.vkontakte_api.enable and theme.vkontakte_api.comments %}
     <div class="comments" id="comments">
       <div id="vk_comments"></div>
@@ -48,9 +52,6 @@
     <div class="comments" id="comments">
     </div>
 
-  {% elif theme.gitalk.enable %}
-    <div class="comments" id="gitalk-container">
-    </div>
 
   {% endif %}
 

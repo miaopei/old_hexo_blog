@@ -84,24 +84,33 @@ disqus_shortname:
 # Extensions
 ## Plugins: https://github.com/hexojs/hexo/wiki/Plugins
 ## Themes: https://github.com/hexojs/hexo/wiki/Themes
-#plugins:
-#  - hexo-generator-feed
-#  - hexo-generator-baidu-sitemap
-#  - hexo-generator-sitemap
-#  - hexo-symbols-count-time
+Plugins:
+  - hexo-generator-feed
+  - hexo-symbols-count-time
+  - hexo-generator-baidu-sitemap
+  - hexo-generator-sitemap
 
 symbols_count_time:
+  #文章内是否显示
   symbols: true
-  time: true
+  time: true   # 取消估算单篇文章阅读时间
+  # 网页底部是否显示
   total_symbols: true
-  total_time: true
+  total_time: true  # 取消估算站点总阅读时间
+  exclude_codeblock: false
 
 # Algolia Search API Key
 algolia:
   applicationID: '5HERDWLKZV'
   apiKey: '7876dff207d78e6df0721656b26ee0af'
   indexName: 'hexo-algolia'
-  
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
 theme: next
 exclude_generator:
 

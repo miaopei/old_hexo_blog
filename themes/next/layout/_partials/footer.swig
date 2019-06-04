@@ -1,4 +1,5 @@
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
 <div class="copyright">{#
 #}{% set current = date(Date.now(), "YYYY") %}{#
 #}{% if theme.footer.beian.enable %}{#
@@ -8,7 +9,7 @@
 #}<span itemprop="copyrightYear">{{ current }}</span>
   <span class="with-love" id="animate">
     <!--<i class="fa fa-{{ theme.footer.icon.name }}"></i>-->
-    <i class="fa fa-heart" aria-hidden="true"></i>
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">{{ theme.footer.copyright || author }}</span>
 
@@ -37,17 +38,18 @@
     #}{{ symbolsTimeTotal(site, theme.symbols_count_time.awl, theme.symbols_count_time.wpm, __('symbols_count_time.time_minutes')) }}{#
   #}</span>
   {% endif %}
+
 </div>
+
+{% if theme.footer.runtime.enable %}
+  {% include '../web-runtime.swig' %}
+{% endif %}
 
 <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
   本站访客数:<span id="busuanzi_value_site_uv"></span>
 </span>
 </div>
-
-{% if theme.footer.runtime.enable %}
-  {% include 'web-runtime.swig' %}
-{% endif %}
 
 <!--
 {% if theme.footer.powered.enable %}
