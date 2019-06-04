@@ -1,6 +1,7 @@
 ---
 title: hexo 使用指南
 tags: hexo
+reward: true
 toc: true
 abbrlink: 14289
 date: 2017-03-28 16:53:46

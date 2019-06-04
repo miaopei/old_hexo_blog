@@ -18,40 +18,40 @@ source from 《HTTP权威指南》
 
 ### 概述-Summary
 
-<img src="/img/http/HTTP-1.svg">
+<img src="/images/imageHttp/HTTP-1.svg">
 
 ### 报文-Message
 
-<img src="/img/http/HTTP-2.svg">
+<img src="/images/imageHttp/HTTP-2.svg">
 
 ### 连接-Connection
 
-<img src="/img/http/HTTP-3.svg">
+<img src="/images/imageHttp/HTTP-3.svg">
 
 ### 代理-Proxy
 
-<img src="/img/http/HTTP-4.svg">
+<img src="/images/imageHttp/HTTP-4.svg">
 
 ### 缓存-Cache
 
-<img src="/img/http/HTTP-5.svg">
+<img src="/images/imageHttp/HTTP-5.svg">
 
 ### 网关、隧道与中继-Gateway、Tunnel and Relay
 
-<img src="/img/http/HTTP-6.svg">
+<img src="/images/imageHttp/HTTP-6.svg">
 
 ### 识别-Identification
 
-<img src="/img/http/HTTP-7.svg">
+<img src="/images/imageHttp/HTTP-7.svg">
 
 ### 认证-Authentication
 
-<img src="/img/http/HTTP-8.svg">
+<img src="/images/imageHttp/HTTP-8.svg">
 
 ### 安全-Security
 
-<img src="/img/http/HTTP-9.svg">
+<img src="/images/imageHttp/HTTP-9.svg">
 
 ### 实体与编码-Entity and Encoding
 
-<img src="/img/http/HTTP-10.svg">
+<img src="/images/imageHttp/HTTP-10.svg">

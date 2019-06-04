@@ -18,9 +18,9 @@ $ svn co svn://localhost/测试工具 /home/testtools --username wzhnsc
 $ svn co http://localhost/test/testapp --username wzhnsc
 ```
 
-**注** ：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项。 不指定本地目录全路径，则检出到当前目录下。
-
 <!-- more -->
+
+**注** ：如果不带--password 参数传输密码的话，会提示输入密码，建议不要用明文的--password 选项。 不指定本地目录全路径，则检出到当前目录下。
 
 ## 导出（导出一个干净的不带.svn文件夹的目录树）
 

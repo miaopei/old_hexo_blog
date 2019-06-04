@@ -19,12 +19,12 @@ date: 2017-05-15 15:48:06
 * FWA产品的任一机型（此次使用的是FWA-4210）
 * SATA或者USB光驱×1
 
+<!-- more -->
+
 **软件环境：**
 
 * 带有genisoimage(旧版是mkisofs)的linux发行版（此次使用的是Ubuntu 16.04 server版）
 * Ubuntu官网通用镜像ISO文件
-
-<!-- more -->
 
 ## 2、操作过程：
 
