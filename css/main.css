@@ -1033,7 +1033,7 @@ pre .javascript .function {
   background: #fff;
   border: 2px solid #555;
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 5px;
   transition-property: background-color;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
@@ -2004,7 +2004,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7edbff;
+  background: #e2ff99;
 }
 .feed-link,
 .chat {
@@ -2258,6 +2258,14 @@ img:hover {
   50%, 70% {
     transform: scale(1.1);
   }
+}
+.gt-header a,
+.gt-comments a,
+.gt-popup a {
+  border-bottom: none;
+}
+.gt-container .gt-popup .gt-action.is--active:before {
+  top: 0.7em;
 }
 i.fa {
   font-family: FontAwesome !important;
@@ -2743,7 +2751,7 @@ body {
   width: 240px;
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
-  border-radius: initial;
+  border-radius: 5px;
 }
 @media (min-width: 1200px) {
   .container .header-inner {
@@ -2778,7 +2786,7 @@ body {
   background: #fff;
   min-height: 700px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
-  border-radius: initial;
+  border-radius: 5px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .content-wrap {
@@ -3008,7 +3016,7 @@ body {
   color: #555;
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-  border-radius: initial;
+  border-radius: 5px;
   opacity: 0;
 }
 .sidebar-inner.affix {
@@ -3140,18 +3148,18 @@ body {
   padding: initial;
   background: initial;
   box-shadow: initial;
-  border-radius: initial;
+  border-radius: 10px;
 }
 .post-block {
   padding: 40px;
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
-  border-radius: initial;
+  border-radius: 5px;
 }
 #posts > article + article .post-block {
   margin-top: 12px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-  border-radius: initial;
+  border-radius: 5px;
 }
 .comments {
   padding: 40px;
@@ -3159,7 +3167,7 @@ body {
   margin-top: 12px;
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-  border-radius: initial;
+  border-radius: 5px;
 }
 .posts-expand {
   padding-top: initial;
@@ -3178,7 +3186,7 @@ body {
   border-top: initial;
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-  border-radius: initial;
+  border-radius: 5px;
   padding: 10px 0 10px;
 }
 .pagination .prev,
@@ -3274,7 +3282,7 @@ body {
   .post-block {
     padding: 20px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-    border-radius: initial;
+    border-radius: 5px;
   }
   #posts > article + article .post-block {
     margin-top: 10px;
@@ -3304,7 +3312,7 @@ body {
     padding: 12px;
     min-height: auto;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
-    border-radius: initial;
+    border-radius: 5px;
   }
   #posts > article + article .post-block {
     margin-top: 8px;
@@ -3316,18 +3324,4 @@ body {
   .pagination {
     margin: 8px 0 0;
   }
-}
-body {
-  background: {"background":"(url(/ images / backGround . png))"};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-}
-.main-inner {
-  background: #fff;
-  opacity: 0.85;
-}
-.header-inner {
-  opacity: 0.85;
 }
