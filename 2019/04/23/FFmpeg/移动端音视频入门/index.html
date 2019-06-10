@@ -114,95 +114,95 @@
 
 
 
-  <meta name="description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
+  <meta name="description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网">
 <meta name="keywords" content="FFmpeg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频入门知识">
 <meta property="og:url" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
-<meta property="og:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
+<meta property="og:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/泛娱乐化直播架构.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/实时互动直播架构.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/CDN网络.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/nginx-trmp配置.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/FFMPEG直播命令.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/测试流媒体服务器.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/声音三要素.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音量与音调.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音色.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/人类听觉范围.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/听觉-发声范围.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频量化过程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/量化基本概念.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码率计算.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频压缩技术.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频冗余信息.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/频域掩蔽效应.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/时域掩蔽效应.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频编码过程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/常见的音频编码器.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频编码器性能对比.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC介绍.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC规格.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC规格描述.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC格式.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/AAC编码库那个好.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264基本概念.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/GOF.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/SPS与PPS.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频花屏卡顿的原因.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频都有哪些视频编码器.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264压缩技术.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264宏块划分.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/宏块划分完成.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/子块划分.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/帧分组.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/组内宏块查找.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/运动估算.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/运动矢量与补偿压缩.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/帧内预测.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/计算帧内预测残差值.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/预测模式与残差值压缩.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/DCT压缩.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/压缩后的结果.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/VLC压缩.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/CABAC压缩.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264结构图.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264编码分层.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码流基本概念一.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/码流基本概念二.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALUnit.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/切片与宏.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264切片.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/H264码流分层.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALHeader.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALType一.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NALType二.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/NAL类型介绍.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/单一NALU的RTP包.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/组合NALU的RTP包.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/分片NALU的RTP包.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/FUHeader.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/图像除了RGB还是有YUV.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV常见格式.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV420.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/YUV存储格式.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/小结.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音频小结.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/视频小结.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/后续.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识01.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识02.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/音视频知识03.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/行业痛点-01.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/行业痛点-02.png">
-<meta property="og:updated_time" content="2019-06-03T08:10:56.878Z">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/泛娱乐化直播架构.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/实时互动直播架构.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/CDN网络.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/nginx-trmp配置.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFMPEG直播命令.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/测试流媒体服务器.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/声音三要素.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音量与音调.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音色.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/人类听觉范围.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/听觉-发声范围.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频量化过程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/量化基本概念.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/码率计算.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频压缩技术.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频冗余信息.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/频域掩蔽效应.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/时域掩蔽效应.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频编码过程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/常见的音频编码器.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频编码器性能对比.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/AAC介绍.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/AAC规格.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/AAC规格描述.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/AAC格式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/AAC编码库那个好.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264基本概念.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/GOF.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/SPS与PPS.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/视频花屏卡顿的原因.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/视频都有哪些视频编码器.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264压缩技术.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264宏块划分.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/宏块划分完成.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/子块划分.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/帧分组.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/组内宏块查找.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/运动估算.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/运动矢量与补偿压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/帧内预测.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/计算帧内预测残差值.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/预测模式与残差值压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/DCT压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/压缩后的结果.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/VLC压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/CABAC压缩.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264结构图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264编码分层.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/码流基本概念一.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/码流基本概念二.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/NALUnit.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/切片与宏.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264切片.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/H264码流分层.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/NALHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/NALType一.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/NALType二.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/NAL类型介绍.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/单一NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/组合NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/分片NALU的RTP包.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FUHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/图像除了RGB还是有YUV.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/YUV.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/YUV常见格式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/YUV420.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/YUV存储格式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/小结.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音频小结.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/视频小结.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/后续.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音视频知识01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音视频知识02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音视频知识03.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/行业痛点-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/行业痛点-02.png">
+<meta property="og:updated_time" content="2019-06-05T04:03:57.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音视频入门知识">
-<meta name="twitter:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网   泛娱乐化直播架构  信令服务器：创建房间、聊天、礼物。。。。 美女主播 –信令–&amp;gt; 信令服务器 信令服务器–rtmp流地址–&amp;gt;美女主播 美女主播 –推流–&amp;gt; 流媒体云CDN 观众 –信令–&amp;gt; 信令服务器：将">
-<meta name="twitter:image" content="http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/_asset/泛娱乐化直播架构.png">
+<meta name="twitter:description" content="1. 万人直播架构讲解直播产品的种类：  泛娱乐化直播 花椒、映客等娱乐直播，还有斗鱼、熊猫等游戏直播  实时互动直播 音视频会议、教育直播等，像 思科、全时、声网">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/泛娱乐化直播架构.png">
 
 
 
@@ -533,7 +533,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+                <time title="修改时间：2019-06-05 12:03:57" itemprop="dateModified" datetime="2019-06-05T12:03:57+08:00">2019-06-05</time>
               
             
           </span>
@@ -622,6 +622,8 @@
 <p>音视频会议、教育直播等，像 思科、全时、声网</p>
 </li>
 </ul>
+<a id="more"></a>
+
 <p>泛娱乐化直播架构</p>
 <blockquote>
 <p>信令服务器：创建房间、聊天、礼物。。。。</p>
@@ -632,10 +634,6 @@
 <p>信令服务器–rmtp流地址–&gt; 观众</p>
 <p>观众 &lt;–拉流–&gt; 流媒体云CDN</p>
 </blockquote>
-<a id="more"></a>
-
-
-
 <p>泛娱乐化直播架构</p>
 <p>基于TCP协议实现</p>
 <ol>
@@ -644,7 +642,7 @@
 <li>获取流媒体云地址</li>
 <li>拉流</li>
 </ol>
-<img src="_asset/泛娱乐化直播架构.png">
+<img src="/images/imageFFmpeg/泛娱乐化直播架构.png">
 
 <p>实时互动直播架构</p>
 <p>基于UDP实现</p>
@@ -656,7 +654,7 @@
 <li>媒体服务器: 将RTP协议的数据转换成RTMP协议的数据</li>
 <li>CDN网络: 根据用户需求进行拉流</li>
 </ol>
-<img src="_asset/实时互动直播架构.png">
+<img src="/images/imageFFmpeg/实时互动直播架构.png">
 
 <h2 id="2-CDN网络介绍"><a href="#2-CDN网络介绍" class="headerlink" title="2. CDN网络介绍"></a>2. CDN网络介绍</h2><blockquote>
 <p>CDN网络是为了解决什么问题而出现的？</p>
@@ -671,35 +669,35 @@
 <p>二级节点：主干网节点，主要用于缓存、减转源站压力</p>
 <p>源站：CP(内容提供方)将内容放到源站</p>
 <p>查找顺序：边缘结点-&gt;二级节点-&gt;源站</p>
-<img src="_asset/CDN网络.png">
+<img src="/images/imageFFmpeg/CDN网络.png">
 
 <h2 id="3-亲手搭建一套简单的直播系统"><a href="#3-亲手搭建一套简单的直播系统" class="headerlink" title="3. 亲手搭建一套简单的直播系统"></a>3. 亲手搭建一套简单的直播系统</h2><p>安装nginx 配置rtmp</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew install nginx-full --with-rtmp-module</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">(这一步卡了我好久，安装nginx提示一直找不到nginx-full,网上相关的教程没更新，原因在于nginx仓库已搬迁)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> brew tap denji/nginx</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nginx -s reload 重启</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nginx  启动</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf</span></span><br></pre></td></tr></table></figure>
 
-<img src="_asset/nginx-trmp配置.png">
+<img src="/images/imageFFmpeg/nginx-trmp配置.png">
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 推流</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ffmpeg -re -i out.mp4 -c copy -f flv rtmp://server/live/streamName</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 拉流</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ffmpeg -i rtmp://server/live/streamName -c copy dump.flv</span></span><br></pre></td></tr></table></figure>
 
-<img src="_asset/FFMPEG直播命令.png">
+<img src="/images/imageFFmpeg/FFMPEG直播命令.png">
 
-<img src="_asset/测试流媒体服务器.png">
+<img src="/images/imageFFmpeg/测试流媒体服务器.png">
 
-<h2 id="4-音频基础知识"><a href="#4-音频基础知识" class="headerlink" title="4. 音频基础知识"></a>4. 音频基础知识</h2><img src="_asset/声音三要素.png">
+<h2 id="4-音频基础知识"><a href="#4-音频基础知识" class="headerlink" title="4. 音频基础知识"></a>4. 音频基础知识</h2><img src="/images/imageFFmpeg/声音三要素.png">
 
 <p>图一音量：甲乙的振动频率相同、振幅不同。图二音调：甲乙振幅相同、频率不同</p>
-<img src="_asset/音量与音调.png">
+<img src="/images/imageFFmpeg/音量与音调.png">
 
-<img src="_asset/音色.png">
+<img src="/images/imageFFmpeg/音色.png">
 
-<img src="_asset/人类听觉范围.png">
+<img src="/images/imageFFmpeg/人类听觉范围.png">
 
-<img src="_asset/听觉-发声范围.png">
+<img src="/images/imageFFmpeg/听觉-发声范围.png">
 
 <h2 id="5-音频的量化与编码"><a href="#5-音频的量化与编码" class="headerlink" title="5. 音频的量化与编码"></a>5. 音频的量化与编码</h2><p>模拟信号进行采样，采样时分频率的从模拟信号获取数据波形值，采样后，进行数据量化，量化后进行编码，把采样的十进制转化为计算机的二进制，也就是数字信号。</p>
 <p>模拟数据——》采样——》量化——》编码——》数字信号</p>
-<img src="_asset/音频量化过程.png">
+<img src="/images/imageFFmpeg/音频量化过程.png">
 
 <p>采样大小决定了音频的振幅的高度，采样时指一个采样用多少bit存放，常用的是16bit</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> bit：位     一个二进制数据0或1，是1bit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> byte：字节  存储空间的基本计量单位，如：MySQL中定义 VARCHAR(45) 即是指 45个字节；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1 Byte = 8 Bit = 1 字节</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2^8 = 256, 2^16 = 65535</span></span><br></pre></td></tr></table></figure>
@@ -709,13 +707,13 @@
 <blockquote>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMzUxNjky" title="https://www.zhihu.com/question/20351692">什么是音频的采样率？采样率和音质有没有关系？<i class="fa fa-external-link"></i></span> - 知乎</p>
 </blockquote>
-<img src="_asset/量化基本概念.png">
+<img src="/images/imageFFmpeg/量化基本概念.png">
 
 <p>人能听到的声音范围是20hz-2whz</p>
 <p>码率 = 采样率 x 采样大小 x 声道数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 宽带速率的单位用 bps(或b/s)表示</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1 B = 8 b   1 B/s = 8 b/s</span></span><br></pre></td></tr></table></figure>
 
-<img src="_asset/码率计算.png">
+<img src="/images/imageFFmpeg/码率计算.png">
 
 <p>原始的wav文件，大小是1411.2Kb/s</p>
 <p>做完aaclc的编码，大小是128Kb/s</p>
@@ -728,7 +726,7 @@
 <p>时域掩蔽：在时间上相邻的声音之间也有掩蔽现象，主要原因是人的大脑处理信息需要花费时间。</p>
 <p>同步掩蔽效应和不同频率声音的频率和相对竟是有关，而时间掩蔽则仅仅和时间有关。如果两个声音在时间上特别接近，分辨会有困难（如两个声音音量相差较大且两个声音间隔时间低于5毫秒，则其中弱的那个声音会听不到）。</p>
 <p>2、哈夫曼无损编码</p>
-<img src="_asset/音频压缩技术.png">
+<img src="/images/imageFFmpeg/音频压缩技术.png">
 
 <p>音频压缩：频域，时域。</p>
 <ul>
@@ -737,13 +735,13 @@
 <li><p>时域: 滤掉某个长时间说话中的低音</p>
 </li>
 </ul>
-<img src="_asset/音频冗余信息.png">
+<img src="/images/imageFFmpeg/音频冗余信息.png">
 
-<img src="_asset/频域掩蔽效应.png">
+<img src="/images/imageFFmpeg/频域掩蔽效应.png">
 
-<img src="_asset/时域掩蔽效应.png">
+<img src="/images/imageFFmpeg/时域掩蔽效应.png">
 
-<img src="_asset/音频编码过程.png">
+<img src="/images/imageFFmpeg/音频编码过程.png">
 
 <h2 id="7-音频编解码器选型"><a href="#7-音频编解码器选型" class="headerlink" title="7. 音频编解码器选型"></a>7. 音频编解码器选型</h2><p>网上测评结果：音频编解码器 opus &gt; aac &gt; vorbis </p>
 <p>音频编解码器：</p>
@@ -756,37 +754,37 @@
 <p>2：AAC，经常用于泛娱乐化直播，因为其对实时性要求不是很高但是对音质要求可能较高，所以，选用AAC，当然也可以选用opus的耳模型</p>
 <p>3：sppex，最大的特点就是不仅可以编码音频，还可以对音频进行降噪，优化，尽可能的获取原音频数据</p>
 <p>4：G.711(722)，主要用于音视频会议，为了和固话进行相应的融合</p>
-<img src="_asset/常见的音频编码器.png">
+<img src="/images/imageFFmpeg/常见的音频编码器.png">
 
-<img src="_asset/音频编码器性能对比.png">
+<img src="/images/imageFFmpeg/音频编码器性能对比.png">
 
 <h2 id="8-AAC-讲解"><a href="#8-AAC-讲解" class="headerlink" title="8. AAC 讲解"></a>8. AAC 讲解</h2><p>cdn，rtmp  支持 aac</p>
 <p>AAC 产生的目的是取代 MP3 格式：</p>
 <p>AAC 相对优点：压缩率高，损耗低</p>
-<img src="_asset/AAC介绍.png">
+<img src="/images/imageFFmpeg/AAC介绍.png">
 
-<img src="_asset/AAC规格.png">
+<img src="/images/imageFFmpeg/AAC规格.png">
 
 <p>aac 三种类型<br>aac<br>aacv1: aac+sbr(频率复用-高频部分采样率高，低频部分采样率低)<br>aacv2: aac+sbr+ps(声道关联，一个声道采集全部，一个声道只采集相对不同的声音)</p>
 <p>AAC规格描述（AAC、AAC HE、AAC HE V2）–&gt; AAC+SBR=AAC HE V1, AAC + SBR + PS = AAC HE V2</p>
-<img src="_asset/AAC规格描述.png">
+<img src="/images/imageFFmpeg/AAC规格描述.png">
 
 <p>AAC格式：</p>
 <p>1、ADIF(Audio Data Interchange Format):只能从头开始解码，常用在磁盘文件中。</p>
 <p>2、ADTS(Audio Data Transport Stream)：这种格式每一帧都有一个同步字，可以在音频流的任何位置开始解码，它似于数据流格式（缺点：文件比ADIF大，优点:每个帧都可以被单独解码播放）</p>
-<img src="_asset/AAC格式.png">
+<img src="/images/imageFFmpeg/AAC格式.png">
 
 <p>aac 编码库 ffmpeg AAC，libfdk AAC</p>
-<img src="_asset/AAC编码库那个好.png">
+<img src="/images/imageFFmpeg/AAC编码库那个好.png">
 
 <h2 id="9-视频基本知识"><a href="#9-视频基本知识" class="headerlink" title="9. 视频基本知识"></a>9. 视频基本知识</h2><p>I帧：关键帧，采用帧内压缩技术</p>
 <p>P帧：向前参考帧，压缩时只参考前一个帧，属于帧间压缩技术</p>
 <p>B帧：双向参考帧，压缩时即参考前一帧也参考后一帧，属于帧间压缩技术</p>
 <p>一般实时互动都不会使用 B 帧</p>
-<img src="_asset/H264基本概念.png">
+<img src="/images/imageFFmpeg/H264基本概念.png">
 
 <p>GOF(group of frame): 一组帧，可以将一段时间内画面变化不大的所有帧划为一组帧</p>
-<img src="_asset/GOF.png">
+<img src="/images/imageFFmpeg/GOF.png">
 
 <p>SPS与PPS（这两种都划为 I 帧）：</p>
 <ul>
@@ -797,18 +795,18 @@
 <p>图像参数集，存放熵编码模式选择标识、片组数目、初始量化参数和去方块滤波系统数调整标识等</p>
 </li>
 </ul>
-<img src="_asset/SPS与PPS.png">
+<img src="/images/imageFFmpeg/SPS与PPS.png">
 
 <p>视频花屏/卡顿原因：</p>
 <p>1、如果 GOP 分组中的 P 帧丢失会造成解码端的图像发生错误（于是形成了花屏）。</p>
 <p>2、为了避免花屏问题的发生，一般如果发现 P 帧或者I帧丢失，就不显示本 GOP 内的所有帧，直到下一个 I 帧来后重新刷新图像（因为丢了一组数据，所以形成了卡顿）</p>
-<img src="_asset/视频花屏卡顿的原因.png">
+<img src="/images/imageFFmpeg/视频花屏卡顿的原因.png">
 
 <p>视频编码器：</p>
 <p>1、x264/x265。</p>
 <p>2、openH264(支持 SVC（分层传输） 技术)。</p>
 <p>3、vp8/vp9</p>
-<img src="_asset/视频都有哪些视频编码器.png">
+<img src="/images/imageFFmpeg/视频都有哪些视频编码器.png">
 
 <h2 id="10-H264-宏块的划分与帧分组"><a href="#10-H264-宏块的划分与帧分组" class="headerlink" title="10. H264 宏块的划分与帧分组"></a>10. H264 宏块的划分与帧分组</h2><p>H264压缩技术</p>
 <ol>
@@ -817,19 +815,19 @@
 <li>整数离散余弦变换(DCT)，将空间上的相关性变为频域上无关的数据然后进行量化</li>
 <li>CABAC压缩，也叫上下文适应无损压缩</li>
 </ol>
-<img src="_asset/H264压缩技术.png">
+<img src="/images/imageFFmpeg/H264压缩技术.png">
 
 <p>宏块的划分与分组：</p>
 <p>H264宏块划分与子块划分：宏块里面可以再包含很多子块</p>
-<img src="_asset/H264宏块划分.png">
+<img src="/images/imageFFmpeg/H264宏块划分.png">
 
-<img src="_asset/宏块划分完成.png">
+<img src="/images/imageFFmpeg/宏块划分完成.png">
 
 <p>子块划分：</p>
-<img src="_asset/子块划分.png">
+<img src="/images/imageFFmpeg/子块划分.png">
 
 <p>帧分组(一组连续的图片，一幅图片为一帧)</p>
-<img src="_asset/帧分组.png">
+<img src="/images/imageFFmpeg/帧分组.png">
 
 <h2 id="11-视频压缩技术详解"><a href="#11-视频压缩技术详解" class="headerlink" title="11. 视频压缩技术详解"></a>11. 视频压缩技术详解</h2><ul>
 <li><p>帧间预测: </p>
@@ -840,25 +838,25 @@
 </li>
 </ul>
 <h3 id="11-1-帧间预测"><a href="#11-1-帧间预测" class="headerlink" title="11.1 帧间预测"></a>11.1 帧间预测</h3><p>组内宏块查找：</p>
-<img src="_asset/组内宏块查找.png">
+<img src="/images/imageFFmpeg/组内宏块查找.png">
 
-<img src="_asset/运动估算.png">
+<img src="/images/imageFFmpeg/运动估算.png">
 
-<img src="_asset/运动矢量与补偿压缩.png">
+<img src="/images/imageFFmpeg/运动矢量与补偿压缩.png">
 
-<h3 id="11-2-帧内预测"><a href="#11-2-帧内预测" class="headerlink" title="11.2 帧内预测"></a>11.2 帧内预测</h3><img src="_asset/帧内预测.png">
+<h3 id="11-2-帧内预测"><a href="#11-2-帧内预测" class="headerlink" title="11.2 帧内预测"></a>11.2 帧内预测</h3><img src="/images/imageFFmpeg/帧内预测.png">
 
-<img src="_asset/计算帧内预测残差值.png">
+<img src="/images/imageFFmpeg/计算帧内预测残差值.png">
 
-<img src="_asset/预测模式与残差值压缩.png">
+<img src="/images/imageFFmpeg/预测模式与残差值压缩.png">
 
-<h3 id="11-3-DCT-压缩"><a href="#11-3-DCT-压缩" class="headerlink" title="11.3 DCT 压缩"></a>11.3 DCT 压缩</h3><img src="_asset/DCT压缩.png">
+<h3 id="11-3-DCT-压缩"><a href="#11-3-DCT-压缩" class="headerlink" title="11.3 DCT 压缩"></a>11.3 DCT 压缩</h3><img src="/images/imageFFmpeg/DCT压缩.png">
 
-<img src="_asset/压缩后的结果.png">
+<img src="/images/imageFFmpeg/压缩后的结果.png">
 
-<h3 id="11-4-VLC-压缩"><a href="#11-4-VLC-压缩" class="headerlink" title="11.4 VLC 压缩"></a>11.4 VLC 压缩</h3><img src="_asset/VLC压缩.png">
+<h3 id="11-4-VLC-压缩"><a href="#11-4-VLC-压缩" class="headerlink" title="11.4 VLC 压缩"></a>11.4 VLC 压缩</h3><img src="/images/imageFFmpeg/VLC压缩.png">
 
-<h3 id="11-5-CABAC-压缩"><a href="#11-5-CABAC-压缩" class="headerlink" title="11.5 CABAC 压缩"></a>11.5 CABAC 压缩</h3><img src="_asset/CABAC压缩.png">
+<h3 id="11-5-CABAC-压缩"><a href="#11-5-CABAC-压缩" class="headerlink" title="11.5 CABAC 压缩"></a>11.5 CABAC 压缩</h3><img src="/images/imageFFmpeg/CABAC压缩.png">
 
 <h2 id="12-H264-结构与码流"><a href="#12-H264-结构与码流" class="headerlink" title="12. H264 结构与码流"></a>12. H264 结构与码流</h2><p>H264编码分层：</p>
 <p>1、NAL层（Network Abstraction Layer）, 视频数据网络抽象层。</p>
@@ -868,17 +866,17 @@
 <p>2、RBSP（Raw Byte Sequence Payload,SODB+trailing bits），算法是在SODB最后一位补1，不按字节对齐则补0。</p>
 <p>3、EBSP(Encapsulate Byte Sequence Payload)，需到两个连续的0x00就增加一个0x03。</p>
 <p>4、NALU，NAL Header(1B)+EBSP</p>
-<img src="_asset/H264结构图.png">
+<img src="/images/imageFFmpeg/H264结构图.png">
 
 <p>以太网最大传输字节 1500 字节。</p>
-<img src="_asset/H264编码分层.png">
+<img src="/images/imageFFmpeg/H264编码分层.png">
 
-<img src="_asset/码流基本概念一.png">
+<img src="/images/imageFFmpeg/码流基本概念一.png">
 
-<img src="_asset/码流基本概念二.png">
+<img src="/images/imageFFmpeg/码流基本概念二.png">
 
 <p>一个H264帧最少要有一个切片(NAL Unit)</p>
-<img src="_asset/NALUnit.png">
+<img src="/images/imageFFmpeg/NALUnit.png">
 
 <p>切片与宏块的关系：</p>
 <ul>
@@ -886,55 +884,55 @@
 <li>每个切片数据又包括了很多宏块，</li>
 <li>每个宏块又包括了宏块的类型、宏块的预测、编码的残渣数据等</li>
 </ul>
-<img src="_asset/切片与宏.png">
+<img src="/images/imageFFmpeg/切片与宏.png">
 
-<img src="_asset/H264切片.png">
+<img src="/images/imageFFmpeg/H264切片.png">
 
-<img src="_asset/H264码流分层.png">
+<img src="/images/imageFFmpeg/H264码流分层.png">
 
-<h2 id="13-NAL-单元详解"><a href="#13-NAL-单元详解" class="headerlink" title="13. NAL 单元详解"></a>13. NAL 单元详解</h2><img src="_asset/NALHeader.png">
+<h2 id="13-NAL-单元详解"><a href="#13-NAL-单元详解" class="headerlink" title="13. NAL 单元详解"></a>13. NAL 单元详解</h2><img src="/images/imageFFmpeg/NALHeader.png">
 
 <p>5 - 关键帧</p>
 <p>7- SPS 序列参数集</p>
 <p>8- PPS 图像参数集</p>
-<img src="_asset/NALType一.png">
+<img src="/images/imageFFmpeg/NALType一.png">
 
-<img src="_asset/NALType二.png">
+<img src="/images/imageFFmpeg/NALType二.png">
 
-<img src="_asset/NAL类型介绍.png">
+<img src="/images/imageFFmpeg/NAL类型介绍.png">
 
-<img src="_asset/单一NALU的RTP包.png">
+<img src="/images/imageFFmpeg/单一NALU的RTP包.png">
 
-<img src="_asset/组合NALU的RTP包.png">
+<img src="/images/imageFFmpeg/组合NALU的RTP包.png">
 
 <p>如：</p>
 <p>P帧B帧很多都是单一类型。</p>
 <p>SPS和PPS这两个NAL单元一般放在同一个RTP包里头</p>
-<img src="_asset/分片NALU的RTP包.png">
+<img src="/images/imageFFmpeg/分片NALU的RTP包.png">
 
-<img src="_asset/FUHeader.png">
+<img src="/images/imageFFmpeg/FUHeader.png">
 
-<h2 id="14-YUV-讲解"><a href="#14-YUV-讲解" class="headerlink" title="14. YUV 讲解"></a>14. YUV 讲解</h2><img src="_asset/图像除了RGB还是有YUV.png">
+<h2 id="14-YUV-讲解"><a href="#14-YUV-讲解" class="headerlink" title="14. YUV 讲解"></a>14. YUV 讲解</h2><img src="/images/imageFFmpeg/图像除了RGB还是有YUV.png">
 
-<img src="_asset/YUV.png">
+<img src="/images/imageFFmpeg/YUV.png">
 
 <p>YUV常见格式：YUV4:2:0、YUV4:2:2、YUV4:4:4</p>
 <p>RGB8:8:8</p>
-<img src="_asset/YUV常见格式.png">
+<img src="/images/imageFFmpeg/YUV常见格式.png">
 
-<img src="_asset/YUV420.png">
+<img src="/images/imageFFmpeg/YUV420.png">
 
 <ul>
 <li>UV 混存则为packed(打包存储)，</li>
 <li>UV分开存则为planar(平面存储) </li>
 </ul>
-<img src="_asset/YUV存储格式.png">
+<img src="/images/imageFFmpeg/YUV存储格式.png">
 
-<h2 id="15-总结"><a href="#15-总结" class="headerlink" title="15. 总结"></a>15. 总结</h2><img src="_asset/小结.png">
+<h2 id="15-总结"><a href="#15-总结" class="headerlink" title="15. 总结"></a>15. 总结</h2><img src="/images/imageFFmpeg/小结.png">
 
-<img src="_asset/音频小结.png">
+<img src="/images/imageFFmpeg/音频小结.png">
 
-<img src="_asset/视频小结.png">
+<img src="/images/imageFFmpeg/视频小结.png">
 
 <p>rtmp 实时消息传输: tcp/ip 应用层协议  推送/直播  基本数据单元为消息</p>
 <p>1B 消息类型  2B 长度  3B 时间 4B  流id 消息体</p>
@@ -966,17 +964,17 @@
 <p>码率：sodb 原始比特流 / rbsp sodb最后补1 / ebsp 起始码增加一个起始位0x03 /  nalu nal+ebsp</p>
 <p>nal unit = nalu 头部 + 一个切片（头/数据） 切片 </p>
 <p>yuv格式：4：4:4/4:4:2/4：2:0 （平坦编码 /半平坦编码）</p>
-<img src="_asset/后续.png">
+<img src="/images/imageFFmpeg/后续.png">
 
-<img src="_asset/音视频知识01.png">
+<img src="/images/imageFFmpeg/音视频知识01.png">
 
-<img src="_asset/音视频知识02.png">
+<img src="/images/imageFFmpeg/音视频知识02.png">
 
-<img src="_asset/音视频知识03.png">
+<img src="/images/imageFFmpeg/音视频知识03.png">
 
-<img src="_asset/行业痛点-01.png">
+<img src="/images/imageFFmpeg/行业痛点-01.png">
 
-<img src="_asset/行业痛点-02.png">
+<img src="/images/imageFFmpeg/行业痛点-02.png">
 
 
 
@@ -1139,7 +1137,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1170,7 +1168,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1223,7 +1227,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1332,7 +1340,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">223k</span>
+    <span title="站点总字数">497k</span>
   
 
   
@@ -1343,7 +1351,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">3:23</span>
+    <span title="站点阅读时长">7:31</span>
   
 
 </div>

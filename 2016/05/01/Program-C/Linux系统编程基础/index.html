@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Linux Note C 语言之解析局部变量返回一般的来说，函数是可以返回局部变量的。 局部变量的作用域只在函数内部，在函数返回后，局部变量的内存已经释放了。因此，如果函数返回的是局部变量的值，不涉及地址，程序不会出错。但是如果返回的是局部变量的地址(指针)的话，程序运行后会出错。因为函数只是把指针复制后返回了，但是指针指向的内容已经被释放了，这样指针指向的内容就是不可预料的内容，调用就会出错。">
+<meta name="keywords" content="Program-C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统编程">
+<meta property="og:url" content="http://miaopei.github.io/2016/05/01/Program-C/Linux系统编程基础/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="Linux Note C 语言之解析局部变量返回一般的来说，函数是可以返回局部变量的。 局部变量的作用域只在函数内部，在函数返回后，局部变量的内存已经释放了。因此，如果函数返回的是局部变量的值，不涉及地址，程序不会出错。但是如果返回的是局部变量的地址(指针)的话，程序运行后会出错。因为函数只是把指针复制后返回了，但是指针指向的内容已经被释放了，这样指针指向的内容就是不可预料的内容，调用就会出错。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/vim.gif">
+<meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/数据段.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/系统api与函数关系.png">
+<meta property="og:updated_time" content="2019-06-10T08:15:45.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux系统编程">
+<meta name="twitter:description" content="Linux Note C 语言之解析局部变量返回一般的来说，函数是可以返回局部变量的。 局部变量的作用域只在函数内部，在函数返回后，局部变量的内存已经释放了。因此，如果函数返回的是局部变量的值，不涉及地址，程序不会出错。但是如果返回的是局部变量的地址(指针)的话，程序运行后会出错。因为函数只是把指针复制后返回了，但是指针指向的内容已经被释放了，这样指针指向的内容就是不可预料的内容，调用就会出错。">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageProgramC/vim.gif">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2016/05/01/Program-C/Linux系统编程基础/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux系统编程 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2016/05/01/Program-C/Linux系统编程基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Linux系统编程
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-05-01 10:14:50" itemprop="dateCreated datePublished" datetime="2016-05-01T10:14:50+08:00">2016-05-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 16:15:45" itemprop="dateModified" datetime="2019-06-10T16:15:45+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Program-C/" itemprop="url" rel="index"><span itemprop="name">Program-C</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Linux-Note"><a href="#Linux-Note" class="headerlink" title="Linux Note"></a>Linux Note</h1><blockquote>
+<h3 id="C-语言之解析局部变量返回"><a href="#C-语言之解析局部变量返回" class="headerlink" title="C 语言之解析局部变量返回"></a>C 语言之解析局部变量返回</h3><p>一般的来说，函数是可以返回局部变量的。 局部变量的作用域只在函数内部，在函数返回后，局部变量的内存已经释放了。因此，如果函数返回的是局部变量的值，不涉及地址，程序不会出错。但是如果返回的是局部变量的地址(指针)的话，程序运行后会出错。因为函数只是把指针复制后返回了，但是指针指向的内容已经被释放了，这样指针指向的内容就是不可预料的内容，调用就会出错。</p>
+<p>准确的来说，<strong>函数不能通过返回指向栈内存的指针(注意这里指的是栈，返回指向堆内存的指针是可以的)</strong>。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="1-Linux-基础命令"><a href="#1-Linux-基础命令" class="headerlink" title="1. Linux 基础命令"></a>1. Linux 基础命令</h2><blockquote>
+<p><strong>stat命令</strong>用于显示文件的状态信息。stat命令的输出信息比 <span class="exturl" data-url="aHR0cDovL21hbi5saW51eGRlLm5ldC9scw==" title="http://man.linuxde.net/ls">ls<i class="fa fa-external-link"></i></span> 命令的输出信息要更详细。</p>
+</blockquote>
+<h3 id="1-0-创建用户"><a href="#1-0-创建用户" class="headerlink" title="1.0 创建用户"></a>1.0 创建用户</h3><p><strong>创建用户命令两条</strong>：</p>
+<ul>
+<li><p>adduser</p>
+</li>
+<li><p>useradd</p>
+</li>
+</ul>
+<p><strong>用户删除命令</strong>：</p>
+<ul>
+<li>userdel</li>
+</ul>
+<p><strong>两个用户创建命令之间的区别</strong>：</p>
+<ul>
+<li><p>adduser： 会自动为创建的用户指定主目录、系统shell版本，会在创建时输入用户密码。</p>
+</li>
+<li><p>useradd：需要使用参数选项指定上述基本设置，如果不使用任何参数，则创建的用户无密码、无主目录、没有指定shell版本。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 adduser</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> adduser apple</span></span><br><span class="line">正在添加用户"apple"...</span><br><span class="line">正在添加新组"apple" (1007)...</span><br><span class="line">正在添加新用户"apple" (1007) 到组"apple"...</span><br><span class="line">创建主目录"/home/apple"...</span><br><span class="line">正在从"/etc/skel"复制文件...</span><br><span class="line">输入新的 UNIX 密码： </span><br><span class="line">重新输入新的 UNIX 密码： </span><br><span class="line">passwd：已成功更新密码</span><br><span class="line">正在改变 apple 的用户信息</span><br><span class="line">请输入新值，或直接敲回车键以使用默认值</span><br><span class="line">        全名 []: </span><br><span class="line">        房间号码 []: </span><br><span class="line">        工作电话 []: </span><br><span class="line">        家庭电话 []: </span><br><span class="line">        其它 []: </span><br><span class="line">这些信息是否正确？ [Y/n] y</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这样在创建用户名时，就创建了用户的主目录以及密码。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认情况下：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> adduser在创建用户时会主动调用  /etc/adduser.conf；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在创建用户主目录时默认在/home下，而且创建为 /home/用户名   </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果主目录已经存在，就不再创建，但是此主目录虽然作为新用户的主目录，而且默认登录时会进入这个目录下，但是这个目录并不是属于新用户，当使用userdel删除新用户时，并不会删除这个主目录，因为这个主目录在创建前已经存在且并不属于这个用户。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 为用户指定shell版本为：/bin/bash</span></span><br></pre></td></tr></table></figure>
+
+<p>因此 adduser 常用参数选项为：</p>
+<ul>
+<li><p><code>--home</code>：  指定创建主目录的路径，默认是在/home目录下创建用户名同名的目录，这里可以指定；如果主目录同名目录存在，则不再创建，仅在登录时进入主目录。</p>
+</li>
+<li><p><code>--quiet</code>：  即只打印警告和错误信息，忽略其他信息。</p>
+</li>
+<li><p><code>--debug</code>：  定位错误信息。</p>
+</li>
+<li><p><code>--conf</code>：   在创建用户时使用指定的configuration文件。</p>
+</li>
+<li><p><code>--force-badname</code>：  默认在创建用户时会进行/etc/adduser.conf中的正则表达式检查用户名是否合法，如果想使用弱检查，则使用这个选项，如果不想检查，可以将/etc/adduser.conf中相关选项屏蔽。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 useradd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意： 在使用useradd命令创建新用户时，不会为用户创建主目录，不会为用户指定shell版本，不会为用户创建密码。</span></span><br></pre></td></tr></table></figure>
+
+<p>为用户指定参数的 useradd 命令，常用命令行选项：</p>
+<ul>
+<li><p><code>-d</code>：   指定用户的主目录</p>
+</li>
+<li><p><code>-m</code>：   如果存在不再创建，但是此目录并不属于新创建用户；如果主目录不存在，则强制创建； -m和-d一块使用。</p>
+</li>
+<li><p><code>-s</code>：   指定用户登录时的shell版本</p>
+</li>
+<li><p><code>-M</code>：   不创建主目录</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 解释：   </span></span><br><span class="line"><span class="meta">#</span><span class="bash">  -d   “/home/tt<span class="string">" ：就是指定/home/tt为主目录</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">  -m   就是如果/home/tt不存在就强制创建</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  -s   就是指定shell版本           </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo  useradd  -d  <span class="string">"/home/tt"</span>  -m   -s <span class="string">"/bin/bash"</span>   tt</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 tt 密码：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo passwd tt</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>删除用户命令</strong></p>
+<ul>
+<li><p>userdel</p>
+</li>
+<li><p>只删除用户：</p>
+<ul>
+<li><code>sudo   userdel   用户名</code></li>
+</ul>
+</li>
+<li><p>连同用户主目录一块删除：</p>
+<ul>
+<li><code>sudo  userdel   -r   用户名</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>相关文件</strong>：</p>
+<ul>
+<li>/etc/passwd - 使 用 者 帐 号 资 讯，可以查看用户信息</li>
+<li>/etc/shadow - 使 用 者 帐 号 资 讯 加 密</li>
+<li>/etc/group - 群 组 资 讯</li>
+<li>/etc/default/useradd - 定 义 资 讯</li>
+<li>/etc/login.defs - 系 统 广 义 设 定</li>
+<li>/etc/skel - 内 含 定 义 档 的 目 录</li>
+</ul>
+<p><strong>为组用户增加 root 权限</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改 /etc/sudoers 文件，找到下面一行，在 root 下面添加一行，如下所示：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Allow root to run any commands anywhere</span></span></span><br><span class="line">root    ALL=(ALL)     ALL</span><br><span class="line">tommy   ALL=(ALL)     ALL</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改完毕，现在可以用 tommy 帐号登录，然后用命令 sudo – ，即可获得 root 权限进行操作。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-ln-软硬链接"><a href="#1-1-ln-软硬链接" class="headerlink" title="1.1 ln 软硬链接"></a>1.1 ln 软硬链接</h3><p><strong>硬链接</strong></p>
+<p>硬链接说白了是一个指针，指向文件索引节点，系统并不为它重新分配inode。可以用: ln 命令来建立硬链接。</p>
+<p>尽管硬链接节省空间，也是Linux系统整合文件系统的传统方式，但是存在一下不足之处：</p>
+<ul>
+<li><p>（1）不可以在不同文件系统的文件间建立链接</p>
+</li>
+<li><p>（2）只有超级用户才可以为目录创建硬链接。</p>
+</li>
+</ul>
+<p><strong>软链接（符号链接）</strong></p>
+<p>软链接克服了硬链接的不足，没有任何文件系统的限制，任何用户可以创建指向目录的符号链接。因而现在更为广泛使用，它具有更大的灵活性，甚至可以跨越不同机器、不同网络对文件进行链接。<br>建立软链接，只要在 ln 后面加上选项  –s</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ln -s abc cde 	<span class="comment"># 建立 abc 的软连接</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ln abc cde 		<span class="comment"># 建立 abc 的硬连接，</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>删除链接</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm -rf symbolic_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> unlink symbolic_name</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-find-grep-xargs"><a href="#1-2-find-grep-xargs" class="headerlink" title="1.2 find grep xargs"></a>1.2 find grep xargs</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 列出当前目录及子目录下所有文件和文件夹</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find .</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在/home目录下查找以.txt结尾的文件名 但忽略大小写</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find /home -iname <span class="string">"*.txt"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 当前目录及子目录下查找所有以 .txt 和 .pdf 结尾的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . \( -name <span class="string">"*.txt"</span> -o -name <span class="string">"*.pdf"</span> \)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -name <span class="string">"*.txt"</span> -o -name <span class="string">"*.pdf"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 匹配文件路径或者文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find /usr/ -path <span class="string">"*local*"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 基于正则表达式匹配文件路径</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -regex <span class="string">".*\(\.txt\|\.pdf\)$"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 同上，但忽略大小写</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -iregex <span class="string">".*\(\.txt\|\.pdf\)$"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出/home下 不是 以 .txt 结尾的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find /home ! -name <span class="string">"*.txt"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据文件类型进行搜索</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 类型参数列表：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  f 普通文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  l 符号连接</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  d 目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  c 字符设备</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  b 块设备</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  s 套接字</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  p Fifo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> 类型参数</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 基于目录深度搜索 向下最大深度限制为3</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -maxdepth 3 -<span class="built_in">type</span> f</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索出深度距离当前目录至少2个子目录的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -mindepth 2 -<span class="built_in">type</span> f</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据文件时间戳进行搜索</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> UNIX/Linux文件系统每个文件都有三种时间戳：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> - 访问时间（-atime/天，-amin/分钟）：用户最近一次访问时间。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> - 修改时间（-mtime/天，-mmin/分钟）：文件最后一次修改时间。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> - 变化时间（-ctime/天，-cmin/分钟）：文件数据元（例如权限等）最后一次修改时间。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f 时间戳</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索最近七天内被访问过的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -atime -7</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索恰好在七天前被访问过的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -atime 7</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索超过七天内被访问过的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -atime +7</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索访问时间超过10分钟的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -amin +10</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出比 file.log 修改时间更长的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -newer file.log</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据文件大小进行匹配</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 文件大小单元：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  b —— 块（512字节）</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  c —— 字节</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  w —— 字（2字节）</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  k —— 千字节</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  M —— 兆字节</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  G —— 吉字节</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -size 文件大小单元</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索大于10KB的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -size +10k</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索小于10KB的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -size -10k</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索等于10KB的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -size 10k</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除匹配文件 删除当前目录下所有.txt文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -name <span class="string">"*.txt"</span> -delete</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 根据文件权限/所有权进行匹配 当前目录下搜索出权限为777的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -perm 777</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出当前目录下权限不是644的php文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -name <span class="string">"*.php"</span> ! -perm 644</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出当前目录用户tom拥有的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -user tom</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出当前目录用户组sunk拥有的所有文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -group sunk</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 借助-<span class="built_in">exec</span>选项与其他命令结合使用 </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出当前目录下所有root的文件，并把所有权更改为用户tom</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> &#123;&#125; 用于与 -<span class="built_in">exec</span> 选项结合使用来匹配所有文件，然后会被替换为相应的文件名。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find .-<span class="built_in">type</span> f -user root -<span class="built_in">exec</span> chown tom &#123;&#125; \;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出自己家目录下所有的.txt文件并删除</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -ok 和 -<span class="built_in">exec</span> 行为一样，不过它会给出提示，是否执行相应的操作。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find <span class="variable">$HOME</span>/. -name <span class="string">"*.txt"</span> -ok rm &#123;&#125; \;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查找当前目录下所有.txt文件并把他们拼接起来写入到all.txt文件中</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -name <span class="string">"*.txt"</span> -<span class="built_in">exec</span> cat &#123;&#125; \;&gt; all.txt</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将30天前的.<span class="built_in">log</span>文件移动到old目录中</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -mtime +30 -name <span class="string">"*.log"</span> -<span class="built_in">exec</span> cp &#123;&#125; old \;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找出当前目录下所有.txt文件并以 “File:文件名” 的形式打印出来</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -<span class="built_in">type</span> f -name <span class="string">"*.txt"</span> -<span class="built_in">exec</span> <span class="built_in">printf</span> <span class="string">"File: %s\n"</span> &#123;&#125; \;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 因为单行命令中 -<span class="built_in">exec</span> 参数中无法使用多个命令，以下方法可以实现在 -<span class="built_in">exec</span> 之后接受多条命令</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> -<span class="built_in">exec</span> ./text.sh &#123;&#125; \;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索但跳出指定的目录</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查找当前目录或者子目录下所有.txt文件，但是跳过子目录sk</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -path <span class="string">"./sk"</span> -prune -o -name <span class="string">"*.txt"</span> -<span class="built_in">print</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> find其他技巧收集</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 要列出所有长度为零的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> find . -empty</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -<span class="built_in">exec</span> 接收 find 传过来的所有内容，容易造成溢出</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> xargs find 的好伴侣，xargs 将 find 命令查找的结果分成若干模块输出给后面的指令</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grep 内容过滤</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在文件中搜索一个单词，命令会返回一个包含“match_pattern”的文本行：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep match_pattern file_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"match_pattern"</span> file_name</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出除之外的所有行 -v 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep -v <span class="string">"match_pattern"</span> file_name</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 标记匹配颜色 --color=auto 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"match_pattern"</span> file_name --color=auto</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用正则表达式 -E 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep -E <span class="string">"[1-9]+"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> egrep <span class="string">"[1-9]+"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 只输出文件中匹配到的部分 -o 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> this is a <span class="built_in">test</span> line. | grep -o -E <span class="string">"[a-z]+\."</span></span></span><br><span class="line">line.</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> this is a <span class="built_in">test</span> line. | egrep -o <span class="string">"[a-z]+\."</span></span></span><br><span class="line">line.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 统计文件或者文本中包含匹配字符串的行数 -c 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep -c <span class="string">"text"</span> file_name</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出包含匹配字符串的行数 -n 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"text"</span> -n file_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat file_name | grep <span class="string">"text"</span> -n</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 搜索多个文件并查找匹配文本在哪些文件中：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep -l <span class="string">"text"</span> file1 file2 file3...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在多级目录中对文本进行递归搜索：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"text"</span> . -r -n</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 忽略匹配样式中的字符大小写：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"hello world"</span> | grep -i <span class="string">"HELLO"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 选项 -e 制动多个匹配样式：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> this is a text line | grep -e <span class="string">"is"</span> -e <span class="string">"line"</span> -o</span></span><br><span class="line">is</span><br><span class="line">line</span><br><span class="line"><span class="meta">#</span><span class="bash"> 也可以使用-f选项来匹配多个样式，在样式文件中逐行写出需要匹配的字符。</span></span><br><span class="line">cat patfile</span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> aaa bbb ccc ddd eee | grep -f patfile -o</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在grep搜索结果中包括或者排除指定文件：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 只在目录中所有的.php和.html文件中递归搜索字符<span class="string">"main()"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"main()"</span> . -r --include *.&#123;php,html&#125;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在搜索结果中排除所有README文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"main()"</span> . -r --exclude <span class="string">"README"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在搜索结果中排除filelist文件列表里的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"main()"</span> . -r --exclude-from filelist</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用0值字节后缀的grep与xargs：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 测试文件：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"aaa"</span> &gt; file1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"bbb"</span> &gt; file2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"aaa"</span> &gt; file3</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">"aaa"</span> file* -lZ | xargs -0 rm</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行后会删除 file1 和 file3，grep 输出用 -Z 选项来指定以 0 值字节作为终结符文件名（\0），xargs -0 读取输入并用 0 值字节终结符分隔文件名，然后删除匹配文件，-Z 通常和 -l 结合使用。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> grep静默输出：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 不会输出任何信息，如果命令运行成功返回0，失败则返回非0值。一般用于条件测试。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> grep -q <span class="string">"test"</span> filename</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 打印出匹配文本之前或者之后的行：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 显示匹配某个结果 之后的3行，使用 -A 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> seq 10 | grep <span class="string">"5"</span> -A 3</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 显示匹配某个结果 之前的3行，使用 -B 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> seq 10 | grep <span class="string">"5"</span> -B 3</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 显示匹配某个结果的 前三行和后三行，使用 -C 选项：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> seq 10 | grep <span class="string">"5"</span> -C 3</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> xargs</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 参数：</span></span><br><span class="line">-a file 从文件中读入作为sdtin</span><br><span class="line">-e flag ，注意有的时候可能会是-E，flag必须是一个以空格分隔的标志，当xargs分析到含有flag这个标志的时候就停止。</span><br><span class="line">-p 当每次执行一个argument的时候询问一次用户。</span><br><span class="line">-n num 后面加次数，表示命令在执行的时候一次用的argument的个数，默认是用所有的。</span><br><span class="line">-t 表示先打印命令，然后再执行。</span><br><span class="line">-i 或者是-I，这得看linux支持了，将xargs的每项名称，一般是一行一行赋值给 &#123;&#125;，可以用 &#123;&#125; 代替。</span><br><span class="line">-r no-run-if-empty 当xargs的输入为空的时候则停止xargs，不用再去执行了。</span><br><span class="line">-s num 命令行的最大字符数，指的是 xargs 后面那个命令的最大命令行字符数。</span><br><span class="line">-L num 从标准输入一次读取 num 行送给 command 命令。</span><br><span class="line">-l 同 -L。</span><br><span class="line">-d delim 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符。</span><br><span class="line">-x exit的意思，主要是配合-s使用。。</span><br><span class="line">-P 修改最大的进程数，默认是1，为0时候为as many as it can ，这个例子我没有想到，应该平时都用不到的吧。</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-VIM"><a href="#1-3-VIM" class="headerlink" title="1.3 VIM"></a>1.3 VIM</h3><p>设置 ~/.bashrc</p>
+<p>添加 set -o vi     – 可以直接使用 vim 的各种快捷键</p>
+<p>VIM 快捷键：</p>
+<img src="/images/imageProgramC/vim.gif">
+
+<h3 id="1-4-GCC"><a href="#1-4-GCC" class="headerlink" title="1.4 GCC"></a>1.4 GCC</h3><p>gcc 工作流程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 预处理 头文件展开 宏替换</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -E hello.c</span></span><br><span class="line">hello.i</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 生成汇编代码</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -S hello.i</span></span><br><span class="line">hello.s</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将汇编编译成二进制文件 </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -c hell0.s</span></span><br><span class="line">hello.o</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 链接</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc hello.o</span></span><br><span class="line">a.out</span><br></pre></td></tr></table></figure>
+
+<p>gcc 参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 指定编译输出的名字</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c -o main</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 -Wall 参数启用所有警告</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -Wall main.c -o main</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -E 参数只产生预处理输出</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -E main.c &gt; main.i</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -S 参数只产生汇编代码</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -S main.c &gt; main.s</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -C 参数只产生编译的代码</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -C main.c</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面的代码产生main.o, 包含机器级别的代码或者编译的代码。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用-save-temps参数产生所有的中间步骤的文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -save-temps main.c</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ls</span></span><br><span class="line">a.out  main.c  main.i  main.o  main.s</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -l 参数链接共享库</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc  -Wall main.c -o main -lCPPfile</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -fPIC 产生位置无关的代码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 当产生共享库的时候，应该创建位置无关的代码，这会让共享库使用任意的地址而不是固定的地址，要实现这个功能，需要使用-fPIC参数。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面的例子产生libCfile.so动态库。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -c -Wall -Werror -fPIC Cfile.c</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -shared -o libCfile.so Cfile.o</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 产生共享库的时候使用了-fPIC 参数。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意 -shared 产生共享库。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -V 打印所有的执行命令</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -Wall -v main.c -o main</span></span><br><span class="line">Using built-in specs.</span><br><span class="line">COLLECT_GCC=gcc</span><br><span class="line">COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/4.6/lto-wrapper</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -D 参数可以使用编译时的宏</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -Wall -D MY_MACRO main.c -o main</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -Werror 将警告升级为错误</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -Wall -Werror main.c -o main</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 @ 参数从文件中读取参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> gcc参数可以从文件中读取，通过@后跟文件名的方式提供， 多个参数可以使用空格区隔。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat opt_file </span></span><br><span class="line">-Wall -omain</span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c @opt_file</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用参数 -I 指定头文件的文件夹</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -I/home/codeman/include input-file.c</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -I 取消前一个参数功能，一般用在 -Idir 之后。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用参数-std指定支持的c++/c的标准</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -std=c++11 hello-world.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -static 生成静态链接的文件 静态编译文件(把动态库的函数和其它依赖都编译进最终文件)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c -static -o main -lpthread</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 相反的使用 -shared 使用动态库链接。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -g 用于 gdb 调试</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c -static -o main -g</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -lstdc++ 指定 gcc 以 c++ 方式编译</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.cpp -lstdc++ -o main</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -O 优化选项， 1-3 越高优先级越高</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.cpp -lstdc++ -o main -O1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 -M 生成文件关联的信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -M main.c</span></span><br><span class="line">main.o: main.c /usr/include/stdc-predef.h /usr/include/stdio.h \</span><br><span class="line"> /usr/include/features.h /usr/include/sys/cdefs.h \</span><br><span class="line"> /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \</span><br><span class="line"> /usr/include/gnu/stubs-64.h \</span><br><span class="line"> /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h \</span><br><span class="line"> /usr/include/bits/types.h /usr/include/bits/typesizes.h \</span><br><span class="line"> /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \</span><br><span class="line"> /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stdarg.h \</span><br><span class="line"> /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-库文件制作"><a href="#1-5-库文件制作" class="headerlink" title="1.5 库文件制作"></a>1.5 库文件制作</h3><p><strong>静态库制作和使用</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 步骤</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 编译为 .o 文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 将 .o 文件打包：ar rcs libmycalc.a file1.0 file2.o ...</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3. 将头文件与库一起发布</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看库信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nm libmycalc.a</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编译时 需要加静态库名（记得路径），-I 包含头文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c -o app -I include/ -L lib/ -lmycalc</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 优点：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 执行快</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 发布应用时不需要发布库</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 缺点：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 执行程序体积比较大</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 库变更时需要重新编译应用</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>动态库制作和使用</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 步骤</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 编译与位置无关的代码，生成 .o 关键参数 -fPIC</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 将 .o 文件打包， 关键参数 -shared</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3. 将库与头文件一起发布</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -shared -o libcalc.so *.o</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -L 指定动态库路径 -I 指定库名</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc main.c -o app -I include/ -L lib/ -lcalc</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ldd 查看库依赖</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ldd libcalc.so</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 优点：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 执行程序体积小</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 库变更时，一般不需要重新发布动态库</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 缺点：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 执行时需要加载动态库，相对而言，比静态库慢</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 发布应用时需要同时发布动态库</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解决不能加载动态库的问题</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. 拷贝到 /lib 下。 一般不允许</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. 将库路径增加到环境变量 LD_LIBRARY_PATH 中，不是特别推荐</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3. 配置 /etc/ld.so.conf 文件，增加 当前项目库路径，执行 sudo ldconfig -v</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/imageProgramC/数据段.png">
+
+<h3 id="1-6-Makefile"><a href="#1-6-Makefile" class="headerlink" title="1.6 Makefile"></a>1.6 Makefile</h3><p>makefile 的三要素：</p>
+<ul>
+<li>目标</li>
+<li>依赖</li>
+<li>规则命令</li>
+</ul>
+<p>写法：</p>
+<ul>
+<li>目标：依赖</li>
+<li>tab键 规则命令</li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">app: main.c add.c sub.c div.c mul.c</span></span><br><span class="line">	gcc -o app -I./<span class="keyword">include</span>/ main.c add.c sub.c div.c mul.c</span><br></pre></td></tr></table></figure>
+
+<p>如果更改其中一个文件，所有的源码都重新编译</p>
+<p>可以考虑编译过程分解，先生成 .o 文件，然后使用 .o 文件编程结果</p>
+<p>规则是递归的，依赖文件如果比目标文件新，则重新生成目标文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ObjFiles=main.o add.o sub.o div.o mul.o</span><br><span class="line">app: $(ObjFiles)</span><br><span class="line">	gcc -o app -I./include/ $(ObjFiles)</span><br><span class="line"></span><br><span class="line">main.o: main.c</span><br><span class="line">	gcc -c main.c -I./include/</span><br><span class="line">add.o: add.c</span><br><span class="line">	gcc -c add.c -I./include/	</span><br><span class="line">sub.o: sub.c</span><br><span class="line">	gcc -c sub.c -I./include/	</span><br><span class="line">div.o: div.c</span><br><span class="line">	gcc -c div.c -I./include/</span><br><span class="line">mul.o: mul.c</span><br><span class="line">	gcc -c mul.c -I./include/</span><br></pre></td></tr></table></figure>
+
+<p>makefile 的隐含规则：默认处理第一个目标</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> get all .c files</span></span><br><span class="line">SrcFiles=$(wildcard *.c)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> all .c files --&gt; .o file</span></span><br><span class="line">ObjFiles=$(patsubst %.c,%.o,$(SrcFiles))</span><br><span class="line"></span><br><span class="line">test:</span><br><span class="line">	echo $(SrcFiles)</span><br><span class="line">	echo $(ObjFiles)</span><br></pre></td></tr></table></figure>
+
+<p>makefile 变量：</p>
+<ul>
+<li>$@    代表目标</li>
+<li>$^    代表全部依赖</li>
+<li>$&lt;    第一个依赖</li>
+<li>$?    第一个变化的依赖</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> get all .c files</span></span><br><span class="line">SrcFiles=$(wildcard *.c)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> all .c files --&gt; .o file</span></span><br><span class="line">ObjFiles=$(patsubst %.c,%.o,$(SrcFiles))</span><br><span class="line"></span><br><span class="line">all:app</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目标文件用法 $(Var)</span></span><br><span class="line">app: $(ObjFiles)</span><br><span class="line">	gcc -o $@ -I./include/ $(ObjFiles)</span><br><span class="line">	</span><br><span class="line"><span class="meta">#</span><span class="bash"> 模式匹配规则， <span class="variable">$@</span> $&lt; 这样的变量，只能在规则中出现</span></span><br><span class="line"><span class="meta">%</span><span class="bash">.o:%.c</span></span><br><span class="line">	gcc -c $&lt; -I./include/ -o $@</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> @ 在规则前代表不输出该条规则的命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> - 规则前的“-”，代表该条规则报错，仍然继续执行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> .PHONY 定义伪目标，防止有歧义</span></span><br><span class="line">.PHONY:clean all</span><br><span class="line">clean:</span><br><span class="line">	-@rm -f *.o</span><br><span class="line">	-@rm -f app</span><br></pre></td></tr></table></figure>
+
+<p>make -f makefile1    指定makefile文件进行编译</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SrcFiles=<span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">TargetFiles=<span class="variable">$(<span class="built_in">patsubst</span> %.c,%,<span class="variable">$(SrcFiles)</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="section">all:<span class="variable">$(TargetFiles)</span></span></span><br><span class="line"></span><br><span class="line"><span class="section">%:%.c</span></span><br><span class="line">	gcc -o <span class="variable">$@</span> %^</span><br><span class="line">	</span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f <span class="variable">$(TargetFiles)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-gdb-调试"><a href="#1-7-gdb-调试" class="headerlink" title="1.7 gdb 调试"></a>1.7 gdb 调试</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuam9iYm9sZS5jb20vMTA3NzU5Lw==" title="http://blog.jobbole.com/107759/">gdb 调试入门，大牛写的高质量指南<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9saW51eHRvb2xzLXJzdC5yZWFkdGhlZG9jcy5pby96aF9DTi9sYXRlc3QvdG9vbC9nZGIuaHRtbA==" title="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html">gdb 调试利器<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>启动gdb：gdb app</p>
+<p>在gdb启动程序：</p>
+<ul>
+<li>r(un)   – 启动  可以带参数启动</li>
+<li>start   – 启动 - 停留在main函数，分步调试</li>
+<li>n(ent)   – 下一条指令</li>
+<li>s(tep)  – 下一条指令，可以进入函数内部，库函数不能进</li>
+<li>q(uit)   – 退出 gdb</li>
+<li>b(reak)  num  – 指定行号，函数, 文件:行号  设置断点<ul>
+<li>b 行号  – 主函数所在文件的行</li>
+<li>b 函数名</li>
+<li>b 文件名:行号</li>
+</ul>
+</li>
+<li>l(ist) 文件：行号   – 查看代码<ul>
+<li>l – 显示主函数对应的文件</li>
+<li>l 文件名:行号</li>
+</ul>
+</li>
+<li>info b   – 查看断点信息</li>
+<li>d(el)  num – 删除断点</li>
+<li>c – continue 跳到下一个断点</li>
+<li>p(rint) – 打印参数，或者变量值</li>
+<li>ptype 变量  – 查看变量类型</li>
+<li>set  – 设置变量的值<ul>
+<li>set argc=4</li>
+<li>set argv[1]=“12”</li>
+<li>set argv[2] = “7”</li>
+</ul>
+</li>
+<li>display argc  –  跟踪显示参数或者变量的变化</li>
+<li>info display</li>
+<li>undisplay num</li>
+<li>b num if xx == xx  – 条件断点</li>
+</ul>
+<p><strong>gdb跟踪core</strong></p>
+<ul>
+<li><p>设置生成 core ：ulimit -c unlimited</p>
+</li>
+<li><p>取消生成 core： ulimit -c 0</p>
+</li>
+<li><p>设置 core 文件格式：/proc/sys/kernel/core_pattern</p>
+<p>文件不能 vi，可以用后面的套路：echo “/corefile/core-%e-%p-%t” &gt; core_pattern</p>
+</li>
+</ul>
+<p>core 文件如何使用：</p>
+<ul>
+<li><p>gdb app core</p>
+</li>
+<li><p>如果看不到在哪儿core  可以用 where 查看在哪儿产生的 core</p>
+</li>
+</ul>
+<h2 id="2-系统api与库函数的关系"><a href="#2-系统api与库函数的关系" class="headerlink" title="2. 系统api与库函数的关系"></a>2. 系统api与库函数的关系</h2><img src="/images/imageProgramC/系统api与函数关系.png">
+
+<h2 id="3-Linux-系统编程"><a href="#3-Linux-系统编程" class="headerlink" title="3. Linux 系统编程"></a>3. Linux 系统编程</h2><p>ulimit -a 查看所有资源的上限</p>
+<p>env 查看环境变量</p>
+<p>echo $PATH  打印指定的环境变量</p>
+<p><code>char *getenv()</code> 获取环境变量</p>
+<p><strong>创建一个进程</strong>：</p>
+<p><code>pid_t fork(void)</code></p>
+<p>返回值：</p>
+<ul>
+<li>失败 -1</li>
+<li>成功，返回两次<ul>
+<li>父进程返回子进程的 id</li>
+<li>子进程返回 0</li>
+</ul>
+</li>
+</ul>
+<p>获得pid，进程 id，获得当前进程</p>
+<p><code>pid_t getpid(void)</code></p>
+<p>获得当前进程父进程的 id</p>
+<p><code>pid_t getppid(void)</code></p>
+<p>ps ajx 查看父进程和子进程相关信息</p>
+<p><strong>进程共享</strong>：</p>
+<p>父子进程之间在fork后，有哪些相同和不同：</p>
+<ul>
+<li>父子相同处：<ul>
+<li>全局变量</li>
+<li>data、text、栈、堆、环境变量</li>
+<li>用户 ID</li>
+<li>宿主目录、进程工作目录、信号处理方式…</li>
+</ul>
+</li>
+<li>父子不同处：<ul>
+<li>进程 ID</li>
+<li>父进程 ID</li>
+<li>进程运行时间</li>
+<li>闹钟（定时器）</li>
+<li>未决信号集</li>
+</ul>
+</li>
+</ul>
+<p>似乎，子进程复制了父进程 0-3G 用户空间内容，以及父进程的 PCB， 但 pid 不同。真的每 fork 一个子进程都要将父进程的 0-3G 地址空间完全拷贝一份，然后在映射至屋里内存吗？当然不是，父子进程间遵循<strong>读时共享写时复制</strong>。这样设计，无论子进程执行父进程的逻辑还是执行自己的逻辑都能节省内存开销。</p>
+<p><strong>孤儿进程与僵尸进程</strong>：</p>
+<ul>
+<li>孤儿进程<ul>
+<li>父进程死了，子进程被 init 进程领养</li>
+</ul>
+</li>
+<li>僵尸进程<ul>
+<li>子进程死了，父进程没有回收子进程的资源（PCB）</li>
+</ul>
+</li>
+</ul>
+<p>回收子进程，知道子进程的死亡原因，作用：</p>
+<ul>
+<li>阻塞等待</li>
+<li>回收子进程资源</li>
+<li>查看死亡原因</li>
+</ul>
+<p><code>pid_t wait(int *status)</code></p>
+<ul>
+<li>status 传出参数</li>
+<li>返回值<ul>
+<li>成功返回终止的子进程 ID</li>
+<li>失败 返回 -1</li>
+</ul>
+</li>
+</ul>
+<p>子进程的死亡原因：</p>
+<ul>
+<li>正常死亡 WIFEXITED<ul>
+<li>如果 WIFEXITED 为真，使用 WEXITSTATUS 得到退出的状态</li>
+</ul>
+</li>
+<li>非正常死亡 WIFSIGNALED<ul>
+<li>如果 WIFSIGNALED 为真，使用 WTERMSIG 得到信号</li>
+</ul>
+</li>
+</ul>
+<p><code>pid_t waitpid(pid_t pid, int *status, int options)</code></p>
+<ul>
+<li>pid<ul>
+<li><code>&lt; -1</code> 组ID</li>
+<li><code>-1</code> 回收任意</li>
+<li><code>0</code> 回收和调用进程组 ID 相同组内的子进程</li>
+<li><code>&gt;0</code> 回收指定的 pid</li>
+</ul>
+</li>
+<li>option<ul>
+<li>0 与 wait 相同，也会阻塞</li>
+<li>WNOHANG 如果当前没有子进程退出，会立刻返回</li>
+</ul>
+</li>
+<li>返回值<ul>
+<li>如果设置了 WNOHANG ，那么如果没有子进程退出，返回 0<ul>
+<li>如果有子进程退出返回退出的 pid</li>
+</ul>
+</li>
+<li>失败返回 -1 （没有子进程）</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-1-IPC-概念"><a href="#3-1-IPC-概念" class="headerlink" title="3.1 IPC 概念"></a>3.1 IPC 概念</h3><p>IPC ： 进程间通信，通过内核提供的缓存区进行数据交换的机制</p>
+<p>IPC 通信的方式有几种：</p>
+<ul>
+<li>pipe 管道 – 最简单</li>
+<li>fifo 有名管道</li>
+<li>mmap 文件映射共享IO – 速度最快</li>
+<li>本地 socket 最稳定</li>
+<li>信号 携带信息量最小</li>
+<li>共享内存</li>
+<li>消息队列</li>
+</ul>
+<p><strong>读管道</strong>：</p>
+<ul>
+<li>写端全部关闭 – read 读到 0， 想当于读到文件末尾</li>
+<li>写端没有全部关闭<ul>
+<li>有数据 – read 读到数据</li>
+<li>没有数据 – read 阻塞 fcntl 函数可以更改非阻塞</li>
+</ul>
+</li>
+</ul>
+<p><strong>写管道</strong>：</p>
+<ul>
+<li>读端全部关闭 – ？ 产生一个信号 SIGPIPE，程序异常终止</li>
+<li>读端未全部关闭<ul>
+<li>管道已满 – write 阻塞 – 如果要显示现象，读端一直不读，写端狂写。</li>
+<li>管道未满 – write 正常写入</li>
+</ul>
+</li>
+</ul>
+<p><strong>管道缓冲区大小</strong></p>
+<p>可以使用 <code>ulimit –a</code> 命令来查看当前系统中创建管道文件所对应的内核缓冲区大小。通常为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipe size            (512 bytes, -p) 8</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 <code>fpathconf</code> 函数，借助参数选项来查看。使用该宏应引入头文件&lt;unistd.h&gt;</p>
+<p><code>long fpathconf(int fd, int name);</code>    </p>
+<ul>
+<li>成功：返回管道的大小    </li>
+<li>失败：-1，设置errno</li>
+</ul>
+<p><strong>管道的优劣</strong></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>简单，相比信号，套接字实现进程间通信，简单很多。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>只能单向通信，双向通信需建立两个管道。</li>
+<li>只能用于父子、兄弟进程(有共同祖先)间通信。该问题后来使用fifo有名管道解决。</li>
+</ul>
+</li>
+</ul>
+<p><strong>FIFO通信</strong></p>
+<p>FIFO 有名管道，实现无血缘关系进程通信</p>
+<ul>
+<li>创建一个管道的伪文件<ul>
+<li>mkfifo myfifo 命令创建</li>
+<li>也可以使用函数 <code>int mkfifo(const char *pathname,  mode_t mode);</code></li>
+</ul>
+</li>
+<li>内核会针对 fifo 文件开辟一个缓存区，操作 fifo 文件，可以操作缓存区，实现进程间通信 – 实际上就是文件读写</li>
+</ul>
+<p><strong>mmap映射共享区</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">mmap</span><span class="params">(<span class="keyword">void</span> *adrr, <span class="keyword">size_t</span> length, <span class="keyword">int</span> prot, <span class="keyword">int</span> flags, <span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>返回：</p>
+<ul>
+<li>成功：返回创建的映射区首地址；</li>
+<li><strong>失败：MAP_FAILED宏</strong></li>
+</ul>
+</li>
+<li><p>参数：    </p>
+<ul>
+<li>addr:     建立映射区的首地址，由Linux内核指定。使用时，直接传递NULL</li>
+<li>length：   欲创建映射区的大小</li>
+<li>prot：       映射区权限 PROT_READ、PROT_WRITE、PROT_READ|PROT_WRITE</li>
+<li>flags：      标志位参数(常用于设定更新物理区域、设置共享、创建匿名映射区)<ul>
+<li>MAP_SHARED:  会将映射区所做的操作反映到物理设备（磁盘）上。（共享的）</li>
+<li>MAP_PRIVATE:  映射区所做的修改不会反映到物理设备。（私有的）</li>
+</ul>
+</li>
+<li>fd：      用来建立映射区的文件描述符</li>
+<li>offset：   映射文件的偏移(4k的整数倍)</li>
+</ul>
+</li>
+</ul>
+<p>释放映射区</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">munmap</span><span class="params">(<span class="keyword">void</span> *addr, <span class="keyword">size_t</span> length)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>匿名映射</strong></p>
+<p>通过使用我们发现，使用映射区来完成文件读写操作十分方便，父子进程间通信也较容易。但缺陷是，每次创建映射区一定要依赖一个文件才能实现。通常为了建立映射区要open一个temp文件，创建好了再unlink、close掉，比较麻烦。 可以直接使用匿名映射来代替。其实Linux系统给我们提供了创建匿名映射区的方法，无需依赖一个文件即可创建映射区。同样需要借助标志位参数flags来指定。</p>
+<p>使用 <code>MAP_ANONYMOUS</code>(或 <code>MAP_ANON</code> )， 如: </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = mmap(<span class="literal">NULL</span>, <span class="number">4</span>, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, <span class="number">-1</span>, <span class="number">0</span>); </span><br><span class="line"><span class="comment">// "4"随意举例，该位置表大小，可依实际需要填写。</span></span><br></pre></td></tr></table></figure>
+
+<p>需注意的是，MAP_ANONYMOUS和MAP_ANON这两个宏是Linux操作系统特有的宏。在类Unix系统中如无该宏定义，可使用如下两步来完成匿名映射区的建立。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">/dev/zero 聚宝盆，可以随意映射</span></span><br><span class="line"><span class="comment">/dev/null 无底洞，一般错误信息重定向到这个文件中</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">fd = open(<span class="string">"/dev/zero"</span>, O_RDWR);</span><br><span class="line">p = mmap(<span class="literal">NULL</span>, size, PROT_READ|PROT_WRITE, MMAP_SHARED, fd, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>信号的概念</strong></p>
+<ul>
+<li><p>信号的特点</p>
+<ul>
+<li>简单，不能带大量信息，满足特定条件发生</li>
+</ul>
+</li>
+<li><p>信号的机制</p>
+<ul>
+<li>进程 B 发送给进程 A ，内核产生信号，内核处理</li>
+</ul>
+</li>
+<li><p>信号的产生</p>
+<ul>
+<li>按键产生 </li>
+<li>函数调用 kill、raise、abort</li>
+<li>定时器 alarm、setitimer</li>
+<li>命令产生 kill</li>
+<li>硬件异常、段错误、浮点型错误、总线错误、SIGPIPE</li>
+</ul>
+</li>
+<li><p>信号的状态</p>
+<ul>
+<li>产生</li>
+<li>递达 信号到达并且处理完</li>
+<li>未决 信号被阻塞</li>
+</ul>
+</li>
+<li><p>信号的默认处理方式</p>
+<ul>
+<li>忽略</li>
+<li>执行默认动作</li>
+<li>捕捉</li>
+</ul>
+</li>
+<li><p>信号的 4 要素</p>
+<ul>
+<li>编号</li>
+<li>事件</li>
+<li>名称</li>
+<li>默认处理动作<ul>
+<li>忽略</li>
+<li>终止</li>
+<li>终止 + core</li>
+<li>暂停</li>
+<li>继续</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-进程和线程"><a href="#3-2-进程和线程" class="headerlink" title="3.2 进程和线程"></a>3.2 进程和线程</h3><ul>
+<li>进程组</li>
+<li>会话</li>
+<li>守护进程</li>
+</ul>
+<p>创建一个会话需要注意以下 5 点注意事项：</p>
+<ul>
+<li>调用进程不能是进程组组长，该进程编程新会话首进程（session header）</li>
+<li>该进程成为一个新进程组的组长进程</li>
+<li>新会话丢弃原有的控制终端，该会话没有控制终端</li>
+<li>该调用进程是组长进程，则出错返回</li>
+<li>建立会话时，先调用fork，父进程终止，子进程调用 setsid</li>
+</ul>
+<p>守护进程：</p>
+<p>Daemon 进程，是 Linux 中的后台服务进程，通常独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。一般采用以 d 结尾的名字。</p>
+<p>创建守护进程，最关键的一步是调用 setsid 函数创建一个新的 session 。并成为 session leader。</p>
+<p><strong>创建守护进程模型</strong>：</p>
+<ul>
+<li>创建子进程，父进程退出<ul>
+<li>所有工作在子进程中进行形式上脱离了控制终端</li>
+</ul>
+</li>
+<li>在子进程中创建新会话<ul>
+<li>setsid() 函数</li>
+<li>使子进程完全能独立出来，脱离控制</li>
+</ul>
+</li>
+<li>改变当前目录为根目录<ul>
+<li>chdir() 函数</li>
+<li>防止占用可卸载的文件系统</li>
+<li>也可以换成其他路径</li>
+</ul>
+</li>
+<li>重设文件权限掩码<ul>
+<li>umask() 函数</li>
+<li>防止继承的文件创建屏蔽字拒绝某些权限</li>
+<li>增加守护进程灵活性</li>
+</ul>
+</li>
+<li>关闭文件描述符<ul>
+<li>继承的打开文件不会用到，浪费系统资源，无法卸载</li>
+</ul>
+</li>
+<li>开始执行守护进程核心工作</li>
+<li>守护进程退出处理程序模型</li>
+</ul>
+<blockquote>
+<p>会话：进程组的更高一级，多个进程组对应一个会话</p>
+<p>进程组：多个进程在同一个组，第一个进程默认是进程组的组长</p>
+<p>创建会话的时候，组长不可以创建，必须是组员创建。</p>
+<p>创建会话的步骤：创建子进程，父进程终止，子进程当会长</p>
+<p>守护进程的步骤：</p>
+<ul>
+<li>创建子进程 fork</li>
+<li>父进程退出</li>
+<li>子进程当会长 setsid</li>
+<li>切换工作目录 $HOME</li>
+<li>设置掩码 umask</li>
+<li>关闭文件描述符，为了避免浪费资源</li>
+<li>执行核心逻辑</li>
+<li>退出</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span> *thread, <span class="keyword">const</span> <span class="keyword">pthread_attr_t</span> *attr,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">void</span> *(*start_routine) (<span class="keyword">void</span> *), <span class="keyword">void</span> *arg)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> strFileName[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">memset</span>(strFileName, <span class="number">0x00</span>, <span class="keyword">sizeof</span>(strFileName));</span><br><span class="line">        <span class="built_in">sprintf</span>(strFileName, <span class="string">"%s/log/Mr.Miaow.%ld"</span>, getenv(<span class="string">"HOME"</span>), time(<span class="literal">NULL</span>));</span><br><span class="line">        <span class="keyword">int</span> fd = open(strFileName, O_RDWR | O_CREAT, <span class="number">0666</span>);</span><br><span class="line">        <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            perror(<span class="string">"open err"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        close(fd);</span><br><span class="line">        sleep(<span class="number">5</span>);                                                                                      </span><br><span class="line">    &#125;        </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>扩展了解：</p>
+<p>通过 nohup 指令也可以达到守护进程创建的效果</p>
+<p>nohup cmd [&gt; 1.log] &amp;</p>
+<ul>
+<li>nohup 指令会让 cmd 收不到 SIGHUP 信号</li>
+<li>&amp; 代表后台运行</li>
+</ul>
+<p>线程是最小的执行单位，进程是最小的系统资源分配单位</p>
+<p>查看 LWP 号：<code>ps -Lf pid</code> 查看指定线程的 lwp 号</p>
+<p>线程非共享资源</p>
+<ul>
+<li>线程 ID</li>
+<li>处理器现场和栈指针（内核栈）</li>
+<li>独立的栈空间（用户空间栈）</li>
+<li>errno 变量</li>
+<li>信号屏蔽字</li>
+<li>调度优先级</li>
+</ul>
+<p>线程优缺点：</p>
+<ul>
+<li>优点：<ul>
+<li>提高程序并发性</li>
+<li>开销小</li>
+<li>数据通信、共享数据方便</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>库函数 不稳定</li>
+<li>调试、编写困难</li>
+<li>对信号支持不好</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">alias echomake=`cat ~/bin/makefile.template &gt;&gt; makefile`</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat ~/bin/makefile.template</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> create by Mr.Miaow `date +%Y%m%d`</span></span><br><span class="line">SrcFiles=$(wildcard *.c)</span><br><span class="line">TargetFiles=$(patsubst %.c,%,$(SrcFiles))</span><br><span class="line">all:$(TargetFiles)</span><br><span class="line"><span class="meta">%</span><span class="bash">:%.c</span></span><br><span class="line">	gcc -o $@ %&lt; -lpthread -g</span><br><span class="line">clean:</span><br><span class="line">	-rm -f $(TargetFiles)</span><br></pre></td></tr></table></figure>
+
+<p><strong>线程退出注意事项</strong>：</p>
+<ul>
+<li>在线程中使用pthread_exit</li>
+<li>在线程中使用 return （主控线程return 代表退出进程）</li>
+<li>exit 代表退出整个进程</li>
+</ul>
+<p>线程回收函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_join</span><span class="params">(<span class="keyword">pthread_t</span> thread, <span class="keyword">void</span> **retval)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>杀死线程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cancel</span><span class="params">(<span class="keyword">pthread_t</span> thread)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>被pthread_cancel 杀死的线程，退出状态为 PTHREAD_CANCELED</p>
+<p>线程分离：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_detach</span><span class="params">(<span class="keyword">pthread_t</span> thread)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>此时不需要 pthread_join回收资源</p>
+<p>线程 ID 在进程内部是唯一的</p>
+<p><strong>进程属性控制</strong>：</p>
+<ul>
+<li><p>初始化线程属性</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_attr_init</span><span class="params">(<span class="keyword">pthread_attr_t</span> *attr)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>销毁线程属性</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_attr_destroy</span><span class="params">(<span class="keyword">pthread_attr_t</span> *attr)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置属性分离态</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_attr_setdetachstate</span><span class="params">(<span class="keyword">pthread_attr_t</span> *attr, <span class="keyword">int</span> detachstate)</span></span>;</span><br><span class="line"><span class="meta"># attr init 初始化的属性</span></span><br><span class="line"><span class="meta"># detachstate</span></span><br><span class="line"># - PTHREAD_CREATE_DETACHED 线程分离</span><br><span class="line"># - PTHREAD_CREATE_JOINABLE 允许回收</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_attr_getdetachstate</span><span class="params">(<span class="keyword">const</span> <span class="keyword">pthread_attr_t</span> *attr, <span class="keyword">int</span> *detachstate)</span></span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>查看线程库版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> getconf GNU_LIBPTHREAD_VERSION</span></span><br></pre></td></tr></table></figure>
+
+<p>创建多少个线程？</p>
+<ul>
+<li>cpu核数 * 2 + 2</li>
+</ul>
+<p><strong>线程同步</strong>：</p>
+<ul>
+<li>协调步骤，顺序执行</li>
+</ul>
+<p>解决同步的问题：加锁</p>
+<p><strong>mutex 互斥量</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pthread_mutex_t</span> fastmutex = PTHREAD_MUTEX_INITIALIZER;	<span class="comment">// 常量初始化，此时可以使用init</span></span><br><span class="line"><span class="keyword">pthread_mutex_t</span> recmutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;</span><br><span class="line"><span class="keyword">pthread_mutex_t</span> errchkmutex = PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_init</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex, <span class="keyword">const</span> <span class="keyword">pthread_mutexattr_t</span> *mutexattr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_lock</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_trylock</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_unlock</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_destroy</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>读写锁的特点：读共享，写独占，写优先级高</p>
+<p>读写说任然是一把锁，有不同状态：</p>
+<ul>
+<li>未加锁</li>
+<li>读锁</li>
+<li>写锁</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_init</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *<span class="keyword">restrict</span> rwlock,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">const</span> <span class="keyword">pthread_rwlockattr_t</span> *<span class="keyword">restrict</span> attr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_destroy</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *rwlock)</span></span>;</span><br><span class="line"><span class="keyword">pthread_rwlock_t</span> rwlock = PTHREAD_RWLOCK_INITIALIZER;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_rdlock</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *rwlock)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_tryrdlock</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *rwlock)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_wrlock</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *rwlock)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_rwlock_unlock</span><span class="params">(<span class="keyword">pthread_rwlock_t</span> *rwlock)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>条件变量</strong>（生产者消费者模型）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pthread_cond_t</span> cond = PTHREAD_COND_INITIALIZER;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_init</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond, <span class="keyword">pthread_condattr_t</span> *cond_attr)</span></span>;</span><br><span class="line"><span class="comment">// 唤醒至少一个阻塞在条件变量 cond 上的线程</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_signal</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond)</span></span>;</span><br><span class="line"><span class="comment">// 唤醒阻塞在条件变量 cond 上的全部线程</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_broadcast</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond)</span></span>;</span><br><span class="line"><span class="comment">// 条件变量阻塞等待</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_wait</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond, <span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line"><span class="comment">// 超时等待</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_timedwait</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond, <span class="keyword">pthread_mutex_t</span> *mutex, <span class="keyword">const</span> struct timespec *abstime)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_destroy</span><span class="params">(<span class="keyword">pthread_cond_t</span> *cond)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>信号量 加强版的互斥锁</strong>：</p>
+<p>信号量是进化版的互斥量，允许多个线程访问共享资源</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_init</span><span class="params">(<span class="keyword">sem_t</span> *sem, <span class="keyword">int</span> pshared, <span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span>;</span><br><span class="line"><span class="meta"># pshared</span></span><br><span class="line"># - <span class="number">0</span> 代表线程信号量</span><br><span class="line"># - 非<span class="number">0</span> 代表进程信号量</span><br><span class="line"><span class="meta"># value 定义信号量的个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 申请信号量，申请成功 value--</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_wait</span><span class="params">(<span class="keyword">sem_t</span> *sem)</span></span>;</span><br><span class="line"><span class="comment">// 释放信号量 value++</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_post</span><span class="params">(<span class="keyword">sem_t</span> *sem)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_trywait</span><span class="params">(<span class="keyword">sem_t</span> *sem)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_timedwait</span><span class="params">(<span class="keyword">sem_t</span> *sem, <span class="keyword">const</span> struct timespec *abs_timeout)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sem_destroy</span><span class="params">(<span class="keyword">sem_t</span> *sem)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Link with -pthread.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>文件锁</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fcntl</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> cmd, ... <span class="comment">/* arg */</span> )</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="苗沛 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Program-C/" rel="tag"> <i class="fa fa-tag"></i> Program-C</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/05/Program-C/compile/" rel="prev" title="Program-C 交叉编译">
+                Program-C 交叉编译 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-Note"><span class="nav-number">1.</span> <span class="nav-text">Linux Note</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-语言之解析局部变量返回"><span class="nav-number">1.0.1.</span> <span class="nav-text">C 语言之解析局部变量返回</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Linux-基础命令"><span class="nav-number">1.1.</span> <span class="nav-text">1. Linux 基础命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-0-创建用户"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.0 创建用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ln-软硬链接"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1 ln 软硬链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-find-grep-xargs"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.2 find grep xargs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-VIM"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.3 VIM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-GCC"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.4 GCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-库文件制作"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.5 库文件制作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Makefile"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.6 Makefile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-gdb-调试"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.7 gdb 调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-系统api与库函数的关系"><span class="nav-number">1.2.</span> <span class="nav-text">2. 系统api与库函数的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Linux-系统编程"><span class="nav-number">1.3.</span> <span class="nav-text">3. Linux 系统编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-IPC-概念"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 IPC 概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-进程和线程"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 进程和线程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">497k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">7:31</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

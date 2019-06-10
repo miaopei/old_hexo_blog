@@ -114,34 +114,37 @@
 
 
 
-  <meta name="keywords" content="FFmpeg">
+  <meta name="description" content="1. 学习大纲FFmpeg 常用命令：  视频录制命令 多媒体文件的分解/复用命令 裁剪与合并命令 图片/视频互转命令 直播相关命令 各种滤镜命令  FFmpeg 基本开发：  C 语言回顾 FFmpeg 核心概念与常用结构体 实战 - 多媒体文件的分解与复用 实战 - 多媒体格式的互转 实战 - 从 MP4 裁剪一段视频 作业 - 实现一个简单的小咖秀  音视频编解码实战：  实战">
+<meta name="keywords" content="FFmpeg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="音视频核心技术">
 <meta property="og:url" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="1. 学习大纲FFmpeg 常用命令：  视频录制命令 多媒体文件的分解/复用命令 裁剪与合并命令 图片/视频互转命令 直播相关命令 各种滤镜命令  FFmpeg 基本开发：  C 语言回顾 FFmpeg 核心概念与常用结构体 实战 - 多媒体文件的分解与复用 实战 - 多媒体格式的互转 实战 - 从 MP4 裁剪一段视频 作业 - 实现一个简单的小咖秀  音视频编解码实战：  实战">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-01.png">
-<meta property="og:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-02.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放器架构.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/渲染流程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg处理音视频流程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg基本信息查询命令.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/FFmpeg录屏命令.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/分解与复用-01.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/多媒体格式转换.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/SDL渲染基本原理.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放音频基本流程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/播放器线程模型.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/Android架构.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/java调用c方法二.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/注册Native方法的最佳时机.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/原始类型的Signature.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/类的Signature.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/_asset/例子.png">
-<meta property="og:updated_time" content="2019-06-03T08:10:56.878Z">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg音视频架构-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg音视频架构-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/播放器架构.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/渲染流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg处理音视频流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg基本信息查询命令.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg录屏命令.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/分解与复用-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/多媒体格式转换.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/SDL渲染基本原理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/播放音频基本流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/播放器线程模型.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Android架构.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/java调用c方法二.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/注册Native方法的最佳时机.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/原始类型的Signature.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/类的Signature.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/例子.png">
+<meta property="og:updated_time" content="2019-06-05T04:03:57.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音视频核心技术">
-<meta name="twitter:image" content="http://miaopei.github.io/imageFFmpeg/FFmpeg音视频架构-01.png">
+<meta name="twitter:description" content="1. 学习大纲FFmpeg 常用命令：  视频录制命令 多媒体文件的分解/复用命令 裁剪与合并命令 图片/视频互转命令 直播相关命令 各种滤镜命令  FFmpeg 基本开发：  C 语言回顾 FFmpeg 核心概念与常用结构体 实战 - 多媒体文件的分解与复用 实战 - 多媒体格式的互转 实战 - 从 MP4 裁剪一段视频 作业 - 实现一个简单的小咖秀  音视频编解码实战：  实战">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/FFmpeg音视频架构-01.png">
 
 
 
@@ -472,7 +475,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+                <time title="修改时间：2019-06-05 12:03:57" itemprop="dateModified" datetime="2019-06-05T12:03:57+08:00">2019-06-05</time>
               
             
           </span>
@@ -552,15 +555,11 @@
       
 
       
-        <img src="/imageFFmpeg/FFmpeg音视频架构-01.png">
+        <a id="more"></a>
 
+<img src="/images/imageFFmpeg/FFmpeg音视频架构-01.png">
 
-
-<a id="more"></a>
-
-
-
-<img src="/imageFFmpeg/FFmpeg音视频架构-02.png">
+<img src="/images/imageFFmpeg/FFmpeg音视频架构-02.png">
 
 <h2 id="1-学习大纲"><a href="#1-学习大纲" class="headerlink" title="1. 学习大纲"></a>1. 学习大纲</h2><p><strong>FFmpeg 常用命令</strong>：</p>
 <ul>
@@ -627,10 +626,10 @@
 <li>人工智能：人脸识别，智能音箱等，更关注算法</li>
 </ul>
 <p><strong>播放器架构</strong>：</p>
-<img src="_asset/播放器架构.png">
+<img src="/images/imageFFmpeg/播放器架构.png">
 
 <p><strong>渲染流程</strong>：</p>
-<img src="_asset/渲染流程.png">
+<img src="/images/imageFFmpeg/渲染流程.png">
 
 <p><strong>FFmpeg 都能做啥</strong>：</p>
 <ul>
@@ -653,17 +652,17 @@
 <li>直播相关</li>
 </ul>
 <p>除了 FFMPEG 的基本信息查询命令外，其它命令都按下图所示的流程处理音视频。</p>
-<img src="_asset/FFmpeg处理音视频流程.png">
+<img src="/images/imageFFmpeg/FFmpeg处理音视频流程.png">
 
-<img src="_asset/FFmpeg基本信息查询命令.png">
+<img src="/images/imageFFmpeg/FFmpeg基本信息查询命令.png">
 
-<img src="_asset/FFmpeg录屏命令.png">
+<img src="/images/imageFFmpeg/FFmpeg录屏命令.png">
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ffplay -s 2560x1600 -pix_fmt uyvy422 out.yuv</span></span><br></pre></td></tr></table></figure>
 
-<img src="_asset/分解与复用-01.png">
+<img src="/images/imageFFmpeg/分解与复用-01.png">
 
-<img src="_asset/多媒体格式转换.png">
+<img src="/images/imageFFmpeg/多媒体格式转换.png">
 
 <h2 id="3-初级开发内容"><a href="#3-初级开发内容" class="headerlink" title="3. 初级开发内容"></a>3. 初级开发内容</h2><ul>
 <li>FFmpeg 日志的使用及目录的操作</li>
@@ -847,7 +846,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SDL_PollEvent(); <span class="comment">// 轮询检测</span></span><br><span class="line">SDL_WaitEvent(); <span class="comment">// 常用的方式</span></span><br><span class="line">SDL_WaitEventTimeout();</span><br></pre></td></tr></table></figure>
 
 <h3 id="5-4-文理渲染"><a href="#5-4-文理渲染" class="headerlink" title="5.4 文理渲染"></a>5.4 文理渲染</h3><p>SDL 渲染基本原理：</p>
-<img src="_asset/SDL渲染基本原理.png">
+<img src="/images/imageFFmpeg/SDL渲染基本原理.png">
 
 <p>SDL 文理相关 API：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateTexture();</span><br><span class="line">- format: YUV, RGB</span><br><span class="line">- access: Texture 类型， Target， Stream</span><br><span class="line"></span><br><span class="line">SDL_DestroyTexture();</span><br></pre></td></tr></table></figure>
@@ -862,7 +861,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_UpdateTexture();</span><br><span class="line">SDL_UpdateYUVTexture();</span><br></pre></td></tr></table></figure>
 
 <h3 id="5-6-SDL-播放音频"><a href="#5-6-SDL-播放音频" class="headerlink" title="5.6 SDL 播放音频"></a>5.6 SDL 播放音频</h3><p>播放音频基本流程：</p>
-<img src="_asset/播放音频基本流程.png">
+<img src="/images/imageFFmpeg/播放音频基本流程.png">
 
 <p>播放音频的基本原则：</p>
 <ul>
@@ -920,7 +919,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_CreateCond() / SDL_DestroyCond();</span><br><span class="line">SDL_CondWait() / SDL_CondSignal();</span><br></pre></td></tr></table></figure>
 
 <h3 id="6-2-锁与条件变量的使用"><a href="#6-2-锁与条件变量的使用" class="headerlink" title="6.2 锁与条件变量的使用"></a>6.2 锁与条件变量的使用</h3><p>TODO</p>
-<h3 id="6-3-播放器线程模型"><a href="#6-3-播放器线程模型" class="headerlink" title="6.3 播放器线程模型"></a>6.3 播放器线程模型</h3><img src="_asset/播放器线程模型.png">
+<h3 id="6-3-播放器线程模型"><a href="#6-3-播放器线程模型" class="headerlink" title="6.3 播放器线程模型"></a>6.3 播放器线程模型</h3><img src="/images/imageFFmpeg/播放器线程模型.png">
 
 <h3 id="6-4-线程的退出机制"><a href="#6-4-线程的退出机制" class="headerlink" title="6.4 线程的退出机制"></a>6.4 线程的退出机制</h3><ul>
 <li>主线程接收到退出事件</li>
@@ -977,7 +976,7 @@
 <li>一般的做法，展示第一帧视频帧后，获得要显示的下一个视频帧的 PTS，然后设置一个定时器，当定时器超时时后，刷新新的视屏帧，如此反复操作。</li>
 </ul>
 <h2 id="7-如何在-Android-下使用-FFmpeg"><a href="#7-如何在-Android-下使用-FFmpeg" class="headerlink" title="7. 如何在 Android 下使用 FFmpeg"></a>7. 如何在 Android 下使用 FFmpeg</h2><p>Android 架构：</p>
-<img src="_asset/Android架构.png">
+<img src="/images/imageFFmpeg/Android架构.png">
 
 <p>内容：</p>
 <ul>
@@ -1002,9 +1001,9 @@
 </li>
 </ul>
 <p>Java调用C/C++方法二：</p>
-<img src="_asset/java调用c方法二.png">
+<img src="/images/imageFFmpeg/java调用c方法二.png">
 
-<img src="_asset/注册Native方法的最佳时机.png">
+<img src="/images/imageFFmpeg/注册Native方法的最佳时机.png">
 
 <p>什么是Signature：</p>
 <ul>
@@ -1012,11 +1011,11 @@
 <li>输入参数放在（）内，输出参数放在（）外</li>
 <li>多个参数之间顺序存放，且用 “；” 分割</li>
 </ul>
-<img src="_asset/原始类型的Signature.png">
+<img src="/images/imageFFmpeg/原始类型的Signature.png">
 
-<img src="_asset/类的Signature.png">
+<img src="/images/imageFFmpeg/类的Signature.png">
 
- <img src="_asset/例子.png">
+ <img src="/images/imageFFmpeg/例子.png">
 
 <p>C/C++ 调用 Java 方法：</p>
 <ul>
@@ -1205,7 +1204,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1236,7 +1235,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1289,7 +1294,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1398,7 +1407,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">223k</span>
+    <span title="站点总字数">497k</span>
   
 
   
@@ -1409,7 +1418,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">3:23</span>
+    <span title="站点阅读时长">7:31</span>
   
 
 </div>

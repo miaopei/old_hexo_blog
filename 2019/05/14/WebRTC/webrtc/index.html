@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="WebRTC WebRTC API Node.js v10.15.3 文档 廖雪峰 - nodejs  1. WebRTC 介绍">
+<meta name="keywords" content="WebRTC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebRTC">
+<meta property="og:url" content="http://miaopei.github.io/2019/05/14/WebRTC/webrtc/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="WebRTC WebRTC API Node.js v10.15.3 文档 廖雪峰 - nodejs  1. WebRTC 介绍">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc应用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc愿景.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/学习WebRTC的难点.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/学习路线.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/学习内容.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/学习收获.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTC能做啥.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/能学到什么.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc架构.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTC目录结构-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTC目录结构-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTCModules目录-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTCModules目录-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/PeerConnection调用过程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/调用时序图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/web服务工作原理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Nodejs工作原理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/JavaScript解析.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Nodejs事件处理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/两个V8引擎.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/https基本原理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/变量与类型.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/基本运算.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/ifelse.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/for循环.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/函数.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/enumerateDevices.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/JavaScript中的Promise.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/音视频采集API.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/getUserMedia的不同实现.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/适配置不同浏览器的方法.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/支持的特效种类.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaStream.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaStream事件.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaRecoder.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaRecorder参数.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaRecorderAPI-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaRecorderAPI-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaRecorder事件.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/JavaScript几种存储数据的方式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/getDisplayMedia.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令服务器的作用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/为什么要使用socketio.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/socketio工作原理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/完全锥型NAT.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/地址限制锥型NAT.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/端口限制锥型NAT.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/对称型NAT.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT穿越组合.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT类型判断.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT类型检测-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT类型检测-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/NAT类型检测-03.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNHeader格式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNMessageType.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNMessageType-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/C0C1.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUN消息类型.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/大小端模式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNMessageType-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TransactionID.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNMessageBody.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TLV.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RFC3489定义的属性.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Attribute的使用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURN例子.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURN使用的传输协议.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURNAllocate.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURNSendAndData.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURNChannel.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TURN的使用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/ICE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/ICECandidate.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Candidate关系图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SDP例子.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/连通性过程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/tcpdump.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/媒体协商过程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/协商状态变化.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/addTrackParameters.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/端对端连接的基本流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SessionDescription.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/TimeDescription.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/MediaDescription.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-03.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-04.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-05.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-06.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/字段含义-07.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/WebRTC中的SDP.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/STUNTURN服务器选型.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/coTurn服务器搭建与部署.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/coTurn服务器配置.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/测试turn服务.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPeerConnection-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Configurations-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Configurations-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Configurations-03.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Configurations-04.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/addIceCandidate.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/直播系统消息处理流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/createOffer.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/客户端状态机.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/客户端流程图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/客户端流程图-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/端对端连接的基本流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/注意要点.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/getDisplayMedia-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/需要注意的点.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Receiver和Sender.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCRtpSender属性.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCRtpReceiver.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCRtpSender.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTPMedia.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCRtpTransceiver.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTPMedia-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/chromeWebRTC-internals.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/createDataChannel.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/option-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/option-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/使用Options.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/DataChannel事件.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/创建RTCDataChannel.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/非音视频数据传输方式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/知识点.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/协议栈.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/传输协议.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTP协议.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTP字段说明.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCP包.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPPayloadType.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPHeader说明.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPSenderReport.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SenderInfomationBlock.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SenderInfo说明.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/ReportBlock.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/ReceiveReportBlock.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPReceiverReport.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPSR-RR发送时机.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPSDES.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SDESitem.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SDES说明.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPBYE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPAPP.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPAPP字段说明.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/DTLS.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/SRTP.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/主要内容.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/需要权限.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Android权限管理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/引入库.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令处理.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/AndroidSocketio.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/socketio接收消息.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/结构图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/呼叫端时序图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/被叫端时序图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/关闭时序图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc处理流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/重要类-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/重要类-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/两个观察者.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/权限库界面.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/收发信令.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/主要内容-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/主要内容-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/引入WebRTC库的方式.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/引入WebRTC库.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/Podfile.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/socketio的使用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/连接服务器.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/发送消息.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/注册侦听消息.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/媒体协商.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令时序图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/RTCPeerConnection委托.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/小结.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令服务器.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/JS客户端实现.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/JS客户端实现-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/进阶.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/进阶-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/行业痛点.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc分层协议图.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令会话协议.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/">
+<meta property="og:updated_time" content="2019-06-10T07:31:20.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebRTC">
+<meta name="twitter:description" content="WebRTC WebRTC API Node.js v10.15.3 文档 廖雪峰 - nodejs  1. WebRTC 介绍">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc应用.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/05/14/WebRTC/webrtc/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WebRTC | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/05/14/WebRTC/webrtc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">WebRTC
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-14 10:14:50" itemprop="dateCreated datePublished" datetime="2019-05-14T10:14:50+08:00">2019-05-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 15:31:20" itemprop="dateModified" datetime="2019-06-10T15:31:20+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="WebRTC"><a href="#WebRTC" class="headerlink" title="WebRTC"></a>WebRTC</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvQVBJL1dlYlJUQ19BUEk=" title="https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API">WebRTC API<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL25vZGVqcy5jbi9hcGkv" title="http://nodejs.cn/api/">Node.js v10.15.3 文档<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cubGlhb3h1ZWZlbmcuY29tL3dpa2kvMTAyMjkxMDgyMTE0OTMxMi8xMDIzMDI1MjM1MzU5MDQw" title="https://www.liaoxuefeng.com/wiki/1022910821149312/1023025235359040">廖雪峰 - nodejs<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="1-WebRTC-介绍"><a href="#1-WebRTC-介绍" class="headerlink" title="1. WebRTC 介绍"></a>1. WebRTC 介绍</h2><a id="more"></a>
+
+<ul>
+<li>Google 开源</li>
+<li>跨平台</li>
+<li>用于浏览器</li>
+<li>实时传输<ul>
+<li>100ms 延迟 通话质量非常好</li>
+<li>200ms 延迟 通话质量比较优质</li>
+<li>500ms 延迟 可以接受</li>
+<li>超过1s 非常迟滞</li>
+</ul>
+</li>
+<li>音视频引擎</li>
+</ul>
+<p>WebRTC 应用：</p>
+<img src="/images/imageWebRTC/webrtc应用.png">
+
+<p>WebRTC 愿景：</p>
+<img src="/images/imageWebRTC/webrtc愿景.png">
+
+<p>学习 WebRTC 的难点：</p>
+<img src="/images/imageWebRTC/学习WebRTC的难点.png">
+
+<p>学习路线：</p>
+<img src="/images/imageWebRTC/学习路线.png">
+
+<p>学习内容：</p>
+<img src="/images/imageWebRTC/学习内容.png">
+
+<p>学习收获：</p>
+<img src="/images/imageWebRTC/学习收获.png">
+
+<p>WebRTC能做啥：</p>
+<img src="/images/imageWebRTC/WebRTC能做啥.png">
+
+<p>能学到什么：</p>
+<img src="/images/imageWebRTC/能学到什么.png">
+
+<p>google webrtc 示例：<span class="exturl" data-url="aHR0cHM6Ly9hcHByLnRjLw==" title="https://appr.tc/">https://appr.tc/<i class="fa fa-external-link"></i></span></p>
+<h2 id="2-WebRTC-原理与架构"><a href="#2-WebRTC-原理与架构" class="headerlink" title="2. WebRTC 原理与架构"></a>2. WebRTC 原理与架构</h2><p>WebRTC 整体架构：</p>
+<img src="/images/imageWebRTC/webrtc架构.png">
+
+
+
+<p>WebRTC 的目录结构图：</p>
+<img src="/images/imageWebRTC/WebRTC目录结构-01.png">
+
+<img src="/images/imageWebRTC/WebRTC目录结构-02.png">
+
+<img src="/images/imageWebRTC/WebRTCModules目录-01.png">
+
+<img src="/images/imageWebRTC/WebRTCModules目录-02.png">
+
+<p>WebRTC 两个基本概念：轨与流</p>
+<ul>
+<li>Track</li>
+<li>MediaStream</li>
+</ul>
+<p>WebRTC重要类：</p>
+<ul>
+<li>MediaStream</li>
+<li>RTCPeerConnection</li>
+<li>RTCDataChannel</li>
+</ul>
+<p>PeerConnection调用过程：</p>
+<img src="/images/imageWebRTC/PeerConnection调用过程.png">
+
+
+
+<p>调用时序图：</p>
+<img src="/images/imageWebRTC/调用时序图.png">
+
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vY3RoZXIvcC9teVBlZXJDb25uZWN0aW9uLmh0bWw=" title="https://www.cnblogs.com/cther/p/myPeerConnection.html">WebRTC之PeerConnection的建立过程<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC80Mzk1N2VlMThmMWE=" title="https://www.jianshu.com/p/43957ee18f1a">WebRTC系列（3）：PeerConnection通信建立流程<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="3-Web服务器原理与Nodejs搭建"><a href="#3-Web服务器原理与Nodejs搭建" class="headerlink" title="3. Web服务器原理与Nodejs搭建"></a>3. Web服务器原理与Nodejs搭建</h2><p>Web服务器选型：</p>
+<ul>
+<li>Nodejs</li>
+<li>Nginx</li>
+<li>Apache</li>
+</ul>
+<p>Web服务工作原理：</p>
+<img src="/images/imageWebRTC/web服务工作原理.png">
+
+<p>Nodejs工作原理：</p>
+<img src="/images/imageWebRTC/Nodejs工作原理.png">
+
+<p>JavaScript解析：</p>
+<img src="/images/imageWebRTC/JavaScript解析.png">
+
+<p>Nodejs 事件处理：</p>
+<img src="/images/imageWebRTC/Nodejs事件处理.png">
+
+<p>两个V8引擎：</p>
+<img src="/images/imageWebRTC/两个V8引擎.png">
+
+<p>最简单的http服务：</p>
+<ul>
+<li><strong>require</strong> 引入http模块</li>
+<li>创建http服务</li>
+<li>侦听端口</li>
+</ul>
+<p>启动Nodejs服务：</p>
+<ul>
+<li>node app.js</li>
+<li>nohub node app.js</li>
+<li>forever start app.js</li>
+<li>pm2 start app.js</li>
+</ul>
+<p>Https基本原理：</p>
+<img src="/images/imageWebRTC/https基本原理.png">
+
+<p>Nodejs 搭建 https 服务：</p>
+<ul>
+<li>生成 HTTPS证书</li>
+<li>引入 HTTPS模块</li>
+<li>指定证书位置，并创建 HTTPS 服务</li>
+</ul>
+<p>真正的Web服务：</p>
+<ul>
+<li>引用 express 模块</li>
+<li>引入 server-index 模块</li>
+<li>指定发布目录</li>
+</ul>
+<h2 id="4-JavaScript-必备知识回顾"><a href="#4-JavaScript-必备知识回顾" class="headerlink" title="4. JavaScript 必备知识回顾"></a>4. JavaScript 必备知识回顾</h2><p>基础知识：</p>
+<ul>
+<li>变量与类型</li>
+<li>基本运算</li>
+<li><code>if/else</code></li>
+<li>for循环</li>
+<li>函数</li>
+<li>日志打印</li>
+</ul>
+<p>变量与类型：</p>
+<img src="/images/imageWebRTC/变量与类型.png">
+
+<p>基本运算：</p>
+<img src="/images/imageWebRTC/基本运算.png">
+
+<img src="/images/imageWebRTC/ifelse.png">
+
+<img src="/images/imageWebRTC/for循环.png">
+
+<img src="/images/imageWebRTC/函数.png">
+
+<h2 id="5-WebRTC设备管理"><a href="#5-WebRTC设备管理" class="headerlink" title="5. WebRTC设备管理"></a>5. WebRTC设备管理</h2><p>enumerateDevices：</p>
+<img src="/images/imageWebRTC/enumerateDevices.png">
+
+<p>JavaScript中的Promise：</p>
+<img src="/images/imageWebRTC/JavaScript中的Promise.png">
+
+<h2 id="6-WebRTC音视频数据采集"><a href="#6-WebRTC音视频数据采集" class="headerlink" title="6. WebRTC音视频数据采集"></a>6. WebRTC音视频数据采集</h2><p>音视频采集API：</p>
+<img src="/images/imageWebRTC/音视频采集API.png">
+
+<p>getUserMedia的不同实现：</p>
+<img src="/images/imageWebRTC/getUserMedia的不同实现.png">
+
+<p>适配置不同浏览器的方法：</p>
+<img src="/images/imageWebRTC/适配置不同浏览器的方法.png">
+
+<p><code>https://webrtc.github.io/adapter/adapter-latest.js</code></p>
+<p>WebRTC音视频采集约束：</p>
+<p>约束详解：</p>
+<ul>
+<li><p>width</p>
+</li>
+<li><p>height</p>
+<p>宽高比例：<code>4:3</code>  <code>16:9</code></p>
+</li>
+<li><p>aspectRatio</p>
+</li>
+<li><p>frameRate</p>
+</li>
+<li><p>facingMode</p>
+<ul>
+<li>user - 前置摄像头</li>
+<li>environment - 后置摄像头</li>
+<li>left - 前置左侧摄像头</li>
+<li>right - 前置右侧摄像头</li>
+</ul>
+</li>
+<li><p>resizeMode</p>
+</li>
+</ul>
+<p>音频约束详解：</p>
+<ul>
+<li>volume - <code>范围 0 - 1.0</code></li>
+<li>sampleRate</li>
+<li>sampleSize -  一般16位</li>
+<li>echoCancellation - 回音消除</li>
+<li>autoGainControl - 是否在原有声音基础上增加音量</li>
+<li>noiseSuppression - 降噪</li>
+<li>latency - 延迟大小</li>
+<li>channelCount - 声道  乐器一般是双声道</li>
+<li>deviceID - 作用是多个设备切换</li>
+<li>groupID </li>
+</ul>
+<p>WebRTC约束例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    audio: true,</span><br><span class="line">    video: &#123;</span><br><span class="line">        width: &#123;</span><br><span class="line">            min: 300,</span><br><span class="line">            max: 640,</span><br><span class="line">        &#125;,</span><br><span class="line">        height: &#123;</span><br><span class="line">            min: 300,</span><br><span class="line">            max: 480,</span><br><span class="line">        &#125;,</span><br><span class="line">        frameRate: &#123;</span><br><span class="line">            min: 15,</span><br><span class="line">            max: 30,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>浏览器视频特效：</p>
+<ul>
+<li>CSS filter，<code>-webkit-filter/filter</code></li>
+<li>如何将 video 与 filter 关联</li>
+<li>OpenGL/Metal/…</li>
+</ul>
+<p>支持的特效种类：</p>
+<img src="/images/imageWebRTC/支持的特效种类.png">
+
+<p>保存图片是实现滤镜效果，可以对 canvas.data 进行数据修改。</p>
+<p>MediaStream API 获取视频约束：</p>
+<img src="/images/imageWebRTC/MediaStream.png">
+
+<img src="/images/imageWebRTC/MediaStream事件.png">
+
+<h2 id="7-WebRTC音视频录制实战"><a href="#7-WebRTC音视频录制实战" class="headerlink" title="7. WebRTC音视频录制实战"></a>7. WebRTC音视频录制实战</h2><h3 id="7-1-WebRTC录制基本知识"><a href="#7-1-WebRTC录制基本知识" class="headerlink" title="7.1 WebRTC录制基本知识"></a>7.1 WebRTC录制基本知识</h3><p>MediaRecoder类：</p>
+<img src="/images/imageWebRTC/MediaRecoder.png">
+
+<img src="/images/imageWebRTC/MediaRecorder参数.png">
+
+<img src="/images/imageWebRTC/MediaRecorderAPI-01.png">
+
+<img src="/images/imageWebRTC/MediaRecorderAPI-02.png">
+
+<img src="/images/imageWebRTC/MediaRecorder事件.png">
+
+<img src="/images/imageWebRTC/JavaScript几种存储数据的方式.png">
+
+<h3 id="7-2-WebRTC-捕获桌面"><a href="#7-2-WebRTC-捕获桌面" class="headerlink" title="7.2 WebRTC 捕获桌面"></a>7.2 WebRTC 捕获桌面</h3><img src="/images/imageWebRTC/getDisplayMedia.png">
+
+<p>捕获桌面需要设置Chrome，具体 操作：<span class="exturl" data-url="Y2hyb21lOi8vZmxhZ3MvI2VuYWJsZS1leHBlcmltZW50YWwtd2ViLXBsYXRmb3JtLWZlYXR1cmVz" title="chrome://flags/#enable-experimental-web-platform-features">chrome://flags/#enable-experimental-web-platform-features<i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>Experimental Web Platform features 设置为 enable</li>
+</ul>
+<h2 id="8-WebRTC信令服务器实现"><a href="#8-WebRTC信令服务器实现" class="headerlink" title="8. WebRTC信令服务器实现"></a>8. WebRTC信令服务器实现</h2><p>如果没有信令服务器WebRTC之间是不能通信的。</p>
+<p>两个client之间通信必须有两个信息通过信令服务器的：</p>
+<ul>
+<li>媒体信息， SDP</li>
+<li>网络信息</li>
+<li>具体的业务</li>
+</ul>
+<img src="/images/imageWebRTC/信令服务器的作用.png">
+
+<img src="/images/imageWebRTC/为什么要使用socketio.png">
+
+<img src="/images/imageWebRTC/socketio工作原理.png">
+
+<p>Socket.IO 发送消息：</p>
+<ul>
+<li><p>给本次连接发送消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.emit()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给某个房间内所有人发送消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.in(room).emit()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>除本链接外，给某个房间内所有人发送消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.to(room).emit()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>除本链接外，给所有人发送消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.broadcast.emit()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>Socket.IO 客户端处理消息：</p>
+<ul>
+<li><p>发送 action 命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S: socket.emit(<span class="string">'action'</span>);</span><br><span class="line">C: socket.on(<span class="string">'action'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送了一个 action 命令，还有 data 数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S: socket.emit(<span class="string">'action'</span>, data);</span><br><span class="line">C: socket.on(<span class="string">'action'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;...&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送了 action 命令，还有两个数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S: socket.emit(<span class="string">'action'</span>, arg1, arg2);</span><br><span class="line">C: socket.on(<span class="string">'action'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>)</span>&#123;...&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送了一个 action 命令，在 emit 方法中包含回调函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S: socket.emit(<span class="string">'action'</span>, data, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>)</span>&#123;...&#125;;</span><br><span class="line">C: socket.on(<span class="string">'action'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, fn</span>)</span>&#123;fn(<span class="string">'a'</span>, <span class="string">'b'</span>);&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="8-1-实战-通过-socket-io-实现信令服务器"><a href="#8-1-实战-通过-socket-io-实现信令服务器" class="headerlink" title="8.1 [实战] 通过 socket.io 实现信令服务器"></a>8.1 [实战] 通过 socket.io 实现信令服务器</h3><p>改造服务端的基本流程：</p>
+<ul>
+<li>安装 socket.io</li>
+<li>引入 socket.io</li>
+<li>处理 connection 消息</li>
+</ul>
+<h2 id="9-WebRTC网络基础补充：P2P-STUN-TRUN-ICE知识"><a href="#9-WebRTC网络基础补充：P2P-STUN-TRUN-ICE知识" class="headerlink" title="9. WebRTC网络基础补充：P2P/STUN/TRUN/ICE知识"></a>9. WebRTC网络基础补充：P2P/STUN/TRUN/ICE知识</h2><h3 id="9-1-WebRTC-网络传输基本知识"><a href="#9-1-WebRTC-网络传输基本知识" class="headerlink" title="9.1 WebRTC 网络传输基本知识"></a>9.1 WebRTC 网络传输基本知识</h3><p>WebRTC 传输基本知识：</p>
+<ul>
+<li>NAT（Network Address Translator）</li>
+<li>STUN（Simple Traversal of UDP Through NAT）</li>
+<li>TURN（Travelsal Using Relays around NAT）</li>
+<li>ICE（Interactive Connectivity Establishment）</li>
+</ul>
+<img src="/images/imageWebRTC/NAT.png">
+
+<p>NAT 产生的原因：</p>
+<ul>
+<li>由于IPv4的地址不够</li>
+<li>处于网络安全的原因</li>
+</ul>
+<p>NAT 的种类：</p>
+<ul>
+<li>完全锥型 NAT（Full Cone NAT）</li>
+<li>地址限制锥型 NAT（Address Restricted Cone NAT）</li>
+<li>端口限制锥型 NAT（Port Restricted Cone NAT）</li>
+<li>对称型 NAT（Symmetric NAT）</li>
+</ul>
+<h3 id="9-2-NAT-打洞原理"><a href="#9-2-NAT-打洞原理" class="headerlink" title="9.2 NAT 打洞原理"></a>9.2 NAT 打洞原理</h3><img src="/images/imageWebRTC/完全锥型NAT.png">
+
+<img src="/images/imageWebRTC/地址限制锥型NAT.png">
+
+<img src="/images/imageWebRTC/端口限制锥型NAT.png">
+
+<img src="/images/imageWebRTC/对称型NAT.png">
+
+<p>NAT 穿越原理：</p>
+<ul>
+<li>C1，C2 向 STUN 发消息</li>
+<li>交换公网 IP 及 端口</li>
+<li>C1 -&gt; C2，C2 -&gt; C1，甚至是端口猜测</li>
+</ul>
+<img src="/images/imageWebRTC/NAT穿越组合.png">
+
+<h3 id="9-3-NAT-类型检测"><a href="#9-3-NAT-类型检测" class="headerlink" title="9.3 NAT 类型检测"></a>9.3 NAT 类型检测</h3><img src="/images/imageWebRTC/NAT类型判断.png">
+
+<p>公网 IP：</p>
+<img src="/images/imageWebRTC/NAT类型检测-01.png">
+
+<p>如果 Client 收到的 IP 和第一次发出去的 IP 是不一样的，则是对称型 NAT，如果是一样的需要进一步判断：</p>
+<img src="/images/imageWebRTC/NAT类型检测-02.png">
+
+<p>Client 通过 Port2 发送消息到 STUN Port1，STUN Server 通过 Port2 给 Client 回消息，如果 Client 能收到消息，则说明是 IP 限制型的；如果不能收到，则说明是端口限制型的：</p>
+<img src="/images/imageWebRTC/NAT类型检测-03.png">
+
+<h3 id="9-4-【协议规范】STUN-协议一"><a href="#9-4-【协议规范】STUN-协议一" class="headerlink" title="9.4 【协议规范】STUN 协议一"></a>9.4 【协议规范】STUN 协议一</h3><p>STUN 介绍：</p>
+<ul>
+<li>STUN 存在的目的就是进行 NAT 穿越</li>
+<li>STUN 是典型的客户端 / 服务器模式。客户端发送请求，服务端进行响应</li>
+</ul>
+<p>RFC STUN 规范：</p>
+<ul>
+<li><p><strong>RFC3489/STUN</strong></p>
+<p>SImple Traversal of UDP Trough NAT</p>
+</li>
+<li><p><strong>RFC5389/STUN</strong> — 包含UDP和TCP</p>
+<p>Session Traversal Utilities for NAT</p>
+</li>
+</ul>
+<p>STUN 协议：</p>
+<ul>
+<li>包括 20 字节的 STUN header</li>
+<li>Body 中可以有 0 个或多个 Attribute</li>
+</ul>
+<p>STUN header（RFC3489）：</p>
+<ul>
+<li>其中 2 个字节（16bit）类型</li>
+<li>2 个字节（16bit）消息长度，不包括消息头</li>
+<li>16 个字节（128bit）事物ID，请求与响应事物 ID 相同</li>
+</ul>
+<p>STUN header（RFC5389）格式：</p>
+<img src="/images/imageWebRTC/STUNHeader格式.png">
+
+<img src="/images/imageWebRTC/STUNMessageType.png">
+
+<p>M 代表请求值，C 代表分类：</p>
+<img src="/images/imageWebRTC/STUNMessageType-01.png">
+
+<img src="/images/imageWebRTC/C0C1.png">
+
+<p>RFC5389 把私密类型去掉了：</p>
+<img src="/images/imageWebRTC/STUN消息类型.png">
+
+<h3 id="9-5-【协议规范】STUN-协议二"><a href="#9-5-【协议规范】STUN-协议二" class="headerlink" title="9.5 【协议规范】STUN 协议二"></a>9.5 【协议规范】STUN 协议二</h3><p>Inter 机子都是小端模式：</p>
+<img src="/images/imageWebRTC/大小端模式.png">
+
+<img src="/images/imageWebRTC/STUNMessageType-02.png">
+
+<img src="/images/imageWebRTC/TransactionID.png">
+
+<img src="/images/imageWebRTC/STUNMessageBody.png">
+
+<img src="/images/imageWebRTC/TLV.png">
+
+<img src="/images/imageWebRTC/RFC3489定义的属性.png">
+
+<img src="/images/imageWebRTC/Attribute的使用.png">
+
+<h3 id="9-6-【协议规范】TURN-协议"><a href="#9-6-【协议规范】TURN-协议" class="headerlink" title="9.6 【协议规范】TURN 协议"></a>9.6 【协议规范】TURN 协议</h3><p>TURN 介绍：</p>
+<ul>
+<li>其目的是解决对称 NAT 无法穿越的问题</li>
+<li>其建立在 STUN 之上，消息格式使用 STUN 格式消息</li>
+<li>TURN Client 要求服务端分配一个公共 IP 和 Port 用于接受 或 发送数据</li>
+</ul>
+<img src="/images/imageWebRTC/TURN例子.png">
+
+<img src="/images/imageWebRTC/TURN使用的传输协议.png">
+
+<img src="/images/imageWebRTC/TURNAllocate.png">
+
+<p>TURN 发送机制：</p>
+<ul>
+<li>Send 和 Data</li>
+<li>Channel</li>
+</ul>
+<img src="/images/imageWebRTC/TURNSendAndData.png">
+
+<img src="/images/imageWebRTC/TURNChannel.png">
+
+<img src="/images/imageWebRTC/TURN的使用.png">
+
+<h3 id="9-7-【协议规范】ICE-框架"><a href="#9-7-【协议规范】ICE-框架" class="headerlink" title="9.7 【协议规范】ICE 框架"></a>9.7 【协议规范】ICE 框架</h3><img src="/images/imageWebRTC/ICE.png">
+
+<img src="/images/imageWebRTC/ICECandidate.png">
+
+<p>Candidate 类型：</p>
+<ul>
+<li>主机候选者</li>
+<li>反射侯选者</li>
+<li>中继候选者</li>
+</ul>
+<p>ICE 具体做些什么：</p>
+<ul>
+<li>收集 Candidate</li>
+<li>对 Candidate Pair 排序</li>
+<li>连通性检查</li>
+</ul>
+<img src="/images/imageWebRTC/Candidate关系图.png">
+
+<p>收集 Candidate：</p>
+<ul>
+<li>Host Candidate：本机所有 IP 和指定端口</li>
+<li>Reflexive Candidate：STUN/TURN</li>
+<li>Relay Candidate：TURN</li>
+</ul>
+<p>什么是 SDP：</p>
+<ul>
+<li><strong>SDP（Session Description Protocol）</strong> 它只是一种信息格式的描述标准，本身不属于传输协议，但是可以被其他传输协议用来交换必要的信息。</li>
+</ul>
+<img src="/images/imageWebRTC/SDP例子.png">
+
+<p>形成 Candidate Pair：</p>
+<ul>
+<li>一方收集到所有候选者后，通过信令传给对方</li>
+<li>同样，另一方收到候选者后，也做收集工作</li>
+<li>当双方拿到全部列表后，将侯选者形成匹配对儿</li>
+</ul>
+<p>连通性检查：</p>
+<ul>
+<li>对侯选者进行优先级排序</li>
+<li>对每个侯选对进行发送检查</li>
+<li>对每个侯选对进行接收检查</li>
+</ul>
+<img src="/images/imageWebRTC/连通性过程.png">
+
+<h3 id="9-8-网络协议分析方法-tcpdump-与-wireshark讲解"><a href="#9-8-网络协议分析方法-tcpdump-与-wireshark讲解" class="headerlink" title="9.8 网络协议分析方法 tcpdump 与 wireshark讲解"></a>9.8 网络协议分析方法 tcpdump 与 wireshark讲解</h3><p>常用工具：</p>
+<ul>
+<li>Linux 服务端用 tcpdump</li>
+<li>其它端 WireShark</li>
+</ul>
+<img src="/images/imageWebRTC/tcpdump.png">
+
+<h3 id="9-9-网络协议分析方法-tcpdump-与-wireshark-实战"><a href="#9-9-网络协议分析方法-tcpdump-与-wireshark-实战" class="headerlink" title="9.9 网络协议分析方法 tcpdump 与 wireshark 实战"></a>9.9 网络协议分析方法 tcpdump 与 wireshark 实战</h3><p>vim 打开二进制数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">：%！xxd</span><br></pre></td></tr></table></figure>
+
+<p>WireShark 中的逻辑运算：</p>
+<ul>
+<li>与：and 或 &amp;&amp;</li>
+<li>或：or 或 ||</li>
+<li>非：not 或 ！</li>
+</ul>
+<p>WireShark 中判断语句：</p>
+<ul>
+<li>等于：eq 或 ==</li>
+<li>小于：lt 或 &lt;</li>
+<li>大于：gt 或 &gt;</li>
+<li>小于等于：le 或 &lt;=</li>
+<li>大于等于：ge 或 &gt;=</li>
+<li>不等于：ne 或 !=</li>
+</ul>
+<p>WireShark 按协议过滤：</p>
+<ul>
+<li>stun</li>
+<li>tcp</li>
+<li>udp</li>
+</ul>
+<p>模拟STUN数据可以使用这个网站中的工具：<span class="exturl" data-url="aHR0cHM6Ly93ZWJydGMuZ2l0aHViLmlvL3NhbXBsZXM=" title="https://webrtc.github.io/samples">https://webrtc.github.io/samples<i class="fa fa-external-link"></i></span></p>
+<p>Wireshark 按 IP 过滤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip.dst == 192.168.1.2</span><br><span class="line">ip.src == 192.168.1.2</span><br><span class="line">ip.addr == 192.168.1.2</span><br></pre></td></tr></table></figure>
+
+<p>WireShark 按 port 过滤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcp.port == 8080</span><br><span class="line">udp.port == 3478</span><br><span class="line">udp.dstport == 3478</span><br><span class="line">udp.srcport == 3478</span><br></pre></td></tr></table></figure>
+
+<p>WireShark 过滤长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">udp.length &lt; 30</span><br><span class="line">tcp.length &lt; 30</span><br><span class="line">http.content_length &lt; 30</span><br></pre></td></tr></table></figure>
+
+<p>WireShark 过滤内容：</p>
+<p>TODO</p>
+<h2 id="10-端对端1V1传输基本流程"><a href="#10-端对端1V1传输基本流程" class="headerlink" title="10. 端对端1V1传输基本流程"></a>10. 端对端1V1传输基本流程</h2><h3 id="10-1-媒体能力协商过程"><a href="#10-1-媒体能力协商过程" class="headerlink" title="10.1 媒体能力协商过程"></a>10.1 媒体能力协商过程</h3><p>WebRTC 端对端连接：</p>
+<p><strong>RTCPeerConnection</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pc = <span class="keyword">new</span> RTCPeerConnection([configuration]);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>RTCPeerConnection 方法分类</strong>：</p>
+<ul>
+<li>媒体协商</li>
+<li>Stream/Track</li>
+<li>传输相关方法</li>
+<li>统计相关方法</li>
+</ul>
+<img src="/images/imageWebRTC/媒体协商过程.png">
+
+<img src="/images/imageWebRTC/协商状态变化.png">
+
+<p><strong>媒体协商方法</strong>：</p>
+<ul>
+<li>createOffer</li>
+<li>createAnswer</li>
+<li>setLocakDescription</li>
+<li>setRemoteDescription</li>
+</ul>
+<p><strong>createOffer</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aPromise = myPeerConnection.createOffer([options]);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>createAnswer</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aPromise = myPeerConnection.createAnswer([options]);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>setLocakDescription</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aPromise = myPc.setLocalDescription(sessionDescription);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>setRemoteDescription</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aPromise = myPc.setRemoteDescription(sessionDescription);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>Track 方法</strong>：</p>
+<ul>
+<li>addTrack</li>
+<li>removeTrack</li>
+</ul>
+<p><strong>addTrack</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rtpSender = myPc.addTrack(track, stream...);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Parameters</p>
+<img src="/images/imageWebRTC/addTrackParameters.png">
+
+</li>
+</ul>
+<p><strong>removeTrack</strong>：</p>
+<ul>
+<li><p>基本格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myPc.remoteTrack(rtpSender);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>重要事件</strong>：</p>
+<ul>
+<li>onnegotiationneeded  - 协商的时候触发这个事件</li>
+<li>onicecandidate - 当收到 ICE 候选者的时候触发这个事件</li>
+</ul>
+<h3 id="10-2-1-1-连接的基本流程"><a href="#10-2-1-1-连接的基本流程" class="headerlink" title="10.2 1:1 连接的基本流程"></a>10.2 1:1 连接的基本流程</h3><img src="/images/imageWebRTC/端对端连接的基本流程.png">
+
+<p><strong>A 与 B 通信，大的方向分为三部分</strong>：</p>
+<ul>
+<li>媒体协商部分</li>
+<li>ICE 候选者的交换、连接、检测部分</li>
+<li>媒体数据流的通信部分</li>
+</ul>
+<h3 id="10-3-【实战】WebRTC-视频传输"><a href="#10-3-【实战】WebRTC-视频传输" class="headerlink" title="10.3 【实战】WebRTC 视频传输"></a>10.3 【实战】WebRTC 视频传输</h3><p>TODO</p>
+<h3 id="10-4-【实战】显示通讯双方的-SDP-内容"><a href="#10-4-【实战】显示通讯双方的-SDP-内容" class="headerlink" title="10.4 【实战】显示通讯双方的 SDP 内容"></a>10.4 【实战】显示通讯双方的 SDP 内容</h3><p>TODO</p>
+<h2 id="11-WebRTC核心之SDP详解"><a href="#11-WebRTC核心之SDP详解" class="headerlink" title="11. WebRTC核心之SDP详解"></a>11. WebRTC核心之SDP详解</h2><h3 id="11-1-【协议规范】SDP-规范"><a href="#11-1-【协议规范】SDP-规范" class="headerlink" title="11.1 【协议规范】SDP 规范"></a>11.1 【协议规范】SDP 规范</h3><p><strong>SDP 规范</strong>：</p>
+<ul>
+<li>会话层</li>
+<li>媒体层</li>
+</ul>
+<p>可以把会话层看做树根，媒体层看成树干。</p>
+<p><strong>会话层</strong>：</p>
+<ul>
+<li>会话的名称与目的</li>
+<li>会话的存活时间</li>
+<li>会话中包含多个媒体信息</li>
+</ul>
+<p><strong>SDP 媒体信息</strong>：</p>
+<ul>
+<li>媒体格式</li>
+<li>传输协议</li>
+<li>传输 IP 和 端口</li>
+<li>媒体负载类型</li>
+</ul>
+<p><strong>SDP 格式</strong>：</p>
+<ul>
+<li>由多个 <code>&lt;type&gt;=&lt;value&gt;</code> 组成</li>
+<li>一个会话级描述</li>
+<li>多个媒体级描述</li>
+</ul>
+<p><strong>SDP 结构</strong>：</p>
+<ul>
+<li>Session Description</li>
+<li>Time Description</li>
+<li>Media Description</li>
+</ul>
+<img src="/images/imageWebRTC/SessionDescription.png">
+
+<img src="/images/imageWebRTC/TimeDescription.png">
+
+<img src="/images/imageWebRTC/MediaDescription.png">
+
+<img src="/images/imageWebRTC/字段含义-01.png">
+
+<img src="/images/imageWebRTC/字段含义-02.png">
+
+<img src="/images/imageWebRTC/字段含义-03.png">
+
+<img src="/images/imageWebRTC/字段含义-04.png">
+
+<img src="/images/imageWebRTC/字段含义-05.png">
+
+<img src="/images/imageWebRTC/字段含义-06.png">
+
+<img src="/images/imageWebRTC/字段含义-07.png">
+
+<h3 id="11-2-【协议规范】WebRTC-中的-SDP"><a href="#11-2-【协议规范】WebRTC-中的-SDP" class="headerlink" title="11.2 【协议规范】WebRTC 中的 SDP"></a>11.2 【协议规范】WebRTC 中的 SDP</h3><img src="/images/imageWebRTC/WebRTC中的SDP.png">
+
+<h3 id="11-3-【详解】WebRTC-中-Offer-Answer-SDP"><a href="#11-3-【详解】WebRTC-中-Offer-Answer-SDP" class="headerlink" title="11.3 【详解】WebRTC 中 Offer_Answer SDP"></a>11.3 【详解】WebRTC 中 Offer_Answer SDP</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="12-实现1V1音视频实时互动直播系统"><a href="#12-实现1V1音视频实时互动直播系统" class="headerlink" title="12. 实现1V1音视频实时互动直播系统"></a>12. 实现1V1音视频实时互动直播系统</h2><h3 id="12-1-STUN-TURN-服务器搭建"><a href="#12-1-STUN-TURN-服务器搭建" class="headerlink" title="12.1 STUN/TURN 服务器搭建"></a>12.1 STUN/TURN 服务器搭建</h3><p>coTurn Download Address：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvdHVybi9jb3R1cm4=" title="https://github.com/coturn/coturn">https://github.com/coturn/coturn<i class="fa fa-external-link"></i></span></p>
+<p>ICE 测试地址：<span class="exturl" data-url="aHR0cHM6Ly93ZWJydGMuZ2l0aHViLmlvL3NhbXBsZXM=" title="https://webrtc.github.io/samples">https://webrtc.github.io/samples<i class="fa fa-external-link"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 turn server</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> turnserver -c /usr/<span class="built_in">local</span>/coturn/etc/turnserver.conf</span></span><br></pre></td></tr></table></figure>
+
+<img src="/images/imageWebRTC/STUNTURN服务器选型.png">
+
+<img src="/images/imageWebRTC/coTurn服务器搭建与部署.png">
+
+<img src="/images/imageWebRTC/coTurn服务器配置.png">
+
+<img src="/images/imageWebRTC/测试turn服务.png">
+
+<h3 id="12-2-【参数介绍】再论-RTCPeerConnection"><a href="#12-2-【参数介绍】再论-RTCPeerConnection" class="headerlink" title="12.2 【参数介绍】再论 RTCPeerConnection"></a>12.2 【参数介绍】再论 RTCPeerConnection</h3><img src="/images/imageWebRTC/RTCPeerConnection-01.png">
+
+<img src="/images/imageWebRTC/Configurations-01.png">
+
+<img src="/images/imageWebRTC/Configurations-02.png">
+
+<img src="/images/imageWebRTC/Configurations-03.png">
+
+<img src="/images/imageWebRTC/Configurations-04.png">
+
+<img src="/images/imageWebRTC/addIceCandidate.png">
+
+<h3 id="12-3-直播系统中的信令及其逻辑关系"><a href="#12-3-直播系统中的信令及其逻辑关系" class="headerlink" title="12.3 直播系统中的信令及其逻辑关系"></a>12.3 直播系统中的信令及其逻辑关系</h3><p>【实战】真正的音视频传输</p>
+<p><strong>客户端信令消息</strong>：</p>
+<ul>
+<li>join 加入房间</li>
+<li>leave 离开房间</li>
+<li>message 端到端消息</li>
+</ul>
+<p><strong>端到端信令消息</strong>：</p>
+<ul>
+<li>Offer 消息</li>
+<li>Answer 消息</li>
+<li>Candidate 消息</li>
+</ul>
+<p><strong>服务端信令消息</strong>：</p>
+<ul>
+<li>joined 已加入房间</li>
+<li>otherjoin 其它用户加入房间</li>
+<li>full 房间人数已满</li>
+<li>leaved 已离开房间</li>
+<li>bye 对方离开房间</li>
+</ul>
+<img src="/images/imageWebRTC/直播系统消息处理流程.png">
+
+<h3 id="12-4-实现-1：1-音视频实时互动信令服务器"><a href="#12-4-实现-1：1-音视频实时互动信令服务器" class="headerlink" title="12.4 实现 1：1 音视频实时互动信令服务器"></a>12.4 实现 1：1 音视频实时互动信令服务器</h3><p>信令服务器改造</p>
+<p>TODO</p>
+<h3 id="12-5-再论CreateOffer"><a href="#12-5-再论CreateOffer" class="headerlink" title="12.5 再论CreateOffer"></a>12.5 再论CreateOffer</h3><img src="/images/imageWebRTC/createOffer.png">
+
+<p><strong>CreateOffer 实战</strong>：</p>
+<ul>
+<li>接收远端音频</li>
+<li>接收远端视频</li>
+<li>静音检测</li>
+<li>ICE restart</li>
+</ul>
+<h3 id="12-6-WebRTC-客户端状态机及处理逻辑"><a href="#12-6-WebRTC-客户端状态机及处理逻辑" class="headerlink" title="12.6 WebRTC 客户端状态机及处理逻辑"></a>12.6 WebRTC 客户端状态机及处理逻辑</h3><p>直播客户端的实现：</p>
+<img src="/images/imageWebRTC/客户端状态机.png">
+
+<img src="/images/imageWebRTC/客户端流程图.png">
+
+<img src="/images/imageWebRTC/客户端流程图-01.png">
+
+<img src="/images/imageWebRTC/端对端连接的基本流程.png">
+
+<h3 id="12-7-WebRTC-客户端的实现"><a href="#12-7-WebRTC-客户端的实现" class="headerlink" title="12.7 WebRTC 客户端的实现"></a>12.7 WebRTC 客户端的实现</h3><img src="/images/imageWebRTC/注意要点.png">
+
+<h3 id="12-8-共享远程桌面"><a href="#12-8-共享远程桌面" class="headerlink" title="12.8 共享远程桌面"></a>12.8 共享远程桌面</h3><img src="/images/imageWebRTC/getDisplayMedia-01.png">
+
+<img src="/images/imageWebRTC/需要注意的点.png">
+
+<h2 id="13-WebRTC核心之RTP媒体控制与数据统计"><a href="#13-WebRTC核心之RTP媒体控制与数据统计" class="headerlink" title="13. WebRTC核心之RTP媒体控制与数据统计"></a>13. WebRTC核心之RTP媒体控制与数据统计</h2><h3 id="13-1-RTPPReceiver-发送器"><a href="#13-1-RTPPReceiver-发送器" class="headerlink" title="13.1 RTPPReceiver 发送器"></a>13.1 RTPPReceiver 发送器</h3><p>RTP Media</p>
+<img src="/images/imageWebRTC/Receiver和Sender.png">
+
+<img src="/images/imageWebRTC/RTCRtpSender属性.png">
+
+<img src="/images/imageWebRTC/RTCRtpReceiver.png">
+
+<h3 id="13-2-RTPSender-发送器"><a href="#13-2-RTPSender-发送器" class="headerlink" title="13.2 RTPSender 发送器"></a>13.2 RTPSender 发送器</h3><img src="/images/imageWebRTC/RTCRtpSender.png">
+
+<img src="/images/imageWebRTC/RTPMedia.png">
+
+<img src="/images/imageWebRTC/RTCRtpTransceiver.png">
+
+<h3 id="13-3-传输速率的控制"><a href="#13-3-传输速率的控制" class="headerlink" title="13.3 传输速率的控制"></a>13.3 传输速率的控制</h3><img src="/images/imageWebRTC/RTPMedia-01.png">
+
+<img src="/images/imageWebRTC/chromeWebRTC-internals.png">
+
+<p>chrome WebRTC 状态查询地址：<span class="exturl" data-url="Y2hyb21lOi8vd2VicnRjLWludGVybmFscw==" title="chrome://webrtc-internals">chrome://webrtc-internals<i class="fa fa-external-link"></i></span></p>
+<h3 id="13-4-【实战】WebRTC统计信息"><a href="#13-4-【实战】WebRTC统计信息" class="headerlink" title="13.4 【实战】WebRTC统计信息"></a>13.4 【实战】WebRTC统计信息</h3><p>TODO</p>
+<h2 id="14-WebRTC非音视频数据传输"><a href="#14-WebRTC非音视频数据传输" class="headerlink" title="14. WebRTC非音视频数据传输"></a>14. WebRTC非音视频数据传输</h2><h3 id="14-1-传输非音视频数据基础知识"><a href="#14-1-传输非音视频数据基础知识" class="headerlink" title="14.1 传输非音视频数据基础知识"></a>14.1 传输非音视频数据基础知识</h3><img src="/images/imageWebRTC/createDataChannel.png">
+
+<img src="/images/imageWebRTC/option-01.png">
+
+<img src="/images/imageWebRTC/option-02.png">
+
+<img src="/images/imageWebRTC/使用Options.png">
+
+<img src="/images/imageWebRTC/DataChannel事件.png">
+
+<img src="/images/imageWebRTC/创建RTCDataChannel.png">
+
+<img src="/images/imageWebRTC/非音视频数据传输方式.png">
+
+<ul>
+<li>Reliability：可靠性</li>
+<li>Delivery：可达性</li>
+<li>Transmission：传输方式</li>
+<li>Flow control：流控</li>
+<li>Congestion control：拥塞控制</li>
+</ul>
+<h3 id="14-2-端到端文本聊天"><a href="#14-2-端到端文本聊天" class="headerlink" title="14.2 端到端文本聊天"></a>14.2 端到端文本聊天</h3><p>TODO</p>
+<h3 id="14-3-文件实时传输"><a href="#14-3-文件实时传输" class="headerlink" title="14.3 文件实时传输"></a>14.3 文件实时传输</h3><img src="/images/imageWebRTC/知识点.png">
+
+<h2 id="15-WebRTC实时数据传输网络协议详解"><a href="#15-WebRTC实时数据传输网络协议详解" class="headerlink" title="15. WebRTC实时数据传输网络协议详解"></a>15. WebRTC实时数据传输网络协议详解</h2><h3 id="15-1-【协议规范】RTP-SRTP协议头详解"><a href="#15-1-【协议规范】RTP-SRTP协议头详解" class="headerlink" title="15.1 【协议规范】RTP-SRTP协议头详解"></a>15.1 【协议规范】RTP-SRTP协议头详解</h3><img src="/images/imageWebRTC/协议栈.png">
+
+<img src="/images/imageWebRTC/传输协议.png">
+
+<img src="/images/imageWebRTC/RTP协议.png">
+
+<img src="/images/imageWebRTC/RTP字段说明.png">
+
+<h3 id="15-2-【协议规范】RTCP-中的-SR-与-RR-报文"><a href="#15-2-【协议规范】RTCP-中的-SR-与-RR-报文" class="headerlink" title="15.2 【协议规范】RTCP 中的 SR 与 RR 报文"></a>15.2 【协议规范】RTCP 中的 SR 与 RR 报文</h3><img src="/images/imageWebRTC/RTCP包.png">
+
+<img src="/images/imageWebRTC/RTCPPayloadType.png">
+
+<img src="/images/imageWebRTC/RTCPHeader.png">
+
+<img src="/images/imageWebRTC/RTCPHeader说明.png">
+
+<img src="/images/imageWebRTC/RTCPSenderReport.png">
+
+<img src="/images/imageWebRTC/SenderInfomationBlock.png">
+
+<img src="/images/imageWebRTC/SenderInfo说明.png">
+
+<img src="/images/imageWebRTC/ReportBlock.png">
+
+<img src="/images/imageWebRTC/ReceiveReportBlock.png">
+
+<img src="/images/imageWebRTC/RTCPReceiverReport.png">
+
+<img src="/images/imageWebRTC/RTCPSR-RR发送时机.png">
+
+<img src="/images/imageWebRTC/RTCPSDES.png">
+
+<img src="/images/imageWebRTC/SDESitem.png">
+
+<img src="/images/imageWebRTC/SDES说明.png">
+
+<img src="/images/imageWebRTC/RTCPBYE.png">
+
+<img src="/images/imageWebRTC/RTCPAPP.png">
+
+<img src="/images/imageWebRTC/RTCPAPP字段说明.png">
+
+<h3 id="15-3-【协议规范】DTSL"><a href="#15-3-【协议规范】DTSL" class="headerlink" title="15.3 【协议规范】DTSL"></a>15.3 【协议规范】DTSL</h3><img src="/images/imageWebRTC/DTLS.png">
+
+<img src="/images/imageWebRTC/SRTP.png">
+
+<h3 id="15-4-wireshark-分析-rtp-rtcp-包"><a href="#15-4-wireshark-分析-rtp-rtcp-包" class="headerlink" title="15.4 wireshark 分析 rtp-rtcp 包"></a>15.4 wireshark 分析 rtp-rtcp 包</h3><p>TODO</p>
+<h2 id="16-Android端与浏览器互通"><a href="#16-Android端与浏览器互通" class="headerlink" title="16. Android端与浏览器互通"></a>16. Android端与浏览器互通</h2><h3 id="16-1-Android-与浏览器互通"><a href="#16-1-Android-与浏览器互通" class="headerlink" title="16.1 Android 与浏览器互通"></a>16.1 Android 与浏览器互通</h3><img src="/images/imageWebRTC/主要内容.png">
+
+<img src="/images/imageWebRTC/需要权限.png">
+
+<img src="/images/imageWebRTC/Android权限管理.png">
+
+<img src="/images/imageWebRTC/引入库.png">
+
+<img src="/images/imageWebRTC/信令处理.png">
+
+<img src="/images/imageWebRTC/AndroidSocketio.png">
+
+<img src="/images/imageWebRTC/socketio接收消息.png">
+
+<h3 id="16-2-WebRTCNative-开发逻辑"><a href="#16-2-WebRTCNative-开发逻辑" class="headerlink" title="16.2 WebRTCNative 开发逻辑"></a>16.2 WebRTCNative 开发逻辑</h3><img src="/images/imageWebRTC/结构图.png">
+
+<img src="/images/imageWebRTC/呼叫端时序图.png">
+
+<img src="/images/imageWebRTC/被叫端时序图.png">
+
+<img src="/images/imageWebRTC/关闭时序图.png">
+
+<img src="/images/imageWebRTC/webrtc处理流程.png">
+
+<img src="/images/imageWebRTC/重要类-01.png">
+
+<img src="/images/imageWebRTC/重要类-02.png">
+
+<img src="/images/imageWebRTC/两个观察者.png">
+
+<h3 id="16-3-实战-权限申请-库的引入与界面"><a href="#16-3-实战-权限申请-库的引入与界面" class="headerlink" title="16.3 实战-权限申请-库的引入与界面"></a>16.3 实战-权限申请-库的引入与界面</h3><img src="/images/imageWebRTC/权限库界面.png">
+
+<h3 id="16-4-实战-通过-socket-io-实现信令收发"><a href="#16-4-实战-通过-socket-io-实现信令收发" class="headerlink" title="16.4 实战-通过 socket.io 实现信令收发"></a>16.4 实战-通过 socket.io 实现信令收发</h3><img src="/images/imageWebRTC/收发信令.png">
+
+<h3 id="16-5-实战-Android-与浏览器互通"><a href="#16-5-实战-Android-与浏览器互通" class="headerlink" title="16.5 实战-Android 与浏览器互通"></a>16.5 实战-Android 与浏览器互通</h3><p>创建 PeerConnection：</p>
+<ul>
+<li>音视频数据采集</li>
+<li>创建 PeerConnection</li>
+</ul>
+<p>媒体能力协商：</p>
+<ul>
+<li>协商媒体能力</li>
+<li>Candidate 连通</li>
+<li>视频渲染</li>
+</ul>
+<h2 id="17-iOS端与浏览器互通"><a href="#17-iOS端与浏览器互通" class="headerlink" title="17. iOS端与浏览器互通"></a>17. iOS端与浏览器互通</h2><h3 id="17-1-IOS权限获取"><a href="#17-1-IOS权限获取" class="headerlink" title="17.1 IOS权限获取"></a>17.1 IOS权限获取</h3><img src="/images/imageWebRTC/主要内容-01.png">
+
+<img src="/images/imageWebRTC/主要内容-02.png">
+
+<h3 id="17-2-IOS引入WebRTC库"><a href="#17-2-IOS引入WebRTC库" class="headerlink" title="17.2 IOS引入WebRTC库"></a>17.2 IOS引入WebRTC库</h3><img src="/images/imageWebRTC/引入WebRTC库的方式.png">
+
+<img src="/images/imageWebRTC/引入WebRTC库.png">
+
+<img src="/images/imageWebRTC/Podfile.png">
+
+<h3 id="17-3-IOS端SocketIO的使用"><a href="#17-3-IOS端SocketIO的使用" class="headerlink" title="17.3 IOS端SocketIO的使用"></a>17.3 IOS端SocketIO的使用</h3><img src="/images/imageWebRTC/socketio的使用.png">
+
+<img src="/images/imageWebRTC/连接服务器.png">
+
+<img src="/images/imageWebRTC/发送消息.png">
+
+<img src="/images/imageWebRTC/注册侦听消息.png">
+
+<h3 id="17-4-IOS界面布局"><a href="#17-4-IOS界面布局" class="headerlink" title="17.4 IOS界面布局"></a>17.4 IOS界面布局</h3><p>TODO</p>
+<h3 id="17-5-IOS本地视频采集与展示"><a href="#17-5-IOS本地视频采集与展示" class="headerlink" title="17.5 IOS本地视频采集与展示"></a>17.5 IOS本地视频采集与展示</h3><p>TODO</p>
+<h3 id="17-6-IOS端RTCPeerConnection"><a href="#17-6-IOS端RTCPeerConnection" class="headerlink" title="17.6 IOS端RTCPeerConnection"></a>17.6 IOS端RTCPeerConnection</h3><p>TODO</p>
+<h3 id="17-7-IOS媒体协商"><a href="#17-7-IOS媒体协商" class="headerlink" title="17.7 IOS媒体协商"></a>17.7 IOS媒体协商</h3><img src="/images/imageWebRTC/媒体协商.png">
+
+<img src="/images/imageWebRTC/信令时序图.png">
+
+<h3 id="17-8-IOS远端视频渲染"><a href="#17-8-IOS远端视频渲染" class="headerlink" title="17.8 IOS远端视频渲染"></a>17.8 IOS远端视频渲染</h3><img src="/images/imageWebRTC/RTCPeerConnection委托.png">
+
+<h2 id="18-课程总结"><a href="#18-课程总结" class="headerlink" title="18. 课程总结"></a>18. 课程总结</h2><img src="/images/imageWebRTC/小结.png">
+
+<img src="/images/imageWebRTC/信令服务器.png">
+
+<img src="/images/imageWebRTC/JS客户端实现.png">
+
+<img src="/images/imageWebRTC/JS客户端实现-01.png">
+
+<img src="/images/imageWebRTC/进阶.png">
+
+<img src="/images/imageWebRTC/进阶-01.png">
+
+<img src="/images/imageWebRTC/行业痛点.png">
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81YzUxMTIxOWU1MWQ0NTUyMmMzMDY2Yzk=" title="https://juejin.im/post/5c511219e51d45522c3066c9">JavaScript 是如何工作的:WebRTC 和对等网络的机制！<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDAxMTQwMzU5Nw==" title="https://segmentfault.com/a/1190000011403597">深入理解WebRTC<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Zpc2htYWkvYXJ0aWNsZS9kZXRhaWxzLzY5NjgxNTk1" title="https://blog.csdn.net/fishmai/article/details/69681595">WebRTC架构简介<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmFycmV0bGVlLmNvbS9ibG9nLzIwMTUvMTAvMDUvaG93LXRvLWJ1aWxkLWEtaHR0cHMtc2VydmVyLw==" title="https://www.barretlee.com/blog/2015/10/05/how-to-build-a-https-server/">HTTPS证书生成原理和部署细节<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC85MDkxZWJkNDM5YTA=" title="https://www.jianshu.com/p/9091ebd439a0">SSL证书生成流程<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ncmFkbGUub3JnL2luc3RhbGwv" title="https://gradle.org/install/">Gradle官网<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3Rvb2xzLmFuZHJvaWQtc3R1ZGlvLm9yZy9pbmRleC5waHAvOS10b29scy8xMDktYW5kcm9pZC10b29scy1kb3dubG9hZA==" title="http://tools.android-studio.org/index.php/9-tools/109-android-tools-download">Gradle 包<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC8zNmU1NjljMWJiMTI=" title="https://www.jianshu.com/p/36e569c1bb12">Mac下AndroidStudio中手动配置Gradle<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>WebRTC的分层协议图：</p>
+<img src="/images/imageWebRTC/webrtc分层协议图.png">
+
+<p>信令，会话和协议：</p>
+<img src="/images/imageWebRTC/信令会话协议.png">
+
+<img src="/images/imageWebRTC/">
+
+<img src="/images/imageWebRTC/">
+
+<h2 id="问题解决里程"><a href="#问题解决里程" class="headerlink" title="问题解决里程"></a>问题解决里程</h2><p>node 启动 server 报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">events.js:141</span><br><span class="line">      throw er; // Unhandled 'error' event</span><br><span class="line">      ^</span><br><span class="line"></span><br><span class="line">Error: listen EACCES 0.0.0.0:443</span><br><span class="line">    at Object.exports._errnoException (util.js:870:11)</span><br><span class="line">    at exports._exceptionWithHostPort (util.js:893:20)</span><br><span class="line">    at Server._listen2 (net.js:1224:19)</span><br><span class="line">    at listen (net.js:1273:10)</span><br><span class="line">    at net.js:1382:9</span><br><span class="line">    at nextTickCallbackWith3Args (node.js:452:9)</span><br><span class="line">    at process._tickCallback (node.js:358:17)</span><br><span class="line">    at Function.Module.runMain (module.js:444:11)</span><br><span class="line">    at startup (node.js:136:18)</span><br><span class="line">    at node.js:966:3</span><br><span class="line"><span class="meta">[Solve]$</span><span class="bash"> sudo <span class="built_in">setcap</span> <span class="string">'cap_net_bind_service=+ep'</span> $(readlink -f $(<span class="built_in">which</span> node))</span></span><br></pre></td></tr></table></figure>
+
+<p>查询端口是否别占用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> netstat -ntpl | grep 443</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="VIM-快捷键温习"><a href="#VIM-快捷键温习" class="headerlink" title="VIM 快捷键温习"></a>VIM 快捷键温习</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93eG5hY3kuY29tLzIwMTcvMDkvMjIvdmltLXBsdWdpbi10ZXJuLw==" title="https://wxnacy.com/2017/09/22/vim-plugin-tern/">Vim 插件 tern_for_vim Javascript 自动补全<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5jbmJsb2dzLmNvbS9qaXFpbmd3dS9hcmNoaXZlLzIwMTIvMDYvMTQvdmltX25vdGVzLmh0bWwjaWQxMDc=" title="http://www.cnblogs.com/jiqingwu/archive/2012/06/14/vim_notes.html#id107">最全的vim快捷键<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>vim 格式化文本，调整缩进：</p>
+<blockquote>
+<p>= 是格式化文本的快捷方法， 当你发现代码缩进的不整齐的，可以用这个快速对齐它们。</p>
+<p>直接按＝号就可以，不能进入命令模式（以 “:” 冒号开始的命令行）。</p>
+<p>gg=G ：从头格到尾，爽。</p>
+<p>＝＝ 格式化一行</p>
+<p>如要格式化一段代码，可以先选中这些代码，再按＝号。</p>
+<p>调整缩进还有个比较慢的办法，按＞＞，向右缩进一格，＜＜向左缩进一格。</p>
+</blockquote>
+<p>vim常用快捷键总结：</p>
+<ul>
+<li><p>光标移动到行首：0</p>
+</li>
+<li><p>光标移动到行尾：$</p>
+</li>
+<li><p>光标移动到文件开始：GG</p>
+</li>
+<li><p>光标移动到文件末尾：shift +G</p>
+</li>
+<li><p>先前翻页：Ctrl+f</p>
+</li>
+<li><p>向后翻页：Ctrl+b</p>
+</li>
+<li><p>删至行首：d0</p>
+</li>
+<li><p>删至行尾：d$</p>
+</li>
+<li><p>删除当前行及其后面n-1行：ndd</p>
+</li>
+<li><p>删除当前字符：x</p>
+</li>
+<li><p>删除当前字符的前一个字符：X</p>
+</li>
+<li><p>删除当前字符：dl</p>
+</li>
+<li><p>删除到第三个字符的结尾位置：d3w</p>
+</li>
+<li><p>删除到某个单词的末尾：dw</p>
+</li>
+<li><p>删除到某个单词的开始：db</p>
+</li>
+<li><p>删除当前行到文件的末尾：dG</p>
+</li>
+<li><p>删除当前行到文件第一行：dH</p>
+</li>
+<li><p>删除知道屏幕上最后一行：dL</p>
+</li>
+<li><p>替换当前行所有temp为hehe：:s/temp/hehe/g</p>
+</li>
+<li><p>替换每行中第一个#include为hehe：:%s/#include/hehe/</p>
+</li>
+<li><p>替换每行中所有的#include为hehe：:%s/#include/hehe/g</p>
+</li>
+<li><p>替换第n行开始到最后一行中每一行的第一个#include为hehe：:n,$s/#include/hehe/</p>
+</li>
+<li><p>替换第n行开始到最后一行中每一行的所有#include为hehe：:n,$s/#include/hehe/g</p>
+</li>
+<li><p>替换当前行到末尾的所有#include为hehe：:.,$s/#include/hehe/g</p>
+</li>
+<li><p>替换正文中所有出现的#include为hehe：:1,$s/#include/hehe/g</p>
+</li>
+<li><p>回复上一步操作：u</p>
+</li>
+<li><p>全部回复操作：shift + u</p>
+</li>
+<li><p>重做上一步操作：Ctrl + r</p>
+</li>
+<li><p>把下一行合并到当前行尾：J</p>
+</li>
+<li><p>选中当前行及其后面的n-1行：nV</p>
+</li>
+<li><p>复制当前光标到此单词末尾：yw</p>
+</li>
+<li><p>批量添加注释：Ctrl+v可视模式，上、下、左、右移动光标选择若干行开头；Shift+i进入插入模式；输入// 者；按Esc</p>
+</li>
+<li><p>批量去掉注释：Ctrl+v可视模式，上、下、左、右移动关闭选择要删除的注释符，如//或#；按d删除</p>
+</li>
+<li><p>横向打开另一个窗口：:sp 文件名</p>
+</li>
+<li><p>竖向打开另一个窗口：:vsp 文件名</p>
+</li>
+<li><p>关闭当前打开的所有窗口：:qa</p>
+</li>
+<li><p>选择当前字符所在的单词：Ctrl+v可视模式，然后a+w或i+w</p>
+</li>
+<li><p>选择当前字符所在的段落：Ctrl+v可视模视，然后i+p或a+p</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="苗沛 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WebRTC/" rel="tag"> <i class="fa fa-tag"></i> WebRTC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/09/FFmpeg/ffmpeg编程基础和一些常见问题的解答/" rel="next" title="ffmpeg编程基础和一些常见问题的解答">
+                <i class="fa fa-chevron-left"></i> ffmpeg编程基础和一些常见问题的解答
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WebRTC"><span class="nav-number">1.</span> <span class="nav-text">WebRTC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-WebRTC-介绍"><span class="nav-number">1.1.</span> <span class="nav-text">1. WebRTC 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-WebRTC-原理与架构"><span class="nav-number">1.2.</span> <span class="nav-text">2. WebRTC 原理与架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Web服务器原理与Nodejs搭建"><span class="nav-number">1.3.</span> <span class="nav-text">3. Web服务器原理与Nodejs搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-JavaScript-必备知识回顾"><span class="nav-number">1.4.</span> <span class="nav-text">4. JavaScript 必备知识回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-WebRTC设备管理"><span class="nav-number">1.5.</span> <span class="nav-text">5. WebRTC设备管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-WebRTC音视频数据采集"><span class="nav-number">1.6.</span> <span class="nav-text">6. WebRTC音视频数据采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-WebRTC音视频录制实战"><span class="nav-number">1.7.</span> <span class="nav-text">7. WebRTC音视频录制实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-WebRTC录制基本知识"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 WebRTC录制基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-WebRTC-捕获桌面"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 WebRTC 捕获桌面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-WebRTC信令服务器实现"><span class="nav-number">1.8.</span> <span class="nav-text">8. WebRTC信令服务器实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-实战-通过-socket-io-实现信令服务器"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 [实战] 通过 socket.io 实现信令服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-WebRTC网络基础补充：P2P-STUN-TRUN-ICE知识"><span class="nav-number">1.9.</span> <span class="nav-text">9. WebRTC网络基础补充：P2P/STUN/TRUN/ICE知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-WebRTC-网络传输基本知识"><span class="nav-number">1.9.1.</span> <span class="nav-text">9.1 WebRTC 网络传输基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-NAT-打洞原理"><span class="nav-number">1.9.2.</span> <span class="nav-text">9.2 NAT 打洞原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-NAT-类型检测"><span class="nav-number">1.9.3.</span> <span class="nav-text">9.3 NAT 类型检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-【协议规范】STUN-协议一"><span class="nav-number">1.9.4.</span> <span class="nav-text">9.4 【协议规范】STUN 协议一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-5-【协议规范】STUN-协议二"><span class="nav-number">1.9.5.</span> <span class="nav-text">9.5 【协议规范】STUN 协议二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-6-【协议规范】TURN-协议"><span class="nav-number">1.9.6.</span> <span class="nav-text">9.6 【协议规范】TURN 协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-7-【协议规范】ICE-框架"><span class="nav-number">1.9.7.</span> <span class="nav-text">9.7 【协议规范】ICE 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-8-网络协议分析方法-tcpdump-与-wireshark讲解"><span class="nav-number">1.9.8.</span> <span class="nav-text">9.8 网络协议分析方法 tcpdump 与 wireshark讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-9-网络协议分析方法-tcpdump-与-wireshark-实战"><span class="nav-number">1.9.9.</span> <span class="nav-text">9.9 网络协议分析方法 tcpdump 与 wireshark 实战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-端对端1V1传输基本流程"><span class="nav-number">1.10.</span> <span class="nav-text">10. 端对端1V1传输基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-媒体能力协商过程"><span class="nav-number">1.10.1.</span> <span class="nav-text">10.1 媒体能力协商过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-1-1-连接的基本流程"><span class="nav-number">1.10.2.</span> <span class="nav-text">10.2 1:1 连接的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-【实战】WebRTC-视频传输"><span class="nav-number">1.10.3.</span> <span class="nav-text">10.3 【实战】WebRTC 视频传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-【实战】显示通讯双方的-SDP-内容"><span class="nav-number">1.10.4.</span> <span class="nav-text">10.4 【实战】显示通讯双方的 SDP 内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-WebRTC核心之SDP详解"><span class="nav-number">1.11.</span> <span class="nav-text">11. WebRTC核心之SDP详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-【协议规范】SDP-规范"><span class="nav-number">1.11.1.</span> <span class="nav-text">11.1 【协议规范】SDP 规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-【协议规范】WebRTC-中的-SDP"><span class="nav-number">1.11.2.</span> <span class="nav-text">11.2 【协议规范】WebRTC 中的 SDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-3-【详解】WebRTC-中-Offer-Answer-SDP"><span class="nav-number">1.11.3.</span> <span class="nav-text">11.3 【详解】WebRTC 中 Offer_Answer SDP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-实现1V1音视频实时互动直播系统"><span class="nav-number">1.12.</span> <span class="nav-text">12. 实现1V1音视频实时互动直播系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-STUN-TURN-服务器搭建"><span class="nav-number">1.12.1.</span> <span class="nav-text">12.1 STUN/TURN 服务器搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-【参数介绍】再论-RTCPeerConnection"><span class="nav-number">1.12.2.</span> <span class="nav-text">12.2 【参数介绍】再论 RTCPeerConnection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-直播系统中的信令及其逻辑关系"><span class="nav-number">1.12.3.</span> <span class="nav-text">12.3 直播系统中的信令及其逻辑关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-4-实现-1：1-音视频实时互动信令服务器"><span class="nav-number">1.12.4.</span> <span class="nav-text">12.4 实现 1：1 音视频实时互动信令服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-5-再论CreateOffer"><span class="nav-number">1.12.5.</span> <span class="nav-text">12.5 再论CreateOffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-6-WebRTC-客户端状态机及处理逻辑"><span class="nav-number">1.12.6.</span> <span class="nav-text">12.6 WebRTC 客户端状态机及处理逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-7-WebRTC-客户端的实现"><span class="nav-number">1.12.7.</span> <span class="nav-text">12.7 WebRTC 客户端的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-8-共享远程桌面"><span class="nav-number">1.12.8.</span> <span class="nav-text">12.8 共享远程桌面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-WebRTC核心之RTP媒体控制与数据统计"><span class="nav-number">1.13.</span> <span class="nav-text">13. WebRTC核心之RTP媒体控制与数据统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-RTPPReceiver-发送器"><span class="nav-number">1.13.1.</span> <span class="nav-text">13.1 RTPPReceiver 发送器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-RTPSender-发送器"><span class="nav-number">1.13.2.</span> <span class="nav-text">13.2 RTPSender 发送器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-3-传输速率的控制"><span class="nav-number">1.13.3.</span> <span class="nav-text">13.3 传输速率的控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-4-【实战】WebRTC统计信息"><span class="nav-number">1.13.4.</span> <span class="nav-text">13.4 【实战】WebRTC统计信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-WebRTC非音视频数据传输"><span class="nav-number">1.14.</span> <span class="nav-text">14. WebRTC非音视频数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#14-1-传输非音视频数据基础知识"><span class="nav-number">1.14.1.</span> <span class="nav-text">14.1 传输非音视频数据基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-2-端到端文本聊天"><span class="nav-number">1.14.2.</span> <span class="nav-text">14.2 端到端文本聊天</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-3-文件实时传输"><span class="nav-number">1.14.3.</span> <span class="nav-text">14.3 文件实时传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-WebRTC实时数据传输网络协议详解"><span class="nav-number">1.15.</span> <span class="nav-text">15. WebRTC实时数据传输网络协议详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#15-1-【协议规范】RTP-SRTP协议头详解"><span class="nav-number">1.15.1.</span> <span class="nav-text">15.1 【协议规范】RTP-SRTP协议头详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-2-【协议规范】RTCP-中的-SR-与-RR-报文"><span class="nav-number">1.15.2.</span> <span class="nav-text">15.2 【协议规范】RTCP 中的 SR 与 RR 报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-3-【协议规范】DTSL"><span class="nav-number">1.15.3.</span> <span class="nav-text">15.3 【协议规范】DTSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-4-wireshark-分析-rtp-rtcp-包"><span class="nav-number">1.15.4.</span> <span class="nav-text">15.4 wireshark 分析 rtp-rtcp 包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-Android端与浏览器互通"><span class="nav-number">1.16.</span> <span class="nav-text">16. Android端与浏览器互通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-1-Android-与浏览器互通"><span class="nav-number">1.16.1.</span> <span class="nav-text">16.1 Android 与浏览器互通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-2-WebRTCNative-开发逻辑"><span class="nav-number">1.16.2.</span> <span class="nav-text">16.2 WebRTCNative 开发逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-3-实战-权限申请-库的引入与界面"><span class="nav-number">1.16.3.</span> <span class="nav-text">16.3 实战-权限申请-库的引入与界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-4-实战-通过-socket-io-实现信令收发"><span class="nav-number">1.16.4.</span> <span class="nav-text">16.4 实战-通过 socket.io 实现信令收发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-5-实战-Android-与浏览器互通"><span class="nav-number">1.16.5.</span> <span class="nav-text">16.5 实战-Android 与浏览器互通</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-iOS端与浏览器互通"><span class="nav-number">1.17.</span> <span class="nav-text">17. iOS端与浏览器互通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#17-1-IOS权限获取"><span class="nav-number">1.17.1.</span> <span class="nav-text">17.1 IOS权限获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-2-IOS引入WebRTC库"><span class="nav-number">1.17.2.</span> <span class="nav-text">17.2 IOS引入WebRTC库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-3-IOS端SocketIO的使用"><span class="nav-number">1.17.3.</span> <span class="nav-text">17.3 IOS端SocketIO的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-4-IOS界面布局"><span class="nav-number">1.17.4.</span> <span class="nav-text">17.4 IOS界面布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-5-IOS本地视频采集与展示"><span class="nav-number">1.17.5.</span> <span class="nav-text">17.5 IOS本地视频采集与展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-6-IOS端RTCPeerConnection"><span class="nav-number">1.17.6.</span> <span class="nav-text">17.6 IOS端RTCPeerConnection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-7-IOS媒体协商"><span class="nav-number">1.17.7.</span> <span class="nav-text">17.7 IOS媒体协商</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-8-IOS远端视频渲染"><span class="nav-number">1.17.8.</span> <span class="nav-text">17.8 IOS远端视频渲染</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-课程总结"><span class="nav-number">1.18.</span> <span class="nav-text">18. 课程总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.19.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题解决里程"><span class="nav-number">1.20.</span> <span class="nav-text">问题解决里程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VIM-快捷键温习"><span class="nav-number">1.21.</span> <span class="nav-text">VIM 快捷键温习</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">497k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">7:31</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>

@@ -114,24 +114,24 @@
 
 
 
-  <meta name="description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。 2. FFMPEG 目录及作用 libavc">
+  <meta name="description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。">
 <meta name="keywords" content="FFmpeg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFmpeg命令大全">
 <meta property="og:url" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
-<meta property="og:description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。 2. FFMPEG 目录及作用 libavc">
+<meta property="og:description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/音视频处理流程.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/分解与复用.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/简单滤镜.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/简单滤镜-01.png">
-<meta property="og:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/复杂滤镜.png">
-<meta property="og:updated_time" content="2019-06-03T08:10:56.878Z">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/音视频处理流程.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/分解与复用.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/简单滤镜.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/简单滤镜-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/复杂滤镜.png">
+<meta property="og:updated_time" content="2019-06-05T04:03:57.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg命令大全">
-<meta name="twitter:description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。 2. FFMPEG 目录及作用 libavc">
-<meta name="twitter:image" content="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/_asset/音视频处理流程.png">
+<meta name="twitter:description" content="1. 前言FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。 本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/音视频处理流程.png">
 
 
 
@@ -462,7 +462,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+                <time title="修改时间：2019-06-05 12:03:57" itemprop="dateModified" datetime="2019-06-05T12:03:57+08:00">2019-06-05</time>
               
             
           </span>
@@ -544,6 +544,8 @@
       
         <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>FFMPEG 是特别强大的专门用于处理音视频的开源库。你既可以使用它的 API 对音视频进行处理，也可以使用它提供的工具，如 ffmpeg, ffplay, ffprobe，来编辑你的音视频文件。</p>
 <p>本文将简要介绍一下 FFMPEG 库的基本目录结构及其功能，然后详细介绍一下我们在日常工作中，如何使用 ffmpeg 提供的工具来处理音视频文件。</p>
+<a id="more"></a>
+
 <h2 id="2-FFMPEG-目录及作用"><a href="#2-FFMPEG-目录及作用" class="headerlink" title="2. FFMPEG 目录及作用"></a>2. FFMPEG 目录及作用</h2><ul>
 <li>libavcodec： 提供了一系列编码器的实现。</li>
 <li>libavformat： 实现在流协议，容器格式及其本IO访问。</li>
@@ -553,10 +555,6 @@
 <li>libswresample： 实现了混音和重采样。</li>
 <li>libswscale： 实现了色彩转换和缩放工能。</li>
 </ul>
-<a id="more"></a>
-
-
-
 <h2 id="3-FFMPEG-基本概念"><a href="#3-FFMPEG-基本概念" class="headerlink" title="3. FFMPEG 基本概念"></a>3. FFMPEG 基本概念</h2><p>在讲解 FFMPEG 命令之前，我们先要介绍一些音视频格式的基要概念。</p>
 <ul>
 <li><p>音／视频流</p>
@@ -581,7 +579,7 @@
 <li>直播相关</li>
 </ul>
 <p>除了 FFMPEG 的基本信息查询命令外，其它命令都按下图所示的流程处理音视频。</p>
-<img src="_asset/音视频处理流程.png">
+<img src="/images/imageFFmpeg/音视频处理流程.png">
 
 <p>然后将编码的数据包传送给解码器（除非为数据流选择了流拷贝，请参阅进一步描述）。 解码器产生未压缩的帧（原始视频/ PCM音频/ …），可以通过滤波进一步处理（见下一节）。 在过滤之后，帧被传递到编码器，编码器并输出编码的数据包。 最后，这些传递给复用器，将编码的数据包写入输出文件。</p>
 <p>默认情况下，ffmpeg只包含输入文件中每种类型（视频，音频，字幕）的一个流，并将其添加到每个输出文件中。 它根据以下标准挑选每一个的“最佳”：对于视频，它是具有最高分辨率的流，对于音频，它是具有最多channel的流，对于字幕，是第一个字幕流。 在相同类型的几个流相等的情况下，选择具有最低索引的流。</p>
@@ -838,7 +836,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ffmpeg  -f avfoundation -i :0 -ar 44100 -f s16le out.pcm</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="8-分解与复用"><a href="#8-分解与复用" class="headerlink" title="8. 分解与复用"></a>8. 分解与复用</h2><p>流拷贝是通过将 copy 参数提供给-codec选项来选择流的模式。它使得ffmpeg省略了指定流的解码和编码步骤，所以它只能进行多路分解和多路复用。 这对于更改容器格式或修改容器级元数据很有用。 在这种情况下，上图将简化为：</p>
-<img src="_asset/分解与复用.png">
+<img src="/images/imageFFmpeg/分解与复用.png">
 
 <p>由于没有解码或编码，速度非常快，没有质量损失。 但是，由于许多因素，在某些情况下可能无法正常工作。 应用过滤器显然也是不可能的，因为过滤器处理未压缩的数据。</p>
 <p><strong>抽取音频流</strong></p>
@@ -886,14 +884,14 @@
 
 <h2 id="10-滤镜"><a href="#10-滤镜" class="headerlink" title="10. 滤镜"></a>10. <strong>滤镜</strong></h2><p>在编码之前，ffmpeg 可以使用 libavfilter 库中的过滤器处理原始音频和视频帧。 几个链式过滤器形成一个过滤器图形。 ffmpeg 区分两种类型的过滤器图形：简单和复杂。</p>
 <h3 id="10-1-简单滤镜"><a href="#10-1-简单滤镜" class="headerlink" title="10.1 简单滤镜"></a>10.1 简单滤镜</h3><p>简单的过滤器图是那些只有一个输入和输出，都是相同的类型。 在上面的图中，它们可以通过在解码和编码之间插入一个额外的步骤来表示：</p>
-<img src="_asset/简单滤镜.png">
+<img src="/images/imageFFmpeg/简单滤镜.png">
 
 <p>简单的 filtergraphs 配置了 per-stream-filter 选项（分别为视频和音频使用 <code>-vf</code> 和 <code>-af</code> 别名）。 一个简单的视频 filtergraph 可以看起来像这样的例子：</p>
-<img src="_asset/简单滤镜-01.png">
+<img src="/images/imageFFmpeg/简单滤镜-01.png">
 
 <p>请注意，某些滤镜会更改帧属性，但不会改变帧内容。 例如。 上例中的 fps 过滤器会改变帧数，但不会触及帧内容。 另一个例子是 setpts 过滤器，它只设置时间戳，否则不改变帧。</p>
 <h3 id="10-2-复杂滤镜"><a href="#10-2-复杂滤镜" class="headerlink" title="10.2 复杂滤镜"></a>10.2 复杂滤镜</h3><p>复杂的过滤器图是那些不能简单描述为应用于一个流的线性处理链的过滤器图。 例如，当图形有多个输入和/或输出，或者当输出流类型与输入不同时，就是这种情况。 他们可以用下图来表示：</p>
-<img src="_asset/复杂滤镜.png">
+<img src="/images/imageFFmpeg/复杂滤镜.png">
 
 <p>复杂的过滤器图使用 <code>-filter_complex</code> 选项进行配置。 请注意，此选项是全局性的，因为复杂的过滤器图形本质上不能与单个流或文件明确关联。</p>
 <p><code>-lavfi</code> 选项等同于 <code>-filter_complex</code>。</p>
@@ -1088,6 +1086,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/05/09/FFmpeg/ffmpeg编程基础和一些常见问题的解答/" rel="prev" title="ffmpeg编程基础和一些常见问题的解答">
+                ffmpeg编程基础和一些常见问题的解答 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1164,7 +1166,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1195,7 +1197,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1248,7 +1256,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1357,7 +1369,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">223k</span>
+    <span title="站点总字数">497k</span>
   
 
   
@@ -1368,7 +1380,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">3:23</span>
+    <span title="站点阅读时长">7:31</span>
   
 
 </div>
