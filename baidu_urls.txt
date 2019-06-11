@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
 http://miaopei.github.io/2019/05/14/WebRTC/webrtc/
 http://miaopei.github.io/2019/05/09/FFmpeg/ffmpeg编程基础和一些常见问题的解答/
 http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2017/03/29/svn-常用操作命令/
 http://miaopei.github.io/2017/03/28/hexo-使用指南/
 http://miaopei.github.io/2017/03/27/nodejs-webpack-vuejs-搭建开发环境学习套路/
 http://miaopei.github.io/2017/03/23/Markdown-支持的语言/
-http://miaopei.github.io/2017/03/21/深入解析Go-很棒的GitBook/
