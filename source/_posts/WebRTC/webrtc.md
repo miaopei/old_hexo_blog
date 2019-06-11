@@ -1115,12 +1115,6 @@ TODO
 - Candidate 连通
 - 视频渲染
 
-
-
-
-
-
-
 ## 17. iOS端与浏览器互通
 
 ### 17.1 IOS权限获取
@@ -1212,10 +1206,6 @@ WebRTC的分层协议图：
 信令，会话和协议：
 
 <img src="/images/imageWebRTC/信令会话协议.png">
-
-<img src="/images/imageWebRTC/">
-
-<img src="/images/imageWebRTC/">
 
 ## 问题解决里程
 
