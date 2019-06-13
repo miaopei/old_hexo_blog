@@ -16,7 +16,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -184,7 +184,7 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -195,7 +195,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -673,8 +673,8 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/23/Docker-学习笔记/" rel="next" title="Docker 学习笔记">
-                <i class="fa fa-chevron-left"></i> Docker 学习笔记
+              <a href="/2017/01/27/git-common-list/" rel="next" title="常用Git命令清单">
+                <i class="fa fa-chevron-left"></i> 常用Git命令清单
               </a>
             
           </div>
@@ -683,8 +683,8 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/27/git-common-list/" rel="prev" title="常用Git命令清单">
-                常用Git命令清单 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/20/Hexo-Github-博客多终端同步/" rel="prev" title="Hexo + Github 博客多终端同步">
+                Hexo + Github 博客多终端同步 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -763,7 +763,7 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -964,7 +964,7 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">532k</span>
+    <span title="站点总字数">550k</span>
   
 
   
@@ -975,7 +975,7 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">8:04</span>
+    <span title="站点阅读时长">8:20</span>
   
 
 </div>
@@ -1585,6 +1585,46 @@ $ git rebase -i --autosquash </code></pre><p>这个用法请参考<span class="e
   
 
   
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
 
 
   
@@ -1681,6 +1721,23 @@ if ($('body').find('pre.mermaid').length) {
 
 
   <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
