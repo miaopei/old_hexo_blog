@@ -11,5 +11,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://blog.diqigan.cn/sitemap.xml
-Sitemap: https://blog.diqigan.cn/baidusitemap.xml
+Sitemap: https://miaopei.github.io/sitemap.xml
+Sitemap: https://miaopei.github.io/baidusitemap.xml

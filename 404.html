@@ -4,8 +4,8 @@
   var referrer = document.referrer;
   // 获取 URL
   var url = document.URL;
-  var find_referrer = referrer.search(/blog\.diqigan\.cn\/\d{8}\/.*\.html/i);
-  var find_url = url.search(/blog\.diqigan\.cn\/\d{8}\/.*\.html/i);
+  var find_referrer = referrer.search(/miaopei\.github\.io\/\d{8}\/.*\.html/i);
+  var find_url = url.search(/miaopei\.github\.io\/\d{8}\/.*\.html/i);
   // 替换日期链接
   if (find_referrer >= 0) {
     href = referrer.replace(/\d{8}/, "posts");
