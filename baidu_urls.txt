@@ -11,10 +11,10 @@ http://miaopei.github.io/2017/05/15/Shell脚本攻略笔记/
 http://miaopei.github.io/2017/04/13/Linux命令eval的用法/
 http://miaopei.github.io/2017/04/12/HTTP思维导图/
 http://miaopei.github.io/2017/04/10/Webpack创建、运行vue-js项目及其目录结构详解/
-http://miaopei.github.io/2017/03/31/lighttpd-fastcgi/
 http://miaopei.github.io/2017/03/31/lighttpd-配置https/
+http://miaopei.github.io/2017/03/31/lighttpd-fastcgi/
 http://miaopei.github.io/2017/03/29/svn-常用操作命令/
 http://miaopei.github.io/2017/03/28/hexo-使用指南/
 http://miaopei.github.io/2017/03/27/nodejs-webpack-vuejs-搭建开发环境学习套路/
 http://miaopei.github.io/2017/03/20/Hexo-Github-博客多终端同步/
-http://miaopei.github.io/2017/01/27/git-using-standard-process/
+http://miaopei.github.io/2017/01/27/git-common-list/
