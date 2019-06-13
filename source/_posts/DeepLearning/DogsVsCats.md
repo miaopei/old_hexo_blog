@@ -4,6 +4,7 @@ tags: DeepLearning
 reward: true
 categories: DeepLearning
 toc: true
+mathjax: true
 abbrlink: 61505
 date: 2018-01-03 10:14:50
 ---
