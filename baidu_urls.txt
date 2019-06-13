@@ -5,6 +5,7 @@ http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
 http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/
 http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/
 http://miaopei.github.io/2018/03/20/vimHotKey/
+http://miaopei.github.io/2018/01/03/DeepLearning/DogsVsCats/
 http://miaopei.github.io/2017/05/16/WebSocket教程/
 http://miaopei.github.io/2017/05/15/定制支持串口安装的ubuntu系统镜像/
 http://miaopei.github.io/2017/05/15/Shell脚本攻略笔记/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2017/03/29/svn-常用操作命令/
 http://miaopei.github.io/2017/03/28/hexo-使用指南/
 http://miaopei.github.io/2017/03/27/nodejs-webpack-vuejs-搭建开发环境学习套路/
 http://miaopei.github.io/2017/03/20/Hexo-Github-博客多终端同步/
-http://miaopei.github.io/2017/01/27/git-common-list/
