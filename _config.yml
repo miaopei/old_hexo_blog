@@ -145,6 +145,12 @@ nofollow:
     exclude: 
       - github.com
 
+math:
+    engine: 'mathjax' # or 'katex'
+    mathjax:
+    # src: custom_mathjax_source
+    config:
+    # MathJax config
 
 # 跳过渲染
 skip_render: ["README.md", "404/**", "404.html", "_posts/*.markdown"]

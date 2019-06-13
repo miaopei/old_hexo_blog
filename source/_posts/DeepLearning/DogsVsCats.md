@@ -68,7 +68,7 @@ $ cd model_graphviz/
 $ make
 ```
 
-<img src="source/model.png">
+<img src="/images/imageDeepLearning/model.png">
 
 整个模型是在本地训练的，训练了三天才完成。建议使用云端 GPU 训练复现实验过程。
 
@@ -156,4 +156,4 @@ $ docker run -p 5000:5000 miaowmiaow/webapp:1.1.0
 
 下图为预测的效果图：
 
-<img src="source/webapp.gif">
+<img src="/images/imageDeepLearning/webapp.gif">
