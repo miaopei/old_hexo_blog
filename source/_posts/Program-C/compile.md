@@ -1,8 +1,8 @@
 ---
 title: Program-C 交叉编译
-tags: Program-C
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 39639
 date: 2016-05-05 10:14:50

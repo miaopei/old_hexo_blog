@@ -1,8 +1,8 @@
 ---
 title: CPlusPlus 设计模式
-tags: Program-C
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 58357
 date: 2016-06-28 10:14:50

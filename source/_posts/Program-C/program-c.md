@@ -1,8 +1,8 @@
 ---
-title: Program-C 基础
-tags: Program-C
+title: C 基础
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 39639
 date: 2016-05-10 10:14:50

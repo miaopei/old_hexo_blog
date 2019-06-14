@@ -1,8 +1,8 @@
 ---
 title: Linux系统编程
-tags: Program-C
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 39639
 date: 2016-05-01 10:14:50

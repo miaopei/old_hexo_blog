@@ -1,8 +1,8 @@
 ---
 title: Interview C C++
-tags: Program-C
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 39639
 date: 2016-06-08 10:14:50

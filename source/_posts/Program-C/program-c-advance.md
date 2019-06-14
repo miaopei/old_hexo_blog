@@ -1,8 +1,8 @@
 ---
-title: Program-C 进阶
-tags: Program-C
+title: C 进阶
+tags: c/c++
 reward: true
-categories: Program-C
+categories: c/c++
 toc: true
 abbrlink: 39639
 date: 2016-05-24 10:14:50

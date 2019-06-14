@@ -1,8 +1,8 @@
 ---
 title: 重拾十大经典排序算法
-tags: Program-C
+tags: [algorithm, c/c++]
 reward: true
-categories: Program-C
+categories: [algorithm, c/c++]
 toc: true
 abbrlink: 39639
 date: 2016-06-05 10:14:50
