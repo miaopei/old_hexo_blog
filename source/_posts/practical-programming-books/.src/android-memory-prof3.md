@@ -1,3 +1,6 @@
+---
+abbrlink: 18
+---
 <p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(102,51,51); font-family:'Microsoft YaHei'; font-size:18px; font-weight:bold">
 <span style="font-size:18px; color:rgb(204,102,0)">内存泄露可以引发很多的问题：</span></p>
 <p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">

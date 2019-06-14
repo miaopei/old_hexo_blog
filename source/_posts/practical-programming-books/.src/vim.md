@@ -1,3 +1,6 @@
+---
+abbrlink: 6
+---
 <p>Vim的学习曲线相当的大，所以，如果你一开始看到的是一大堆VIM的命令分类，你一定会对这个编辑器失去兴趣的。下面的文章翻译自《<a href="http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/" target="_blank">Learn Vim Progressively</a>》，我觉得这是给新手最好的VIM的升级教程了，没有列举所有的命令，只是列举了那些最有用的命令。非常不错。</p>
 <p style="text-align: center;"><a href="http://jbcdn2.b0.upaiyun.com/2012/04/code-editor-learing-curve.jpg" rel="lightbox[18339]" title="一些常见编辑器的学习曲线图"><img class="aligncenter size-full wp-image-18359" title="一些常见编辑器的学习曲线图" alt="一些常见编辑器的学习曲线图" src="http://jbcdn2.b0.upaiyun.com/2012/04/code-editor-learing-curve.jpg" width="480" height="332" /></a></p>
 <p>——————————正文开始——————————</p>

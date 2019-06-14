@@ -1,3 +1,6 @@
+---
+abbrlink: 2
+---
 <p>导读：Kristóf Kovács 是一位软件架构师和咨询顾问，他最近发布了一片对比各种类型NoSQL数据库的文章。</p>
 <p>虽然SQL数据库是非常有用的工具，但经历了15年的一支独秀之后垄断即将被打破。这只是时间问题：被迫使用关系数据库，但最终发现不能适应需求的情况不胜枚举。</p>
 <p>但是NoSQL数据库之间的不同，远超过两 SQL数据库之间的差别。这意味着软件架构师更应该在项目开始时就选择好一个适合的 NoSQL数据库。针对这种情况，这里对 <a href="http://cassandra.apache.org/">Cassandra</a>、<a href="http://www.mongodb.org/">Mongodb</a>、<a href="http://couchdb.apache.org/">CouchDB</a>、<a href="http://redis.io/">Redis</a>、 <a href="http://www.basho.com/Riak.html">Riak</a>、<a href="http://www.couchbase.org/membase">Membase</a>、<a href="http://neo4j.org/">Neo4j</a> 和 <a href="http://hbase.apache.org/">HBase</a> 进行了比较：</p>

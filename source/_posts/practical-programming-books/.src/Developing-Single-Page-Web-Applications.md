@@ -1,3 +1,6 @@
+---
+abbrlink: 7
+---
  <p>In this post you will learn how to use a micro framework called <a href="http://www.sparkjava.com/">Spark</a> to build a RESTful backend. The RESTful backend is consumed by a single page web application using AngularJS and MongoDB for data storage. I&#8217;ll also show you how to run Java 8 on OpenShift.</p>
 <h2>Application Use Case</h2>
 <p>You will develop a todo application which allows users to create and list todo items. The application will do the following:</p>

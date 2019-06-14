@@ -1,3 +1,6 @@
+---
+abbrlink: 15
+---
 <span style="font-family: Arial;">String in Java is very special class and most frequently used class as
 well. There are lot many things to learn about </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;"> in Java
 than any other class, and having a good knowledge of different </span><span style="font-family: Courier New, Courier, monospace;">String

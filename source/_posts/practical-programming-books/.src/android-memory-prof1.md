@@ -1,3 +1,6 @@
+---
+abbrlink: 11
+---
 <div style="text-align:justify"><span style="font-family:SimSun; font-size:14px">RAM（random access memory）随机存取存储器。说白了就是内存。</span></div>
 <p style="margin-top:10px; margin-bottom:10px; padding-top:0px; padding-bottom:0px">
 <span style="font-family:SimSun; font-size:14px">一般Java在内存分配时会涉及到以下区域：</span></p>
