@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="String in Java is very special class and most frequently used class aswell. There are lot many things to learn about String in Javathan any other class, and having a good knowledge of different String">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mr.Miaow Blog">
+<meta property="og:url" content="http://miaopei.github.io/2019/06/14/practical-programming-books/src/java-string/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="String in Java is very special class and most frequently used class aswell. There are lot many things to learn about String in Javathan any other class, and having a good knowledge of different String">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://3.bp.blogspot.com/-K6q0DQ1v-tw/TWu8owBtc2I/AAAAAAAAADA/oBoHDBiJ8ag/s1600/17.jpg">
+<meta property="og:updated_time" content="2019-06-14T02:52:59.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mr.Miaow Blog">
+<meta name="twitter:description" content="String in Java is very special class and most frequently used class aswell. There are lot many things to learn about String in Javathan any other class, and having a good knowledge of different String">
+<meta name="twitter:image" content="http://3.bp.blogspot.com/-K6q0DQ1v-tw/TWu8owBtc2I/AAAAAAAAADA/oBoHDBiJ8ag/s1600/17.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/06/14/practical-programming-books/src/java-string/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/06/14/practical-programming-books/src/java-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="滴水石穿，不是力量大，而是功夫深!">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-14 10:52:59" itemprop="dateCreated datePublished" datetime="2019-06-14T10:52:59+08:00">2019-06-14</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><span style="font-family: Arial;">String in Java is very special class and most frequently used class as<br>well. There are lot many things to learn about </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;"> in Java<br>than any other class, and having a good knowledge of different </span><span style="font-family: Courier New, Courier, monospace;">String<br></span><span style="font-family: Arial;">functionalities makes you to use it properly. Given heavy use of Java </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;"> in almost<br>any kind of project, it become even more important to know subtle detail about<br>String. Though I have shared lot of String related article already here in<br><b>Javarevisited</b>, this is an effort to bring some of String feature together. In<br>this tutorial we will see some important points about Java </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;">, which is<br>worth remembering. You can also refer my earlier post <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMTAvMTAtamF2YS1zdHJpbmctaW50ZXJ2aWV3LXF1ZXN0aW9uLWFuc3dlcnMtdG9wLmh0bWw=" title="http://javarevisited.blogspot.com/2012/10/10-java-string-interview-question-answers-top.html">10<br>advanced Java String questions<i class="fa fa-external-link"></i></span> to know more about </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;">. Though I<br>tried to cover lot of things, there are definitely few things, which I might<br>have missed; please let me know if you have any question or doubt on </span><span style="font-family: &quot;Courier New&quot;;">java.lang.String</span><span style="font-family: Arial;"><br>functionality and I will try to address them here.</span><br><a name="more"></a><br></p>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">1)
+Strings are not null terminated in Java.</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">Unlike C and C++, String in Java doesn't terminate with null character. Instead
+String are Object in Java and backed by character array. You can get the
+character array used to represent String in Java by calling </span><span style="font-family: &quot;Courier New&quot;;">toCharArray()</span><span style="font-family: Arial;"> method of </span><span style="font-family: &quot;Courier New&quot;;">java.lang.String</span><span style="font-family: Arial;"> class of
+JDK.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">2)
+Strings are immutable and final in Java</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">Strings are immutable in Java it means once created you cannot modify
+content of String. If you modify it by using </span><span style="font-family: &quot;Courier New&quot;;">toLowerCase()</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">toUpperCase()</span><span style="font-family: Arial;"> or any
+other method,<span style="mso-spacerun: yes;">&nbsp; </span>It always result in new
+String. Since String is final there is no way anyone can extend String or
+override any of String functionality. Now if you are puzzled <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTAvMTAvd2h5LXN0cmluZy1pcy1pbW11dGFibGUtaW4tamF2YS5odG1s" title="http://javarevisited.blogspot.com/2010/10/why-string-is-immutable-in-java.html">why
+String is immutable or final in Java<i class="fa fa-external-link"></i></span>. checkout the link.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">3)
+Strings are maintained in String Pool</span></u></b></div>
+<div class="MsoNormal">
+<span class="exturl" data-url="aHR0cDovLzMuYnAuYmxvZ3Nwb3QuY29tLy1LNnEwRFExdi10dy9UV3U4b3dCdGMySS9BQUFBQUFBQUFEQS9vQm9IREJpSjhhZy9zMTYwMC8xNy5qcGc=" title="http://3.bp.blogspot.com/-K6q0DQ1v-tw/TWu8owBtc2I/AAAAAAAAADA/oBoHDBiJ8ag/s1600/17.jpg"><img alt="Advanced Java String tutorial and example programmers " border="0" src="http://3.bp.blogspot.com/-K6q0DQ1v-tw/TWu8owBtc2I/AAAAAAAAADA/oBoHDBiJ8ag/s1600/17.jpg" title><i class="fa fa-external-link"></i></span><span style="font-family: Arial;">As I Said earlier String is special class in Java and all String literal
+e.g. </span><span style="font-family: &quot;Courier New&quot;;">"abc"</span><span style="font-family: Arial;"><span style="mso-spacerun: yes;">&nbsp; </span>(anything
+which is inside double quotes are String literal in Java) are maintained in a
+separate String pool, special memory location inside Java memory, more
+precisely inside <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMDEvdG9tY2F0LWphdmFsYW5nb3V0b2ZtZW1vcnllcnJvci1wZXJtZ2VuLmh0bWw=" title="http://javarevisited.blogspot.com/2012/01/tomcat-javalangoutofmemoryerror-permgen.html">PermGen
+Space<i class="fa fa-external-link"></i></span>.&nbsp;Any time&nbsp;you create a new String object using String literal, JVM
+first checks&nbsp;String pool and if an object with similar content available, than
+it returns that and doesn't create a new object. JVM doesn't perform String
+pool check if you create object using new operator.</span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">You may face subtle issues if you are not aware of this String&nbsp;behaviour&nbsp;, here is an example</span></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;"><br></span>
+<div style="background: #F3F3F3; border: dotted windowtext 1.0pt; mso-border-alt: dotted windowtext .5pt; mso-element: para-border-div; padding: 1.0pt 4.0pt 1.0pt 4.0pt;">
+
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Scala"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">; </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//1st String object</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name_1 = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Scala"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">; </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//same object referenced by name variable</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name_2 = </span><b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">new</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"> String(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Scala"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">) </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//different String object</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//this will return true</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(name==name_1){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"both name and name_1 is pointing to same string object"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//this will return false</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(name==name_2){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"both name and name_2 is pointing to same string object"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+</div>
+<span style="font-family: Arial;"><br></span>
+<span style="font-family: Arial;">if you compare name and </span><span style="font-family: &quot;Courier New&quot;;">name_1</span><span style="font-family: Arial;"> using equality operator </span><span style="font-family: &quot;Courier New&quot;;">"=="</span><span style="font-family: Arial;"> it will
+return true because both are pointing to same object. While </span><span style="font-family: &quot;Courier New&quot;;">name==name_2</span><span style="font-family: Arial;"> will
+return false because they are pointing to different string object. It's worth
+remembering that <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3Quc2cvMjAxMi8xMi9kaWZmZXJlbmNlLWJldHdlZW4tZXF1YWxzLW1ldGhvZC1hbmQtZXF1YWxpdHktb3BlcmF0b3ItamF2YS5odG1s" title="http://javarevisited.blogspot.sg/2012/12/difference-between-equals-method-and-equality-operator-java.html">equality
+<span style="font-family: &quot;Courier New&quot;;">"=="</span> operator compares
+object memory location<i class="fa fa-external-link"></i></span> and not characters of String. By default Java puts
+all string literal into string pool, but you can also put any string into pool
+by calling </span><span style="font-family: &quot;Courier New&quot;;">intern()</span><span style="font-family: Arial;"> method of </span><span style="font-family: &quot;Courier New&quot;;">java.lang.String</span><span style="font-family: Arial;"> class,
+like string created using </span><span style="font-family: &quot;Courier New&quot;;">new()</span><span style="font-family: Arial;"> operator.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">4) Use
+Equals methods for comparing String in Java</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">String class overrides equals method and provides a content equality,
+which is based on characters, case and order. So if you want to compare two
+String object, to check whether they are same or not, always use </span><span style="font-family: &quot;Courier New&quot;;">equals()</span><span style="font-family: Arial;"> method
+instead of equality operator. Like in earlier example if <span style="mso-spacerun: yes;">&nbsp;</span>we use <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTEvMDIvaG93LXRvLXdyaXRlLWVxdWFscy1tZXRob2QtaW4tamF2YS5odG1s" title="http://javarevisited.blogspot.com/2011/02/how-to-write-equals-method-in-java.html">equals
+method<i class="fa fa-external-link"></i></span> to compare objects, they will be equal to each other because they
+all contains same contents. Here is example of comparing String using equals
+method.</span><br>
+<span style="font-family: Arial;"><br></span></div>
+<div class="MsoNormal">
+<div style="background: #F3F3F3; border: dotted windowtext 1.0pt; mso-border-alt: dotted windowtext .5pt; mso-element: para-border-div; padding: 1.0pt 4.0pt 1.0pt 4.0pt;">
+
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">; </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//1st String object</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name_1 = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">; </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//same object referenced by name variable</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String name_2 = </span><b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">new</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"> String(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">) </span><span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//different String object</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(name.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">equals</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(name_1)){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"name and name_1 are equal String by equals method"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//this will return false</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(name==name_2){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"name_1 and name_2 are equal String by equals method"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+</div>
+<span style="font-family: Arial;"><br></span>
+<span style="font-family: Arial;">You can also check my earlier post </span><span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMTIvZGlmZmVyZW5jZS1iZXR3ZWVuLWVxdWFscy1tZXRob2QtYW5kLWVxdWFsaXR5LW9wZXJhdG9yLWphdmEuaHRtbA==" title="http://javarevisited.blogspot.com/2012/12/difference-between-equals-method-and-equality-operator-java.html">difference
+between equals() method and == operator<i class="fa fa-external-link"></i></span><span style="font-family: Arial;"> for more detail discussion on
+consequences of comparing two string using == operator in Java.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">5) Use
+indexOf() and lastIndexOf() or matches(String regex) method to search inside
+String</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">String class in Java provides convenient method to see if a character or&nbsp;sub-string&nbsp;or a pattern exists in&nbsp;current String object. You can use<span style="font-family: Arial,Helvetica,sans-serif;"> </span></span><span style="font-family: Courier New, Courier, monospace;">indexOf()</span><span style="font-family: Arial;"><span style="font-family: Arial,Helvetica,sans-serif;"> </span>which will
+return position of character or String, if that exist in current String object
+or -1 if character doesn't exists in String. </span><span style="font-family: &quot;Courier New&quot;;">lastIndexOf</span><span style="font-family: Arial;"> is similar
+but it searches from end. </span><span style="font-family: &quot;Courier New&quot;;">String.match(String regex)</span><span style="font-family: Arial;"> is even
+more powerful, which allows you to search for a <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMTAvcmVndWxhci1leHByZXNzaW9uLWV4YW1wbGUtaW4tamF2YS10by1jaGVjay1TdHJpbmctbnVtYmVyLmh0bWw=" title="http://javarevisited.blogspot.com/2012/10/regular-expression-example-in-java-to-check-String-number.html">regular
+expression pattern<i class="fa fa-external-link"></i></span> inside String. here is examples of </span><span style="font-family: &quot;Courier New&quot;;">indexOf</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">lastIndexOf</span><span style="font-family: Arial;"> and </span><span style="font-family: &quot;Courier New&quot;;">matches</span><span style="font-family: Arial;"> method
+from </span><span style="font-family: &quot;Courier New&quot;;">java.lang.String</span><span style="font-family: Arial;"> class.</span></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;"><br></span>
+<div style="background: #F3F3F3; border: dotted windowtext 1.0pt; mso-border-alt: dotted windowtext .5pt; mso-element: para-border-div; padding: 1.0pt 4.0pt 1.0pt 4.0pt;">
+
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String str = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java is best programming language"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">;<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">indexOf</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">) != -</span><b><span style="color: #0000dd; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">1</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">&nbsp;&nbsp;&nbsp;&nbsp; System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"String
+contains Java at index :"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"> + str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">indexOf</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">));<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">matches</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"J.*"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">)){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">&nbsp;&nbsp;&nbsp;&nbsp; System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"String
+Starts with J"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">str =</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Do you like Java ME or Java EE"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">;<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<br></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<b><span style="color: #008800; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">if</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">lastIndexOf</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">) != -</span><b><span style="color: #0000dd; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">1</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">){<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"String contains Java lastly at: "</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"> + str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">lastIndexOf</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">));<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">}<o:p></o:p></span></div>
+</div>
+<span style="font-family: Arial;"><br></span>
+<span style="font-family: Arial;">As expected </span><span style="font-family: &quot;Courier New&quot;;">indexOf</span><span style="font-family: Arial;"> will return </span><span style="font-family: &quot;Courier New&quot;;">0</span><span style="font-family: Arial;"> because characters
+in String are indexed from zero. </span><span style="font-family: &quot;Courier New&quot;;">lastIndexOf</span><span style="font-family: Arial;"> returns
+index of second &#8220;</span><span style="font-family: &quot;Courier New&quot;;">Java&#8221;,</span><span style="font-family: Arial;"> which starts at 23 and matches
+will return true because </span><span style="font-family: &quot;Courier New&quot;;">J.*</span><span style="font-family: Arial;"> pattern is any String starting with character
+</span><span style="font-family: &quot;Courier New&quot;;">J</span><span style="font-family: Arial;"> followed by any character because of</span><span style="font-family: &quot;Courier New&quot;;"> dot(.) </span><span style="font-family: Arial;">and any
+number of time due to </span><span style="font-family: &quot;Courier New&quot;;">asterick (*)</span><span style="font-family: Arial;">.</span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">Remember </span><span style="font-family: &quot;Courier New&quot;;">matches()</span><span style="font-family: Arial;"> is tricky and some time
+non-intuitive. If you just put </span><span style="font-family: &quot;Courier New&quot;;">"Java"</span><span style="font-family: Arial;"> in matches
+it will return </span><span style="font-family: &quot;Courier New&quot;;">false</span><span style="font-family: Arial;"> because String is not equals to
+"Java" i.e. in case of plain text it behaves like equals method. See <span class="exturl" data-url="aHR0cDovL2phdmE2Ny5ibG9nc3BvdC5zZy8yMDEyLzA5L2phdmEtc3RyaW5nLW1hdGNoZXMtZXhhbXBsZS1yZWd1bGFyLWV4cHJlc3Npb24uaHRtbA==" title="http://java67.blogspot.sg/2012/09/java-string-matches-example-regular-expression.html">here<i class="fa fa-external-link"></i></span>
+for more examples of String </span><span style="font-family: &quot;Courier New&quot;;">matches()</span><span style="font-family: Arial;"> method.</span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">Apart from </span><span style="font-family: &quot;Courier New&quot;;">indexOf()</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">lastIndexOf()</span><span style="font-family: Arial;"> and </span><span style="font-family: &quot;Courier New&quot;;">matches(String
+regex)</span><span style="font-family: Arial;"> String also has methods like </span><span style="font-family: &quot;Courier New&quot;;">startsWith()</span><span style="font-family: Arial;"> and </span><span style="font-family: &quot;Courier New&quot;;">endsWidth(),</span><span style="font-family: Arial;"> which can
+be used to check an String if it starting or ending with certain character or
+String.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">6) Use
+SubString to get part of String in Java</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">Java String provides another useful method called </span><span style="font-family: &quot;Courier New&quot;;">substring(),</span><span style="font-family: Arial;"> which can
+be used to get parts of String. basically you specify start and end index and </span><span style="font-family: &quot;Courier New&quot;;">substring()</span><span style="font-family: Arial;"> method
+returns character from that range. Index starts from 0 and goes till </span><span style="font-family: &quot;Courier New&quot;;">String.length()-1</span><span style="font-family: Arial;">. By the
+way </span><span style="font-family: &quot;Courier New&quot;;">String.length()</span><span style="font-family: Arial;"> returns you number of characters in String,
+including white spaces like tab, space. One point which is worth remembering
+here is that substring is also backed up by character array, which is used by
+original String. This can be dangerous if original string object is very large
+and substring is very small, because even a small fraction can hold reference
+of complete array and prevents it from being garbage collected even if there is
+no other reference for that particular String. Read <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTEvMTAvaG93LXN1YnN0cmluZy1pbi1qYXZhLXdvcmtzLmh0bWw=" title="http://javarevisited.blogspot.com/2011/10/how-substring-in-java-works.html">How
+Substring works in Java<i class="fa fa-external-link"></i></span> for more details. Here is an example of using SubString
+in Java:</span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<div style="background: #F3F3F3; border: dotted windowtext 1.0pt; mso-border-alt: dotted windowtext .5pt; mso-element: para-border-div; padding: 1.0pt 4.0pt 1.0pt 4.0pt;">
+
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String str = </span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Java is best programming language"</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">;<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #888888; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">//this will return part of
+String str from index 0 to 12</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"><o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">String subString = str.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">substring</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><b><span style="color: #0000dd; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">0</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">,</span><b><span style="color: #0000dd; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">12</span></b><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">);<o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></div>
+<div class="MsoNormal" style="background-position: initial initial; background-repeat: initial initial; border: none; padding: 0in;">
+<span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">System.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">out</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">.</span><span style="color: #336699; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">println</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">(</span><span style="background: #FFF0F0; color: #dd2200; font-family: &quot;Courier New&quot;; font-size: 11.0pt;">"Substring: "</span><span style="color: #333333; font-family: &quot;Courier New&quot;; font-size: 11.0pt;"> + subString);<o:p></o:p></span></div>
+</div>
+</div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">7)
+"+" is overloaded for String concatenation</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;"><i>Java
+doesn't support Operator overloading</i> but String is special and + operator
+can be used to concatenate two Strings. It can even used to convert </span><span style="font-family: &quot;Courier New&quot;;">int</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">char</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">long</span><span style="font-family: Arial;"> or </span><span style="font-family: &quot;Courier New&quot;;">double</span><span style="font-family: Arial;"> to convert
+into String by simply concatenating with empty
+string </span><span style="font-family: &quot;Courier New&quot;;">""</span><span style="font-family: Arial;">. internally + is implemented
+using </span><span style="font-family: &quot;Courier New&quot;;">StringBuffer</span><span style="font-family: Arial;"> prior to Java 5 and </span><span style="font-family: &quot;Courier New&quot;;">StringBuilder</span><span style="font-family: Arial;"> from Java
+5 onwards. This also brings point of using </span><span style="font-family: &quot;Courier New&quot;;">StringBuffer</span><span style="font-family: Arial;"> or </span><span style="font-family: &quot;Courier New&quot;;">StringBuilder</span><span style="font-family: Arial;"> for
+manipulating String. Since both represent mutable object they can be used to
+reduce string garbage created because of temporary String. Read more about <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTEvMDcvc3RyaW5nLXZzLXN0cmluZ2J1ZmZlci12cy1zdHJpbmdidWlsZGVyLmh0bWw=" title="http://javarevisited.blogspot.com/2011/07/string-vs-stringbuffer-vs-stringbuilder.html">StringBuffer
+vs StringBuilder<i class="fa fa-external-link"></i></span> here.</span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;"><span style="mso-spacerun: yes;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">8) Use
+trim() to remove white spaces from String</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">String in Java provides </span><span style="font-family: &quot;Courier New&quot;;">trim()</span><span style="font-family: Arial;"> method to remove white space
+from both end of String. If </span><span style="font-family: &quot;Courier New&quot;;">trim()</span><span style="font-family: Arial;"> removes white spaces it
+returns a new </span><span style="font-family: &quot;Courier New&quot;;">String</span><span style="font-family: Arial;"> otherwise it returns same String. Along with </span><span style="font-family: &quot;Courier New&quot;;">trim()</span><span style="font-family: Arial;"> String also provides </span><span style="font-family: &quot;Courier New&quot;;">replace()</span><span style="font-family: Arial;"> and </span><span style="font-family: &quot;Courier New&quot;;">replaceAll()</span><span style="font-family: Arial;"> method for
+replacing characters from String. </span><span style="font-family: &quot;Courier New&quot;;">replaceAll</span><span style="font-family: Arial;"> method even
+support regular expression. Read more about How to replace String in Java <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTEvMTIvamF2YS1zdHJpbmctcmVwbGFjZS1leGFtcGxlLXR1dG9yaWFsLmh0bWw=" title="http://javarevisited.blogspot.com/2011/12/java-string-replace-example-tutorial.html">here<i class="fa fa-external-link"></i></span>.</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">9) Use
+split() for splitting String using Regular expression</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">String in Java is feature rich. it has methods like </span><span style="font-family: &quot;Courier New&quot;;">split(regex)</span><span style="font-family: Arial;"> which can
+take any String in form of regular expression and split the String based on
+that. particularly useful if you dealing with comma separated file (CSV) and
+wanted to have individual part in a String array. There are other methods also
+available related to splitting String, see this <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTEvMDkvc3RyaW5nLXNwbGl0LWV4YW1wbGUtaW4tamF2YS10dXRvcmlhbC5odG1s" title="http://javarevisited.blogspot.com/2011/09/string-split-example-in-java-tutorial.html">Java
+tutorial to split string<i class="fa fa-external-link"></i></span> for more details.</span><br>
+<span style="font-family: Arial;"><br></span></div>
+<div class="MsoNormal">
+<br></div>
+<div class="MsoNormal">
+<b><u><span style="font-family: Arial;">10) Don't
+store sensitive data in String</span></u></b></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">String pose security threat if used for storing sensitive data like
+passwords, SSN or any other sensitive information. Since String is immutable in
+Java there is no way you can erase contents of String and since they are kept
+in String pool (in case of String literal) they stay longer on Java heap ,which
+exposes risk of being seen by anyone who has access to Java memory, like
+reading from memory dump. Instead </span><span style="font-family: &quot;Courier New&quot;;">char[]</span><span style="font-family: Arial;"> should be
+used to store password or sensitive information. See <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLmJyLzIwMTIvMDMvd2h5LWNoYXJhY3Rlci1hcnJheS1pcy1iZXR0ZXItdGhhbi5odG1s" title="http://javarevisited.blogspot.com.br/2012/03/why-character-array-is-better-than.html">Why
+char[] is more secure than String for storing passwords in Java<i class="fa fa-external-link"></i></span> for more
+details.</span><br>
+<span style="font-family: Arial;"><br></span>
+<span style="font-family: Arial;"><br></span>
+<span style="font-family: Arial;"><b><u>11) Character Encoding and String</u></b></span><br>
+<span style="font-family: Arial;">Apart from all these 10 facts about String in Java, the most critical thing to know is <i>what encoding your String is using</i>. It does not make sense to have a </span><span style="font-family: Courier New, Courier, monospace;">String </span><span style="font-family: Arial;">without knowing what encoding it uses. There is no way to interpret an String if you don't know the encoding it used. You can not assume that </span><span style="font-family: Courier New, Courier, monospace;">"plain"</span><span style="font-family: Arial;"> text is ASCII. If you have a String, in memory or stored in file, you must know what encoding it is in, or you cannot display it correctly. By default Java uses platform encoding i.e. character encoding of your server, and believe me this can cause huge trouble if you are handling Unicode data, especially if you are <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3Quc2cvMjAxMy8wMy9jb252ZXJ0LWFuZC1wcmludC1ieXRlLWFycmF5LXRvLWhleC1zdHJpbmctamF2YS1leGFtcGxlLXR1dG9yaWFsLmh0bWw=" title="http://javarevisited.blogspot.sg/2013/03/convert-and-print-byte-array-to-hex-string-java-example-tutorial.html">converting byte array to XML String<i class="fa fa-external-link"></i></span>. I have faced instances where our program fail to interpret Strings from European language e.g. German, French etc. because our server was not using Unicode encodings like </span><span style="font-family: Courier New, Courier, monospace;">UTF-8</span><span style="font-family: Arial;"> or </span><span style="font-family: Courier New, Courier, monospace;">UTF-16</span><span style="font-family: Arial;">. Thankfully, Java allows you to specify default character encoding for your application using system property file.encoding. See <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMDEvZ2V0LXNldC1kZWZhdWx0LWNoYXJhY3Rlci1lbmNvZGluZy5odG1s" title="http://javarevisited.blogspot.com/2012/01/get-set-default-character-encoding.html">here <i class="fa fa-external-link"></i></span>to read more about character encoding in Java</span></div>
+<div class="MsoNormal">
+<br>
+<br></div>
+<div class="MsoNormal">
+<span style="font-family: Arial;">That's all about String in Java. As I have said String is very special in
+Java, sometime even refer has God class. It has some unique feature like </span><span style="font-family: &quot;Courier New&quot;;">immutability</span><span style="font-family: Arial;">, </span><span style="font-family: &quot;Courier New&quot;;">concatenation
+support, caching</span><span style="font-family: Arial;"> etc, and to become a serious Java programmer,
+detailed knowledge of String is quite important. Last but not the least don't
+forget about <span class="exturl" data-url="aHR0cDovL2phdmFyZXZpc2l0ZWQuYmxvZ3Nwb3QuY29tLzIwMTIvMDEvZ2V0LXNldC1kZWZhdWx0LWNoYXJhY3Rlci1lbmNvZGluZy5odG1s" title="http://javarevisited.blogspot.com/2012/01/get-set-default-character-encoding.html">character
+encoding<i class="fa fa-external-link"></i></span> while converting a byte array into String in Java. Good knowledge of</span><span style="font-family: Courier New, Courier, monospace;"> java.lang.String</span><span style="font-family: Arial;"> is must for good Java developers.</span></div>
+<div class="MsoNormal">
+<br></div>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/14/practical-programming-books/src/logging/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/14/practical-programming-books/src/how-stackoverflow-works/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">滴水石穿，不是力量大，而是功夫深!</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">940k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">14:14</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
