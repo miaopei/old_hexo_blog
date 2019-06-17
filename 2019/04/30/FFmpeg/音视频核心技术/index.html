@@ -140,7 +140,7 @@
 <meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/原始类型的Signature.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/类的Signature.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/例子.png">
-<meta property="og:updated_time" content="2019-06-12T06:47:34.994Z">
+<meta property="og:updated_time" content="2019-06-17T07:49:22.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="音视频核心技术">
 <meta name="twitter:description" content="1. 学习大纲FFmpeg 常用命令：  视频录制命令 多媒体文件的分解/复用命令 裁剪与合并命令 图片/视频互转命令 直播相关命令 各种滤镜命令  FFmpeg 基本开发：  C 语言回顾 FFmpeg 核心概念与常用结构体 实战 - 多媒体文件的分解与复用 实战 - 多媒体格式的互转 实战 - 从 MP4 裁剪一段视频 作业 - 实现一个简单的小咖秀  音视频编解码实战：  实战">
@@ -475,7 +475,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-12 14:47:34" itemprop="dateModified" datetime="2019-06-12T14:47:34+08:00">2019-06-12</time>
+                <time title="修改时间：2019-06-17 15:49:22" itemprop="dateModified" datetime="2019-06-17T15:49:22+08:00">2019-06-17</time>
               
             
           </span>
@@ -972,6 +972,7 @@
 <li>解码时间戳：1 4 2 3</li>
 <li>展示时间戳：1 2 3 4</li>
 </ul>
+<p>由于有了 B 帧之后，它打乱了 PTS 时间戳，所以加了 DTS 解码时间戳。在大多数没有 B 帧的情况下 PTS 和 DTS 是一致的。</p>
 <p>从哪儿获得 PTS：</p>
 <ul>
 <li>AVPacket 中的 PTS</li>
@@ -995,6 +996,7 @@
 <li>frame_delay：1/tbr</li>
 <li>audio_clock：音频当前播放的时间戳</li>
 </ul>
+<p>音视频同步的时候需要计算 audio_clock 和 video_clock，看视屏时间是在音频时间之前还是在音频时间之后，如果是在音频时间之前就立即播放，如果在音频时间之后需要 delay 一段时间播放（delay的时间计算：audio_clock  - video_clock）</p>
 <p>音视频同步方式：</p>
 <ul>
 <li>视频同步到音频</li>
@@ -1307,7 +1309,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1534,7 +1536,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">684k</span>
+    <span title="站点总字数">691k</span>
   
 
   
@@ -1545,7 +1547,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">10:22</span>
+    <span title="站点阅读时长">10:28</span>
   
 
 </div>
