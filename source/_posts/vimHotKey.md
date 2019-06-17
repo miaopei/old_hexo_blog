@@ -8,7 +8,11 @@ abbrlink: 33301
 date: 2018-03-20 16:53:46
 ---
 
+> [vimplus github](<https://github.com/chxuan/vimplus>)
+>
 > [Vim使用笔记](https://www.cnblogs.com/jiqingwu/archive/2012/06/14/vim_notes.html)
+>
+> [利用ctags+cscope+taglist+nerdree+srcexpl+trinity 将 VIM 变成 source insight](<https://www.robinjin.com/tech/?p=605>)
 
 ## 1. 文档操作
 
@@ -484,8 +488,6 @@ $ cscope -bkq -i cscope.files
 $ ctags -R
 ```
 
-​    
-
 - `cscope -Rbq` : 生成 cscope.out 文件
 - `:cs add /path/to/cscope.out /your/work/dir`
 - `:cs find c func` -- 查找 func 在哪些地方被调用
@@ -586,6 +588,28 @@ set makeprg=javac\ abc.java
 - `zj` -- 跳到下一个折叠处；
 - `zk` -- 跳到上一个折叠处；
 - `zi -- enable/disable fold`;
+
+### 10.10 zshrc配置脚本
+
+```shell
+$ vi ~/.zshrc
+ctags_fun()
+{
+    ctags -R
+    cscope -Rbqk
+    return 0
+}
+alias mctags=ctags_fun  # define mctags
+
+ctags_cplus_fun()
+{
+    find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" > cscope.files
+    cscope -bkq -i cscope.files
+    ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
+    return 0
+}
+alias cplusctags=ctags_cplus_fun  # define mctags
+```
 
 ## 11. 其它
 

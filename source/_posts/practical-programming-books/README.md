@@ -152,6 +152,8 @@ date: 2018-05-13 10:14:50
 
 ### 编辑器
 
+- [vimplus](<https://github.com/chxuan/vimplus>)
+
 * [exvim--vim 改良成IDE项目](http://exvim.github.io/docs-zh/intro/)
 * [笨方法学Vimscript 中译本](http://learnvimscriptthehardway.onefloweroneworld.com/)
 * [Vim中文文档](https://github.com/vimcn/vimcdoc)
