@@ -1,4 +1,5 @@
 http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
+http://miaopei.github.io/2019/05/18/FFmpeg/FFmpegLeiXiaoHuaNote/
 http://miaopei.github.io/2019/05/14/WebRTC/webrtc/
 http://miaopei.github.io/2019/05/09/FFmpeg/ffmpeg编程基础和一些常见问题的解答/
 http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2017/05/16/WebSocket教程/
 http://miaopei.github.io/2017/05/15/定制支持串口安装的ubuntu系统镜像/
 http://miaopei.github.io/2017/05/15/Shell脚本攻略笔记/
 http://miaopei.github.io/2017/04/13/Linux命令eval的用法/
-http://miaopei.github.io/2017/04/12/HTTP思维导图/
