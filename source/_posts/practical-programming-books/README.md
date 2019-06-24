@@ -741,3 +741,9 @@ date: 2018-05-13 10:14:50
 
 -----------------
 
+## 计算机原理
+
+- [视频地址](https://www.bilibili.com/video/av21376839/)
+
+- [Github地址](https://github.com/1c7/crash-course-computer-science-chinese)
+
