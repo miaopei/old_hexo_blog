@@ -114,18 +114,20 @@
 
 
 
-  <meta name="description" content="Docker基本命令常用Docker命令">
-<meta name="keywords" content="Docker">
+  <meta name="description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
+<meta name="keywords" content="FFmpeg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 学习笔记">
-<meta property="og:url" content="http://miaopei.github.io/2016/12/23/Docker-学习笔记/index.html">
+<meta property="og:title" content="FFmpeg 源代码结构">
+<meta property="og:url" content="http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
-<meta property="og:description" content="Docker基本命令常用Docker命令">
+<meta property="og:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-03T08:10:56.874Z">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:updated_time" content="2019-06-24T07:32:17.399Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker 学习笔记">
-<meta name="twitter:description" content="Docker基本命令常用Docker命令">
+<meta name="twitter:title" content="FFmpeg 源代码结构">
+<meta name="twitter:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png">
 
 
 
@@ -135,7 +137,7 @@
 
   
   
-  <link rel="canonical" href="http://miaopei.github.io/2016/12/23/Docker-学习笔记/">
+  <link rel="canonical" href="http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/">
 
 
 
@@ -145,7 +147,7 @@
   };
 </script>
 
-  <title>Docker 学习笔记 | Mr.Miaow Blog</title>
+  <title>FFmpeg 源代码结构 | Mr.Miaow Blog</title>
   
 
 
@@ -396,7 +398,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2016/12/23/Docker-学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="苗沛">
@@ -413,7 +415,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Docker 学习笔记
+          <h2 class="post-title" itemprop="name headline">FFmpeg 源代码结构
 
               
             
@@ -439,7 +441,7 @@
                 
               
 
-              <time title="创建时间：2016-12-23 10:14:50" itemprop="dateCreated datePublished" datetime="2016-12-23T10:14:50+08:00">2016-12-23</time>
+              <time title="创建时间：2019-05-25 10:14:50" itemprop="dateCreated datePublished" datetime="2019-05-25T10:14:50+08:00">2019-05-25</time>
             
 
             
@@ -456,7 +458,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-03 16:10:56" itemprop="dateModified" datetime="2019-06-03T16:10:56+08:00">2019-06-03</time>
+                <time title="修改时间：2019-06-24 15:32:17" itemprop="dateModified" datetime="2019-06-24T15:32:17+08:00">2019-06-24</time>
               
             
           </span>
@@ -473,7 +475,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
 
                 
                 
@@ -536,313 +538,260 @@
       
 
       
-        <h1 id="Docker基本命令"><a href="#Docker基本命令" class="headerlink" title="Docker基本命令"></a>Docker基本命令</h1><h3 id="常用Docker命令"><a href="#常用Docker命令" class="headerlink" title="常用Docker命令"></a>常用Docker命令</h3><hr>
-<a id="more"></a>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启Docker守护进程调试模式</span></span><br><span class="line">$ sudo docker daemon -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看Docker信息</span></span><br><span class="line">$ sudo docker info </span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止或者启动Docker</span></span><br><span class="line">$ sudo service docker stop/start </span><br><span class="line"></span><br><span class="line"><span class="comment"># 以命令行模式运行一个容器</span></span><br><span class="line">$ sudo docker run -i -t ubuntu /bin/bash </span><br><span class="line"></span><br><span class="line"><span class="comment"># 给容器命名</span></span><br><span class="line">$ sudo docker run --name Micheal_container -i -t ubuntu /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动或者停止运行的容器</span></span><br><span class="line">$ sudo docker start/stop Micheal_container </span><br><span class="line"></span><br><span class="line"><span class="comment"># 附着到正在运行的容器</span></span><br><span class="line">$ sudo docker attach Micheal_container</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建守护式容器</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --name daemon_dave -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>上面的docker run 使用了<code>-d</code>参数，因此Docker会将容器放到后台运行。</p>
+        <blockquote>
+<p>特别说明，此文参考至雷神笔记，做一个备忘录。</p>
 </blockquote>
-<p><strong>Docker日志</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取守护式容器的日志</span></span><br><span class="line">$ sudo docker logs daemon_dave</span><br><span class="line"></span><br><span class="line"><span class="comment"># 跟踪守护式容器的日志</span></span><br><span class="line">$ sudo docker logs -f daemon_dave</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取日志的最后10行</span></span><br><span class="line">$ sudo docker logs --tail 10 daemon_dave </span><br><span class="line"></span><br><span class="line"><span class="comment"># 跟踪某个容器的最新日志</span></span><br><span class="line">$ sudo docker logs --tail 0 -f daemon_dave</span><br><span class="line"></span><br><span class="line"><span class="comment"># -t 标志为每条日志项加上时间戳</span></span><br><span class="line">$ sudo docker logs -ft daemon_dave</span><br></pre></td></tr></table></figure>
-
-<p><strong>Docker日志驱动</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --<span class="built_in">log</span>-driver=<span class="string">"syslog"</span> --name daemon_dave -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用syslog将会禁用docker logs命令，并且将所有容器的日志输出都重定向到Syslog。</p>
-</blockquote>
-<p><strong>查看容器内的进程</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker top daemon_dave</span><br></pre></td></tr></table></figure>
-
-<p><strong>Docker统计信息</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker stats daemon_dave daemon_kate daemon_clear daemon_sarah</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>以上命令可以看到一个守护容器的列表，以及他们的CPU、内存、网络I/O以及存储I/O的性能和指标。这对快速监控一台主机上的一组容器非常有用。</p>
-</blockquote>
-<p><strong>在容器内部运行进程</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker <span class="built_in">exec</span> -d daemon_dave touch /etc/new_config_file</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>-d</code>表示需要运行一个后台进程</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在容器内运行交互命令</span></span><br><span class="line">$ sudo docker <span class="built_in">exec</span> -t -i daemon_dave /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p><strong>自动重启容器</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run --restart=always --name daemon_dave -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>--restart</code>标志被设置为always。无论容器的退出代码是什么，Docker都会自动重启改容器。除了always，还可以将这个标志设为<code>on-failure</code>，这样，只有当容器的退出代码为非0值的时候，才会自动重启。另外，on-failure还接受一个可选的重启次数参数，<code>--restart=on-failure:5</code>,Docker会尝试自动重启改容器，最多重启5次。</p>
-</blockquote>
-<p><strong>深入容器</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker inspect daemon_dave</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>docker inspect命令会对容器进行详细的检查，然后返回其配置信息，包括名称、命令、网络配置以及很多有用的数据。可以使用<code>-f</code>或者<code>--format</code>标志来选定查看结果。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker inspect --format=<span class="string">'&#123;.State.Running&#125;'</span> daemon_dave</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查看多个容器</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker inspect --format <span class="string">'&#123;.Name&#125; &#123;.State.Running&#125;'</span> daemon_dave Micheal_container</span><br></pre></td></tr></table></figure>
-
-<p><strong>删除容器</strong><br>​    </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker rm daemon_dave</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除所有容器</span></span><br><span class="line">$ sudo docker rm `sudo docker ps -a -q`</span><br></pre></td></tr></table></figure>
-
-<p><strong>列出所有镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker images</span><br></pre></td></tr></table></figure>
-
-<p><strong>拉去镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker pull ubuntu:16.04</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行一个带标签的Docker镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -i -t --name new_container ubuntu:16.04 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p><strong>查找镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker search puppet</span><br></pre></td></tr></table></figure>
-
-<p><strong>构建镜像</strong></p>
+<h2 id="FFmpeg源代码结构图-解码"><a href="#FFmpeg源代码结构图-解码" class="headerlink" title="FFmpeg源代码结构图 - 解码"></a>FFmpeg源代码结构图 - 解码</h2><p>下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。</p>
+<p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="FFmpeg解码结构图"></p>
+<p>下面解释一下图中关键标记的含义。</p>
+<h3 id="函数背景色"><a href="#函数背景色" class="headerlink" title="函数背景色"></a>函数背景色</h3><p>函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：</p>
 <ul>
-<li>使用<code>docker commit</code>命令</li>
-<li>使用<code>docker build</code>命令和<code>Dockerfile</code>文件</li>
+<li>粉红色背景函数：FFmpeg 的 API函数。</li>
+<li>白色背景的函数：FFmpeg 的内部函数。</li>
+<li>黄色背景的函数：URLProtocol 结构体中的函数，包含处理协议（Protocol）的功能。</li>
+<li>绿色背景的函数：AVInputFormat 结构体中的函数，包含处理封装格式（Format）的功能。</li>
+<li>蓝色背景的函数：AVCodec 结构体中的函数，包含了编解码器（Codec）的功能。</li>
 </ul>
-<p><strong>用Docker的commit命令创建镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -i -t ubuntu /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来安装需要安装的工具，安装完成后exit退出容器, eg：</span></span><br><span class="line">$ apt-get -yqq update</span><br><span class="line">$ apt-get -y install apache2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定提交修改过的容器的ID（可以通过docker ps -l -q命令得到刚创建的容器的ID）</span></span><br><span class="line">$ sudo docker commit 4aab3cecb76 micheal/apache2  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查新创建的镜像</span></span><br><span class="line">sudo docker images micheal/apache2  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交另一个新定制容器</span></span><br><span class="line"><span class="comment"># -m 选项用来指定新创建的镜像的提交信息，-a 用来列出该镜像的作者信息。</span></span><br><span class="line">$ sudo docker commit -m<span class="string">"A new custom image"</span> -a<span class="string">"Micheal"</span> 4aab3cecb76 micheal/apache2:webserver</span><br></pre></td></tr></table></figure>
-
-<p><strong>用Dockerfile构建镜像</strong></p>
-<p>Dockerfile文件示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Vsersion: 0.0.1</span></span><br><span class="line">FROM ubuntu:16.04</span><br><span class="line">MAINTAINER Micheal "miaopei@baicells.com"</span><br><span class="line">RUN apt-get -yqq update &amp;&amp; apt-get -y install nginx</span><br><span class="line">RUN echo 'Hi, I an in your container' &gt; /usr/share/nginx/html/index.html</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
-
 <blockquote>
-<p>Dockerfile中的指令会按照顺序从上到下执行，所以根据需要合理安排指令的顺序。</p>
-<p>如果Dockerfile由于某些原因没有正常结束，那么用户得到了一个可以使用的镜像。这对调试非常有帮助：可以基于改镜像运行一个具备交互功能的容器，使用最后创建的镜像对为什么用户指令会失败进行调试。</p>
-<p><strong>每个Dockerfile的第一条指令必须是FROM</strong>,FROM指令指定一个已经存在的镜像，后续指令都将基于该镜像进行，这个镜像被称为基础镜像。</p>
-<p>MAINTAINER指令告诉Docker镜像的作者是谁，以及作者的电子邮件。有助于标识镜像的所有者和联系方式。</p>
+<p>PS：URLProtocol，AVInputFormat，AVCodec在FFmpeg开始运行并且注册完组件之后，都会分别被连接成一个个的链表。因此实际上是有很多的URLProtocol，AVInputFormat，AVCodec的。图中画出了解码一个输入协议是“文件”（其实就是打开一个文件。“文件”也被当做是一种广义的协议），封装格式为FLV，视频编码格式是H.264的数据的函数调用关系。</p>
 </blockquote>
-<blockquote>
-<p>默认情况下，RUN指令会在shell里使用命令包装器<code>/bin/sh -c</code>来执行，如果是在一个不支持shell的平台上运行或者不希望在shell中运行（比如避免shell字符串篡改），也可以使用<code>exec</code>格式的RUN指令，如下所示：</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUN [ "apt-get", " install", "-y", "nginx" ]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>EXPOSE指令告诉Docker该容器内的应用程序将会使用该容器的指定端口。</p>
-</blockquote>
-<p><strong>基于Dockerfile构建新镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t=<span class="string">"micheal/static_web"</span> .</span><br><span class="line">$ sudo docker build -t=<span class="string">"micheal/static_web:v1"</span> .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里Docker假设在这个Git仓库的根目录下存在Dockerfile文件</span></span><br><span class="line">$ sudo docker build -t=<span class="string">"micheal/static_web:v1"</span> git@github.com:micheal/docker_static_web  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 忽略Dockerfile的构建缓存</span></span><br><span class="line">$ sudo docker build --no-cache -t=<span class="string">"micheal/static_web"</span> .</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出Docker镜像</span></span><br><span class="line">$ sudo docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看镜像每一层，以及创建这些层的Dockerfile指令</span></span><br><span class="line">$ sudo docker <span class="built_in">history</span> micheal/static_web </span><br><span class="line"></span><br><span class="line">$ sudo docker run -d -p 80 --name statix_web micheal/static_web nginx -g <span class="string">"daemon off;"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>nginx -g “daemon off;”,这将以前台的方式启动Nginx。</p>
-<p><code>-p</code>标志用来控制Docker在运行时应该公开那些网络端口给外部（宿主机）。运行一个容器时，Docker可以通过两种方式来在宿主机上分配端口。</p>
+<h3 id="区域"><a href="#区域" class="headerlink" title="区域"></a>区域</h3><p>整个架构图可以分为以下几个区域：</p>
 <ul>
-<li>Docker可以在宿主机上随机选择一个位于32768 ~ 61000的一个比较大的端口号来映射到容器中的80端口上。</li>
-<li>可以在Docker宿主机只指定一个具体的端口号来映射到容器中的80端口上。</li>
+<li><strong>左边区域——架构函数区域</strong>：这些函数并不针对某一特定的视频格式。</li>
+<li><strong>右上方黄色区域——协议处理函数区域</strong>：不同的协议（RTP，RTMP，FILE）会调用不同的协议处理函数。</li>
+<li><strong>右边中间绿色区域——封装格式处理函数区域</strong>：不同的封装格式（MKV，FLV，MPEGTS，AVI）会调用不同的封装格式处理函数。</li>
+<li><strong>右边下方蓝色区域——编解码函数区域</strong>：不同的编码标准（HEVC，H.264，MPEG2）会调用不同的编解码函数。</li>
 </ul>
-</blockquote>
-<p><strong>查看Docker端口映射情况</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker ps -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回宿主机中映射的端口</span></span><br><span class="line">$ sudo socker port static_web 80 </span><br><span class="line"></span><br><span class="line"><span class="comment"># -p会将容器内的80端口绑定到宿主机的8080端口上</span></span><br><span class="line">$ sudo docker run -d -p 8080:80 --name statix_web micheal/static_web nginx -g <span class="string">"daemon off;"</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>Dockerfile指令</strong></p>
-<ol>
-<li>CMD</li>
-</ol>
-<blockquote>
-<p>CMD指令用于指定一个容器启动时要运行的命令。这有点儿类似于RUN指令，只是RUN指令是指定容器镜像被构建时要运行的命令，而CMD是指定容器被启动时要运行的命令。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD [<span class="string">"/bin/bash/"</span>, <span class="string">"-l"</span>]</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>ENTRYPOINT</li>
-</ol>
-<blockquote>
-<p>ENTRYPOINT和CMD指令非常类似，我们可在docker run命令行中覆盖CMD指令，而ENTRYPOINT指令提供的命令则不容易在启动容器的时候被覆盖。</p>
-<p>可以组合使用ENTRYPOINT和CMD指令来完成一些巧妙的工作。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [<span class="string">"/usr/sbin/nginx"</span>]</span><br><span class="line">CMD [<span class="string">"-h"</span>]</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>WORKDIR</li>
-</ol>
-<blockquote>
-<p>WORKDIR指令用来在从镜像创建一个新容器时，在容器内部设置一个工作目录，ENTRYPOINT和/或CMD指定的程序会在这个目录下执行。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /opt/webapp/db</span><br><span class="line">RUN bundle install</span><br><span class="line">WORKDIR /opt/webapp</span><br><span class="line">ENTRYPOINT [<span class="string">"rackup"</span>]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可以通过<code>-w</code>标志在运行时覆盖工作目录</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -ti -w /var/<span class="built_in">log</span> ubuntu <span class="built_in">pwd</span>/var/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>ENV</li>
-</ol>
-<blockquote>
-<p>ENV指令用来在镜像构建过程中设置环境变量。这些变量会持久保存到从我们镜像创建的任何容器中。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENV RVM_PATH /home/rvm</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>也可以使用docker run命令行的<code>-e</code>标志来传递环境变量。这些环境变量只会在运行时有效。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -ti -e <span class="string">"WEB_PORT=8080"</span> ubuntu env</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>USER</li>
-</ol>
-<blockquote>
-<p>USER指令用来指定该镜像会以什么样的用户身份来运行。我们可以指定用户名或者UID以及组或GID，甚至是两者的组合。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">USER user</span><br><span class="line">USER user:group</span><br><span class="line">USER uid</span><br><span class="line">USER uid:gid</span><br><span class="line">USER user:gid</span><br><span class="line">USER uid:group</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>也可以在docker run命令行中通过<code>-u</code>标志覆盖该指令指定的值。</p>
-</blockquote>
-<ol>
-<li>VOLUME</li>
-</ol>
-<blockquote>
-<p>VOLUME指令用来向基于镜像创建的容器添加卷。一个卷可以存在于一个或者多个容器内特定的目录，这个目录可以绕过联合文件系统，并提供如下共享数据或者对数据进行持久化的功能。</p>
+<h3 id="箭头线"><a href="#箭头线" class="headerlink" title="箭头线"></a>箭头线</h3><p>为了把调用关系表示的更明显，图中的箭头线也使用了不同的颜色：</p>
 <ul>
-<li>卷可以在容器间共享和重用</li>
-<li>一个容器可以不是必须和其他容器共享卷</li>
-<li>对卷的修改是立即生效的</li>
-<li>对卷的修改不会对更新镜像产生影响</li>
-<li>卷会一直存在直到没有任何容器再使用它</li>
+<li><p>黑色箭头线：标志了函数之间的调用关系。</p>
+</li>
+<li><p>红色的箭头线：标志了解码的流程。</p>
+</li>
+<li><p>其他颜色的箭头线：标志了函数之间的调用关系。其中：</p>
+<ul>
+<li>调用 URLProtocol 结构体中的函数用<strong>黄色箭头线</strong>标识；</li>
+<li>调用 AVInputFormat 结构体中的函数用<strong>绿色箭头线</strong>标识；</li>
+<li>调用 AVCodec 结构体中的函数用<strong>蓝色箭头线</strong>标识。</li>
 </ul>
-<p>卷功能让我们可以将数据（如源代码）、数据库或者其他内容添加到镜像中而不是将这些内容提交到镜像中，并且允许我们在多个容器间共享这些内容，我们可以利用此功能来测试容器和内部应用程序代码，管理日志，或者处理容器内部的数据库。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VOLUME [<span class="string">"/opt/project"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="函数所在的文件"><a href="#函数所在的文件" class="headerlink" title="函数所在的文件"></a>函数所在的文件</h3><p>每个函数旁边标识了它所在的文件的路径。</p>
+<p>此外，还有一点需要注意的是，一些 API 函数内部也调用了另一些API函数。也就是说，API函数并不一定全部都调用FFmpeg的内部函数，他也有可能调用其他的API函数。例如从图中可以看出来， <code>avformat_close_input()</code> 调用了 <code>avformat_free_context()</code> 和 <code>avio_close()</code>。这些在内部代码中被调用的API函数也标记为粉红色。</p>
+<h3 id="函数调用关系"><a href="#函数调用关系" class="headerlink" title="函数调用关系"></a>函数调用关系</h3><p>下面简单列出几个区域中函数之间的调用关系（函数之间的调用关系使用缩进的方式表现出来）。详细的函数分析可以参考相关的《FFmpeg源代码分析》系列文章。</p>
+<h4 id="左边区域（FFmpeg架构函数）"><a href="#左边区域（FFmpeg架构函数）" class="headerlink" title="左边区域（FFmpeg架构函数）"></a>左边区域（FFmpeg架构函数）</h4><p><strong><font color="red">1.  av_register_all()【函数简单分析】</font>&gt;</strong></p>
+<ul>
+<li><strong><font color="red">1)  avcodec_register_all()</font></strong><ul>
+<li><strong>(a) REGISTER_HWACCEL()</strong></li>
+<li><strong>(b) REGISTER_ENCODER()</strong></li>
+<li><strong>(c) REGISTER_DECODER()</strong></li>
+<li><strong>(d) REGISTER_PARSER()</strong></li>
+<li><strong>(e) REGISTER_BSF()</strong></li>
+</ul>
+</li>
+<li><strong>2)  REGISTER_MUXER()</strong></li>
+<li><strong>3)  REGISTER_DEMUXER()</strong></li>
+<li><strong>4)  REGISTER_PROTOCOL()</strong></li>
+</ul>
+<p><strong><font color="red">2.  avformat_alloc_context()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) av_malloc(sizeof(AVFormatContext))</strong></p>
+</li>
+<li><p><strong>2) avformat_get_context_defaults()</strong></p>
+<ul>
+<li><strong>(a) av_opt_set_defaults()</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">3.  avformat_open_input()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) init_input()</strong><ul>
+<li><strong><font color="red">(a) avio_open2()【函数简单分析】</font></strong><ul>
+<li><strong>a) ffurl_open()</strong><ul>
+<li><strong>i. ffurl_alloc()</strong><ul>
+<li><strong>url_find_protocol()</strong></li>
+<li><strong>url_alloc_for_protocol()</strong></li>
+</ul>
+</li>
+<li><strong>ii. ffurl_connect()</strong><ul>
+<li><strong><font color="#FFC000">URLProtocol-&gt;url_open()</font></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>b) ffio_fdopen()</strong><ul>
+<li><strong>i. av_malloc(buffer_size)</strong></li>
+<li><strong>ii. <font color="red">avio_alloc_context()</font></strong><ul>
+<li><strong>av_mallocz(sizeof(AVIOContext))</strong></li>
+<li><strong>ffio_init_context()</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><font color="red">(b) av_probe_input_buffer2()</font></strong><ul>
+<li><strong><font color="red">a) avio_read()</font></strong><ul>
+<li><strong>i.  <font color="#009900">AVInputFormat-&gt;read_packet()</font></strong></li>
+</ul>
+</li>
+<li><strong><font color="red">b) av_probe_input_format2()</font></strong></li>
+<li><strong><font color="red">c) av_probe_input_format3()</font></strong><ul>
+<li><strong>i. <font color="red">av_iformat_next()</font></strong></li>
+<li><strong>ii. <font color="red">av_match_name()</font></strong></li>
+<li><strong>iii. <font color="red">av_match_ext()</font></strong></li>
+<li><strong>iv. <font color="#009900">AVInputFormat-&gt;read_probe()</font></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>2) <font color="#009900">AVInputFormat-&gt;read_header()</font></strong></li>
+</ul>
+<p><strong><font color="red">4. avformat_find_stream_info()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) find_decoder()</strong><ul>
+<li><strong><font color="red">(a) avcodec_find_decoder()</font></strong></li>
+</ul>
+</li>
+<li><strong><font color="red">2) avcodec_open2()</font></strong></li>
+<li><strong>3) read_frame_internal()</strong></li>
+<li><strong>4) try_decode_frame()</strong><ul>
+<li><strong><font color="red">(a) avcodec_decode_video2()</font></strong></li>
+</ul>
+</li>
+<li><strong><font color="red">5) avcodec_close()</font></strong></li>
+<li><strong>6) estimate_timings()</strong><ul>
+<li><strong>(a)  estimate_timings_from_pts()</strong></li>
+<li><strong>(b)  estimate_timings_from_bit_rate()</strong></li>
+<li><strong>(c)  update_stream_timings()</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">5. avcodec_find_decoder()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) find_encdec()</strong></li>
+</ul>
+<p><strong><font color="red">6. avcodec_open2()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong><font color="#3072C2">1) AVCodec-&gt;init()</font></strong></li>
+</ul>
+<p><strong><font color="red">7. av_read_frame()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) read_from_packet_buffer()</strong></p>
+</li>
+<li><p><strong>2) read_frame_internal()</strong></p>
+<ul>
+<li><strong>(a) ff_read_packet()</strong><ul>
+<li><strong><font color="#009900">a) AVInputFormat-&gt;read_packet()</font></strong></li>
+</ul>
+</li>
+<li><strong>(b) parse_packet()</strong><ul>
+<li><strong>a) av_parser_parse2()</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">8. avcodec_decode_video2()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) av_packet_split_side_data()</strong></p>
+</li>
+<li><p><strong>2) <font color="#3072C2">AVCodec</font>-&gt; <font color="red">decode()</font></strong></p>
+</li>
+<li><p><strong>3) av_frame_set_pkt_pos()</strong></p>
+</li>
+<li><p><strong>4) av_frame_set_best_effort_timestamp()</strong></p>
+</li>
+</ul>
+<p><strong><font color="red">9. avcodec_close()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong><font color="#3072C2">1) AVCodec-&gt;close()</font></strong></li>
+</ul>
+<p><strong><font color="red">10. avformat_close_input()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong><font color="#009900">1) AVInputFormat-&gt;read_close()</font></strong></p>
+</li>
+<li><p><strong>2) avformat_free_context()</strong></p>
+<ul>
+<li><strong>(a) ff_free_stream()</strong></li>
+</ul>
+</li>
+<li><p><strong>3) avio_close()</strong></p>
+<ul>
+<li><strong>(a) avio_flush()</strong><ul>
+<li><strong>a) flush_buffer()</strong></li>
+</ul>
+</li>
+<li><strong>(b) ffurl_close()</strong><ul>
+<li><strong>a) ffurl_closep()</strong><ul>
+<li><strong><font color="#FFC000">URLProtocol-&gt;url_close()</font></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="右上区域（URLProtocol协议处理函数）"><a href="#右上区域（URLProtocol协议处理函数）" class="headerlink" title="右上区域（URLProtocol协议处理函数）"></a>右上区域（URLProtocol协议处理函数）</h4><p>URLProtocol结构体包含如下协议处理函数指针：</p>
+<ul>
+<li><strong><font color="#FFC000">url_open()：打开</font></strong></li>
+<li><strong><font color="#FFC000">url_read()：读取</font></strong></li>
+<li><strong><font color="#FFC000">url_write()：写入</font></strong></li>
+<li><strong><font color="#FFC000">url_seek()：调整进度</font></strong></li>
+<li><strong><font color="#FFC000">url_close()：关闭</font></strong></li>
+</ul>
+<p>【例子】不同的协议对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>File协议（即文件）对应的URLProtocol结构体 <code>ff_file_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; file_open() -&gt; open()</span><br><span class="line">url_read() -&gt; file_read() -&gt; read()</span><br><span class="line">url_write() -&gt; file_write() -&gt; write()</span><br><span class="line">url_seek() -&gt; file_seek() -&gt; lseek()</span><br><span class="line">url_close() -&gt; file_close() -&gt; close()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>这条指令将会基于此镜像的任何容器创建一个名为/opt/project的挂载点。</p>
-<p>也可以通过指定数组的方式指定多个卷</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VOLUME [<span class="string">"/opt/project"</span>, <span class="string">"/data"</span>]</span><br></pre></td></tr></table></figure>
+<p><strong>RTMP协议（libRTMP）对应的URLProtocol结构体 <code>ff_librtmp_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; rtmp_open() -&gt; RTMP_Init(), RTMP_SetupURL(), RTMP_Connect(), RTMP_ConnectStream()</span><br><span class="line">url_read() -&gt; rtmp_read() -&gt; RTMP_Read()</span><br><span class="line">url_write() -&gt; rtmp_write() -&gt; RTMP_Write()</span><br><span class="line">url_seek() -&gt; rtmp_read_seek() -&gt; RTMP_SendSeek()</span><br><span class="line">url_close() -&gt; rtmp_close() -&gt; RTMP_Close()</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>ADD</li>
-</ol>
-<blockquote>
-<p>ADD指令用来将构建环境下的文件和目录复制到镜像中。不能对构建目录或者上下文之外的文件进行ADD操作。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ADD software.lic /opt/application/software.lic</span><br><span class="line">ADD latest.tar.gz /var/www/wordpress/   //这条指令会将归档文件解开到指定的目录下</span><br></pre></td></tr></table></figure>
+<p><strong>UDP协议对应的URLProtocol结构体 <code>ff_udp_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; udp_open()</span><br><span class="line">url_read() -&gt; udp_read()</span><br><span class="line">url_write() -&gt; udp_write()</span><br><span class="line">url_seek() -&gt; udp_close()</span><br><span class="line">url_close() -&gt; udp_close()</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>COPY</li>
-</ol>
-<blockquote>
-<p>COPY指令非常类似ADD，它们根本不同是COPY只关心构建上下文中复制本地文件，而不会去做文件提取（extraction）和解压（decompression）的工作。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COPY conf.d/ /etc/apache2/</span><br></pre></td></tr></table></figure>
+<h4 id="右中区域（AVInputFormat封装格式处理函数）"><a href="#右中区域（AVInputFormat封装格式处理函数）" class="headerlink" title="右中区域（AVInputFormat封装格式处理函数）"></a>右中区域（AVInputFormat封装格式处理函数）</h4><p>AVInputFormat包含如下封装格式处理函数指针：</p>
+<ul>
+<li><strong><font color="#009900">read_probe()：检查格式</font></strong></li>
+<li><strong><font color="#009900">read_header()：读取文件头</font></strong></li>
+<li><strong><font color="#009900">read_packet()：读取一帧数据</font></strong></li>
+<li><strong><font color="#009900">read_seek()：调整进度</font></strong></li>
+<li><strong><font color="#009900">read_close()：关闭</font></strong></li>
+</ul>
+<p>【例子】不同的封装格式对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>FLV封装格式对应的AVInputFormat结构体 <code>ff_flv_demuxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">read_probe() -&gt; flv_probe() –&gt; probe()</span><br><span class="line">read_header() -&gt; flv_read_header() -&gt; create_stream() -&gt; avformat_new_stream()</span><br><span class="line">read_packet() -&gt; flv_read_packet()</span><br><span class="line">read_seek() -&gt; flv_read_seek()</span><br><span class="line">read_close() -&gt; flv_read_close()</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>LABEL</li>
-</ol>
-<blockquote>
-<p>LABEL指令用于为Docker镜像添加元数据。元数据以键值对的形式展现</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LABEL version=<span class="string">"1.0"</span></span><br><span class="line">LABEL location=<span class="string">"New York"</span> <span class="built_in">type</span>=<span class="string">"Data Center"</span> role=<span class="string">"Web Server"</span></span><br></pre></td></tr></table></figure>
+<p><strong>MKV封装格式对应的AVInputFormat结构体 <code>ff_matroska_demuxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">read_probe() -&gt; matroska_probe()</span><br><span class="line">read_header() -&gt; matroska_read_header()</span><br><span class="line">read_packet() -&gt; matroska_read_packet()</span><br><span class="line">read_seek() -&gt; matroska_read_seek()</span><br><span class="line">read_close() -&gt; matroska_read_close()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>可以使用docker inspect命令查看容器标签</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker inspect micheal/apache2</span><br></pre></td></tr></table></figure>
+<p><strong>MPEG2TS封装格式对应的AVInputFormat结构体 <code>ff_mpegts_demuxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">read_probe() -&gt; mpegts_probe()</span><br><span class="line">read_header() -&gt; mpegts_read_header()</span><br><span class="line">read_packet() -&gt; mpegts_read_packet() </span><br><span class="line">read_close() -&gt; mpegts_read_close()</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>STOPSIGNAL</li>
-</ol>
-<blockquote>
-<p>STOPSIGNAL指令用来设置停止容器时发送什么系统调用信号给容器。</p>
-</blockquote>
-<ol>
-<li>ARG</li>
-</ol>
-<blockquote>
-<p>ARG指令用来定义可以在docker build命令运行时传递给构建运行时的变量，我们只需要在构建时使用–build-arg标志即可。用户只能在构建时指定在Dockerfile文件汇总定义过的参数。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ARG build</span><br><span class="line">ARG webapp_user=user</span><br><span class="line"></span><br><span class="line">$ docker build --build-arg build=1234 -t micheal/webapp .</span><br></pre></td></tr></table></figure>
+<p><strong>AVI封装格式对应的AVInputFormat结构体 <code>ff_avi_demuxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">read_probe() -&gt; avi_probe()</span><br><span class="line">read_header() -&gt; avi_read_header()</span><br><span class="line">read_packet() -&gt; avi_read_packet()</span><br><span class="line">read_seek() -&gt; avi_read_seek()</span><br><span class="line">read_close() -&gt; avi_read_close()</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>ONBUILD</li>
-</ol>
-<blockquote>
-<p>ONBUILD指令能为镜像添加触发器（trigger）。当一个镜像被用做其他镜像的基础镜像时（比如用户的镜像需要从某未准备好的位置添加源代码，或者用户需要执行特定于构建镜像的环境的构建脚本），该镜像中的触发器将会被执行。</p>
-<p>触发器会在构建过程中插入新指令，我们可以认为这些指令是紧跟在FROM之后指定的。触发器可以是任何构建指令。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ONBUILD ADD . /app/src</span><br><span class="line">ONBUILD RUN <span class="built_in">cd</span> /app/src/ &amp;&amp; make</span><br></pre></td></tr></table></figure>
+<h4 id="右下区域（AVCodec编解码函数）"><a href="#右下区域（AVCodec编解码函数）" class="headerlink" title="右下区域（AVCodec编解码函数）"></a>右下区域（AVCodec编解码函数）</h4><p>AVCodec包含如下编解码函数指针：</p>
+<ul>
+<li><strong><font color="#3072C2">init()：初始化</font></strong></li>
+<li><strong><font color="red">decode()</font>：解码一帧数据</strong></li>
+<li><strong><font color="#3072C2">close()：关闭</font></strong></li>
+</ul>
+<p>【例子】不同的编解码器对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>HEVC解码对应的AVCodec结构体 <code>ff_hevc_decoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; hevc_decode_init()</span><br><span class="line">decode() -&gt; hevc_decode_frame() -&gt; decode_nal_units()</span><br><span class="line">close() -&gt; hevc_decode_free()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>上面的代码将会在创建的镜像中加入ONBUILD触发器，ONBUILD指令可以在镜像上运行docker inspect命令查看。</p>
-</blockquote>
-<p><strong>Docker Networking</strong></p>
-<blockquote>
-<p>容器之间的连接用网络创建，这被称为Docker Networking。Docker Networking允许用户创建自己的网络，容器可以通过这个网上互相通信。更重要的是，现在容器可以跨越不同的宿主机来通信，并且网络配置可以更灵活的定制。Docker Networking也和Docker Compose以及Swarm进行了集成。</p>
-<p>要想使用Docker网络，需要先创建一个网络，然后在这个网络下启动容器。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network create app</span><br></pre></td></tr></table></figure>
+<p><strong>H.264解码对应的AVCodec结构体 <code>ff_h264_decoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; ff_h264_decode_init()</span><br><span class="line">decode() -&gt; h264_decode_frame() -&gt; decode_nal_units()</span><br><span class="line">close() -&gt; h264_decode_end()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>这里使用docker network命令创建了一个桥接网络，命名为app。可以使用docker network inspect命令查看新创建的这个网络。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network inspect app</span><br></pre></td></tr></table></figure>
+<p><strong>VP8解码（libVPX）对应的AVCodec结构体 <code>ff_libvpx_vp8_decoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; vpx_init() -&gt; vpx_codec_dec_init()</span><br><span class="line">decode() -&gt; vp8_decode() -&gt; vpx_codec_decode(), vpx_codec_get_frame()</span><br><span class="line">close() -&gt; vp8_free() -&gt; vpx_codec_destroy()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>我们可以看到这个新网络是一个本地的桥接网络（这非常像docker0网络），而且现在没有容器再这个网络中运行。</p>
-<p>可以使用<code>docker network ls</code>命令列出当前系统中所有的网络。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network ls</span><br></pre></td></tr></table></figure>
+<p><strong>MPEG2解码对应的AVCodec结构体 <code>ff_mpeg2video_decoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; mpeg_decode_init()</span><br><span class="line">decode() -&gt; mpeg_decode_frame()</span><br><span class="line">close() -&gt; mpeg_decode_end()</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>也可以使用 <code>docker network rm</code>命令删除一个Docker网络。</p>
-<p>在Docker网络中创建Redis容器</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d --net=app --name db micheal/redis</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>--net</code>标志指定了新容器将会在那个网络中运行。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network inspect app</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>将已有容器连接到Docker网络</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network connect app db2</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可以通过<code>docker network disconnect</code> 命令断开一个容器与指定网络的连接</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker network disconnect app db2</span><br></pre></td></tr></table></figure>
-
-<p><strong>通过Docker链接连接容器</strong></p>
-<blockquote>
-<p>启动一个Redis容器</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -d --name redis micheal/redis</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意：这里没有公开容器的任何端口。一会就能看到这么做的原因。</p>
-</blockquote>
-<blockquote>
-<p>链接Redis容器</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -p 4567 --name webapp --link redis:db -t -i -v <span class="variable">$PWD</span>/webapp_redis:/opt/webapp micheal/sinatra /bin/bash</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这个命令做了不少事情，我们逐一解释。首先，我们使用<code>-p</code>标志公开4567端口，这样就能从外面访问web应用程序。</p>
-<p>我们还使用<code>--name</code>标志给容器命名为webapp，并且使用了<code>-v</code>标志把web应用程序目录作为卷挂载到了容器里。</p>
-<p>然而，这次我们使用了一个新标志<code>--link</code>。<code>--link</code>标志创建了两个容器间的客户-服务链接。这个标志需要两个参数：一个是要链接的容器的名字，另一个是链接的别名。这个例子中我们创建了客户联系，webapp容器是客户，redis容器是“服务”，并且为这个服务增加了db作为别名。这个别名让我们可以一致地访问容器公开信息，而无须关注底层容器的名字。链接让服务容器有能力与客户容器通信，并且能分享一些连接细节，这些细节有助于在应用程序中配置并使用这个链接。</p>
-</blockquote>
-<blockquote>
-<p>连接也能得到一些安全上的好处。注意，启动 Redis 容器时，并没有使用<code>-p</code>标志公开Redis的端口。因为不需要这么做。通过把容器链接在一起，可以让客户直接访问任意服务容器的公开端口（即客户webapp容器可以连接到服务redis容器的6379端口）。更妙的是，只有使用<code>--link</code>标志链接到这个容器的容器才能连接到这个端口。容器的端口不需要对本地宿主机公开，现在我们已经拥有一个非常安全的模型。通过这个安全模型，就可以限制容器化应用程序被攻击面，减少应用暴露的网络。</p>
-</blockquote>
 
       
     </div>
@@ -899,7 +848,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Docker/" rel="tag"> <i class="fa fa-tag"></i> Docker</a>
+            <a href="/tags/FFmpeg/" rel="tag"> <i class="fa fa-tag"></i> FFmpeg</a>
           
         </div>
       
@@ -912,8 +861,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/15/Program-C/leveldb/" rel="next" title="leveldb原理剖析">
-                <i class="fa fa-chevron-left"></i> leveldb原理剖析
+              <a href="/2019/05/19/FFmpeg/ffmpeg实时美颜推流/" rel="next" title="FFMpeg实时美颜直播推流">
+                <i class="fa fa-chevron-left"></i> FFMpeg实时美颜直播推流
               </a>
             
           </div>
@@ -921,10 +870,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/27/git-using-standard-process/" rel="prev" title="Git使用规范流程">
-                Git使用规范流程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1191,7 +1136,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker基本命令"><span class="nav-number">1.</span> <span class="nav-text">Docker基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用Docker命令"><span class="nav-number">1.0.1.</span> <span class="nav-text">常用Docker命令</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg源代码结构图-解码"><span class="nav-number">1.</span> <span class="nav-text">FFmpeg源代码结构图 - 解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数背景色"><span class="nav-number">1.1.</span> <span class="nav-text">函数背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区域"><span class="nav-number">1.2.</span> <span class="nav-text">区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#箭头线"><span class="nav-number">1.3.</span> <span class="nav-text">箭头线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数所在的文件"><span class="nav-number">1.4.</span> <span class="nav-text">函数所在的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用关系"><span class="nav-number">1.5.</span> <span class="nav-text">函数调用关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左边区域（FFmpeg架构函数）"><span class="nav-number">1.5.1.</span> <span class="nav-text">左边区域（FFmpeg架构函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右上区域（URLProtocol协议处理函数）"><span class="nav-number">1.5.2.</span> <span class="nav-text">右上区域（URLProtocol协议处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右中区域（AVInputFormat封装格式处理函数）"><span class="nav-number">1.5.3.</span> <span class="nav-text">右中区域（AVInputFormat封装格式处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右下区域（AVCodec编解码函数）"><span class="nav-number">1.5.4.</span> <span class="nav-text">右下区域（AVCodec编解码函数）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
