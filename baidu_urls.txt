@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/05/29/实用的计算机工具库/
 http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/
 http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
 http://miaopei.github.io/2019/05/18/FFmpeg/FFmpegLeiXiaoHuaNote/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2018/01/03/DeepLearning/DogsVsCats/
 http://miaopei.github.io/2017/10/20/关于知识付费的理解/
 http://miaopei.github.io/2017/05/16/WebSocket教程/
 http://miaopei.github.io/2017/05/15/定制支持串口安装的ubuntu系统镜像/
-http://miaopei.github.io/2017/05/15/Shell脚本攻略笔记/

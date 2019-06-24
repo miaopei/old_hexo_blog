@@ -114,20 +114,22 @@
 
 
 
-  <meta name="description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
+  <meta name="description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。">
 <meta name="keywords" content="FFmpeg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FFmpeg 源代码结构">
+<meta property="og:title" content="FFmpeg 源代码结构（编解码解析）">
 <meta property="og:url" content="http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
-<meta property="og:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
+<meta property="og:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png">
-<meta property="og:updated_time" content="2019-06-24T07:32:17.399Z">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E8%A7%A3%E7%A0%81.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_open_input.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E7%BC%96%E7%A0%81.png">
+<meta property="og:updated_time" content="2019-06-24T10:43:19.873Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FFmpeg 源代码结构">
-<meta name="twitter:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。  下面解释一下图中关键标记的含义。 函数背景色函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：  粉红色背景函数：FFmpeg 的 API函数。 白色背景的函">
-<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta name="twitter:title" content="FFmpeg 源代码结构（编解码解析）">
+<meta name="twitter:description" content="特别说明，此文参考至雷神笔记，做一个备忘录。  FFmpeg源代码结构图 - 解码下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E8%A7%A3%E7%A0%81.png">
 
 
 
@@ -147,7 +149,7 @@
   };
 </script>
 
-  <title>FFmpeg 源代码结构 | Mr.Miaow Blog</title>
+  <title>FFmpeg 源代码结构（编解码解析） | Mr.Miaow Blog</title>
   
 
 
@@ -415,7 +417,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">FFmpeg 源代码结构
+          <h2 class="post-title" itemprop="name headline">FFmpeg 源代码结构（编解码解析）
 
               
             
@@ -458,7 +460,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-24 15:32:17" itemprop="dateModified" datetime="2019-06-24T15:32:17+08:00">2019-06-24</time>
+                <time title="修改时间：2019-06-24 18:43:19" itemprop="dateModified" datetime="2019-06-24T18:43:19+08:00">2019-06-24</time>
               
             
           </span>
@@ -539,10 +541,12 @@
 
       
         <blockquote>
-<p>特别说明，此文参考至雷神笔记，做一个备忘录。</p>
+<p>特别说明，此文参考至<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDIyMDE1MQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44220151">雷神笔记<i class="fa fa-external-link"></i></span>，做一个备忘录。</p>
 </blockquote>
 <h2 id="FFmpeg源代码结构图-解码"><a href="#FFmpeg源代码结构图-解码" class="headerlink" title="FFmpeg源代码结构图 - 解码"></a>FFmpeg源代码结构图 - 解码</h2><p>下图表明了 FFmpeg 在解码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。</p>
-<p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="FFmpeg解码结构图"></p>
+<a id="more"></a>
+
+<p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E8%A7%A3%E7%A0%81.png" alt="FFmpeg源代码结构图 - 解码"></p>
 <p>下面解释一下图中关键标记的含义。</p>
 <h3 id="函数背景色"><a href="#函数背景色" class="headerlink" title="函数背景色"></a>函数背景色</h3><p>函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：</p>
 <ul>
@@ -792,6 +796,233 @@
 <p><strong>MPEG2解码对应的AVCodec结构体 <code>ff_mpeg2video_decoder</code>：</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; mpeg_decode_init()</span><br><span class="line">decode() -&gt; mpeg_decode_frame()</span><br><span class="line">close() -&gt; mpeg_decode_end()</span><br></pre></td></tr></table></figure>
 
+<h3 id="avformat-open-input-函数"><a href="#avformat-open-input-函数" class="headerlink" title="avformat_open_input() 函数"></a>avformat_open_input() 函数</h3><p><img src="/images/imageFFmpeg/Thor/avformat_open_input.png" alt="avformat_open_input"></p>
+<h2 id="FFmpeg源代码结构图-编码"><a href="#FFmpeg源代码结构图-编码" class="headerlink" title="FFmpeg源代码结构图 - 编码"></a>FFmpeg源代码结构图 - 编码</h2><h3 id="函数调用关系图"><a href="#函数调用关系图" class="headerlink" title="函数调用关系图"></a>函数调用关系图</h3><p>下图表明了FFmpeg在编码一个视频的时候的函数调用流程。为了保证结构清晰，其中仅列出了最关键的函数，剔除了其它不是特别重要的函数。</p>
+<p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E7%BC%96%E7%A0%81.png" alt="FFmpeg源代码结构图 - 编码"></p>
+<p>下面解释一下图中关键标记的含义。</p>
+<h3 id="函数背景色-1"><a href="#函数背景色-1" class="headerlink" title="函数背景色"></a>函数背景色</h3><p>函数在图中以方框的形式表现出来。不同的背景色标志了该函数不同的作用：</p>
+<ul>
+<li>粉红色背景函数：FFmpeg 的 API 函数。</li>
+<li>白色背景的函数：FFmpeg 的内部函数。</li>
+<li>黄色背景的函数：URLProtocol 结构体中的函数，包含了读写各种协议的功能。</li>
+<li>绿色背景的函数：AVOutputFormat 结构体中的函数，包含了读写各种封装格式的功能。</li>
+<li>蓝色背景的函数：AVCodec 结构体中的函数，包含了编解码的功能。</li>
+</ul>
+<h3 id="区域-1"><a href="#区域-1" class="headerlink" title="区域"></a>区域</h3><p>整个关系图可以分为以下几个区域：</p>
+<ul>
+<li><strong>左边区域——架构函数区域</strong>：这些函数并不针对某一特定的视频格式。</li>
+<li><strong>右上方黄色区域——协议处理函数区域</strong>：不同的协议（RTP，RTMP，FILE）会调用不同的协议处理函数。</li>
+<li><strong>右边中间绿色区域——封装格式处理函数区域</strong>：不同的封装格式（MKV，FLV，MPEG2TS，AVI）会调用不同的封装格式处理函数。</li>
+<li><strong>右边下方蓝色区域——编解码函数区域</strong>：不同的编码标准（HEVC，H.264，MPEG2）会调用不同的编解码函数。</li>
+</ul>
+<h3 id="箭头线-1"><a href="#箭头线-1" class="headerlink" title="箭头线"></a>箭头线</h3><p>为了把调用关系表示的更明显，图中的箭头线也使用了不同的颜色：</p>
+<ul>
+<li><p>红色的箭头线：标志了编码的流程。</p>
+</li>
+<li><p>其他颜色的箭头线：标志了函数之间的调用关系。其中：</p>
+<ul>
+<li>调用 URLProtocol 结构体中的函数用<strong>黄色箭头线</strong>标识；</li>
+<li>调用 AVOutputFormat 结构体中的函数用<strong>绿色箭头线</strong>标识；</li>
+<li>调用 AVCodec 结构体中的函数用<strong>蓝色箭头线</strong>标识。</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数所在的文件-1"><a href="#函数所在的文件-1" class="headerlink" title="函数所在的文件"></a>函数所在的文件</h3><p>每个函数标识了它所在的文件路径。</p>
+<h3 id="函数功能简述"><a href="#函数功能简述" class="headerlink" title="函数功能简述"></a>函数功能简述</h3><p>下面简单列出几个区域中函数之间的调用关系（函数之间的调用关系使用缩进的方式表现出来）。详细的函数分析可以参考相关的《FFmpeg源代码分析》系列文章。</p>
+<h4 id="左边区域（架构函数）"><a href="#左边区域（架构函数）" class="headerlink" title="左边区域（架构函数）"></a>左边区域（架构函数）</h4><p><strong><font color="red">1. av_register_all()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong><font color="red">1) avcodec_register_all()</font></strong></p>
+<ul>
+<li><strong>(a) REGISTER_HWACCEL()</strong></li>
+<li><strong>(b) REGISTER_ENCODER()</strong></li>
+<li><strong>(c) REGISTER_DECODER()</strong></li>
+<li><strong>(d) REGISTER_PARSER()</strong></li>
+<li><strong>(e) REGISTER_BSF()</strong></li>
+</ul>
+</li>
+<li><p><strong>2) REGISTER_MUXER()</strong></p>
+</li>
+<li><p><strong>3) REGISTER_DEMUXER()</strong></p>
+</li>
+<li><p><strong>4) REGISTER_PROTOCOL()</strong></p>
+</li>
+</ul>
+<p><strong><font color="red">2. avformat_alloc_output_context2()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong><font color="red">1) avformat_alloc_context()</font></strong></p>
+<ul>
+<li><p><strong>(a) av_malloc(sizeof(AVFormatContext))</strong></p>
+</li>
+<li><p><strong>(b) avformat_get_context_defaults()</strong></p>
+<ul>
+<li><strong>a) av_opt_set_defaults()</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><font color="red">2) av_guess_format()</font></strong></p>
+<ul>
+<li><strong><font color="red">(a) av_oformat_next()</font></strong></li>
+<li><strong><font color="red">(b) av_match_name()</font></strong></li>
+<li><strong><font color="red">(c) av_match_ext()</font></strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">3. avio_open2()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) ffurl_open()</strong></p>
+<ul>
+<li><strong>(a) ffurl_alloc()</strong><ul>
+<li><strong>a) url_find_protocol()</strong></li>
+<li><strong>b) url_alloc_for_protocol()</strong></li>
+</ul>
+</li>
+<li><strong>(b) ffurl_connect()</strong><ul>
+<li><strong><font color="#FFC000">a) URLProtocol-&gt;url_open()</font></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>2) ffio_fdopen()</strong></p>
+<ul>
+<li><strong>(a) av_malloc(buffer_size)</strong></li>
+<li><strong><font color="red">(b) avio_alloc_context()</font></strong><ul>
+<li><strong>a) av_mallocz(sizeof(AVIOContext))</strong></li>
+<li><strong>b) ffio_init_context()</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">4. avformat_new_stream()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) av_mallocz(sizeof(AVStream))</strong></p>
+</li>
+<li><p><strong><font color="red">2) avcodec_alloc_context3()</font></strong></p>
+<ul>
+<li><strong>(a) av_malloc(sizeof(AVCodecContext))</strong></li>
+<li><strong>(b) avcodec_get_context_defaults3()</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">5. avcodec_find_encoder()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) find_encdec()</strong></li>
+</ul>
+<p><strong><font color="red">6. avcodec_open2()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) AVCodec-&gt;init()</strong></li>
+</ul>
+<p><strong><font color="red">7. avformat_write_header()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) init_muxer()</strong></p>
+</li>
+<li><p><strong><font color="#009900">2) AVOutputFormat-&gt;write_header()</font></strong></p>
+</li>
+<li><p><strong>3) init_pts()</strong></p>
+</li>
+</ul>
+<p><strong><font color="red">8. avcodec_encode_video2()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong><font color="#3072C2">1) AVCodec-&gt;encode2()</font></strong></li>
+</ul>
+<p><strong><font color="red">9. av_write_frame()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) check_packet()</strong></p>
+</li>
+<li><p><strong>2) compute_pkt_fields2()</strong></p>
+</li>
+<li><p><strong>3) write_packet()</strong></p>
+<ul>
+<li><strong><font color="#009900">(a) AVOutputFormat-&gt;write_packet()</font></strong></li>
+</ul>
+</li>
+</ul>
+<p><strong><font color="red">10. av_write_trailer()【函数简单分析】</font></strong></p>
+<ul>
+<li><p><strong>1) write_packet()</strong></p>
+</li>
+<li><p><strong><font color="#009900">2) AVOutputFormat-&gt;write_trailer()</font></strong></p>
+</li>
+</ul>
+<p><strong><font color="red">11. avcodec_close()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong><font color="#3072C2">1) AVCodec-&gt;close()</font></strong></li>
+</ul>
+<p><strong><font color="red">12. avformat_free_context()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) ff_free_stream()</strong></li>
+</ul>
+<p><strong><font color="red">13. avio_close()【函数简单分析】</font></strong></p>
+<ul>
+<li><strong>1) avio_flush()</strong><ul>
+<li><strong>(a) flush_buffer()</strong></li>
+</ul>
+</li>
+<li><strong>2) ffurl_close()</strong><ul>
+<li><strong>(a) ffurl_closep()</strong><ul>
+<li><strong><font color="#FFC000">a) URLProtocol-&gt;url_close()</font></strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="右上区域（URLProtocol协议处理函数）-1"><a href="#右上区域（URLProtocol协议处理函数）-1" class="headerlink" title="右上区域（URLProtocol协议处理函数）"></a>右上区域（URLProtocol协议处理函数）</h4><p>URLProtocol结构体包含如下协议处理函数指针：</p>
+<ul>
+<li><strong><font color="#FFC000">url_open()：打开</font></strong></li>
+<li><strong><font color="#FFC000">url_read()：读取</font></strong></li>
+<li><strong><font color="#FFC000">url_write()：写入</font></strong></li>
+<li><strong><font color="#FFC000">url_seek()：调整进度</font></strong></li>
+<li><strong><font color="#FFC000">url_close()：关闭</font></strong></li>
+</ul>
+<p>【例子】不同的协议对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>File协议（即文件）对应的URLProtocol结构体 <code>ff_file_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; file_open() -&gt; open()</span><br><span class="line">url_read() -&gt; file_read() -&gt; read()</span><br><span class="line">url_write() -&gt; file_write() -&gt; write()</span><br><span class="line">url_seek() -&gt; file_seek() -&gt; lseek()</span><br><span class="line">url_close() -&gt; file_close() -&gt; close()</span><br></pre></td></tr></table></figure>
+
+<p><strong>RTMP协议（libRTMP）对应的URLProtocol结构体 <code>ff_librtmp_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; rtmp_open() -&gt; RTMP_Init(), RTMP_SetupURL(), RTMP_Connect(), RTMP_ConnectStream()</span><br><span class="line">url_read() -&gt; rtmp_read() -&gt; RTMP_Read()</span><br><span class="line">url_write() -&gt; rtmp_write() -&gt; RTMP_Write()</span><br><span class="line">url_seek() -&gt; rtmp_read_seek() -&gt; RTMP_SendSeek()</span><br><span class="line">url_close() -&gt; rtmp_close() -&gt; RTMP_Close()</span><br></pre></td></tr></table></figure>
+
+<p><strong>UDP协议对应的URLProtocol结构体 <code>ff_udp_protocol</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url_open() -&gt; udp_open()</span><br><span class="line">url_read() -&gt; udp_read()</span><br><span class="line">url_write() -&gt; udp_write()</span><br><span class="line">url_seek() -&gt; udp_close()</span><br><span class="line">url_close() -&gt; udp_close()</span><br></pre></td></tr></table></figure>
+
+<h4 id="右中区域（AVOutputFormat封装格式处理函数）"><a href="#右中区域（AVOutputFormat封装格式处理函数）" class="headerlink" title="右中区域（AVOutputFormat封装格式处理函数）"></a>右中区域（AVOutputFormat封装格式处理函数）</h4><p>AVOutputFormat包含如下封装格式处理函数指针：</p>
+<ul>
+<li><strong><font color="#009900">write_header()：写文件头</font></strong></li>
+<li><strong><font color="#009900">write_packet()：写一帧数据</font></strong></li>
+<li><strong><font color="#009900">write_trailer()：写文件尾</font></strong></li>
+</ul>
+<p>【例子】不同的封装格式对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>FLV封装格式对应的AVOutputFormat结构体 <code>ff_flv_muxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">write_header() -&gt; flv_write_header()</span><br><span class="line">write_packet() –&gt; flv_write_packet()</span><br><span class="line">write_trailer() -&gt; flv_write_trailer()</span><br></pre></td></tr></table></figure>
+
+<p><strong>MKV封装格式对应的AVOutputFormat结构体 <code>ff_matroska_muxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">write_header() -&gt; mkv_write_header()</span><br><span class="line">write_packet() –&gt; mkv_write_flush_packet()</span><br><span class="line">write_trailer() -&gt; mkv_write_trailer()</span><br></pre></td></tr></table></figure>
+
+<p><strong>MPEG2TS封装格式对应的AVOutputFormat结构体 <code>ff_mpegts_muxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">write_header() -&gt; mpegts_write_header()</span><br><span class="line">write_packet() –&gt; mpegts_write_packet()</span><br><span class="line">write_trailer() -&gt; mpegts_write_end()</span><br></pre></td></tr></table></figure>
+
+<p><strong>AVI封装格式对应的AVOutputFormat结构体 <code>ff_avi_muxer</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">write_header() -&gt; avi_write_header()</span><br><span class="line">write_packet() –&gt; avi_write_packet()</span><br><span class="line">write_trailer() -&gt; avi_write_trailer()</span><br></pre></td></tr></table></figure>
+
+<h4 id="右下区域（AVCodec编解码函数）-1"><a href="#右下区域（AVCodec编解码函数）-1" class="headerlink" title="右下区域（AVCodec编解码函数）"></a>右下区域（AVCodec编解码函数）</h4><p>AVCodec包含如下编解码函数指针：</p>
+<ul>
+<li><strong><font color="#3072C2">init()：初始化</font></strong></li>
+<li><strong><font color="#3072C2">encode2()：编码一帧数据</font></strong></li>
+<li><strong><font color="#3072C2">close()：关闭</font></strong></li>
+</ul>
+<p>【例子】不同的编解码器对应着上述接口有不同的实现函数，举几个例子：</p>
+<p><strong>HEVC编码器对应的AVCodec结构体 <code>ff_libx265_encoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; libx265_encode_init() -&gt; x265_param_alloc(), x265_param_default_preset(), x265_encoder_open()</span><br><span class="line">encode2() -&gt; libx265_encode_frame() -&gt; x265_encoder_encode()</span><br><span class="line">close() -&gt; libx265_encode_close() -&gt; x265_param_free(), x265_encoder_close()</span><br></pre></td></tr></table></figure>
+
+<p><strong>H.264编码器对应的AVCodec结构体 <code>ff_libx264_encoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; X264_init() -&gt; x264_param_default(), x264_encoder_open(), x264_encoder_headers()</span><br><span class="line">encode2() -&gt; X264_frame() -&gt; x264_encoder_encode()</span><br><span class="line">close() -&gt; X264_close() -&gt; x264_encoder_close()</span><br></pre></td></tr></table></figure>
+
+<p><strong>VP8编码器（libVPX）对应的AVCodec结构体 <code>ff_libvpx_vp8_encoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; vpx_init() -&gt; vpx_codec_enc_config_default()</span><br><span class="line">encode2() -&gt; vp8_encode() -&gt; vpx_codec_enc_init(), vpx_codec_encode()</span><br><span class="line">close() -&gt; vp8_free() -&gt; vpx_codec_destroy()</span><br></pre></td></tr></table></figure>
+
+<p><strong>MPEG2编码器对应的AVCodec结构体 <code>ff_mpeg2video_encoder</code>：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init() -&gt; encode_init()</span><br><span class="line">encode2() -&gt; ff_mpv_encode_picture()</span><br><span class="line">close() -&gt; ff_mpv_encode_end()</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -871,6 +1102,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/05/29/实用的计算机工具库/" rel="prev" title="实用的计算机工具库">
+                实用的计算机工具库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -947,7 +1182,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1136,7 +1371,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg源代码结构图-解码"><span class="nav-number">1.</span> <span class="nav-text">FFmpeg源代码结构图 - 解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数背景色"><span class="nav-number">1.1.</span> <span class="nav-text">函数背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区域"><span class="nav-number">1.2.</span> <span class="nav-text">区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#箭头线"><span class="nav-number">1.3.</span> <span class="nav-text">箭头线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数所在的文件"><span class="nav-number">1.4.</span> <span class="nav-text">函数所在的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用关系"><span class="nav-number">1.5.</span> <span class="nav-text">函数调用关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左边区域（FFmpeg架构函数）"><span class="nav-number">1.5.1.</span> <span class="nav-text">左边区域（FFmpeg架构函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右上区域（URLProtocol协议处理函数）"><span class="nav-number">1.5.2.</span> <span class="nav-text">右上区域（URLProtocol协议处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右中区域（AVInputFormat封装格式处理函数）"><span class="nav-number">1.5.3.</span> <span class="nav-text">右中区域（AVInputFormat封装格式处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右下区域（AVCodec编解码函数）"><span class="nav-number">1.5.4.</span> <span class="nav-text">右下区域（AVCodec编解码函数）</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg源代码结构图-解码"><span class="nav-number">1.</span> <span class="nav-text">FFmpeg源代码结构图 - 解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数背景色"><span class="nav-number">1.1.</span> <span class="nav-text">函数背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区域"><span class="nav-number">1.2.</span> <span class="nav-text">区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#箭头线"><span class="nav-number">1.3.</span> <span class="nav-text">箭头线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数所在的文件"><span class="nav-number">1.4.</span> <span class="nav-text">函数所在的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用关系"><span class="nav-number">1.5.</span> <span class="nav-text">函数调用关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左边区域（FFmpeg架构函数）"><span class="nav-number">1.5.1.</span> <span class="nav-text">左边区域（FFmpeg架构函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右上区域（URLProtocol协议处理函数）"><span class="nav-number">1.5.2.</span> <span class="nav-text">右上区域（URLProtocol协议处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右中区域（AVInputFormat封装格式处理函数）"><span class="nav-number">1.5.3.</span> <span class="nav-text">右中区域（AVInputFormat封装格式处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右下区域（AVCodec编解码函数）"><span class="nav-number">1.5.4.</span> <span class="nav-text">右下区域（AVCodec编解码函数）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#avformat-open-input-函数"><span class="nav-number">1.6.</span> <span class="nav-text">avformat_open_input() 函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg源代码结构图-编码"><span class="nav-number">2.</span> <span class="nav-text">FFmpeg源代码结构图 - 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用关系图"><span class="nav-number">2.1.</span> <span class="nav-text">函数调用关系图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数背景色-1"><span class="nav-number">2.2.</span> <span class="nav-text">函数背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区域-1"><span class="nav-number">2.3.</span> <span class="nav-text">区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#箭头线-1"><span class="nav-number">2.4.</span> <span class="nav-text">箭头线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数所在的文件-1"><span class="nav-number">2.5.</span> <span class="nav-text">函数所在的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数功能简述"><span class="nav-number">2.6.</span> <span class="nav-text">函数功能简述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左边区域（架构函数）"><span class="nav-number">2.6.1.</span> <span class="nav-text">左边区域（架构函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右上区域（URLProtocol协议处理函数）-1"><span class="nav-number">2.6.2.</span> <span class="nav-text">右上区域（URLProtocol协议处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右中区域（AVOutputFormat封装格式处理函数）"><span class="nav-number">2.6.3.</span> <span class="nav-text">右中区域（AVOutputFormat封装格式处理函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右下区域（AVCodec编解码函数）-1"><span class="nav-number">2.6.4.</span> <span class="nav-text">右下区域（AVCodec编解码函数）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1174,7 +1409,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">747k</span>
+    <span title="站点总字数">753k</span>
   
 
   
@@ -1185,7 +1420,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">11:19</span>
+    <span title="站点阅读时长">11:25</span>
   
 
 </div>
