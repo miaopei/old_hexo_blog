@@ -5,7 +5,7 @@ reward: true
 categories: FFmpeg
 toc: true
 abbrlink: 39639
-date: 2019-05-29 10:14:50
+date: 2019-05-28 10:14:50
 ---
 
 > 特别说明，此文参考至[雷神笔记](<https://blog.csdn.net/leixiaohua1020/article/details/44864509>)，做一个备忘录。
@@ -119,7 +119,7 @@ ff_h264_parser中h264_parse()逐层调用的和解析Slice相关的函数：
 
 - **parse_nal_units()：解析一个NALU。**
 
-#### 解析函数（Parser）
+#### <font style="color:rgb(255,153,255);">解析函数（Parser）</font>
 解析函数（Parser）用于解析H.264码流中的一些信息（例如SPS、PPS、Slice Header等）。在parse_nal_units()和decode_nal_units()中都调用这些解析函数完成了解析。下面举几个解析函数的例子。
 
 - **ff_h264_decode_nal()：解析NALU。这个函数是后几个解析函数的前提。**
@@ -128,14 +128,14 @@ ff_h264_parser中h264_parse()逐层调用的和解析Slice相关的函数：
 - **ff_h264_decode_seq_parameter_set()：解析SPS。**
 - **ff_h264_decode_picture_parameter_set()：解析PPS。**
 
-#### 熵解码函数（Entropy Decoding）
+#### <font style="color:#993399;">熵解码函数（Entropy Decoding）</font>
 
 熵解码函数（Entropy Decoding）读取码流数据并且进行CABAC或者CAVLC熵解码。CABAC解码函数是ff_h264_decode_mb_cabac()，CAVLC解码函数是ff_h264_decode_mb_cavlc()。熵解码函数中包含了很多的读取指数哥伦布编码数据的函数，例如get_ue_golomb_long()，get_ue_golomb()，get_se_golomb()，get_ue_golomb_31()等等。
 
 在获取残差数据的时候需要进行CAVLC/CABAC解码。例如解码CAVLC的时候，会调用decode_residual()函数，而decode_residual()会调用get_vlc2()函数，get_vlc2()会调用OPEN_READER()，UPDATE_CACHE()，GET_VLC()，CLOSE_READER()几个函数读取CAVLC格式的数据。
 此外，在获取运动矢量的时候，会调用pred_motion()以及类似的几个函数获取运动矢量相关的信息。
 
-#### 解码函数（Decode）
+#### <font style="color:#009900;">解码函数（Decode）</font>
 
 解码函数（Decode）通过帧内预测、帧间预测、DCT反变换等方法解码压缩数据。解码函数是`ff_h264_hl_decode_mb()`。其中跟宏块类型的不同，会调用几个不同的函数，最常见的就是调用`hl_decode_mb_simple_8()`。
 
@@ -145,7 +145,7 @@ ff_h264_parser中h264_parse()逐层调用的和解析Slice相关的函数：
 
 随后 `FUNC(hl_decode_mb)()` 会调用 `hl_decode_mb_idct_luma()` 等几个函数对数据进行DCT反变换工作。
 
-#### 环路滤波函数（Loop Filter）
+#### <font style="color:#ffcc00;">环路滤波函数（Loop Filter）</font>
 
 环路滤波函数（Loop Filter）对解码后的数据进行滤波，去除方块效应。环路滤波函数是loop_filter()。其中调用了ff_h264_filter_mb()和ff_h264_filter_mb_fast()。ff_h264_filter_mb_fast()中又调用了h264_filter_mb_fast_internal()。而h264_filter_mb_fast_internal()中又调用了下面几个函数进行滤波：
 
@@ -155,7 +155,7 @@ ff_h264_parser中h264_parse()逐层调用的和解析Slice相关的函数：
 
 - **filter_mb_edgecv()：色度垂直滤波**
 
-#### 汇编函数（Assembly）
+#### <font style="color:#3333ff;">汇编函数（Assembly）</font>
 
 汇编函数（Assembly）是做过汇编优化的函数。为了提高效率，整个H.264解码器中（主要在解码部分和环路滤波部分）包含了大量的汇编函数。实际解码的过程中，FFmpeg会根据系统的特性调用相应的汇编函数（而不是C语言函数）以提高解码的效率。如果系统不支持汇编优化的话，FFmpeg才会调用C语言版本的函数。例如在帧内预测的时候，对于16x16亮度DC模式，有以下几个版本的函数：
 
