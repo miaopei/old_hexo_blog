@@ -390,7 +390,7 @@ int main(int argc, char* argv[])
 {
 	AVFormatContext	*pFormatCtx;
 	int				i, videoindex;
-	AVCodecContext	*pCodecCtx;
+	AVCodecContext	*pCodecCtx;			// 音视频编解码器上下文
 	AVCodec			*pCodec;
 	AVFrame			*pFrame, *pFrameYUV;
 	unsigned char 	*out_buffer;
@@ -411,15 +411,17 @@ int main(int argc, char* argv[])
 	//char filepath[]="bigbuckbunny_480x272.h265";
 	char filepath[]="Titanic.ts";
  
-	av_register_all();
+	av_register_all();	// 注册所有的编解码器
 	avformat_network_init();
-	pFormatCtx = avformat_alloc_context();
+	pFormatCtx = avformat_alloc_context(); 	// 分配内存并设置默认值
  
+    // 该函数用于打开多媒体数据并且获得一些相关的信息,AVInputFormat的read_header()完成了视音频流对应的AVStream的创建
 	if(avformat_open_input(&pFormatCtx, filepath, NULL, NULL) != 0){
 		printf("Couldn't open input stream.\n");
 		return -1;
 	}
-	if(avformat_find_stream_info(pFormatCtx,NULL) < 0){
+    // 该函数可以读取一部分视音频数据并且获得一些相关的信息,该函数主要用于给每个媒体流（音频/视频）的AVStream结构体赋值
+	if(avformat_find_stream_info(pFormatCtx, NULL) < 0){
 		printf("Couldn't find stream information.\n");
 		return -1;
 	}
@@ -433,12 +435,18 @@ int main(int argc, char* argv[])
 		printf("Didn't find a video stream.\n");
 		return -1;
 	}
-	pCodecCtx = pFormatCtx->streams[videoindex]->codec;
-	pCodec = avcodec_find_decoder(pCodecCtx->codec_id);
+	pCodecCtx = pFormatCtx->streams[videoindex]->codec; // 找到视频流编解码器
+	pCodec = avcodec_find_decoder(pCodecCtx->codec_id); 
 	if(pCodec == NULL){
 		printf("Codec not found.\n");
 		return -1;
 	}
+    // 该函数用于初始化一个视音频编解码器的AVCodecContext
+    //（1）为各种结构体分配内存（通过各种av_malloc()实现）。
+	//（2）将输入的AVDictionary形式的选项设置到AVCodecContext。
+	//（3）其他一些零零碎碎的检查，比如说检查编解码器是否处于“实验”阶段。
+	//（4）如果是编码器，检查输入参数是否符合编码器的要求
+	//（5）调用AVCodec的init()初始化具体的解码器。
 	if(avcodec_open2(pCodecCtx, pCodec,NULL) < 0){
 		printf("Could not open codec.\n");
 		return -1;
@@ -446,17 +454,24 @@ int main(int argc, char* argv[])
 	pFrame = av_frame_alloc();
 	pFrameYUV = av_frame_alloc();
  
-	out_buffer = (unsigned char *)av_malloc(av_image_get_buffer_size(AV_PIX_FMT_YUV420P,  pCodecCtx->width, pCodecCtx->height, 1));
-	av_image_fill_arrays(pFrameYUV->data, pFrameYUV->linesize,out_buffer,
-		AV_PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height, 1);
+	out_buffer = (unsigned char *)av_malloc(av_image_get_buffer_size(AV_PIX_FMT_YUV420P, pCodecCtx->width, pCodecCtx->height, 1));
+	av_image_fill_arrays(pFrameYUV->data, pFrameYUV->linesize,
+                         out_buffer,AV_PIX_FMT_YUV420P, pCodecCtx->width, 
+                         pCodecCtx->height, 1);
  
 	//Output Info-----------------------------
 	printf("---------------- File Information ---------------\n");
 	av_dump_format(pFormatCtx, 0, filepath, 0);
 	printf("-------------------------------------------------\n");
 	
-	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, 
-		pCodecCtx->width, pCodecCtx->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL); 
+    // 初始化一个SwsContext
+    // 参数说明：
+    // 源图像的宽, 源图像的高, 源图像的像素格式, 
+    // 目标图像的宽, 目标图像的高, 目标图像的像素格式, 设定图像拉伸使用的算法
+	img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, 
+                                     pCodecCtx->pix_fmt, pCodecCtx->width, 
+                                     pCodecCtx->height, AV_PIX_FMT_YUV420P, 
+                                     SWS_BICUBIC, NULL, NULL, NULL); 
 	
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {  
 		printf( "Could not initialize SDL - %s\n", SDL_GetError()); 
@@ -465,8 +480,9 @@ int main(int argc, char* argv[])
 	//SDL 2.0 Support for multiple windows
 	screen_w = pCodecCtx->width;
 	screen_h = pCodecCtx->height;
-	screen = SDL_CreateWindow("Simplest ffmpeg player's Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		screen_w, screen_h, SDL_WINDOW_OPENGL);
+	screen = SDL_CreateWindow("Simplest ffmpeg player's Window", 
+                              SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,
+                              screen_w, screen_h, SDL_WINDOW_OPENGL);
  
 	if(!screen) {  
 		printf("SDL: could not create window - exiting:%s\n",SDL_GetError()); 
@@ -475,7 +491,9 @@ int main(int argc, char* argv[])
 	sdlRenderer = SDL_CreateRenderer(screen, -1, 0);  
 	//IYUV: Y + U + V  (3 planes)
 	//YV12: Y + V + U  (3 planes)
-	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, pCodecCtx->width, pCodecCtx->height);  
+	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV, 
+                                   SDL_TEXTUREACCESS_STREAMING, 
+                                   pCodecCtx->width, pCodecCtx->height);  
  
 	sdlRect.x = 0;
 	sdlRect.y = 0;
@@ -492,19 +510,38 @@ int main(int argc, char* argv[])
 		SDL_WaitEvent(&event);
 		if(event.type == SFM_REFRESH_EVENT){
 			while(1){
+                // av_read_frame()的作用是读取码流中的音频若干帧或者视频一帧
+                // 例如，解码视频的时候，每解码一个视频帧，需要先调用 av_read_frame()获得一帧视频的压缩数据，然后才能对该数据进行解码（例如H.264中一帧压缩数据通常对应一个NAL）
+                // 参数说明：输入的AVFormatContext, 输出的AVPacket
 				if(av_read_frame(pFormatCtx, packet)<0)
 					thread_exit = 1;
  
 				if(packet->stream_index == videoindex)
 					break;
 			}
+            // 作用是解码一帧视频数据,输入一个压缩编码的结构体AVPacket，输出一个解码后的结构体AVFrame
+            // avcodec_decode_video2()主要做了以下几个方面的工作：
+            //（1）对输入的字段进行了一系列的检查工作：例如宽高是否正确，输入是否为视频等等。
+			//（2）通过ret = avctx->codec->decode(avctx, picture, got_picture_ptr,&tmp)这句代码，调用了相应AVCodec的decode()函数，完成了解码操作。
+			//（3）对得到的AVFrame的一些字段进行了赋值，例如宽高、像素格式等等。
 			ret = avcodec_decode_video2(pCodecCtx, pFrame, &got_picture, packet);
 			if(ret < 0){
 				printf("Decode Error.\n");
 				return -1;
 			}
 			if(got_picture){
-				sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+                // sws_scale()是用于转换像素的函数
+                // 参数说明：
+                // 1）转换格式的上下文。也就是 sws_getContext 函数返回的结果。
+                // 2）输入图像的每个颜色通道的数据指针
+                // 3）输入图像的每个颜色通道的跨度
+                // 4）参数int srcSliceY, int srcSliceH,定义在输入图像上处理区域，srcSliceY是起始位置，srcSliceH是处理多少行。
+                // 如果srcSliceY=0，srcSliceH=height，表示一次性处理完整个图像。					// 这种设置是为了多线程并行，例如可以创建两个线程，第一个线程处理 [0, h/2-1]行，第二个线程处理 [h/2, h-1]行。并行处理加快速度。
+                // 5）参数uint8_t *const dst[], const int dstStride[]定义输出图像信息（输出的每个颜色通道数据指针，每个颜色通道行字节数）
+				sws_scale(img_convert_ctx, 
+                          (const unsigned char* const*)pFrame->data, 
+                          pFrame->linesize, 0, pCodecCtx->height, 
+                          pFrameYUV->data, pFrameYUV->linesize);
 				//SDL---------------------------
 				SDL_UpdateTexture( sdlTexture, NULL, pFrameYUV->data[0], pFrameYUV->linesize[0] );  
 				SDL_RenderClear( sdlRenderer );  
@@ -539,6 +576,18 @@ int main(int argc, char* argv[])
 ```
 
 </details>
+
+### av_read_packet()
+
+通过 `av_read_packet()`，读取一个包，需要说明的是此函数必须是包含整数帧的，不存在半帧的情况。
+
+以 ts 流为例，是读取一个完整的 PES 包（一个完整 pes 包包含若干视频或音频 es 包），读取完毕后，通过 `av_parser_parse2()` 分析出视频一帧（或音频若干帧），返回，下次进入循环的时候，如果上次的数据没有完全取完，则 `st = s->cur_st` ; 不会是NULL，即再此进入 `av_parser_parse2()` 流程，而不是下面的 `av_read_packet（）` 流程.
+
+这样就保证了，如果读取一次包含了 N 帧视频数据（以视频为例），则调用 `av_read_frame（）` N 次都不会去读数据，而是返回第一次读取的数据，直到全部解析完毕。
+
+函数调用结构图：
+
+![av_read_packet](/images/imageFFmpeg/Thor/av_read_packet.png)
 
 ## FFmpeg 源码分析
 
