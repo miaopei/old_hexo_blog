@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="架构图FFMPEG+SDL的视频播放器 最简单的基于FFMPEG+SDL的视频播放器 ver2 （采用SDL2.0）  FFmpeg 解码一个视频流程：">
+<meta name="keywords" content="FFmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg框架详解">
+<meta property="og:url" content="http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="架构图FFMPEG+SDL的视频播放器 最简单的基于FFMPEG+SDL的视频播放器 ver2 （采用SDL2.0）  FFmpeg 解码一个视频流程：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E6%92%AD%E6%94%BE%E5%99%A8%E8%A7%A3%E7%A0%81%E7%9A%84%E6%B5%81%E7%A8%8B%E7%94%A8%E5%9B%BE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/SDL2.0%E6%98%BE%E7%A4%BAYUV%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E7%BC%96%E7%A0%81%E8%A7%86%E9%A2%91%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E4%BB%85%E4%BD%BF%E7%94%A8libavcodec%E7%BC%96%E7%A0%81%E8%A7%86%E9%A2%91%E7%9A%84%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E8%A7%A3%E7%A0%81.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E7%BC%96%E7%A0%81.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_register_all.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-03.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-04.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-05.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%B8%B8%E8%A7%81%E7%BB%93%E6%9E%84%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_alloc_context.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_new_stream.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_frame_alloc.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avpicture_fill.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_new_packet.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avio_open2.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avcodec_find_encoder.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avcodec_open2.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avcodec_close.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E5%9B%BE%E8%A7%A3FFMPEG%E6%89%93%E5%BC%80%E5%AA%92%E4%BD%93%E7%9A%84%E5%87%BD%E6%95%B0avformat_open_input.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_open_input.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_find_stream_info.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_read_frame.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FLV%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/AudioTag.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/AACAUDIODATA%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/VideoTag.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/AVCVIDEOPACKET%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_close_input.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_alloc_output_context2.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/avformat_write_header.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/FLVHeader.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thoreavcodec_encode_video.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_write_frame.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_write_trailer.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/AVCVIDEOPACKET%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_log%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/av_log.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/">
+<meta property="og:updated_time" content="2019-06-26T10:57:20.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FFmpeg框架详解">
+<meta name="twitter:description" content="架构图FFMPEG+SDL的视频播放器 最简单的基于FFMPEG+SDL的视频播放器 ver2 （采用SDL2.0）  FFmpeg 解码一个视频流程：">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/%E6%92%AD%E6%94%BE%E5%99%A8%E8%A7%A3%E7%A0%81%E7%9A%84%E6%B5%81%E7%A8%8B%E7%94%A8%E5%9B%BE.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>FFmpeg框架详解 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">天道酬勤，地道酬善，人道酬誠，商道酬信，業道酬精</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="苗沛">
+      <meta itemprop="description" content="人生如逆水行舟，不进则退！">
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">FFmpeg框架详解
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-27 10:14:50" itemprop="dateCreated datePublished" datetime="2019-05-27T10:14:50+08:00">2019-05-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-26 18:57:20" itemprop="dateModified" datetime="2019-06-26T18:57:20+08:00">2019-06-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h1><h2 id="FFMPEG-SDL的视频播放器"><a href="#FFMPEG-SDL的视频播放器" class="headerlink" title="FFMPEG+SDL的视频播放器"></a>FFMPEG+SDL的视频播放器</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy8zODg2ODQ5OQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/38868499">最简单的基于FFMPEG+SDL的视频播放器 ver2 （采用SDL2.0）<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p><strong>FFmpeg 解码一个视频流程：</strong></p>
+<a id="more"></a>
+
+<p><img src="/images/imageFFmpeg/Thor/%E6%92%AD%E6%94%BE%E5%99%A8%E8%A7%A3%E7%A0%81%E7%9A%84%E6%B5%81%E7%A8%8B%E7%94%A8%E5%9B%BE.png" alt="FFmpeg解码一个视频流程"></p>
+<p><strong>SDL2.0 显示 YUV 的流程：</strong></p>
+<p><img src="/images/imageFFmpeg/Thor/SDL2.0%E6%98%BE%E7%A4%BAYUV%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="SDL2.0显示YUV的流程"></p>
+<h2 id="FFMPEG的视频编码器（YUV编码为H-264）"><a href="#FFMPEG的视频编码器（YUV编码为H-264）" class="headerlink" title="FFMPEG的视频编码器（YUV编码为H.264）"></a>FFMPEG的视频编码器（YUV编码为H.264）</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy8yNTQzMDQyNQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/25430425">最简单的基于FFMPEG的视频编码器（YUV编码为H.264）<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy8zOTc3MDk0Nw==" title="https://blog.csdn.net/leixiaohua1020/article/details/39770947">最简单的基于FFmpeg的视频编码器-更新版（YUV编码为HEVC(H.265)）<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80MjE4MTI3MQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/42181271">最简单的基于FFmpeg的编码器-纯净版（不包含libavformat）<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h3 id="FFmpeg编码视频的流程图"><a href="#FFmpeg编码视频的流程图" class="headerlink" title="FFmpeg编码视频的流程图"></a>FFmpeg编码视频的流程图</h3><p>通过该流程，不仅可以编码H.264/H.265的码流，而且可以编码MPEG4/MPEG2/VP9/VP8等多种码流。实际上使用FFmpeg编码视频的方式都是一样的。图中蓝色背景的函数是实际输出数据的函数。浅绿色的函数是视频编码的函数。</p>
+<p><img src="/images/imageFFmpeg/Thor/FFmpeg%E7%BC%96%E7%A0%81%E8%A7%86%E9%A2%91%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="FFmpeg编码视频的流程图"></p>
+<p>简单介绍一下流程中各个函数的意义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">av_register_all()  <span class="comment">// 注册FFmpeg所有编解码器。</span></span><br><span class="line">avformat_alloc_output_context2()  <span class="comment">// 初始化输出码流的AVFormatContext。</span></span><br><span class="line">avio_open()  <span class="comment">// 打开输出文件。</span></span><br><span class="line">av_new_stream()  <span class="comment">// 创建输出码流的AVStream。</span></span><br><span class="line">avcodec_find_encoder()  <span class="comment">// 查找编码器。</span></span><br><span class="line">avcodec_open2()  <span class="comment">// 打开编码器。</span></span><br><span class="line">avformat_write_header()  <span class="comment">// 写文件头（对于某些没有文件头的封装格式，不需要此函数。比如说MPEG2TS）。</span></span><br><span class="line">avcodec_encode_video2()  <span class="comment">// 编码一帧视频。即将AVFrame（存储YUV像素数据）编码为AVPacket（存储H.264等格式的码流数据）。</span></span><br><span class="line">av_write_frame()  <span class="comment">// 将编码后的视频码流写入文件。</span></span><br><span class="line">flush_encoder()  <span class="comment">// 输入的像素数据读取完成后调用此函数。用于输出编码器中剩余的AVPacket。</span></span><br><span class="line">av_write_trailer()  <span class="comment">// 写文件尾（对于某些没有文件头的封装格式，不需要此函数。比如说MPEG2TS）。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="“纯净”的基于FFmpeg的视频编码器"><a href="#“纯净”的基于FFmpeg的视频编码器" class="headerlink" title="“纯净”的基于FFmpeg的视频编码器"></a>“纯净”的基于FFmpeg的视频编码器</h3><p>以下记录一个更加 “纯净” 的基于 FFmpeg 的视频编码器。此前记录过一个基于 FFmpeg 的视频编码器：</p>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjAvYXJ0aWNsZS9kZXRhaWxzLzM5NzcwOTQ3" title="http://blog.csdn.net/leixiaohua1020/article/details/39770947"> 《最简单的基于FFmpeg的视频编码器-更新版（YUV编码为HEVC(H.265)）》<i class="fa fa-external-link"></i></span></p>
+<p>这个视频编码器调用了 FFmpeg 中的 libavformat 和 libavcodec 两个库完成了视频编码工作。但是这不是一个 “纯净” 的编码器。</p>
+<p>上述两个库中 libavformat 完成封装格式处理，而 libavcodec 完成编码工作。</p>
+<p>一个 “纯净” 的编码器，理论上说只需要使用 libavcodec 就足够了，并不需要使用 libavformat。一下记录的编码器就是这样的一个 “纯净” 的编码器，它仅仅通过调用 libavcodec 将 YUV 数据编码为 H.264/HEVC 等格式的压缩视频码流。</p>
+<p><strong>仅使用libavcodec（不使用libavformat）编码视频的流程：</strong></p>
+<p><img src="/images/imageFFmpeg/Thor/%E4%BB%85%E4%BD%BF%E7%94%A8libavcodec%E7%BC%96%E7%A0%81%E8%A7%86%E9%A2%91%E7%9A%84%E6%B5%81%E7%A8%8B.png" alt="仅使用libavcodec（不使用libavformat）编码视频的流程"></p>
+<p>流程图中关键函数的作用如下所列：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">avcodec_register_all()  <span class="comment">// 注册所有的编解码器。</span></span><br><span class="line">avcodec_find_encoder()  <span class="comment">// 查找编码器。</span></span><br><span class="line">avcodec_alloc_context3()  <span class="comment">// 为AVCodecContext分配内存。</span></span><br><span class="line">avcodec_open2()  <span class="comment">// 打开编码器。</span></span><br><span class="line">avcodec_encode_video2()  <span class="comment">// 编码一帧数据。</span></span><br></pre></td></tr></table></figure>
+
+<p>两个存储数据的结构体如下所列：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AVFrame  <span class="comment">// 存储一帧未编码的像素数据。</span></span><br><span class="line">AVPacket  <span class="comment">// 存储一帧压缩编码数据。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>对比：</strong></p>
+<p>简单记录一下这个只使用 libavcodec 的 “纯净版” 视频编码器和使用 libavcodec+libavformat 的视频编码器的不同。</p>
+<p>（1）    下列与libavformat相关的函数在“纯净版”视频编码器中都不存在。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">av_register_all注册所有的编解码器，复用/解复用器等等组件。其中调用了</span><br><span class="line">avcodec_register_all()  <span class="comment">// 注册所有编解码器相关的组件。</span></span><br><span class="line">avformat_alloc_context()  <span class="comment">// 创建AVFormatContext结构体。</span></span><br><span class="line">avformat_alloc_output_context2()  <span class="comment">// 初始化一个输出流。</span></span><br><span class="line">avio_open()  <span class="comment">// 打开输出文件。</span></span><br><span class="line">avformat_new_stream()  <span class="comment">// 创建AVStream结构体。avformat_new_stream()中会调用</span></span><br><span class="line">avcodec_alloc_context3()  <span class="comment">// 创建AVCodecContext结构体。</span></span><br><span class="line">avformat_write_header()  <span class="comment">// 写文件头。</span></span><br><span class="line">av_write_frame()  <span class="comment">// 写编码后的文件帧。</span></span><br><span class="line">av_write_trailer()  <span class="comment">// 写文件尾。</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）    新增了如下几个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">avcodec_register_all()  <span class="comment">// 只注册编解码器有关的组件。</span></span><br><span class="line">avcodec_alloc_context3()  <span class="comment">// 创建AVCodecContext结构体。</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出，相比于“完整”的编码器，这个纯净的编码器函数调用更加简单，功能相对少一些，相对来说更加的“轻量”。</p>
+<h2 id="解码框架图"><a href="#解码框架图" class="headerlink" title="解码框架图"></a>解码框架图</h2><p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E8%A7%A3%E7%A0%81.png" alt="FFmpeg解码"></p>
+<h2 id="编码框架图"><a href="#编码框架图" class="headerlink" title="编码框架图"></a>编码框架图</h2><p><img src="/images/imageFFmpeg/Thor/FFmpeg%E6%BA%90%E7%A0%81API%E7%BB%93%E6%9E%84%E5%9B%BE-%E7%BC%96%E7%A0%81.png" alt="FFmpeg编码"></p>
+<h1 id="通用函数解析"><a href="#通用函数解析" class="headerlink" title="通用函数解析"></a>通用函数解析</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDIyMDE1MQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44220151">函数解析<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="av-register-all"><a href="#av-register-all" class="headerlink" title="av_register_all()"></a>av_register_all()</h2><p>ffmpeg 注册复用器，编码器等的函数 <code>av_register_all()</code>。该函数在所有基于ffmpeg的应用程序中几乎都是第一个被调用的。只有调用了该函数，才能使用复用器，编码器等。</p>
+<p>函数调用关系图如下图所示。<code>av_register_all()</code> 调用了 <code>avcodec_register_all()</code>。<code>avcodec_register_all()</code> 注册了和编解码器有关的组件：硬件加速器，解码器，编码器，Parser，Bitstream Filter。<code>av_register_all()</code> 除了调用 <code>avcodec_register_all()</code> 之外，还注册了复用器，解复用器，协议处理器。</p>
+<p><img src="/images/imageFFmpeg/Thor/av_register_all.png" alt="av_register_all"></p>
+<h2 id="内存的分配和释放（av-malloc-、av-free-等）"><a href="#内存的分配和释放（av-malloc-、av-free-等）" class="headerlink" title="内存的分配和释放（av_malloc()、av_free()等）"></a>内存的分配和释放（av_malloc()、av_free()等）</h2><p>内存操作的常见函数位于 <code>libavutil\mem.c</code> 中。本文记录FFmpeg开发中最常使用的几个函数：<code>av_malloc()</code>，<code>av_realloc()</code>，<code>av_mallocz()</code>，<code>av_calloc()</code>，<code>av_free()</code>，<code>av_freep()</code>。</p>
+<p><code>av_malloc()</code> 就是简单的封装了系统函数malloc()，并做了一些错误检查工作。</p>
+<h3 id="关于size-t"><a href="#关于size-t" class="headerlink" title="关于size_t"></a>关于size_t</h3><p>size _t  这个类型在 FFmpeg 中多次出现，简单解释一下其作用。size _t 是为了增强程序的可移植性而定义的。不同系统上，定义 size_t 可能不一样。它实际上就是 unsigned int。</p>
+<h3 id="为什么要内存对齐？"><a href="#为什么要内存对齐？" class="headerlink" title="为什么要内存对齐？"></a>为什么要内存对齐？</h3><p>FFmpeg 内存分配方面多次涉及到 “内存对齐”（memory alignment）的概念。</p>
+<p>这方面内容在 IBM 的网站上有一篇文章，讲的挺通俗易懂的，在此简单转述一下。</p>
+<p>程序员通常认为内存就是一个字节数组，每次可以一个一个字节存取内存。例如在 C 语言中使用 <code>char *</code> 指代 “一块内存”，Java 中使用 <code>byte[]</code> 指代一块内存。如下所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-01.png" alt></p>
+<p>但那实际上计算机处理器却不是这样认为的。处理器相对比较 “懒惰”，它会以 2 字节，4 字节，8 字节，16 字节甚至 32 字节来存取内存。例如下图显示了以 4 字节为单位读写内存的处理器 “看待” 上述内存的方式。</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-02.png" alt></p>
+<p>上述的存取单位的大小称之为内存存取粒度。</p>
+<p>下面看一个实例，分别从地址0，和地址 1 读取 4 个字节到寄存器。</p>
+<p>从程序员的角度来看，读取方式如下图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-03.png" alt></p>
+<p>而 2 字节存取粒度的处理器的读取方式如下图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-04.png" alt></p>
+<p>可以看出 2 字节存取粒度的处理器从地址 0 读取 4 个字节一共读取 2 次；从地址 1 读取 4 个字节一共读取了 3 次。由于每次读取的开销是固定的，因此从地址 1 读取 4 字节的效率有所下降。</p>
+<p>4 字节存取粒度的处理器的读取方式如下图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90-05.png" alt></p>
+<p>可以看出 4 字节存取粒度的处理器从地址 0 读取 4 个字节一共读取 1 次；从地址 1 读取 4 个字节一共读取了 2 次。从地址 1 读取的开销比从地址 0 读取多了一倍。由此可见内存不对齐对 CPU 的性能是有影响的。 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">av_malloc()  <span class="comment">// 是FFmpeg中最常见的内存分配函数, av_malloc()就是简单的封装了系统函数malloc()</span></span><br><span class="line">av_realloc()  <span class="comment">// 用于对申请的内存的大小进行调整。</span></span><br><span class="line">av_mallocz()  <span class="comment">// 可以理解为av_malloc()+zeromemory</span></span><br><span class="line">av_calloc()  <span class="comment">// 则是简单封装了av_mallocz()</span></span><br><span class="line">av_free()  <span class="comment">// 用于释放申请的内存</span></span><br><span class="line">av_freep()  <span class="comment">// 简单封装了av_free()。并且在释放内存之后将目标指针设置为NULL</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常见结构体的初始化和销毁（AVFormatContext，AVFrame等）"><a href="#常见结构体的初始化和销毁（AVFormatContext，AVFrame等）" class="headerlink" title="常见结构体的初始化和销毁（AVFormatContext，AVFrame等）"></a>常见结构体的初始化和销毁（AVFormatContext，AVFrame等）</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGVpeGlhb2h1YTEwMjAvYXJ0aWNsZS9kZXRhaWxzLzExNjkzOTk3" title="http://blog.csdn.net/leixiaohua1020/article/details/11693997">FFMPEG中最关键的结构体之间的关系<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>常见的结构体如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统领全局的基本结构体。主要用于处理封装格式（FLV/MKV/RMVB 等）</span></span><br><span class="line">AVFormatContext</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输入输出对应的结构体，用于输入输出（读写文件，RTMP 协议等）</span></span><br><span class="line">AVIOContext</span><br><span class="line"></span><br><span class="line"><span class="comment">// 视音频流对应的结构体，用于视音频编解码</span></span><br><span class="line">AVStream，AVCodecContext</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存储非压缩的数据（视频对应 RGB/YUV 像素数据，音频对应 PCM 采样数据）</span></span><br><span class="line">AVFrame</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存储压缩数据（视频对应 H.264 等码流数据，音频对应 AAC/MP3 等码流数据）</span></span><br><span class="line">AVPacket</span><br></pre></td></tr></table></figure>
+
+<p>他们之间的关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%B8%B8%E8%A7%81%E7%BB%93%E6%9E%84%E4%BD%93%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="常见结构体之间的关系"></p>
+<p>简单分析一下上述几个结构体的初始化和销毁函数。这些函数列表如下。</p>
+<table>
+<thead>
+<tr>
+<th>结构体</th>
+<th>初始化</th>
+<th>销毁</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AVFormatContext</td>
+<td>avformat_alloc_context()</td>
+<td>avformat_free_context()</td>
+</tr>
+<tr>
+<td>AVIOContext</td>
+<td>avio_alloc_context()</td>
+<td></td>
+</tr>
+<tr>
+<td>AVStream</td>
+<td>avformat_new_stream()</td>
+<td></td>
+</tr>
+<tr>
+<td>AVCodecContext</td>
+<td>avcodec_alloc_context3()</td>
+<td></td>
+</tr>
+<tr>
+<td>AVFrame</td>
+<td>av_frame_alloc();<br>av_image_fill_arrays()</td>
+<td>av_frame_free()</td>
+</tr>
+<tr>
+<td>AVPacket</td>
+<td>av_init_packet();<br>av_new_packet()</td>
+<td>av_free_packet()</td>
+</tr>
+</tbody></table>
+<h3 id="avformat-alloc-context"><a href="#avformat-alloc-context" class="headerlink" title="avformat_alloc_context()"></a>avformat_alloc_context()</h3><p><code>avformat_alloc_context()</code> 的定义位于 <code>libavformat\options.c</code>。</p>
+<p><code>avformat_alloc_context()</code> 调用 <code>av_malloc()</code> 为 AVFormatContext 结构体分配了内存，而且同时也给 AVFormatContext 中的 <code>internal</code> 字段分配内存（这个字段是 FFmpeg 内部使用的，先不分析）。此外调用了一个 <code>avformat_get_context_defaults()</code> 函数。该函数用于设置 AVFormatContext 的字段的默认值。它的定义也位于 <code>libavformat\options.c</code>，确切的说就位于 <code>avformat_alloc_context()</code>上面</p>
+<p><code>avformat_get_context_defaults()</code> 首先调用 <code>memset()</code> 将 AVFormatContext 的所有字段置 0。而后调用了一个函数 <code>av_opt_set_defaults()</code> 。<code>av_opt_set_defaults()</code> 用于给字段设置默认值。</p>
+<p><code>avformat_alloc_context()</code> 代码的函数调用关系如下图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_alloc_context.png" alt="avformat_alloc_context"></p>
+<p><code>avformat_free_context()</code> 的声明位于 <code>libavformat\avformat.h</code></p>
+<p><code>avformat_free_context()</code> 的定义位于 <code>libavformat\options.c</code></p>
+<p><code>avformat_free_context()</code> 调用了各式各样的销毁函数：<code>av_opt_free()</code>，<code>av_freep()</code>，<code>av_dict_free()</code>。这些函数分别用于释放不同种类的变量，在这里不再详细讨论。</p>
+<p>在这里看一个释放 AVStream 的函数 <code>ff_free_stream()</code>。该函数的定义位于 <code>libavformat\options.c</code>（其实就在 <code>avformat_free_context()</code> 上方）, 与释放 AVFormatContext 类似，释放 AVStream 的时候，也是调用了 <code>av_freep()</code>，<code>av_dict_free()</code> 这些函数释放有关的字段。如果使用了 parser 的话，会调用 <code>av_parser_close()</code> 关闭该 parser。</p>
+<h3 id="avio-alloc-context"><a href="#avio-alloc-context" class="headerlink" title="avio_alloc_context()"></a>avio_alloc_context()</h3><p>AVIOContext 的初始化函数是 <code>avio_alloc_context()</code>，销毁的时候使用 <code>av_free()</code> 释放掉其中的缓存即可。它的声明位于 <code>libavformat\avio.h</code> 中</p>
+<p><code>avio_alloc_context()</code> 定义位于 <code>libavformat\aviobuf.c</code> 中</p>
+<p><code>avio_alloc_context()</code> 首先调用 <code>av_mallocz()</code> 为 AVIOContext 分配内存。而后调用了一个函数 <code>ffio_init_context()</code> 。该函数完成了真正的初始化工作</p>
+<h3 id="avformat-new-stream"><a href="#avformat-new-stream" class="headerlink" title="avformat_new_stream()"></a>avformat_new_stream()</h3><p><code>avformat_new_stream()</code> 的声明位于 <code>libavformat\avformat.h</code> 中</p>
+<p>AVStream 的初始化函数是 <code>avformat_new_stream()</code>，销毁函数使用销毁 AVFormatContext 的 <code>avformat_free_context()</code> 就可以了。</p>
+<p><code>avformat_new_stream()</code> 的定义位于 <code>libavformat\utils.c</code> 中</p>
+<p><code>avformat_new_stream()</code> 首先调用 <code>av_mallocz()</code>  为 AVStream 分配内存。接着给新分配的AVStream 的各个字段赋上默认值。然后调用了另一个函数 <code>avcodec_alloc_context3()</code> 初始化 AVStream 中的 AVCodecContext。</p>
+<h3 id="avcodec-alloc-context3"><a href="#avcodec-alloc-context3" class="headerlink" title="avcodec_alloc_context3()"></a>avcodec_alloc_context3()</h3><p><code>avcodec_alloc_context3()</code> 的声明位于 <code>libavcodec\avcodec.h</code> 中</p>
+<p><code>avcodec_alloc_context3()</code> 的定义位于 <code>libavcodec\options.c</code> 中</p>
+<p><code>avcodec_alloc_context3()</code> 首先调用 <code>av_malloc()</code> 为 AVCodecContext 分配存储空间，然后调用了一个函数 <code>avcodec_get_context_defaults3()</code> 用于设置该 AVCodecContext 的默认值</p>
+<p><code>avformat_new_stream()</code> 函数的调用结构如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_new_stream.png" alt="avformat_new_stream"></p>
+<h3 id="av-frame-alloc"><a href="#av-frame-alloc" class="headerlink" title="av_frame_alloc()"></a>av_frame_alloc()</h3><p>AVFrame 的初始化函数是 <code>av_frame_alloc()</code>，销毁函数是 <code>av_frame_free()</code>。在这里有一点需要注意，旧版的 FFmpeg 都是使用 <code>avcodec_alloc_frame()</code> 初始化 AVFrame 的，但是我在写这篇文章的时候，<code>avcodec_alloc_frame()</code> 已经被标记为 “过时的” 了，为了保证与时俱进，决定分析新的<code>API——av_frame_alloc()</code>。</p>
+<p><code>av_frame_alloc()</code> 的声明位于 <code>libavutil\frame.h</code></p>
+<p><code>av_frame_alloc()</code> 的定义位于 <code>libavutil\frame.c</code></p>
+<p><code>av_frame_alloc()</code> 首先调用 <code>av_mallocz()</code> 为 AVFrame 结构体分配内存。而后调用了一个函数<code>get_frame_defaults()</code> 用于设置一些默认参数</p>
+<p>从 <code>av_frame_alloc()</code> 的代码我们可以看出，该函数并没有为 AVFrame 的像素数据分配空间。因此AVFrame 中的像素数据的空间需要自行分配空间，例如使用 <code>avpicture_fill()</code>， <code>av_image_fill_arrays()</code> 等函数。</p>
+<p><code>av_frame_alloc()</code> 函数的调用结构如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_frame_alloc.png" alt="av_frame_alloc"></p>
+<h4 id="avpicture-fill"><a href="#avpicture-fill" class="headerlink" title="avpicture_fill()"></a>avpicture_fill()</h4><p><code>avpicture_fill()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<p><code>avpicture_fill()</code> 的定义位于 <code>libavcodec\avpicture.c</code></p>
+<p><code>avpicture_fill()</code> 仅仅是简单调用了一下 <code>av_image_fill_arrays()</code>。也就是说这两个函数实际上是等同的</p>
+<h4 id="av-image-fill-arrays"><a href="#av-image-fill-arrays" class="headerlink" title="av_image_fill_arrays()"></a>av_image_fill_arrays()</h4><p><code>av_image_fill_arrays()</code> 的声明位于 <code>libavutil\imgutils.h</code> 中</p>
+<p><code>av_image_fill_arrays()</code> 的定义位于 <code>libavutil\imgutils.c</code> 中</p>
+<p><code>av_image_fill_arrays()</code> 函数中包含 3 个函数：<code>av_image_check_size()</code>，<code>av_image_fill_linesizes()</code>，<code>av_image_fill_pointers()</code>。<code>av_image_check_size()</code> 用于检查输入的宽高参数是否合理，即不能太大或者为负数。<code>av_image_fill_linesizes()</code> 用于填充dst_linesize。<code>av_image_fill_pointers()</code> 则用于填充 dst_data。它们的定义相对比较简单，不再详细分析。</p>
+<p><code>avpicture_fill()</code> 函数调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avpicture_fill.png" alt="avpicture_fill"></p>
+<h3 id="av-init-packet"><a href="#av-init-packet" class="headerlink" title="av_init_packet()"></a>av_init_packet()</h3><p><code>av_init_packet()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<p><code>av_init_packet()</code> 的定义位于 <code>libavcodec\avpacket.c</code></p>
+<h3 id="av-new-packet"><a href="#av-new-packet" class="headerlink" title="av_new_packet()"></a>av_new_packet()</h3><p><code>av_new_packet()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<p><code>av_new_packet()</code> 的定义位于 <code>libavcodec\avpacket.c</code></p>
+<p><code>av_new_packet()</code> 调用了 <code>av_init_packet(pkt)</code>。此外还调用了一个函数 <code>packet_alloc()</code></p>
+<p><code>packet_alloc()</code> 中调用 <code>av_buffer_realloc()</code> 为 AVPacket 分配内存。然后调用 <code>memset()</code> 将分配的内存置 0。</p>
+<p>PS：发现 AVPacket 的结构随着 FFmpeg 的发展越发复杂了。原先 AVPacket 中的数据仅仅存在一个 uint8_t 类型的数组里，而现在已经使用一个专门的结构体 AVBufferRef 存储数据。</p>
+<p><code>av_new_packet()</code> 代码的函数调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_new_packet.png" alt="av_new_packet"></p>
+<p><code>av_free_packet()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<p><code>av_free_packet()</code> 的定义位于 <code>libavcodec\avpacket.c</code></p>
+<p><code>av_free_packet()</code> 调用 <code>av_buffer_unref()</code> 释放 AVPacket 中的数据，而后还调用了<code>av_packet_free_side_data()</code> 释放了 side_data（存储封装格式可以提供的额外的数据）。</p>
+<h2 id="avio-open2"><a href="#avio-open2" class="headerlink" title="avio_open2()"></a>avio_open2()</h2><p>该函数用于打开 FFmpeg 的输入输出文件。<code>avio_open2()</code> 的声明位于 <code>libavformat\avio.h</code> 文件中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avio_open2</span><span class="params">(AVIOContext **s, <span class="keyword">const</span> <span class="keyword">char</span> *url, <span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> AVIOInterruptCB *int_cb, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>avio_open2()</code> 函数参数的含义如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s：函数调用成功之后创建的AVIOContext结构体。</span><br><span class="line">url：输入输出协议的地址（文件也是一种“广义”的协议，对于文件来说就是文件的路径）。</span><br><span class="line">flags：打开地址的方式。可以选择只读，只写，或者读写。取值如下。</span><br><span class="line">AVIO_FLAG_READ：只读。</span><br><span class="line">AVIO_FLAG_WRITE：只写。</span><br><span class="line">AVIO_FLAG_READ_WRITE：读写。</span><br><span class="line">int_cb：目前还没有用过。</span><br><span class="line">options：目前还没有用过。</span><br></pre></td></tr></table></figure>
+
+<p>函数调用结构图：</p>
+<p><img src="/images/imageFFmpeg/Thor/avio_open2.png" alt="avio_open2"></p>
+<h2 id="av-find-decoder-和-av-find-encoder"><a href="#av-find-decoder-和-av-find-encoder" class="headerlink" title="av_find_decoder() 和 av_find_encoder()"></a>av_find_decoder() 和 av_find_encoder()</h2><p><code>avcodec_find_encoder()</code> 用于查找 FFmpeg 的编码器，</p>
+<p><code>avcodec_find_decoder()</code> 用于查找 FFmpeg 的解码器。</p>
+<p><code>avcodec_find_encoder()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">AVCodec *<span class="title">avcodec_find_encoder</span><span class="params">(<span class="keyword">enum</span> AVCodecID id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数的参数是一个编码器的 ID，返回查找到的编码器（没有找到就返回NULL）。</p>
+<p><code>avcodec_find_decoder()</code> 的声明也位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">AVCodec *<span class="title">avcodec_find_decoder</span><span class="params">(<span class="keyword">enum</span> AVCodecID id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数的参数是一个解码器的 ID，返回查找到的解码器（没有找到就返回NULL）。</p>
+<p><code>avcodec_find_encoder()</code> 和 <code>avcodec_find_decoder()</code> 的函数调用关系图如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avcodec_find_encoder.png" alt="函数调用关系图"></p>
+<p><code>avcodec_find_encoder()</code> 的源代码位于 <code>libavcodec\utils.c</code></p>
+<p><code>avcodec_find_encoder()</code> 调用了一个 <code>find_encdec()</code>，注意它的第二个参数是 1。</p>
+<p><code>find_encdec()</code> 的源代码位于 <code>libavcodec\utils.c</code></p>
+<p><code>find_encdec()</code> 中有一个循环，该循环会遍历 AVCodec 结构的链表，逐一比较输入的 ID 和每一个编码器的 ID，直到找到 ID 取值相等的编码器。</p>
+<p>在这里有几点需要注意：</p>
+<p>（1）first_avcodec 是一个全局变量，存储 AVCodec 链表的第一个元素。</p>
+<p>（2）<code>remap_deprecated_codec_id()</code> 用于将一些过时的编码器 ID 映射到新的编码器 ID。</p>
+<p>（3）函数的第二个参数 encoder 用于确定查找编码器还是解码器。当该值为 1 的时候，用于查找编码器，此时会调用 <code>av_codec_is_encoder()</code> 判断 AVCodec 是否为编码器；当该值为 0 的时候，用于查找解码器，此时会调用 <code>av_codec_is_decoder()</code> 判断 AVCodec 是否为解码器。</p>
+<p><code>avcodec_find_decoder()</code> 的源代码位于 <code>libavcodec\utils.c</code></p>
+<p><code>avcodec_find_decoder()</code> 同样调用了 <code>find_encdec()</code>，只是第 2 个参数设置为 0。</p>
+<h2 id="avcodec-open2"><a href="#avcodec-open2" class="headerlink" title="avcodec_open2()"></a>avcodec_open2()</h2><p>该函数用于初始化一个视音频编解码器的 AVCodecContext。</p>
+<p><code>avcodec_open2()</code> 的声明位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_open2</span><span class="params">(AVCodecContext *avctx, <span class="keyword">const</span> AVCodec *codec, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用中文简单转述一下avcodec_open2()各个参数的含义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">avctx：需要初始化的 AVCodecContext。</span><br><span class="line">codec：输入的 AVCodec</span><br><span class="line">options：一些选项。例如使用 libx264 编码的时候，“preset”，“tune”等都可以通过该参数设置。</span><br></pre></td></tr></table></figure>
+
+<p><code>avcodec_open2()</code> 函数调用关系非常简单，如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avcodec_open2.png" alt="avcodec_open2"></p>
+<p><code>avcodec_open2()</code> 的定义位于 <code>libavcodec\utils.c</code></p>
+<p><code>avcodec_open2()</code> 的源代码量是非常长的，但是它的调用关系非常简单——它只调用了一个关键的函数，即 AVCodec 的 <code>init()</code>，后文将会对这个函数进行分析。</p>
+<p>我们可以简单梳理一下 <code>avcodec_open2()</code> 所做的工作，如下所列：</p>
+<p>（1）为各种结构体分配内存（通过各种 <code>av_malloc()</code> 实现）。</p>
+<p>（2）将输入的 AVDictionary 形式的选项设置到 AVCodecContext。</p>
+<p>（3）其他一些零零碎碎的检查，比如说检查编解码器是否处于 “实验” 阶段。</p>
+<p>（4）如果是编码器，检查输入参数是否符合编码器的要求</p>
+<p>（5）调用 AVCodec 的 <code>init()</code> 初始化具体的解码器。</p>
+<p>前几步比较简单，不再分析。在这里我们分析一下第4步和第5步。</p>
+<h3 id="检查输入参数是否符合编码器要求"><a href="#检查输入参数是否符合编码器要求" class="headerlink" title="检查输入参数是否符合编码器要求"></a>检查输入参数是否符合编码器要求</h3><p>在这里简单分析一下第 4 步，即 “检查输入参数是否符合编码器的要求”。这一步中检查了很多的参数，在这里我们随便选一个参数 pix_fmts（像素格式）看一下，如下所示。</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//检查像素格式</span></span><br><span class="line">        <span class="keyword">if</span> (avctx-&gt;codec-&gt;pix_fmts) &#123;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; avctx-&gt;codec-&gt;pix_fmts[i] != AV_PIX_FMT_NONE; i++)</span><br><span class="line">                <span class="keyword">if</span> (avctx-&gt;pix_fmt == avctx-&gt;codec-&gt;pix_fmts[i])</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_NONE</span><br><span class="line">                &amp;&amp; !((avctx-&gt;codec_id == AV_CODEC_ID_MJPEG || avctx-&gt;codec_id == AV_CODEC_ID_LJPEG)</span><br><span class="line">                     &amp;&amp; avctx-&gt;strict_std_compliance &lt;= FF_COMPLIANCE_UNOFFICIAL)) &#123;</span><br><span class="line">                <span class="keyword">char</span> buf[<span class="number">128</span>];</span><br><span class="line">                <span class="built_in">snprintf</span>(buf, <span class="keyword">sizeof</span>(buf), <span class="string">"%d"</span>, avctx-&gt;pix_fmt);</span><br><span class="line">                av_log(avctx, AV_LOG_ERROR, <span class="string">"Specified pixel format %s is invalid or not supported\n"</span>,</span><br><span class="line">                       (<span class="keyword">char</span> *)av_x_if_null(av_get_pix_fmt_name(avctx-&gt;pix_fmt), buf));</span><br><span class="line">                ret = AVERROR(EINVAL);</span><br><span class="line">                <span class="keyword">goto</span> free_and_end;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_YUVJ420P ||</span><br><span class="line">                avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_YUVJ411P ||</span><br><span class="line">                avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_YUVJ422P ||</span><br><span class="line">                avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_YUVJ440P ||</span><br><span class="line">                avctx-&gt;codec-&gt;pix_fmts[i] == AV_PIX_FMT_YUVJ444P)</span><br><span class="line">                avctx-&gt;color_range = AVCOL_RANGE_JPEG;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>可以看出，该代码首先进入了一个 <code>for()</code> 循环，将 AVCodecContext 中设定的 <code>pix_fmt</code> 与编码器AVCodec 中的 <code>pix_fmts</code> 数组中的元素逐一比较。</p>
+<p>先简单介绍一下 AVCodec 中的 <code>pix_fmts</code> 数组。AVCodec 中的 <code>pix_fmts</code> 数组存储了该种编码器支持的像素格式，并且规定以 AV_PIX_FMT_NONE（AV_PIX_FMT_NONE 取值为 -1）为结尾。例如，libx264 的 <code>pix_fmts</code> 数组的定义位于 <code>libavcodec\libx264.c</code>，如下所示。</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">enum</span> AVPixelFormat pix_fmts_8bit[] = &#123;</span><br><span class="line">    AV_PIX_FMT_YUV420P,</span><br><span class="line">    AV_PIX_FMT_YUVJ420P,</span><br><span class="line">    AV_PIX_FMT_YUV422P,</span><br><span class="line">    AV_PIX_FMT_YUVJ422P,</span><br><span class="line">    AV_PIX_FMT_YUV444P,</span><br><span class="line">    AV_PIX_FMT_YUVJ444P,</span><br><span class="line">    AV_PIX_FMT_NV12,</span><br><span class="line">    AV_PIX_FMT_NV16,</span><br><span class="line">    AV_PIX_FMT_NONE</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>从 <code>pix_fmts_8bit</code> 的定义可以看出 libx264 主要支持的是以 YUV 为主的像素格式。</p>
+<p>现在回到 “检查输入 <code>pix_fmt</code> 是否符合编码器的要求” 的那段代码。如果 <code>for()</code> 循环从 <code>AVCodec-&gt;pix_fmts</code> 数组中找到了符合 <code>AVCodecContext-&gt;pix_fmt</code> 的像素格式，或者完成了 <code>AVCodec-&gt;pix_fmts</code> 数组的遍历，都会跳出循环。如果发现 <code>AVCodec-&gt;pix_fmts</code> 数组中索引为 <code>i</code> 的元素是 AV_PIX_FMT_NONE（即最后一个元素，取值为 -1）的时候，就认为没有找到合适的像素格式，并且最终提示错误信息。</p>
+<h3 id="AVCodec-gt-init"><a href="#AVCodec-gt-init" class="headerlink" title="AVCodec-&gt;init()"></a>AVCodec-&gt;init()</h3><p><code>avcodec_open2()</code> 中最关键的一步就是调用 AVCodec 的 <code>init()</code> 方法初始化具体的编码器。AVCodec 的 <code>init()</code> 是一个函数指针，指向具体编解码器中的初始化函数。这里我们以 libx264 为例，看一下它对应的 AVCodec 的定义。</p>
+<p>libx264 对应的 AVCodec 的定义位于 <code>libavcodec\libx264.c</code></p>
+<details><summary>代码：</summary>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">AVCodec ff_libx264_encoder = &#123;</span><br><span class="line">    .name             = <span class="string">"libx264"</span>,</span><br><span class="line">    .long_name        = NULL_IF_CONFIG_SMALL(<span class="string">"libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"</span>),</span><br><span class="line">    .type             = AVMEDIA_TYPE_VIDEO,</span><br><span class="line">    .id               = AV_CODEC_ID_H264,</span><br><span class="line">    .priv_data_size   = <span class="keyword">sizeof</span>(X264Context),</span><br><span class="line">    .init             = X264_init,</span><br><span class="line">    .encode2          = X264_frame,</span><br><span class="line">    .close            = X264_close,</span><br><span class="line">    .capabilities     = CODEC_CAP_DELAY | CODEC_CAP_AUTO_THREADS,</span><br><span class="line">    .priv_class       = &amp;x264_class,</span><br><span class="line">    .defaults         = x264_defaults,</span><br><span class="line">    .init_static_data = X264_init_static,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>可以看出在 <code>ff_libx264_encoder</code> 中 <code>init()</code> 指向 <code>X264_init()</code> 。<code>X264_init()</code> 的定义同样位于<code>libavcodec\libx264.c</code></p>
+<p><code>X264_init()</code> 的代码以后研究 X264 的时候再进行细节的分析，在这里简单记录一下它做的两项工作：</p>
+<p>（1）设置 X264Context 的参数。X264Context 主要完成了 libx264 和 FFmpeg 对接的功能。可以看出代码主要在设置一个 params 结构体变量，该变量的类型即是 x264 中存储参数的结构体 <code>x264_param_t</code>。
+（2）调用 libx264 的 API 进行编码器的初始化工作。例如调用 <code>x264_param_default()</code> 设置默认参数，调用 <code>x264_param_apply_profile()</code> 设置 profile，调用 <code>x264_encoder_open()</code> 打开编码器等等。</p>
+<p>最后附上 X264Context 的定义，位于 <code>libavcodec\libx264.c</code></p>
+<h2 id="avcodec-close"><a href="#avcodec-close" class="headerlink" title="avcodec_close()"></a>avcodec_close()</h2><p>该函数用于关闭编码器。<code>avcodec_close()</code> 函数的声明位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_close</span><span class="params">(AVCodecContext *avctx)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数只有一个参数，就是需要关闭的编码器的 AVCodecContext。</p>
+<p>函数的调用关系图如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avcodec_close.png" alt="avcodec_close"></p>
+<p><code>avcodec_close()</code> 的定义位于 <code>libavcodec\utils.c</code></p>
+<p>从 <code>avcodec_close()</code> 的定义可以看出，该函数释放 AVCodecContext 中有关的变量，并且调用了 AVCodec 的 <code>close()</code> 关闭了解码器。</p>
+<h1 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h1><h2 id="图解-FFMPEG-打开媒体的函数-avformat-open-input"><a href="#图解-FFMPEG-打开媒体的函数-avformat-open-input" class="headerlink" title="图解 FFMPEG 打开媒体的函数 avformat_open_input"></a>图解 FFMPEG 打开媒体的函数 avformat_open_input</h2><p>FFMPEG打开媒体的的过程开始于avformat_open_input，因此该函数的重要性不可忽视。</p>
+<p>在该函数中，FFMPEG完成了：</p>
+<ul>
+<li><p>输入输出结构体 AVIOContext 的初始化；</p>
+</li>
+<li><p>输入数据的协议（例如 RTMP，或者 file）的识别（通过一套评分机制）:</p>
+<ul>
+<li>判断文件名的后缀 </li>
+<li>读取文件头的数据进行比对；</li>
+</ul>
+</li>
+<li><p>使用获得最高分的文件协议对应的 URLProtocol，通过函数指针的方式，与 FFMPEG 连接（非专业用词）；</p>
+</li>
+</ul>
+<p>剩下的就是调用该 URLProtocol 的函数进行 open, read 等操作了</p>
+<p>以下是通过 eclipse+MinGW 调试 FFMPEG 源代码获得的函数调用关系图：</p>
+<p><img src="/images/imageFFmpeg/Thor/%E5%9B%BE%E8%A7%A3FFMPEG%E6%89%93%E5%BC%80%E5%AA%92%E4%BD%93%E7%9A%84%E5%87%BD%E6%95%B0avformat_open_input.png" alt></p>
+<p>可见最终都调用了 URLProtocol 结构体中的函数指针。</p>
+<p>URLProtocol 结构如下，是一大堆函数指针的集合（avio.h文件）</p>
+<details><summary>代码</summary>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> &#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="keyword">int</span> (*url_open)(URLContext *h, <span class="keyword">const</span> <span class="keyword">char</span> *url, <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> (*url_read)(URLContext *h, <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> size);</span><br><span class="line">    <span class="keyword">int</span> (*url_write)(URLContext *h, <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf, <span class="keyword">int</span> size);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_seek)(URLContext *h, <span class="keyword">int64_t</span> pos, <span class="keyword">int</span> whence);</span><br><span class="line">    <span class="keyword">int</span> (*url_close)(URLContext *h);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> *<span class="title">next</span>;</span></span><br><span class="line">    <span class="keyword">int</span> (*url_read_pause)(URLContext *h, <span class="keyword">int</span> pause);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_read_seek)(URLContext *h, <span class="keyword">int</span> stream_index,</span><br><span class="line">                             <span class="keyword">int64_t</span> timestamp, <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> (*url_get_file_handle)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> priv_data_size;</span><br><span class="line">    <span class="keyword">const</span> AVClass *priv_data_class;</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> (*url_check)(URLContext *h, <span class="keyword">int</span> mask);</span><br><span class="line">&#125; URLProtocol;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>URLProtocol 功能就是完成各种输入协议的读写等操作</p>
+<p>但输入协议种类繁多，它是怎样做到 “大一统” 的呢？</p>
+<p>原来，每个具体的输入协议都有自己对应的 URLProtocol。</p>
+<p>比如 file 协议（FFMPEG 把文件也当做一种特殊的协议）（<code>*file.c</code> 文件）</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">URLProtocol ff_pipe_protocol = &#123;</span><br><span class="line">    .name                = <span class="string">"pipe"</span>,</span><br><span class="line">    .url_open            = pipe_open,</span><br><span class="line">    .url_read            = file_read,</span><br><span class="line">    .url_write           = file_write,</span><br><span class="line">    .url_get_file_handle = file_get_handle,</span><br><span class="line">    .url_check           = file_check,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>或者rtmp协议（此处使用了librtmp）（librtmp.c文件）</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">URLProtocol ff_rtmp_protocol = &#123;</span><br><span class="line">    .name                = <span class="string">"rtmp"</span>,</span><br><span class="line">    .url_open            = rtmp_open,</span><br><span class="line">    .url_read            = rtmp_read,</span><br><span class="line">    .url_write           = rtmp_write,</span><br><span class="line">    .url_close           = rtmp_close,</span><br><span class="line">    .url_read_pause      = rtmp_read_pause,</span><br><span class="line">    .url_read_seek       = rtmp_read_seek,</span><br><span class="line">    .url_get_file_handle = rtmp_get_file_handle,</span><br><span class="line">    .priv_data_size      = <span class="keyword">sizeof</span>(RTMP),</span><br><span class="line">    .flags               = URL_PROTOCOL_FLAG_NETWORK,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>可见它们把各自的函数指针都赋值给了 URLProtocol 结构体的函数指针</p>
+<p>因此 <code>avformat_open_input</code> 只需调用 url_open, url_read 这些函数就可以完成各种具体输入协议的 open, read 等操作了</p>
+<h2 id="avformat-open-input"><a href="#avformat-open-input" class="headerlink" title="avformat_open_input()"></a>avformat_open_input()</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy8xMTg4NTgxMw==" title="https://blog.csdn.net/leixiaohua1020/article/details/11885813">FFMPEG源码分析：avformat_open_input()（媒体打开函数）<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDA2NDcxNQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44064715">avformat_open_input()<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>个人感觉这个函数确实太重要了，可以算作 FFmpeg 的 “灵魂”</p>
+<p>函数用于打开多媒体数据并且获得一些相关的信息。它的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_open_input</span><span class="params">(AVFormatContext **ps, <span class="keyword">const</span> <span class="keyword">char</span> *filename, AVInputFormat *fmt, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ps：函数调用成功之后处理过的 AVFormatContext 结构体。</span><br><span class="line">file：打开的视音频流的 URL。</span><br><span class="line">fmt：强制指定 AVFormatContext 中 AVInputFormat 的。这个参数一般情况下可以设置为 NULL，这样 FFmpeg 可以自动检测 AVInputFormat。</span><br><span class="line">dictionay：附加的一些选项，一般情况下可以设置为 NULL。</span><br></pre></td></tr></table></figure>
+
+<p>函数执行成功的话，其返回值大于等于 0。</p>
+<p>函数调用结构图如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_open_input.png" alt="avformat_open_input"></p>
+<p><code>avformat_open_input()</code> 定义位于 <code>libavformat\utils.c</code> 中</p>
+<p><code>avformat_open_input()</code> 源代码比较长，一部分是一些容错代码，比如说如果发现传入的 AVFormatContext 指针没有初始化过，就调用 <code>avformat_alloc_context()</code> 初始化该结构体；还有一部分是针对一些格式做的特殊处理，比如 id3v2 信息的处理等等。有关上述两种信息不再详细分析，在这里只选择它关键的两个函数进行分析：</p>
+<ul>
+<li><p><strong><code>init_input()</code></strong>：绝大部分初始化工作都是在这里做的。</p>
+</li>
+<li><p><strong><code>s-&gt;iformat-&gt;read_header()</code></strong>：读取多媒体数据文件头，根据视音频流创建相应的 AVStream。</p>
+</li>
+</ul>
+<h3 id="init-input"><a href="#init-input" class="headerlink" title="init_input()"></a>init_input()</h3><p><code>init_input()</code> 作为一个内部函数，竟然包含了一行注释（一般内部函数都没有注释），足可以看出它的重要性。它的主要工作就是打开输入的视频数据并且探测视频的格式。该函数的定义位于 <code>libavformat\utils.c</code></p>
+<details><summary>代码：</summary>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Open input file and probe the format if necessary. */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">init_input</span><span class="params">(AVFormatContext *s, <span class="keyword">const</span> <span class="keyword">char</span> *filename,</span></span></span><br><span class="line"><span class="function"><span class="params">                      AVDictionary **options)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    AVProbeData pd = &#123; filename, <span class="literal">NULL</span>, <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">int</span> score = AVPROBE_SCORE_RETRY;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> (s-&gt;pb) &#123;</span><br><span class="line">        s-&gt;flags |= AVFMT_FLAG_CUSTOM_IO;</span><br><span class="line">        <span class="keyword">if</span> (!s-&gt;iformat)</span><br><span class="line">            <span class="keyword">return</span> av_probe_input_buffer2(s-&gt;pb, &amp;s-&gt;iformat, filename,</span><br><span class="line">                                         s, <span class="number">0</span>, s-&gt;format_probesize);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (s-&gt;iformat-&gt;flags &amp; AVFMT_NOFILE)</span><br><span class="line">            av_log(s, AV_LOG_WARNING, <span class="string">"Custom AVIOContext makes no sense and "</span></span><br><span class="line">                                      <span class="string">"will be ignored with AVFMT_NOFILE format.\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> ((s-&gt;iformat &amp;&amp; s-&gt;iformat-&gt;flags &amp; AVFMT_NOFILE) ||</span><br><span class="line">        (!s-&gt;iformat &amp;&amp; (s-&gt;iformat = av_probe_input_format2(&amp;pd, <span class="number">0</span>, &amp;score))))</span><br><span class="line">        <span class="keyword">return</span> score;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> ((ret = avio_open2(&amp;s-&gt;pb, filename, AVIO_FLAG_READ | s-&gt;avio_flags,</span><br><span class="line">                          &amp;s-&gt;interrupt_callback, options)) &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    <span class="keyword">if</span> (s-&gt;iformat)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> av_probe_input_buffer2(s-&gt;pb, &amp;s-&gt;iformat, filename,</span><br><span class="line">                                 s, <span class="number">0</span>, s-&gt;format_probesize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>这个函数在短短的几行代码中包含了好几个 return，因此逻辑还是有点复杂的，我们可以梳理一下：</p>
+<p>在函数的开头的 score 变量是一个判决 AVInputFormat 的分数的门限值，如果最后得到的 AVInputFormat 的分数低于该门限值，就认为没有找到合适的 AVInputFormat 。</p>
+<p>FFmpeg 内部判断封装格式的原理实际上是对每种 AVInputFormat 给出一个分数，满分是 100 分，越有可能正确的 AVInputFormat 给出的分数就越高。最后选择分数最高的 AVInputFormat 作为推测结果。score 的值是一个宏定义 AVPROBE_SCORE_RETRY，我们可以看一下它的定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AVPROBE_SCORE_RETRY (AVPROBE_SCORE_MAX/4)</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 AVPROBE_SCORE_MAX 是 score 的最大值，取值是 100：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AVPROBE_SCORE_MAX       100 <span class="comment">///&lt; maximum score</span></span></span><br></pre></td></tr></table></figure>
+
+<p>由此我们可以得出 score 取值是 25，即如果推测后得到的最佳 AVInputFormat 的分值低于 25，就认为没有找到合适的 AVInputFormat。</p>
+<p>整个函数的逻辑大体如下：</p>
+<p>（1）当使用了自定义的 AVIOContext 的时候（AVFormatContext 中的 AVIOContext 不为空，即 <code>s-&gt;pb!=NULL</code>），如果指定了 AVInputFormat 就直接返回，如果没有指定就调用 <code>av_probe_input_buffer2()</code> 推测 AVInputFormat。这一情况出现的不算很多，但是当我们从内存中读取数据的时候（需要初始化自定义的 AVIOContext），就会执行这一步骤。</p>
+<p>（2）在更一般的情况下，如果已经指定了 AVInputFormat，就直接返回；如果没有指定 AVInputFormat，就调用 <code>av_probe_input_format(NULL,…)</code> 根据文件路径判断文件格式。这里特意把 <code>av_probe_input_format()</code> 的第 1 个参数写成 “NULL”，是为了强调这个时候实际上并没有给函数提供输入数据，此时仅仅通过文件路径推测 AVInputFormat。</p>
+<p>（3）如果发现通过文件路径判断不出来文件格式，那么就需要打开文件探测文件格式了，这个时候会首先调用 <code>avio_open2()</code> 打开文件，然后调用 <code>av_probe_input_buffer2()</code> 推测 AVInputFormat。</p>
+<h2 id="avformat-find-stream-info"><a href="#avformat-find-stream-info" class="headerlink" title="avformat_find_stream_info()"></a>avformat_find_stream_info()</h2><p>该函数可以读取一部分视音频数据并且获得一些相关的信息。</p>
+<p><code>avformat_find_stream_info()</code> 的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_find_stream_info</span><span class="params">(AVFormatContext *ic, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>简单解释一下它的参数的含义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ic：输入的 AVFormatContext。</span><br><span class="line">options：额外的选项，目前没有深入研究过。</span><br></pre></td></tr></table></figure>
+
+<p>函数正常执行后返回值大于等于 0。</p>
+<p>PS：由于该函数比较复杂，所以只看了一部分代码，以后有时间再进一步分析。</p>
+<p>函数的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_find_stream_info.png" alt="avformat_find_stream_info"></p>
+<p><code>avformat_find_stream_info()</code> 的定义位于 <code>libavformat\utils.c</code></p>
+<p>由于<code>avformat_find_stream_info()</code> 代码比较长，难以全部分析，在这里只能简单记录一下它的要点。该函数主要用于给每个媒体流（音频/视频）的 AVStream 结构体赋值。我们大致浏览一下这个函数的代码，会发现它其实已经实现了解码器的查找，解码器的打开，视音频帧的读取，视音频帧的解码等工作。换句话说，该函数实际上已经“走通”的解码的整个流程。下面看一下除了成员变量赋值之外，该函数的几个关键流程。</p>
+<ul>
+<li><p>查找解码器：<code>find_decoder()</code></p>
+</li>
+<li><p>打开解码器：<code>avcodec_open2()</code></p>
+</li>
+<li><p>读取完整的一帧压缩编码的数据：<code>read_frame_internal()</code></p>
+<p>注：<code>av_read_frame()</code> 内部实际上就是调用的 <code>read_frame_internal()</code>。</p>
+</li>
+<li><p>解码一些压缩编码数据：<code>try_decode_frame()</code></p>
+</li>
+</ul>
+<h2 id="av-read-frame"><a href="#av-read-frame" class="headerlink" title="av_read_frame()"></a>av_read_frame()</h2><p>ffmpeg 中的 <code>av_read_frame()</code> 的作用是读取码流中的音频若干帧或者视频一帧。例如，解码视频的时候，每解码一个视频帧，需要先调用 <code>av_read_frame()</code> 获得一帧视频的压缩数据，然后才能对该数据进行解码（例如 H.264 中一帧压缩数据通常对应一个 NAL）。</p>
+<p>上代码之前，先参考了其他人对 <code>av_read_frame()</code> 的解释，在此做一个参考：</p>
+<blockquote>
+<p>通过 <code>av_read_packet()</code>，读取一个包，需要说明的是此函数必须是包含整数帧的，不存在半帧的情况，以 ts 流为例，是读取一个完整的 PES 包（一个完整 pes 包包含若干视频或音频 es 包），读取完毕后，通过 <code>av_parser_parse2()</code> 分析出视频一帧（或音频若干帧），返回，下次进入循环的时候，如果上次的数据没有完全取完，则 <code>st = s-&gt;cur_st</code> ; 不会是 NULL，即再此进入 <code>av_parser_parse2()</code> 流程，而不是下面的 <code>av_read_packet（）</code> 流程，这样就保证了，如果读取一次包含了 N 帧视频数据（以视频为例），则调用 <code>av_read_frame（）</code> N 次都不会去读数据，而是返回第一次读取的数据，直到全部解析完毕。</p>
+</blockquote>
+<p><code>av_read_frame()</code> 的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_read_frame</span><span class="params">(AVFormatContext *s, AVPacket *pkt)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>av_read_frame()</code> 使用方法在注释中写得很详细，用中文简单描述一下它的两个参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s：输入的AVFormatContext</span><br><span class="line">pkt：输出的AVPacket</span><br></pre></td></tr></table></figure>
+
+<p>如果返回 0 则说明读取正常。</p>
+<p>函数调用结构图如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_read_frame.png" alt="av_read_frame"></p>
+<p><code>av_read_frame()</code> 的定义位于 <code>libavformat\utils.c</code></p>
+<p><code>read_frame_internal()</code> 代码比较长，这里只简单看一下它前面的部分。它前面部分有 2 步是十分关键的：</p>
+<p>（1）调用了 <code>ff_read_packet()</code> 从相应的 AVInputFormat 读取数据。</p>
+<p>（2）如果媒体频流需要使用 AVCodecParser，则调用 <code>parse_packet()</code> 解析相应的 AVPacket。</p>
+<p><code>ff_read_packet()</code> 中最关键的地方就是调用了 AVInputFormat 的 <code>read_packet()</code> 方法。 AVInputFormat 的 <code>read_packet()</code> 是一个函数指针，指向当前的 AVInputFormat 的读取数据的函数。在这里我们以 FLV 封装格式对应的 AVInputFormat 为例，看看 <code>read_packet()</code> 的实现函数是什么样子的。</p>
+<p>FLV 封装格式对应的 AVInputFormat 的定义位于 <code>libavformat\flvdec.c</code></p>
+<details><summary>代码：</summary>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">AVInputFormat ff_flv_demuxer = &#123;</span><br><span class="line">    .name           = <span class="string">"flv"</span>,</span><br><span class="line">    .long_name      = NULL_IF_CONFIG_SMALL(<span class="string">"FLV (Flash Video)"</span>),</span><br><span class="line">    .priv_data_size = <span class="keyword">sizeof</span>(FLVContext),</span><br><span class="line">    .read_probe     = flv_probe,</span><br><span class="line">    .read_header    = flv_read_header,</span><br><span class="line">    .read_packet    = flv_read_packet,</span><br><span class="line">    .read_seek      = flv_read_seek,</span><br><span class="line">    .read_close     = flv_read_close,</span><br><span class="line">    .extensions     = <span class="string">"flv"</span>,</span><br><span class="line">    .priv_class     = &amp;flv_class,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>从 <code>ff_flv_demuxer</code> 的定义可以看出，<code>read_packet()</code> 对应的是 <code>flv_read_packet()</code> 函数。在看 <code>flv_read_packet()</code> 函数之前，我们先回顾一下 FLV 封装格式的结构，如下图所示。</p>
+<p>PS：原图是网上找的，感觉画的很清晰，比官方的 Video File Format Specification 更加通俗易懂。但是图中有一个错误，就是 TagHeader 中的 StreamID 字段的长度写错了（查看了一下官方标准，应该是 3 字节，现在已经改过来了）。</p>
+<p><img src="/images/imageFFmpeg/Thor/FLV%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F.png" alt="FLV封装格式"></p>
+<p>从图中可以看出，FLV 文件体部分是由一个一个的 Tag 连接起来的（中间间隔着 Previous Tag Size）。每个 Tag 包含了 Tag Header 和 Tag Data 两个部分。</p>
+<p>Tag Data 根据 Tag 的 Type 不同而不同：可以分为音频 Tag Data，视频 Tag Data 以及 Script Tag Data。下面简述一下音频 Tag Data 和视频 Tag Data。</p>
+<h3 id="Audio-Tag-Data"><a href="#Audio-Tag-Data" class="headerlink" title="Audio Tag Data"></a>Audio Tag Data</h3><p>Audio Tag在官方标准中定义如下。</p>
+<p><img src="/images/imageFFmpeg/Thor/AudioTag.png" alt="Audio Tag"></p>
+<p>Audio Tag 开始的第 1 个字节包含了音频数据的参数信息，从第 2 个字节开始为音频流数据。<br>第 1 个字节的前 4 位的数值表示了音频数据格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">0 = Linear PCM, platform endian</span><br><span class="line">1 = ADPCM</span><br><span class="line">2 = MP3</span><br><span class="line">3 = Linear PCM, little endian</span><br><span class="line">4 = Nellymoser 16-kHz mono</span><br><span class="line">5 = Nellymoser 8-kHz mono</span><br><span class="line">6 = Nellymoser</span><br><span class="line">7 = G.711 A-law logarithmic PCM</span><br><span class="line">8 = G.711 mu-law logarithmic PCM</span><br><span class="line">9 = reserved</span><br><span class="line">10 = AAC</span><br><span class="line">14 = MP3 8-Khz</span><br><span class="line">15 = Device-specific sound</span><br></pre></td></tr></table></figure>
+
+<p>第 1 个字节的第 5-6 位的数值表示采样率：<code>0 = 5.5kHz，1 = 11KHz，2 = 22 kHz，3 = 44 kHz</code>。</p>
+<p>第 1 个字节的第7位表示采样精度：<code>0 = 8bits，1 = 16bits</code>。</p>
+<p>第 1 个字节的第8位表示音频类型：<code>0 = sndMono，1 = sndStereo</code>。</p>
+<p>其中，当音频编码为 AAC 的时候，第一个字节后面存储的是 AACAUDIODATA，格式如下所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/AACAUDIODATA%E6%A0%BC%E5%BC%8F.png" alt="AACAUDIODATA格式"></p>
+<h3 id="Video-Tag-Data"><a href="#Video-Tag-Data" class="headerlink" title="Video Tag Data"></a>Video Tag Data</h3><p>Video Tag在官方标准中的定义如下：</p>
+<p><img src="/images/imageFFmpeg/Thor/VideoTag.png" alt="Video Tag"></p>
+<p>Video Tag 也用开始的第 1 个字节包含视频数据的参数信息，从第 2 个字节为视频流数据。</p>
+<p>第 1 个字节的前 4 位的数值表示帧类型（FrameType）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1: keyframe (for AVC, a seekableframe)（关键帧）</span><br><span class="line">2: inter frame (for AVC, a nonseekableframe)</span><br><span class="line">3: disposable inter frame (H.263only)</span><br><span class="line">4: generated keyframe (reservedfor server use only)</span><br><span class="line">5: video info/command frame</span><br></pre></td></tr></table></figure>
+
+<p>第 1 个字节的后 4 位的数值表示视频编码 ID（CodecID）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1: JPEG (currently unused)</span><br><span class="line">2: Sorenson H.263</span><br><span class="line">3: Screen video</span><br><span class="line">4: On2 VP6</span><br><span class="line">5: On2 VP6 with alpha channel</span><br><span class="line">6: Screen video version 2</span><br><span class="line">7: AVC</span><br></pre></td></tr></table></figure>
+
+<p>其中，当音频编码为 AVC（H.264）的时候，第一个字节后面存储的是 AVCVIDEOPACKET，格式如下所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/AVCVIDEOPACKET%E6%A0%BC%E5%BC%8F.png" alt="AVCVIDEOPACKET格式"></p>
+<p>了解了 FLV 的基本格式之后，就可以看一下 FLV 解析 Tag 的函数 <code>flv_read_packet()了</code>。</p>
+<p><code>flv_read_packet()</code> 的定义位于 <code>libavformat\flvdec.c</code></p>
+<p><code>flv_read_packet()</code> 的代码比较长，但是逻辑比较简单。它的主要功能就是根据 FLV 文件格式的规范，逐层解析 Tag 以及 TagData，获取 Tag 以及 TagData 中的信息。比较关键的地方已经写上了注释，不再详细叙述。</p>
+<p><code>parse_packet()</code> 给需要 AVCodecParser 的媒体流提供解析 AVPacket 的功能。</p>
+<p>从代码中可以看出，最终调用了相应 AVCodecParser 的 <code>av_parser_parse2()</code> 函数，解析出来 AVPacket。此后根据解析的信息还进行了一系列的赋值工作，不再详细叙述。</p>
+<h2 id="avcodec-decode-video2"><a href="#avcodec-decode-video2" class="headerlink" title="avcodec_decode_video2()"></a>avcodec_decode_video2()</h2><p>ffmpeg 中的 <code>avcodec_decode_video2()</code> 的作用是解码一帧视频数据。输入一个压缩编码的结构体 AVPacket，输出一个解码后的结构体 AVFrame。该函数的声明位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_decode_video2</span><span class="params">(AVCodecContext *avctx, AVFrame *picture,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">int</span> *got_picture_ptr,</span></span></span><br><span class="line"><span class="function"><span class="params">                         <span class="keyword">const</span> AVPacket *avpkt)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看源代码之后发现，这个函数竟然十分的简单，源代码位于 <code>libavcodec\utils.c</code></p>
+<p>从代码中可以看出，<code>avcodec_decode_video2()</code> 主要做了以下几个方面的工作：</p>
+<p>（1）对输入的字段进行了一系列的检查工作：例如宽高是否正确，输入是否为视频等等。</p>
+<p>（2）通过 <code>ret = avctx-&gt;codec-&gt;decode(avctx, picture, got_picture_ptr,&amp;tmp)</code> 这句代码，调用了相应 AVCodec 的 <code>decode()</code> 函数，完成了解码操作。</p>
+<p>（3）对得到的 AVFrame 的一些字段进行了赋值，例如宽高、像素格式等等。</p>
+<p>其中第二部是关键的一步，它调用了 AVCodec 的 <code>decode()</code> 方法完成了解码。AVCodec 的 <code>decode()</code> 方法是一个函数指针，指向了具体解码器的解码函数。在这里我们以 H.264 解码器为例，看一下解码的实现过程。H.264 解码器对应的 AVCodec 的定义位于 <code>libavcodec\h264.c</code>，如下所示。</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">AVCodec ff_h264_decoder = &#123;</span><br><span class="line">    .name                  = <span class="string">"h264"</span>,</span><br><span class="line">    .long_name             = NULL_IF_CONFIG_SMALL(<span class="string">"H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"</span>),</span><br><span class="line">    .type                  = AVMEDIA_TYPE_VIDEO,</span><br><span class="line">    .id                    = AV_CODEC_ID_H264,</span><br><span class="line">    .priv_data_size        = <span class="keyword">sizeof</span>(H264Context),</span><br><span class="line">    .init                  = ff_h264_decode_init,</span><br><span class="line">    .close                 = h264_decode_end,</span><br><span class="line">    .decode                = h264_decode_frame,</span><br><span class="line">    .capabilities          = <span class="comment">/*CODEC_CAP_DRAW_HORIZ_BAND |*/</span> CODEC_CAP_DR1 |</span><br><span class="line">                             CODEC_CAP_DELAY | CODEC_CAP_SLICE_THREADS |</span><br><span class="line">                             CODEC_CAP_FRAME_THREADS,</span><br><span class="line">    .flush                 = flush_dpb,</span><br><span class="line">    .init_thread_copy      = ONLY_IF_THREADS_ENABLED(decode_init_thread_copy),</span><br><span class="line">    .update_thread_context = ONLY_IF_THREADS_ENABLED(ff_h264_update_thread_context),</span><br><span class="line">    .profiles              = NULL_IF_CONFIG_SMALL(profiles),</span><br><span class="line">    .priv_class            = &amp;h264_class,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p>从 <code>ff_h264_decoder</code> 的定义可以看出，<code>decode()</code> 指向了 <code>h264_decode_frame()</code> 函数。</p>
+<p>从 <code>h264_decode_frame()</code> 的定义可以看出，它调用了 <code>decode_nal_units()</code> 完成了具体的 H.264 解码工作。</p>
+<h2 id="avformat-close-input"><a href="#avformat-close-input" class="headerlink" title="avformat_close_input()"></a>avformat_close_input()</h2><p>该函数用于关闭一个 AVFormatContext，一般情况下是和 <code>avformat_open_input()</code> 成对使用的。</p>
+<p>函数的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_close_input.png" alt="avformat_close_input"></p>
+<p><code>avformat_close_input()</code> 的源代码位于 <code>libavformat\utils.c</code></p>
+<p>从源代码中可以看出，<code>avformat_close_input()</code> 主要做了以下几步工作：</p>
+<p>（1）调用 AVInputFormat 的 <code>read_close()</code> 方法关闭输入流</p>
+<p>（2）调用 <code>avformat_free_context()</code> 释放 AVFormatContext</p>
+<p>（3）调用 <code>avio_close()</code> 关闭并且释放 AVIOContext</p>
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="avformat-alloc-output-context2"><a href="#avformat-alloc-output-context2" class="headerlink" title="avformat_alloc_output_context2()"></a>avformat_alloc_output_context2()</h2><p>在基于 FFmpeg 的视音频编码器程序中，该函数通常是第一个调用的函数（除了组件注册函数 <code>av_register_all()</code>）。</p>
+<p><code>avformat_alloc_output_context2()</code> 函数可以初始化一个用于输出的 AVFormatContext 结构体。它的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_alloc_output_context2</span><span class="params">(AVFormatContext **ctx, AVOutputFormat *oformat,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="keyword">const</span> <span class="keyword">char</span> *format_name, <span class="keyword">const</span> <span class="keyword">char</span> *filename)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>代码中的英文注释写的已经比较详细了，在这里拿中文简单叙述一下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ctx：函数调用成功之后创建的AVFormatContext结构体。</span><br><span class="line">oformat：指定AVFormatContext中的AVOutputFormat，用于确定输出格式。如果指定为NULL，可以设定后两个参数（format_name或者filename）由FFmpeg猜测输出格式。</span><br><span class="line">PS：使用该参数需要自己手动获取AVOutputFormat，相对于使用后两个参数来说要麻烦一些。</span><br><span class="line">format_name：指定输出格式的名称。根据格式名称，FFmpeg会推测输出格式。输出格式可以是“flv”，“mkv”等等。</span><br><span class="line">filename：指定输出文件的名称。根据文件名称，FFmpeg会推测输出格式。文件名称可以是“xx.flv”，“yy.mkv”等等。</span><br></pre></td></tr></table></figure>
+
+<p>函数执行成功的话，其返回值大于等于0。</p>
+<p>首先贴出来最终分析得出的函数调用结构图，如下所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_alloc_output_context2.png" alt="avformat_alloc_output_context2"></p>
+<p><code>avformat_alloc_output_context2()</code> 的函数定义位于 <code>libavformat\mux.c</code></p>
+<p>从代码中可以看出，<code>avformat_alloc_output_context2()</code> 的流程如要包含以下 2 步：</p>
+<p>1)    调用 <code>avformat_alloc_context()</code> 初始化一个默认的 AVFormatContext。</p>
+<p>2)    如果指定了输入的 AVOutputFormat，则直接将输入的 AVOutputFormat 赋值给AVOutputFormat 的 oformat。如果没有指定输入的 AVOutputFormat，就需要根据文件格式名称或者文件名推测输出的 AVOutputFormat。无论是通过文件格式名称还是文件名推测输出格式，都会调用一个函数 <code>av_guess_format()</code>。</p>
+<p><code>avformat_alloc_context()</code> 首先调用 <code>av_malloc()</code> 为 AVFormatContext 分配一块内存。然后调用了一个函数 <code>avformat_get_context_defaults()</code> 用于给 AVFormatContext 设置默认值</p>
+<p><code>avformat_alloc_context()</code> 首先调用 <code>memset()</code> 将 AVFormatContext 的内存置零；然后指定它的AVClass（指定了 AVClass 之后，该结构体就支持和 AVOption 相关的功能）；最后调用 <code>av_opt_set_defaults()</code> 给 AVFormatContext 的成员变量设置默认值（<code>av_opt_set_defaults()</code> 就是和 AVOption 有关的一个函数，专门用于给指定的结构体设定默认值，此处暂不分析）。</p>
+<p><code>av_guess_format()</code> 中使用一个整型变量 score 记录每种输出格式的匹配程度。函数中包含了一个 <code>while()</code> 循环，该循环利用函数 <code>av_oformat_next()</code> 遍历 FFmpeg 中所有的 AVOutputFormat，并逐一计算每个输出格式的 score。具体的计算过程分成如下几步：</p>
+<p>1)    如果封装格式名称匹配，score 增加 100。匹配中使用了函数 <code>av_match_name()</code>。</p>
+<p>2)    如果 mime 类型匹配，score 增加 10。匹配直接使用字符串比较函数 <code>strcmp()</code>。</p>
+<p>3)    如果文件名称的后缀匹配，score 增加 5。匹配中使用了函数 <code>av_match_ext()</code>。</p>
+<p><code>while()</code> 循环结束后，得到得分最高的格式，就是最匹配的格式。</p>
+<p>下面看一下一个 AVOutputFormat 的实例，就可以理解 “封装格式名称”，“mine类型”，“文件名称后缀” 这些概念了。下面是 flv 格式的视音频复用器（Muxer）对应的 AVOutputFormat 格式的变量 <code>ff_flv_muxer</code>。</p>
+<details><summary>代码：</summary>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">AVOutputFormat ff_flv_muxer = &#123;</span><br><span class="line">    .name           = <span class="string">"flv"</span>,</span><br><span class="line">    .long_name      = NULL_IF_CONFIG_SMALL(<span class="string">"FLV (Flash Video)"</span>),</span><br><span class="line">    .mime_type      = <span class="string">"video/x-flv"</span>,</span><br><span class="line">    .extensions     = <span class="string">"flv"</span>,</span><br><span class="line">    .priv_data_size = <span class="keyword">sizeof</span>(FLVContext),</span><br><span class="line">    .audio_codec    = CONFIG_LIBMP3LAME ? AV_CODEC_ID_MP3 : AV_CODEC_ID_ADPCM_SWF,</span><br><span class="line">    .video_codec    = AV_CODEC_ID_FLV1,</span><br><span class="line">    .write_header   = flv_write_header,</span><br><span class="line">    .write_packet   = flv_write_packet,</span><br><span class="line">    .write_trailer  = flv_write_trailer,</span><br><span class="line">    .codec_tag      = (<span class="keyword">const</span> AVCodecTag* <span class="keyword">const</span> []) &#123;</span><br><span class="line">                          flv_video_codec_ids, flv_audio_codec_ids, <span class="number">0</span></span><br><span class="line">                      &#125;,</span><br><span class="line">    .flags          = AVFMT_GLOBALHEADER | AVFMT_VARIABLE_FPS |</span><br><span class="line">                      AVFMT_TS_NONSTRICT,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<h2 id="avformat-write-header"><a href="#avformat-write-header" class="headerlink" title="avformat_write_header()"></a>avformat_write_header()</h2><p>FFmpeg 的写文件用到的 3 个函数：</p>
+<ul>
+<li><strong><code>avformat_write_header()</code></strong></li>
+<li><strong><code>av_write_frame()</code></strong></li>
+<li><strong><code>av_write_trailer()</code></strong></li>
+</ul>
+<p>其中 <code>av_write_frame()</code> 用于写视频数据，<code>avformat_write_header()</code> 用于写视频文件头，而 <code>av_write_trailer()</code> 用于写视频文件尾。</p>
+<p>本文首先分析<code>avformat_write_header()</code>。</p>
+<p>PS：需要注意的是，尽管这 3 个函数功能是配套的，但是它们的前缀却不一样，写文件头 Header 的函数前缀是“<code>avformat_</code>”，其他两个函数前缀是“<code>av_</code>”（不太明白其中的原因）。</p>
+<p><code>avformat_write_header()</code> 的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_write_header</span><span class="params">(AVFormatContext *s, AVDictionary **options)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>简单解释一下它的参数的含义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s：用于输出的AVFormatContext。</span><br><span class="line">options：额外的选项，目前没有深入研究过，一般为NULL。</span><br></pre></td></tr></table></figure>
+
+<p>函数正常执行后返回值等于 0。</p>
+<p><code>avformat_write_header()</code> 的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/avformat_write_header.png" alt="avformat_write_header"></p>
+<p><code>avformat_write_header()</code> 的定义位于 <code>libavformat\mux.c</code></p>
+<p>从源代码可以看出，<code>avformat_write_header()</code> 完成了以下工作：</p>
+<p>（1）调用 <code>init_muxer()</code> 初始化复用器</p>
+<p>（2）调用 AVOutputFormat 的 <code>write_header()</code></p>
+<p><code>init_muxer()</code> 代码很长，但是它所做的工作比较简单，可以概括成两个字：检查。函数的流程可以概括成以下几步：</p>
+<p>（1）将传入的 AVDictionary 形式的选项设置到 AVFormatContext</p>
+<p>（2）遍历 AVFormatContext 中的每个 AVStream，并作如下检查：</p>
+<ul>
+<li><p>a) AVStream 的 time_base 是否正确设置。如果发现 AVStream 的 time_base 没有设置，则会调用 <code>avpriv_set_pts_info()</code> 进行设置。</p>
+</li>
+<li><p>b) 对于音频，检查采样率设置是否正确；对于视频，检查宽、高、宽高比。</p>
+</li>
+<li><p>c) 其他一些检查，不再详述。</p>
+</li>
+</ul>
+<p><strong>AVOutputFormat-&gt;write_header()</strong></p>
+<p><code>avformat_write_header()</code> 中最关键的地方就是调用了 AVOutputFormat 的 <code>write_header()</code>。</p>
+<p><code>write_header()</code> 是 AVOutputFormat 中的一个函数指针，指向写文件头的函数。不同的AVOutputFormat 有不同的 <code>write_header()</code> 的实现方法。在这里我们举例子看一下 FLV 封装格式对应的 AVOutputFormat，它的定义位于 <code>libavformat\flvenc.c</code></p>
+<p>从 <code>ff_flv_muxer</code> 的定义中可以看出，<code>write_header()</code> 指向的函数为 <code>flv_write_header()</code>。我们继续看一下 <code>flv_write_header()</code> 函数。<code>flv_write_header()</code> 的定义同样位于 <code>libavformat\flvenc.c</code></p>
+<p>从源代码可以看出，<code>flv_write_header()</code> 完成了FLV文件头的写入工作。该函数的工作可以大体分为以下两部分：</p>
+<p>（1）给 FLVContext 设置参数</p>
+<p>（2）写文件头，以及相关的 Tag</p>
+<p>可以参考下图中 FLV 文件头的定义比对一下上面的代码。</p>
+<p><img src="/images/imageFFmpeg/Thor/FLVHeader.png" alt="FLV Header.png"></p>
+<h2 id="avcodec-encode-video"><a href="#avcodec-encode-video" class="headerlink" title="avcodec_encode_video()"></a>avcodec_encode_video()</h2><p>该函数用于编码一帧视频数据。<code>avcodec_encode_video2()</code> 函数的声明位于 <code>libavcodec\avcodec.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avcodec_encode_video2</span><span class="params">(AVCodecContext *avctx, AVPacket *avpkt,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">const</span> AVFrame *frame, <span class="keyword">int</span> *got_packet_ptr)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>该函数每个参数的含义在注释里面已经写的很清楚了，在这里用中文简述一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">avctx：编码器的AVCodecContext。</span><br><span class="line">avpkt：编码输出的AVPacket。</span><br><span class="line">frame：编码输入的AVFrame。</span><br><span class="line">got_packet_ptr：成功编码一个AVPacket的时候设置为1。</span><br></pre></td></tr></table></figure>
+
+<p>函数返回0代表编码成功。</p>
+<p>函数的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thoreavcodec_encode_video.png" alt="avcodec_encode_video"></p>
+<p><code>avcodec_encode_video2()</code> 的定义位于 <code>libavcodec\utils.c</code></p>
+<p>从函数的定义可以看出，<code>avcodec_encode_video2()</code> 首先调用了 <code>av_image_check_size()</code> 检查设置的宽高参数是否合理，然后调用了 AVCodec 的 <code>encode2()</code> 调用具体的解码器。</p>
+<p><code>av_image_check_size()</code> 主要是要求图像宽高必须为正数，而且取值不能太大。</p>
+<p>AVCodec 的 <code>encode2()</code> 是一个函数指针，指向特定编码器的编码函数</p>
+<p>从 <code>ff_libx264_encoder</code> 的定义可以看出，<code>encode2()</code> 函数指向的是 <code>X264_frame()</code> 函数。</p>
+<p><code>X264_frame()</code> 函数的定义位于 <code>libavcodec\libx264.c</code></p>
+<h2 id="av-write-frame"><a href="#av-write-frame" class="headerlink" title="av_write_frame()"></a>av_write_frame()</h2><p><code>av_write_frame()</code> 用于输出一帧视音频数据，它的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_write_frame</span><span class="params">(AVFormatContext *s, AVPacket *pkt)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>简单解释一下它的参数的含义：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s：用于输出的AVFormatContext。</span><br><span class="line">pkt：等待输出的AVPacket。</span><br></pre></td></tr></table></figure>
+
+<p>函数正常执行后返回值等于 0。</p>
+<p><code>av_write_frame()</code> 的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_write_frame.png" alt="av_write_frame"></p>
+<p><code>av_write_frame()</code> 的定义位于 <code>libavformat\mux.c</code></p>
+<p>从源代码可以看出，<code>av_write_frame()</code> 主要完成了以下几步工作：</p>
+<p>（1）调用 <code>check_packet()</code> 做一些简单的检测</p>
+<p>（2）调用 <code>compute_pkt_fields2()</code> 设置 AVPacket 的一些属性值</p>
+<p>（3）调用 <code>write_packet()</code> 写入数据</p>
+<p><code>check_packet()</code> 的功能比较简单：首先检查一下输入的 AVPacket 是否为空，如果为空，则是直接返回；然后检查一下 AVPacket 的 <code>stream_index</code>（标记了该 AVPacket 所属的 AVStream）设置是否正常，如果为负数或者大于 AVStream 的个数，则返回错误信息；最后检查 AVPacket 所属的 AVStream 是否属于 attachment stream，这个地方没见过，目前还没有研究。</p>
+<p><code>compute_pkt_fields2()</code> 函数的定义位于 <code>libavformat\mux.c</code></p>
+<p><code>compute_pkt_fields2()</code> 主要有两方面的功能：</p>
+<ul>
+<li>一方面用于计算 AVPacket 的 duration， dts 等信息；</li>
+<li>另一方面用于检查 pts、dts 这些参数的合理性（例如 PTS 是否一定大于 DTS）。具体的代码还没有细看，以后有时间再进行分析。</li>
+</ul>
+<p><code>write_packet()</code> 函数的定义位于 <code>libavformat\mux.c</code></p>
+<p><code>write_packet()</code> 函数最关键的地方就是调用了 AVOutputFormat 中写入数据的方法。如果 AVPacket 中的 flag 标记中包含 AV_PKT_FLAG_UNCODED_FRAME，就会调用 AVOutputFormat 的 <code>write_uncoded_frame()</code> 函数；如果不包含那个标记，就会调用 <code>write_packet()</code> 函数。 <code>write_packet()</code> 实际上是一个函数指针，指向特定的 AVOutputFormat 中的实现函数。例如，我们看一下 FLV 对应的 AVOutputFormat，位于 <code>libavformat\flvenc.c</code></p>
+<p>从 <code>ff_flv_muxer</code> 的定义可以看出，<code>write_packet()</code> 指向的是 <code>flv_write_packet()</code> 函数。在看 <code>flv_write_packet()</code> 函数的定义之前，先回顾一下 FLV 封装格式的结构。</p>
+<h2 id="av-write-trailer"><a href="#av-write-trailer" class="headerlink" title="av_write_trailer()"></a>av_write_trailer()</h2><p><code>av_write_trailer()</code> 用于输出文件尾，它的声明位于 <code>libavformat\avformat.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_write_trailer</span><span class="params">(AVFormatContext *s)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>它只需要指定一个参数，即用于输出的 AVFormatContext。</p>
+<p>函数正常执行后返回值等于 0。</p>
+<p><code>av_write_trailer()</code> 的调用关系如下图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_write_trailer.png" alt="av_write_trailer"></p>
+<p><code>av_write_trailer()</code> 的定义位于 <code>libavformat\mux.c</code></p>
+<p>从源代码可以看出 <code>av_write_trailer()</code> 主要完成了以下两步工作：</p>
+<p>（1）循环调用 <code>interleave_packet()</code> 以及 <code>write_packet()</code>，将还未输出的 AVPacket 输出出来。</p>
+<p>（2）调用 AVOutputFormat 的 <code>write_trailer()</code>，输出文件尾。</p>
+<p>其中第一步和 <code>av_write_frame()</code> 中的步骤大致是一样的（<code>interleave_packet()</code> 这一部分在并不包含在 <code>av_write_frame()</code> 中，而是包含在 <code>av_interleaved_write_frame()</code> 中，这一部分源代码还没有分析）</p>
+<p>AVOutputFormat 的 <code>write_trailer()</code> 是一个函数指针，指向特定的 AVOutputFormat 中的实现函数。我们以 FLV 对应的 AVOutputFormat 为例，看一下它的定义</p>
+<p>从 FLV 对应的 AVOutputFormat 结构体的定义我们可以看出，<code>write_trailer()</code> 指向了<code>flv_write_trailer()</code> 函数。</p>
+<p><code>flv_write_trailer()</code> 函数的定义位于 <code>libavformat\flvenc.c</code></p>
+<p>从 <code>flv_write_trailer()</code> 的源代码可以看出该函数做了以下两步工作：</p>
+<p>（1）如果视频流是 H.264，则添加包含 EOS（End Of Stream） NALU 的 Tag。</p>
+<p>（2）更新 FLV 的时长信息，以及文件大小信息。</p>
+<p>其中，<code>put_avc_eos_tag()</code> 函数用于添加包含 EOS NALU 的 Tag（包含结尾的一个PreviousTagSize）</p>
+<p>可以参考 FLV 封装格式理解上述函数。由于前面的文章中已经描述过 FLV 封装格式，在这里不再重复叙述，在这里仅在此记录一下 AVCVIDEOPACKET 的格式，如下所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/AVCVIDEOPACKET%E6%A0%BC%E5%BC%8F.png" alt="AVCVIDEOPACKET格式"></p>
+<p>可以看出包含 EOS NALU 的 AVCVIDEOPACKET 的 AVCPacketType 为 2。在这种情况下， AVCVIDEOPACKET 的 CompositionTime 字段取 0，并且无需包含 Data 字段。</p>
+<h1 id="日志输出系统"><a href="#日志输出系统" class="headerlink" title="日志输出系统"></a>日志输出系统</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDI0MzE1NQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44243155">日志输出系统<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="av-log"><a href="#av-log" class="headerlink" title="av_log()"></a>av_log()</h2><p>本文分析一下 FFmpeg 的日志（Log）输出系统的源代码。日志输出部分的核心函数只有一个： <code>av_log()</code>。使用 <code>av_log()</code> 在控制台输出日志的效果如下图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/av_log%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.png" alt="av_log控制台日志输出"></p>
+<p>FFmpeg 日志输出系统的函数调用结构图如图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/av_log.png" alt="FFmpeg 日志输出系统的函数调用结构图"></p>
+<p><code>av_log()</code> 是 FFmpeg 中输出日志的函数。随便打开一个 FFmpeg 的源代码文件，就会发现其中遍布着 <code>av_log()</code> 函数。一般情况下 FFmpeg 类库的源代码中是不允许使用 <code>printf()</code> 这种的函数的，所有的输出一律使用 <code>av_log()</code>。</p>
+<p>av_log()的声明位于libavutil\log.h</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">av_log</span><span class="params">(<span class="keyword">void</span> *avcl, <span class="keyword">int</span> level, <span class="keyword">const</span> <span class="keyword">char</span> *fmt, ...)</span> <span class="title">av_printf_format</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数的声明有两个地方比较特殊：</p>
+<p>（1）函数最后一个参数是 “…”。</p>
+<p>在 C 语言中，在函数参数数量不确定的情况下使用 “…” 来代表参数。例如 <code>printf()</code> 的原型定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span> <span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>*, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>（2）它的声明后面有一个 <code>av_printf_format(3, 4)</code>。有关这个地方的左右还没有深入研究，网上资料中说它的作用是按照 <code>printf()</code> 的格式检查 <code>av_log()</code> 的格式。</p>
+<p>av_log()每个字段的含义如下：</p>
+<ul>
+<li>avcl：指定一个包含 AVClass 的结构体。</li>
+<li>level：log 的级别</li>
+<li>fmt：和 <code>printf()</code> 一样。</li>
+</ul>
+<p>由此可见，<code>av_log()</code> 和 <code>printf()</code> 的不同主要在于前面多了两个参数。其中第一个参数指定该 log 所属的结构体，例如 AVFormatContext、AVCodecContext 等等。第二个参数指定 log 的级别，源代码中定义了如下几个级别。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_QUIET    -8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_PANIC     0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_FATAL     8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_ERROR    16</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_WARNING  24</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_INFO     32</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_VERBOSE  40</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AV_LOG_DEBUG    48</span></span><br></pre></td></tr></table></figure>
+
+<p>从定义中可以看出来，随着严重程度逐渐下降，一共包含如下级别：</p>
+<ul>
+<li>AV_LOG_PANIC，</li>
+<li>AV_LOG_FATAL，</li>
+<li>AV_LOG_ERROR，</li>
+<li>AV_LOG_WARNING，</li>
+<li>AV_LOG_INFO，</li>
+<li>AV_LOG_VERBOSE，</li>
+<li>AV_LOG_DEBUG。</li>
+</ul>
+<p>每个级别定义的数值代表了严重程度，数值越小代表越严重。默认的级别是 AV_LOG_INFO。此外，还有一个级别不输出任何信息，即 AV_LOG_QUIET。</p>
+<p>当前系统存在着一个 “Log级别”。所有严重程度高于该级别的 Log 信息都会输出出来。例如当前的 Log 级别是 AV_LOG_WARNING，则会输出 AV_LOG_PANIC，AV_LOG_FATAL，AV_LOG_ERROR，AV_LOG_WARNING 级别的信息，而不会输出 AV_LOG_INFO 级别的信息。可以通过 <code>av_log_get_level()</code> 获得当前 Log 的级别，通过另一个函数 <code>av_log_set_level()</code> 设置当前的 Log 级别。</p>
+<p>可以通过 <code>av_log_set_level()</code> 设置当前 Log 的级别。</p>
+<h1 id="接头体成员管理系统"><a href="#接头体成员管理系统" class="headerlink" title="接头体成员管理系统"></a>接头体成员管理系统</h1><h2 id="AVClass"><a href="#AVClass" class="headerlink" title="AVClass"></a>AVClass</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDI2ODMyMw==" title="https://blog.csdn.net/leixiaohua1020/article/details/44268323">FFmpeg源代码简单分析：结构体成员管理系统-AVClass<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>TODO</p>
+<h2 id="AVOption"><a href="#AVOption" class="headerlink" title="AVOption"></a>AVOption</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDI3OTMyOQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44279329">FFmpeg源代码简单分析：结构体成员管理系统-AVOption<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>TODO</p>
+<h1 id="libswscale"><a href="#libswscale" class="headerlink" title="libswscale"></a>libswscale</h1><h2 id="sws-getContext"><a href="#sws-getContext" class="headerlink" title="sws_getContext()"></a>sws_getContext()</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDMwNTY5Nw==" title="https://blog.csdn.net/leixiaohua1020/article/details/44305697">FFmpeg源代码简单分析：libswscale的sws_getContext()<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>TODO</p>
+<h2 id="sws-scale"><a href="#sws-scale" class="headerlink" title="sws_scale()"></a>sws_scale()</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDM0NjY4Nw==" title="https://blog.csdn.net/leixiaohua1020/article/details/44346687">FFmpeg源代码简单分析：libswscale的sws_scale()<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>TODO</p>
+<h1 id="libavdevice"><a href="#libavdevice" class="headerlink" title="libavdevice"></a>libavdevice</h1><h2 id="avdevice-register-all"><a href="#avdevice-register-all" class="headerlink" title="avdevice_register_all()"></a>avdevice_register_all()</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80MTIxMTEyMQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/41211121">FFmpeg源代码简单分析：libavdevice的avdevice_register_all()<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="gdigrab"><a href="#gdigrab" class="headerlink" title="gdigrab"></a>gdigrab</h2><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlaXhpYW9odWExMDIwL2FydGljbGUvZGV0YWlscy80NDU5Nzk1NQ==" title="https://blog.csdn.net/leixiaohua1020/article/details/44597955">FFmpeg源代码简单分析：libavdevice的gdigrab<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p><img src="/images/imageFFmpeg/Thor/" alt></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="苗沛 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="苗沛 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FFmpeg/" rel="tag"> <i class="fa fa-tag"></i> FFmpeg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/25/FFmpeg/FFmpeg源代码结构note/" rel="next" title="FFmpeg 源代码结构（编解码解析）">
+                <i class="fa fa-chevron-left"></i> FFmpeg 源代码结构（编解码解析）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/" rel="prev" title="FFmpeg的H.264解码器源代码简单分析">
+                FFmpeg的H.264解码器源代码简单分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="苗沛">
+              
+                <p class="site-author-name" itemprop="name">苗沛</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description">人生如逆水行舟，不进则退！</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#架构图"><span class="nav-number">1.</span> <span class="nav-text">架构图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFMPEG-SDL的视频播放器"><span class="nav-number">1.1.</span> <span class="nav-text">FFMPEG+SDL的视频播放器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFMPEG的视频编码器（YUV编码为H-264）"><span class="nav-number">1.2.</span> <span class="nav-text">FFMPEG的视频编码器（YUV编码为H.264）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg编码视频的流程图"><span class="nav-number">1.2.1.</span> <span class="nav-text">FFmpeg编码视频的流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“纯净”的基于FFmpeg的视频编码器"><span class="nav-number">1.2.2.</span> <span class="nav-text">“纯净”的基于FFmpeg的视频编码器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解码框架图"><span class="nav-number">1.3.</span> <span class="nav-text">解码框架图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码框架图"><span class="nav-number">1.4.</span> <span class="nav-text">编码框架图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通用函数解析"><span class="nav-number">2.</span> <span class="nav-text">通用函数解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#av-register-all"><span class="nav-number">2.1.</span> <span class="nav-text">av_register_all()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存的分配和释放（av-malloc-、av-free-等）"><span class="nav-number">2.2.</span> <span class="nav-text">内存的分配和释放（av_malloc()、av_free()等）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于size-t"><span class="nav-number">2.2.1.</span> <span class="nav-text">关于size_t</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要内存对齐？"><span class="nav-number">2.2.2.</span> <span class="nav-text">为什么要内存对齐？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见结构体的初始化和销毁（AVFormatContext，AVFrame等）"><span class="nav-number">2.3.</span> <span class="nav-text">常见结构体的初始化和销毁（AVFormatContext，AVFrame等）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#avformat-alloc-context"><span class="nav-number">2.3.1.</span> <span class="nav-text">avformat_alloc_context()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#avio-alloc-context"><span class="nav-number">2.3.2.</span> <span class="nav-text">avio_alloc_context()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#avformat-new-stream"><span class="nav-number">2.3.3.</span> <span class="nav-text">avformat_new_stream()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#avcodec-alloc-context3"><span class="nav-number">2.3.4.</span> <span class="nav-text">avcodec_alloc_context3()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#av-frame-alloc"><span class="nav-number">2.3.5.</span> <span class="nav-text">av_frame_alloc()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#avpicture-fill"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">avpicture_fill()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#av-image-fill-arrays"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">av_image_fill_arrays()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#av-init-packet"><span class="nav-number">2.3.6.</span> <span class="nav-text">av_init_packet()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#av-new-packet"><span class="nav-number">2.3.7.</span> <span class="nav-text">av_new_packet()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avio-open2"><span class="nav-number">2.4.</span> <span class="nav-text">avio_open2()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#av-find-decoder-和-av-find-encoder"><span class="nav-number">2.5.</span> <span class="nav-text">av_find_decoder() 和 av_find_encoder()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avcodec-open2"><span class="nav-number">2.6.</span> <span class="nav-text">avcodec_open2()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查输入参数是否符合编码器要求"><span class="nav-number">2.6.1.</span> <span class="nav-text">检查输入参数是否符合编码器要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVCodec-gt-init"><span class="nav-number">2.6.2.</span> <span class="nav-text">AVCodec-&gt;init()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avcodec-close"><span class="nav-number">2.7.</span> <span class="nav-text">avcodec_close()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解码"><span class="nav-number">3.</span> <span class="nav-text">解码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图解-FFMPEG-打开媒体的函数-avformat-open-input"><span class="nav-number">3.1.</span> <span class="nav-text">图解 FFMPEG 打开媒体的函数 avformat_open_input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avformat-open-input"><span class="nav-number">3.2.</span> <span class="nav-text">avformat_open_input()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init-input"><span class="nav-number">3.2.1.</span> <span class="nav-text">init_input()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avformat-find-stream-info"><span class="nav-number">3.3.</span> <span class="nav-text">avformat_find_stream_info()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#av-read-frame"><span class="nav-number">3.4.</span> <span class="nav-text">av_read_frame()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Audio-Tag-Data"><span class="nav-number">3.4.1.</span> <span class="nav-text">Audio Tag Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Video-Tag-Data"><span class="nav-number">3.4.2.</span> <span class="nav-text">Video Tag Data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avcodec-decode-video2"><span class="nav-number">3.5.</span> <span class="nav-text">avcodec_decode_video2()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avformat-close-input"><span class="nav-number">3.6.</span> <span class="nav-text">avformat_close_input()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码"><span class="nav-number">4.</span> <span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#avformat-alloc-output-context2"><span class="nav-number">4.1.</span> <span class="nav-text">avformat_alloc_output_context2()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avformat-write-header"><span class="nav-number">4.2.</span> <span class="nav-text">avformat_write_header()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avcodec-encode-video"><span class="nav-number">4.3.</span> <span class="nav-text">avcodec_encode_video()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#av-write-frame"><span class="nav-number">4.4.</span> <span class="nav-text">av_write_frame()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#av-write-trailer"><span class="nav-number">4.5.</span> <span class="nav-text">av_write_trailer()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志输出系统"><span class="nav-number">5.</span> <span class="nav-text">日志输出系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#av-log"><span class="nav-number">5.1.</span> <span class="nav-text">av_log()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接头体成员管理系统"><span class="nav-number">6.</span> <span class="nav-text">接头体成员管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AVClass"><span class="nav-number">6.1.</span> <span class="nav-text">AVClass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AVOption"><span class="nav-number">6.2.</span> <span class="nav-text">AVOption</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#libswscale"><span class="nav-number">7.</span> <span class="nav-text">libswscale</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sws-getContext"><span class="nav-number">7.1.</span> <span class="nav-text">sws_getContext()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sws-scale"><span class="nav-number">7.2.</span> <span class="nav-text">sws_scale()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#libavdevice"><span class="nav-number">8.</span> <span class="nav-text">libavdevice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#avdevice-register-all"><span class="nav-number">8.1.</span> <span class="nav-text">avdevice_register_all()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdigrab"><span class="nav-number">8.2.</span> <span class="nav-text">gdigrab</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">苗沛</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">796k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">12:04</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
