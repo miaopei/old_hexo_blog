@@ -38,7 +38,7 @@ const ap = new APlayer({
         {
             name: 'Turnin', 
             artist: 'Young Rising Sons',
-            url: 'https://m701.music.126.net/20190627191738/d8b5870bd85f5f9307ac4eaa8ea04cdd/jdyyaac/045f/520e/035e/35fbcc03aded47970147441c85365e6c.m4a',
+            url: 'https://m701.music.126.net/20190627195148/e1ba40716039182042679b0ac06c0291/jdyyaac/045f/520e/035e/35fbcc03aded47970147441c85365e6c.m4a',
             cover: 'http://p1.music.126.net/_3YCwTf4yAB-pMP7j70sUg==/5896680860106448.jpg',
             theme: '#46718b'
         }
