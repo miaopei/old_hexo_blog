@@ -247,6 +247,31 @@
   </entry>
   
   <entry>
+    <title>ffmpeg SDK定制</title>
+    <link href="http://miaopei.github.io/2019/05/09/FFmpeg/FFmpeg%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
+    <id>http://miaopei.github.io/2019/05/09/FFmpeg/FFmpeg编译安装/</id>
+    <published>2019-05-09T02:14:50.000Z</published>
+    <updated>2019-06-27T12:05:26.816Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="FFmpeg-编译"><a href="#FFmpeg-编译" class="headerlink" title="FFmpeg 编译"></a>FFmpeg 编译</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> http://source.ffmpeg.org/git/ffmpeg.git ffmpeg</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ffmpeg</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure --prefix=./install --<span class="built_in">enable</span>-gpl --<span class="built_in">enable</span>-nonfree \</span></span><br><span class="line">--enable-libass --enable-libfdk-aac --enable-libfreetype \</span><br><span class="line">--enable-libmp3lame --enable-libopus --enable-libtheora \</span><br><span class="line">--enable-libvorbis --enable-libvpx --enable-libx264 --enable-libxvid \</span><br><span class="line">--enable-shared --enable-static</span><br><span class="line"><span class="meta">$</span><span class="bash"> make &amp;&amp; sudo make install</span></span><br></pre></td></tr></table></figure><p>注意：在执行各自的 configure 创建编译配置文件时，最好都强制带上 –enable-static 和 –enable-shared 参数以确保生成静态库和动态库。另外因为是在 Mac OS X 环境下编译，因此在各自编译完后，都要执行 sudo make install，安装到默认的 /usr/local 目录下相应位置（Mac OS X 下不推荐 /usr），因此不要在 configure 时指定 –prefix，就用默认的 /usr/local 目录前缀即可。完成编译安装后，FFmpeg 的头文件将会复制到 /usr/local/include 下面相应位置，静态库及动态库会被复制到 /usr/local/lib 目录下，FFmpeg 的可执行程序（ffmpeg、ffprobe、ffserver）会被复制到 /usr/local/bin 目录下，这样 FFmpeg 的开发环境就构建好了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;FFmpeg-编译&quot;&gt;&lt;a href=&quot;#FFmpeg-编译&quot; class=&quot;headerlink&quot; title=&quot;FFmpeg 编译&quot;&gt;&lt;/a&gt;FFmpeg 编译&lt;/h2&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t
+      
+    
+    </summary>
+    
+      <category term="FFmpeg" scheme="http://miaopei.github.io/categories/FFmpeg/"/>
+    
+    
+      <category term="FFmpeg" scheme="http://miaopei.github.io/tags/FFmpeg/"/>
+    
+  </entry>
+  
+  <entry>
     <title>FFmpeg命令大全</title>
     <link href="http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/"/>
     <id>http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/</id>
