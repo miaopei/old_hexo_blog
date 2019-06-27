@@ -121,7 +121,7 @@
 <meta property="og:site_name" content="Mr.Miaow Blog">
 <meta property="og:description" content="Everything is going to be alright, maybe not today.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-27T04:29:19.260Z">
+<meta property="og:updated_time" content="2019-06-27T08:21:24.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mr.Miaow">
 <meta name="twitter:description" content="Everything is going to be alright, maybe not today.">
@@ -430,16 +430,19 @@
       <div class="post-body han-init-context">
         
         
-          <blockquote>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>
+
+<blockquote>
 <p>一切都会好的，也许不是今天，但是最终都会好的.</p>
 </blockquote>
 <p><em><del>这个人很懒，什么都没有留下</del></em></p>
 <p><font color="#ff7600">这个人很懒，但还是留下了一点东西</font></p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=0&id=2861822943&auto=1&height=430"></iframe>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
-<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>
+    <div id="aplayer-uHovCvmQ" class="aplayer aplayer-tag-marker meting-tag-marker" data-id="2861822943" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="true" data-mutex="false" data-listmaxheight="340px" data-preload="none" data-theme="#ad7a86"></div>
+
+
 
         
       </div>
@@ -459,6 +462,14 @@
 
           </div>
           
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -668,12 +679,6 @@
             </div>
           
 
-          <!-- 音乐播放器 -->
-          <div>
-            
-                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="210" height="110" src="//music.163.com/outchain/player?type=0&id=2861822943&auto=1&height=430"></iframe>
-            
-          </div>
           
 
           
@@ -971,6 +976,37 @@
 
   
 
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
 
 
   
