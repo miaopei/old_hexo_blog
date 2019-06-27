@@ -137,6 +137,11 @@
             </div>
           {% endif %}
 
+          <link rel="stylesheet" href="/dist/APlayer.min.css">
+          <div id="aplayer"></div>
+          <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+          <script type="text/javascript" src="/dist/music.js"></script>
+
           {% if theme.creative_commons.license and theme.creative_commons.sidebar %}
              <div class="cc-license motion-element" itemprop="license">
               {% set ccLanguage = theme.creative_commons.language %}
