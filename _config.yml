@@ -164,3 +164,8 @@ index_generator:
 hide_categories:
     - notes
 
+aplayer:
+    enable: true
+    meting: true
+    asset_inject: false
+
