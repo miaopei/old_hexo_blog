@@ -1,5 +1,5 @@
 ---
-title: ffmpeg SDK定制
+title: FFmpeg SDK定制
 tags: FFmpeg
 reward: true
 categories: FFmpeg

@@ -33,6 +33,7 @@ const ap = new APlayer({
             artist: 'Martin Garrix',
             url: '/images/SummerDays.mp3',
             cover: 'https://p2.music.126.net/V-NvZ9AQWgsup61DrG5Ztg==/109951164177068604.jpg',
+            //cover: 'http://p2.music.126.net/YDrUWvNAGLDEKs1R8ROH3w==/109951164024853448.jpg',
             theme: '#ebd0c2'
         },
         {
