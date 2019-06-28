@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文以文档的形式来描述FFmpeg怎么入门，这也是为以后写文档做的一个大题框架格式。  文档介绍文档目的整理出开源代码 ffmpeg 的资料，方便公司同事后续使用。">
+<meta name="keywords" content="FFmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg入门">
+<meta property="og:url" content="http://miaopei.github.io/2019/04/20/FFmpeg/FFmpeg入门/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="本文以文档的形式来描述FFmpeg怎么入门，这也是为以后写文档做的一个大题框架格式。  文档介绍文档目的整理出开源代码 ffmpeg 的资料，方便公司同事后续使用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/2-1.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/2-2.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/2-3.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/markdown-table.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/ffmpeg%E8%BD%AC%E7%A0%81%E6%95%B0%E6%8D%AEIO%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/libavformat%E5%BA%93%E4%B8%ADIO%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:updated_time" content="2019-06-28T10:42:19.343Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FFmpeg入门">
+<meta name="twitter:description" content="本文以文档的形式来描述FFmpeg怎么入门，这也是为以后写文档做的一个大题框架格式。  文档介绍文档目的整理出开源代码 ffmpeg 的资料，方便公司同事后续使用。">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageFFmpeg/Thor/2-1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/04/20/FFmpeg/FFmpeg入门/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>FFmpeg入门 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Do what you say, say what you do.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/04/20/FFmpeg/FFmpeg入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.Miaow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">FFmpeg入门
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-20 10:14:50" itemprop="dateCreated datePublished" datetime="2019-04-20T10:14:50+08:00">2019-04-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-28 18:42:19" itemprop="dateModified" datetime="2019-06-28T18:42:19+08:00">2019-06-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">0</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文以文档的形式来描述FFmpeg怎么入门，这也是为以后写文档做的一个大题框架格式。</p>
+</blockquote>
+<h1 id="文档介绍"><a href="#文档介绍" class="headerlink" title="文档介绍"></a>文档介绍</h1><h2 id="文档目的"><a href="#文档目的" class="headerlink" title="文档目的"></a>文档目的</h2><p>整理出开源代码 ffmpeg 的资料，方便公司同事后续使用。</p>
+<a id="more"></a>
+
+<h2 id="文档范围"><a href="#文档范围" class="headerlink" title="文档范围"></a>文档范围</h2><p>较为详细的介绍 ffmpeg 的功能、使用以及二次开发。</p>
+<h2 id="读者对象"><a href="#读者对象" class="headerlink" title="读者对象"></a>读者对象</h2><p>希望了解 ffmpeg 知识，从事 USM 及 IPTV 的同事。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>TODO</p>
+<h2 id="术语与缩写解释"><a href="#术语与缩写解释" class="headerlink" title="术语与缩写解释"></a>术语与缩写解释</h2><table>
+<thead>
+<tr>
+<th>缩略语/术语</th>
+<th>全 称</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ffmpeg</td>
+<td>Fast forword mpeg</td>
+<td>音视频转换器</td>
+</tr>
+<tr>
+<td>ffplay</td>
+<td>Fast forword play</td>
+<td>用 ffmpeg 实现的播放器</td>
+</tr>
+<tr>
+<td>ffserver</td>
+<td>Fast forword server</td>
+<td>用 ffmpeg 实现的 rstp 服务器</td>
+</tr>
+<tr>
+<td>ffprobe</td>
+<td>Fast forword probe</td>
+<td>用来输入分析输入流。</td>
+</tr>
+</tbody></table>
+<h1 id="FFmpeg-支持能力说明"><a href="#FFmpeg-支持能力说明" class="headerlink" title="FFmpeg 支持能力说明"></a>FFmpeg 支持能力说明</h1><h2 id="FFmpeg-介绍及安装"><a href="#FFmpeg-介绍及安装" class="headerlink" title="FFmpeg 介绍及安装"></a>FFmpeg 介绍及安装</h2><h3 id="FFmpeg-简介"><a href="#FFmpeg-简介" class="headerlink" title="FFmpeg 简介"></a>FFmpeg 简介</h3><p>FFmpeg 是一个开源免费跨平台的视频和音频流方案，属于自由软件，采用 LGPL 或 GPL 许可证（依据你选择的组件）。它提供了录制、转换以及流化音视频的完整解决方案。它包含了非常先进的音频/视频编解码库 libavcodec，为了保证高可移植性和编解码质量，libavcodec 里很多 codec 都是从头开发的。</p>
+<p>FFmpeg 项目由以下几部分组成:</p>
+<p>（1）ffmpeg 视频文件转换命令行工具, 也支持经过实时电视卡抓取和编码成视频文件.</p>
+<p>（2）ffserver 基于 HTTP、RTSP 用于实时广播的多媒体服务器. 也支持时间平移</p>
+<p>（3）ffplay 用 SDL 和 FFmpeg 库开发的一个简单的媒体播放器</p>
+<p>（4）libavcodec 一个包含了所有 FFmpeg 音视频编解码器的库. 为了保证最优性能和高可复用性, 大多数编解码器从头开发的.</p>
+<p>（5）libavformat 一个包含了所有的普通音视格式的解析器和产生器的库</p>
+<h3 id="FFmpeg-安装"><a href="#FFmpeg-安装" class="headerlink" title="FFmpeg 安装"></a>FFmpeg 安装</h3><p>将所有源代码压缩在一个文件夹中，例如 <code>/绝对路径/ffmpeg</code>。</p>
+<p>在终端输入以下指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /绝对路径/ffmpeg</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure   <span class="comment">#(此时，会出现问题。然后重新输入./configure –disable-yasm-)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> Make</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，ffmpeg 安装编译通过，可以进行对音视频的操作。</p>
+<p>ffplay 的编译需要依赖于 SDL 库，所以要想编译成功 ffplay，必须先安装 SDL 库，</p>
+<p>安装方法：下载最新版本的 SDL 相应版本的 SDL 源码，编译，即可生成 SDL 库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 首先下载 SDL 软件包</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> configure --prefix=/usr/<span class="built_in">local</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="FFmpeg-参数说明"><a href="#FFmpeg-参数说明" class="headerlink" title="FFmpeg 参数说明"></a>FFmpeg 参数说明</h2><h3 id="通用选项"><a href="#通用选项" class="headerlink" title="通用选项"></a>通用选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-L license</span><br><span class="line">-h 帮助</span><br><span class="line">-fromats 显示可用的格式，编解码的，协议的。</span><br><span class="line">-f fmt 强迫采用格式 fmt</span><br><span class="line">-i filename 输入文件</span><br><span class="line">-y 覆盖输出文件</span><br><span class="line">-t duration 设置纪录时间 hh:mm:ss[.xxx]格式的记录时间也支持</span><br><span class="line">-ss position 搜索到指定的时间 [-]hh:mm:ss[.xxx]的格式也支持</span><br><span class="line">-title string 设置标题</span><br><span class="line">-author string 设置作者</span><br><span class="line">-copyright string 设置版权</span><br><span class="line">-comment string 设置评论</span><br><span class="line">-target type 设置目标文件类型(vcd，svcd，dvd) 所有的格式选项（比特率，编解码以及缓冲区	大小）自动设置 ，只需要输入如下的就可以了：</span><br><span class="line">	ffmpeg -i myfile.avi -target vcd /tmp/vcd.mpg</span><br><span class="line">-hq 激活高质量设置</span><br><span class="line">-itsoffset offset 设置以秒为基准的时间偏移，该选项影响所有后面的输入文件。该偏移被加到输	 入文件的时戳，定义一个正偏移意味着相应的流被延迟了 offset 秒。</span><br><span class="line">	[-]hh:mm:ss[.xxx] 的格式也支持</span><br></pre></td></tr></table></figure>
+
+<h3 id="视频选项"><a href="#视频选项" class="headerlink" title="视频选项"></a>视频选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">-b bitrate 设置比特率，缺省 200kb/s</span><br><span class="line">-r fps 设置帧频 缺省 25</span><br><span class="line">-s size 设置帧大小 格式为 WXH 缺省 160X128.下面的简写也可以直接使用：</span><br><span class="line">	Sqcif 128X96 qcif 176X144 cif 252X288 4cif 704X576</span><br><span class="line">-aspect aspect 设置横纵比 4:3 16:9 或 1.3333 1.7777</span><br><span class="line">-croptop size 设置顶部切除带大小 像素单位</span><br><span class="line">-cropbottom size –cropleft size –cropright size 底部，左边，右边切除带大小。</span><br><span class="line">-padtop size 设置顶部补齐的大小 像素单位</span><br><span class="line">-padbottom size –padleft size –padright size –padcolor color 设置补齐条大小</span><br><span class="line">	和颜色(hex，6 个 16 进制的数，红:绿:兰排列，比如 000000 代表黑色)</span><br><span class="line">-vn 不做视频记录</span><br><span class="line">-bt tolerance 设置视频码率容忍度 kbit/s</span><br><span class="line">-maxrate bitrate 设置最大视频码率容忍度</span><br><span class="line">-minrate bitreate 设置最小视频码率容忍度</span><br><span class="line">-bufsize size 设置码率控制缓冲区大小</span><br><span class="line">-vcodec codec 强制使用 codec 编解码方式。 如果用 copy 表示原始编解码数据必须被拷贝。</span><br><span class="line">-sameq 使用同样视频质量作为源（VBR）</span><br><span class="line">-pass n 选择处理遍数（1 或者 2）。两遍编码非常有用。第一遍生成统计信息，第二遍生成精确的请求的码率</span><br><span class="line">-passlogfile file 选择两遍的纪录文件名为 file</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级视频选项"><a href="#高级视频选项" class="headerlink" title="高级视频选项"></a>高级视频选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">-g gop_size 设置图像组大小</span><br><span class="line">-intra 仅适用帧内编码</span><br><span class="line">-qscale q 使用固定的视频量化标度(VBR)</span><br><span class="line">-qmin q 最小视频量化标度(VBR)</span><br><span class="line">-qmax q 最大视频量化标度(VBR)</span><br><span class="line">-qdiff q 量化标度间最大偏差 (VBR)</span><br><span class="line">-qblur blur 视频量化标度柔化(VBR)</span><br><span class="line">-qcomp compression 视频量化标度压缩(VBR)</span><br><span class="line">-rc_init_cplx complexity 一遍编码的初始复杂度</span><br><span class="line">-b_qfactor factor 在 p 和 b 帧间的 qp 因子</span><br><span class="line">-i_qfactor factor 在 p 和 i 帧间的 qp 因子</span><br><span class="line">-b_qoffset offset 在 p 和 b 帧间的 qp 偏差</span><br><span class="line">-i_qoffset offset 在 p 和 i 帧间的 qp 偏差</span><br><span class="line">-rc_eq equation 设置码率控制方程 默认 tex^qComp</span><br><span class="line">-rc_override override 特定间隔下的速率控制重载</span><br><span class="line">-me method 设置运动估计的方法 可用方法有 zero phods log x1 epzs(缺省) full</span><br><span class="line">-dct_algo algo 设置 dct 的算法可用的有 0 FF_DCT_AUTO 缺省的 DCT </span><br><span class="line">	1 FF_DCT_FASTINT </span><br><span class="line">	2 FF_DCT_INT </span><br><span class="line">	3 FF_DCT_MMX </span><br><span class="line">	4 FF_DCT_MLIB </span><br><span class="line">	5 FF_DCT_ALTIVEC</span><br><span class="line">-idct_algo algo 设置 idct 算法。可用的有 0 FF_IDCT_AUTO 缺省的 IDCT </span><br><span class="line">	1 FF_IDCT_INT </span><br><span class="line">	2 FF_IDCT_SIMPLE </span><br><span class="line">	3 FF_IDCT_SIMPLEMMX </span><br><span class="line">	4 FF_IDCT_LIBMPEG2MMX </span><br><span class="line">	5 FF_IDCT_PS2 </span><br><span class="line">	6 FF_IDCT_MLIB </span><br><span class="line">	7 FF_IDCT_ARM </span><br><span class="line">	8 FF_IDCT_ALTIVEC </span><br><span class="line">	9 FF_IDCT_SH4 </span><br><span class="line">	10 FF_IDCT_SIMPLEARM</span><br><span class="line">-er n 设置错误残留为 n 1 FF_ER_CAREFULL 缺省 </span><br><span class="line">	2 FF_ER_COMPLIANT </span><br><span class="line">	3 FF_ER_AGGRESSIVE </span><br><span class="line">	4 FF_ER_VERY_AGGRESSIVE</span><br><span class="line">-ec bit_mask 设置错误掩蔽为 bit_mask ， 该值为如下值的位掩码 </span><br><span class="line">	1 FF_EC_GUESS_MVS (default=enabled) </span><br><span class="line">	2 FF_EC_DEBLOCK (default=enabled)</span><br><span class="line">-bf frames 使用 frames B 帧，支持 mpeg1，mpeg2，mpeg4</span><br><span class="line">-mbd mode 宏块决策 0 FF_MB_DECISION_SIMPLE 使 用 mb_cmp </span><br><span class="line">	1 FF_MB_DECISION_BITS </span><br><span class="line">	2 FF_MB_DECISION_RD</span><br><span class="line">-4mv 使用 4 个运动矢量 仅用于 mpeg4</span><br><span class="line">-part 使用数据划分 仅用于 mpeg4</span><br><span class="line">-bug param 绕过没有被自动监测到编码器的问题</span><br><span class="line">-strict strictness 跟标准的严格性</span><br><span class="line">-aic 使能高级帧内编码 h263+</span><br><span class="line">-umv 使能无限运动矢量 h263+</span><br><span class="line">-deinterlace 不采用交织方法</span><br><span class="line">-interlace 强迫交织法编码 仅对 mpeg2 和 mpeg4 有效。当你的输入是交织的并且你想要保持交	织以最小图像损失的时候采用该选项。可选的方法是不交织，但是损失更大</span><br><span class="line">-psnr 计算压缩帧的 psnr</span><br><span class="line">-vstats 输出视频编码统计到 vstats_hhmmss.log</span><br><span class="line">-vhook module 插入视频处理模块 module 包括了模块名和参数，用空格分开</span><br></pre></td></tr></table></figure>
+
+<h3 id="音频选项"><a href="#音频选项" class="headerlink" title="音频选项"></a>音频选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-ab bitrate 设置音频码率</span><br><span class="line">-ar freq 设置音频采样率</span><br><span class="line">-ac channels 设置通道 缺省为 1</span><br><span class="line">-an 不使能音频纪录</span><br><span class="line">-acodec codec 使用 codec 编解码</span><br></pre></td></tr></table></figure>
+
+<h3 id="音频-视频捕获选项"><a href="#音频-视频捕获选项" class="headerlink" title="音频/视频捕获选项"></a>音频/视频捕获选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-vd device 设置视频捕获设备。比如/dev/video0</span><br><span class="line">-vc channel 设置视频捕获通道 DV1394 专用</span><br><span class="line">-tvstd standard 设置电视标准 NTSC PAL(SECAM)</span><br><span class="line">-dv1394 设置 DV1394 捕获</span><br><span class="line">-av device 设置音频设备 比如/dev/dsp</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级选项"><a href="#高级选项" class="headerlink" title="高级选项"></a>高级选项</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-map file:stream 设置输入流映射</span><br><span class="line">-debug 打印特定调试信息</span><br><span class="line">-benchmark 为基准测试加入时间</span><br><span class="line">-hex 倾倒每一个输入包</span><br><span class="line">-bitexact 仅使用位精确算法 用于编解码测试</span><br><span class="line">-ps size 设置包大小，以 bits 为单位</span><br><span class="line">-re 以本地帧频读数据，主要用于模拟捕获设备</span><br><span class="line">-loop 循环输入流。只工作于图像流，用于 ffserver 测试</span><br></pre></td></tr></table></figure>
+
+<h3 id="FFmpeg-参数实例"><a href="#FFmpeg-参数实例" class="headerlink" title="FFmpeg 参数实例"></a>FFmpeg 参数实例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg -y -i /rootVideoConverter/123.avi -ab 56 -ar 22050 -b 1500 -r 15 -qscale 10 –s 480x350 /root/VideoConverter/234.flv</span></span><br><span class="line">============================================================</span><br><span class="line">-y （覆盖输出文件，即如果 1.***文件已经存在的话，不经提示就覆盖掉了）</span><br><span class="line">-i "1.avi"（输入文件是和 ffmpeg 在同一目录下的 1.avi 文件，可以自己加路径，改名字）</span><br><span class="line">-s （输出的分辨率，注意片源一定要是 16:9 的不然会变形）</span><br><span class="line">-r （帧数，一般就用这个吧）</span><br><span class="line">-b 1500（视频数据流量，用-b xxxx 的指令则使用固定码率，数字随便改，1500 以上没效果；</span><br><span class="line">	还可以用动态码率如：-qscale 4 和-qscale 6，4 的质量比 6 高）</span><br><span class="line">-acodec aac（音频编码用 AAC）</span><br><span class="line">-ac 2 （声道数 1 或 2）</span><br><span class="line">-ar 24000（声音的采样频率，好像 PSP 只能支持 24000Hz）</span><br><span class="line">-ab 128 （ 音频数据流量，一般选择 32、64、96、128）</span><br><span class="line">-vol 200（200%的音量，自己改）</span><br><span class="line">-f psp （输出 psp 专用格式）</span><br><span class="line">-muxvb 768（给 PSP 机器识别的码率，一般选择 384、512 和 768）</span><br><span class="line">-ab bitrate 设置音频码率</span><br><span class="line">-ar freq 设置音频采样率</span><br><span class="line">-ss 指定时间点开始转换任务，(time_off set the start time offset)，-ss 后跟的时间单位为秒 .</span><br><span class="line">-s 320x240 指定分辨率</span><br><span class="line">-r 29.97 桢速率</span><br><span class="line">-bitexact 使用标准比特率</span><br><span class="line">-vcodec xvid 使用 xvid 压缩</span><br></pre></td></tr></table></figure>
+
+<h2 id="FFmpeg-支持能力说明-1"><a href="#FFmpeg-支持能力说明-1" class="headerlink" title="FFmpeg 支持能力说明"></a>FFmpeg 支持能力说明</h2><h3 id="FFmpeg-对编码解码器的支持"><a href="#FFmpeg-对编码解码器的支持" class="headerlink" title="FFmpeg 对编码解码器的支持"></a>FFmpeg 对编码解码器的支持</h3><p>ffmpeg 支持的编解码器种类共有 280 多种，涵盖了几乎所有常见音视频编码格式，能解码几乎所有的音视频，每种音视频编解码器的实现都在 libavcodec 目录下有具体的C 语言实现，具体的支持情况参见：</p>
+<blockquote>
+<p><a href>ffmpeg支持的编解码器</a></p>
+</blockquote>
+<p>注：编码器和解码器的名称不是完全匹配的，因此有些编码器没有对应相同名称的解码器，反之，<br>解码器也一样。即使编码和解码都支持也不一定是完全对应的，例如 h263 解码器对应有 h263p 和 h263 编码器。</p>
+<h3 id="FFmpeg-对容器格式的支持"><a href="#FFmpeg-对容器格式的支持" class="headerlink" title="FFmpeg 对容器格式的支持"></a>FFmpeg 对容器格式的支持</h3><p>ffmpeg 支持对绝大多数的容器格式的读写操作，共计 190 多种，涵盖了互联网上各种常见媒体格式及日常生活中及专业应用中的各种媒体格式。详细的支持情况参见：</p>
+<blockquote>
+<p><a href>FFmpeg支持的媒体文件格式</a></p>
+</blockquote>
+<h3 id="FFmpeg-对过滤器的支持"><a href="#FFmpeg-对过滤器的支持" class="headerlink" title="FFmpeg 对过滤器的支持"></a>FFmpeg 对过滤器的支持</h3><table>
+<thead>
+<tr>
+<th>Filters</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>aformat</td>
+<td>Convert the input audio to one of the specified formats.</td>
+</tr>
+<tr>
+<td>anull</td>
+<td>Pass the source unchanged to the output.</td>
+</tr>
+<tr>
+<td>aresample</td>
+<td>Resample audio data.</td>
+</tr>
+<tr>
+<td>ashowinfo</td>
+<td>Show textual information for each audio frame.</td>
+</tr>
+<tr>
+<td>abuffer</td>
+<td>Buffer audio frames， and make them accessible to the filterchain.</td>
+</tr>
+<tr>
+<td>anullsrc</td>
+<td>Null audio source， never return audio frames.</td>
+</tr>
+<tr>
+<td>abuffersink</td>
+<td>Buffer audio frames， and make them available to the end of the filter graph.</td>
+</tr>
+<tr>
+<td>anullsink</td>
+<td>Do absolutely nothing with the input audio.</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>Copy the input video unchanged to the output.</td>
+</tr>
+<tr>
+<td>crop</td>
+<td>Crop the input video to <code>width:height:x:y</code>.</td>
+</tr>
+<tr>
+<td>drawbox</td>
+<td>Draw a colored box on the input video.</td>
+</tr>
+<tr>
+<td>fade</td>
+<td>Fade in/out input video</td>
+</tr>
+<tr>
+<td>fieldorder</td>
+<td>Set the field order.</td>
+</tr>
+<tr>
+<td>fifo</td>
+<td>Buffer input images and send them when they are requested.</td>
+</tr>
+<tr>
+<td>format</td>
+<td>Convert the input video to one of the specified pixel formats.</td>
+</tr>
+<tr>
+<td>gradfun</td>
+<td>Debands video quickly using gradients.</td>
+</tr>
+<tr>
+<td>hflip</td>
+<td>Horizontally flip the input video.</td>
+</tr>
+<tr>
+<td>lut</td>
+<td>Compute and apply a lookup table to the RGB/YUV input video.</td>
+</tr>
+<tr>
+<td>lutrgb</td>
+<td>Compute and apply a lookup table to the RGB input video.</td>
+</tr>
+<tr>
+<td>lutyuv</td>
+<td>Compute and apply a lookup table to the YUV input video.</td>
+</tr>
+<tr>
+<td>negate</td>
+<td>Negate input video.</td>
+</tr>
+<tr>
+<td>noformat</td>
+<td>Force libavfilter not to use any of the specified pixel formats for the input to the next filter.</td>
+</tr>
+<tr>
+<td>null</td>
+<td>Pass the source unchanged to the output.</td>
+</tr>
+<tr>
+<td>overlay</td>
+<td>Overlay a video source on top of the input.</td>
+</tr>
+<tr>
+<td>pad</td>
+<td>Pad input image to <code>width:height[:x:y[:color]] (default x and y: 0， default color: black)</code>.</td>
+</tr>
+<tr>
+<td>pixdesctest</td>
+<td>Test pixel format definitions.</td>
+</tr>
+<tr>
+<td>scale</td>
+<td>Scale the input video to width:height size and/or convert the image format.</td>
+</tr>
+<tr>
+<td>select</td>
+<td>Select frames to pass in output.</td>
+</tr>
+<tr>
+<td>setdar</td>
+<td>Set the frame display aspect ratio.</td>
+</tr>
+<tr>
+<td>setpts</td>
+<td>Set PTS for the output video frame.</td>
+</tr>
+<tr>
+<td>setsar</td>
+<td>Set the pixel sample aspect ratio.</td>
+</tr>
+<tr>
+<td>settb</td>
+<td>Set timebase for the output link.</td>
+</tr>
+<tr>
+<td>showinfo</td>
+<td>Show textual information for each video frame.</td>
+</tr>
+<tr>
+<td>slicify</td>
+<td>Pass the images of input video on to next video filter as multiple slices.</td>
+</tr>
+<tr>
+<td>split</td>
+<td>Pass on the input to two outputs.</td>
+</tr>
+<tr>
+<td>transpose</td>
+<td>Transpose input video.</td>
+</tr>
+<tr>
+<td>unsharp</td>
+<td>Sharpen or blur the input video.</td>
+</tr>
+<tr>
+<td>vflip</td>
+<td>Flip the input video vertically.</td>
+</tr>
+<tr>
+<td>buffer</td>
+<td>Buffer video frames， and make them accessible to the filterchain.</td>
+</tr>
+<tr>
+<td>color</td>
+<td>Provide an uniformly colored input， syntax is: [color[:size[:rate]]]</td>
+</tr>
+<tr>
+<td>movie</td>
+<td>Read from a movie source.</td>
+</tr>
+<tr>
+<td>nullsrc</td>
+<td>Null video source， never return images.</td>
+</tr>
+<tr>
+<td>rgbtestsrc</td>
+<td>Generate RGB test pattern.</td>
+</tr>
+<tr>
+<td>testsrc</td>
+<td>Generate test pattern.</td>
+</tr>
+<tr>
+<td>buffersink</td>
+<td>Buffer video frames， and make them available to the end of the filter graph.</td>
+</tr>
+<tr>
+<td>nullsink</td>
+<td>Do absolutely nothing with the input video.</td>
+</tr>
+</tbody></table>
+<h3 id="FFmpeg-对图像颜色空间的支持"><a href="#FFmpeg-对图像颜色空间的支持" class="headerlink" title="FFmpeg 对图像颜色空间的支持"></a>FFmpeg 对图像颜色空间的支持</h3><p>ffmpeg 支持常见的图像颜色空间，并且在 libavswcale 中定义了颜色空间转换的相关函数实现各种颜色模式的互转。具体的支持情况见:</p>
+<blockquote>
+<p><a href>FFmpeg支持的图像颜色空间</a></p>
+</blockquote>
+<h2 id="FFmpeg-功能及使用说明"><a href="#FFmpeg-功能及使用说明" class="headerlink" title="FFmpeg 功能及使用说明"></a>FFmpeg 功能及使用说明</h2><h3 id="ffplay-对多媒体的支持能力验证"><a href="#ffplay-对多媒体的支持能力验证" class="headerlink" title="ffplay 对多媒体的支持能力验证"></a>ffplay 对多媒体的支持能力验证</h3><p><strong>一、视频</strong></p>
+<p><code>3gp 177X144</code> 支持播放，在 windows 下播放正常，但是在 linux 下面偶有 BUG 如果发现画面无法显示而声音可以播放的情况下 可以试着切换全屏或者切换分辨率。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">AVI 	208X176 		支持</span><br><span class="line"> 		320X240 		支持</span><br><span class="line"> 		720X400 		支持</span><br><span class="line"> 		720X576 		支持</span><br><span class="line">DAT 3	52X288 			支持</span><br><span class="line">DiVX 	720X576 		支持</span><br><span class="line">MKV 	320X240 		支持</span><br><span class="line">		352X288 		支持</span><br><span class="line"> 		704X304 		支持</span><br><span class="line"> 		720X576 		支持</span><br><span class="line">MP4 	320X240 		支持</span><br><span class="line">		352X288 		支持</span><br><span class="line">        720X400 		支持</span><br><span class="line">MPG 	320X240 		支持</span><br><span class="line"> 		352X288 		支持</span><br><span class="line"> 		480X576 		支持</span><br><span class="line"> 		720X576 		支持</span><br><span class="line"> 		720X480 		支持</span><br><span class="line">VOB 	352X288 		支持</span><br><span class="line">XVID 	720X576 		支持</span><br><span class="line">MOV 					支持</span><br><span class="line">RMVB 					支持</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、音频</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">AC3 	48KHZ 				支持</span><br><span class="line">APE 	11KHZ 				支持</span><br><span class="line"> 		22KHZ 				支持</span><br><span class="line"> 		44KHZ 				支持</span><br><span class="line"> 		48KHZ 				支持</span><br><span class="line">MP3 	32KHZ 	64Kbps 		支持</span><br><span class="line">        32KHZ 	128KbpS 	支持</span><br><span class="line">        32KHZ 	160Kbps 	支持</span><br><span class="line">        32KHZ 	192Kbps 	支持</span><br><span class="line">        32KHZ 	320Kbps 	支持</span><br><span class="line">        44KHZ	64Kbps 		支持</span><br><span class="line">        44KHZ 	128Kbps 	支持</span><br><span class="line">        44KHZ 	160Kbps 	支持</span><br><span class="line">        44KHZ 	192Kbps 	支持</span><br><span class="line">        44KHZ 	320Kbps 	支持</span><br><span class="line">        48KHZ 	64Kbps 		支持</span><br><span class="line">        48KHZ 	128Kbps 	支持</span><br><span class="line">        48KHZ 	160Kbps 	支持</span><br><span class="line">        48KHZ 	192Kbps 	支持</span><br><span class="line">        48KHZ 	320Kbps 	支持</span><br><span class="line">OGG 	32KHZ 	128Kbps 	支持</span><br><span class="line">        32KHZ 	192Kbps 	支持</span><br><span class="line">        44KHZ 	64Kbps 		支持</span><br><span class="line">        44KHZ 	128Kbps 	支持</span><br><span class="line">        44KHZ 	192Kbps 	支持</span><br><span class="line">        48KHZ 	64Kbps 		支持</span><br><span class="line">        44KHZ 	128Kbps 	支持</span><br><span class="line">        44KHZ 	192Kbps 	支持</span><br><span class="line">WAV 	11KHZ 				支持</span><br><span class="line">        22KHZ 	16Kbps 		支持</span><br><span class="line">        44KHZ 	16Kbps 		支持</span><br><span class="line">        48KHZ 	16Kbps 		支持</span><br><span class="line">WMA 	8KHZ 	16Kbps 		支持</span><br><span class="line">        11KHZ 	16Kbps 		支持</span><br><span class="line">        16KHZ 	16Kbps 		支持</span><br><span class="line">        22KHZ 	16Kbps 		支持</span><br><span class="line">        44KHZ 	16Kbps 		支持</span><br><span class="line">        48KHZ 	16Kbps 		支持</span><br></pre></td></tr></table></figure>
+
+<p><strong>三、图像</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PNG 		支持</span><br><span class="line">JPG 		支持</span><br><span class="line">JPEG 		支持</span><br><span class="line">GIF 		支持</span><br><span class="line">BMP 		支持</span><br></pre></td></tr></table></figure>
+
+<h3 id="FFmpeg-格式转换"><a href="#FFmpeg-格式转换" class="headerlink" title="FFmpeg 格式转换"></a>FFmpeg 格式转换</h3><p><strong>第一步：准备媒体</strong></p>
+<p>前面已经讲的很清楚了，ffmpeg 如何安装不在赘述。准备好相应的文件，如图 2-1所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/2-1.png" alt="图 2-1"></p>
+<p><strong>第二步：启动 ffmpeg</strong></p>
+<p>由于做的是格式转换，在 ffserver 上不能直观的看见结果，故我是在 linux 下进行的。打开终端，值得一提的是格式转换需要超级用户才能进行，故在命令行输入：<code>su，&lt;回车&gt;</code>，输入密码进入超级用户，本例中，以 FFmpeg 将 test.avi 转换为 test.mpg。在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –r 25 –s 720x400 test.mpg</span></span><br></pre></td></tr></table></figure>
+
+<p>其中原格式分辨率为 320x240，将转为 720x400，-r 前面已经解释其含义，表示设置帧频为 25。转换成功后如图 2-2 所示，前后两种格式播放效果如图 2-3 所示。相应的，转换为其他格式做相应的变化即可。</p>
+<p>同时还可以在转换格式时进行强制的音视频转换，如 <code>–vcodec + 格式</code>，将会强制将视频按指定格式编码，<code>-acodec +格式</code>，将会强制按指定格式编码音频信息。在转换中有很多其他参数可以指定，如码率、分辨率、帧率等，具体按照 ffmpeg 的参数说明指定参数即可。但有一条转低不转高的原则需要注意，即品质差的音视频转换不建议转换到品质好的音视频。</p>
+<p><img src="/images/imageFFmpeg/Thor/2-2.png" alt="图 2-2"></p>
+<p><img src="/images/imageFFmpeg/Thor/2-3.png" alt="图 2-3"></p>
+<p>再说说如何在转换视频的时候将音频合成到视频中，且覆盖其原来的音频。这个现在摸索出两种方法。</p>
+<p><strong>方法一</strong>：需要两条命令实现，先在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi -an –r 25 test.mpg</span></span><br></pre></td></tr></table></figure>
+
+<p>此时将生成一个没有声音的 test.mpg 视频，再在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.mpg –i test.mp3 –r 25 test1.mpg</span></span><br></pre></td></tr></table></figure>
+
+<p>此时将会生成一个名为 test1.mpg 的视频。该视频播放时视频为 test.avi 的视频，但音频变为了 test.mp3 的音频了。</p>
+<p><strong>方法二</strong>：只要一条指令即可实现。在命令行中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –i test.mp3 –vcodec copy –acodec copy –r 25 test2.mpg</span></span><br></pre></td></tr></table></figure>
+
+<p>此时将会生成一个名为 test2.mpg 的视频，播放时其视频为 test.avi 的视频，音频为 test.mp3。<code>–vcodec copy</code> 为 force video codec(‘copy’ to copy stream)。</p>
+<p>有一点需要注意，文件命名不能有空格，否则会导致编译时不能通过。另外，<code>-an</code> 为不能使音频记录。</p>
+<p><strong>第三步：播放媒体</strong></p>
+<p>播放我们转换的媒体，看看是否满足我们当初的愿望，不出什么差错的话，是完全能够满足我们的要求的。</p>
+<h3 id="FFmpeg-视频截图"><a href="#FFmpeg-视频截图" class="headerlink" title="FFmpeg 视频截图"></a>FFmpeg 视频截图</h3><p>截取一张 <code>300x200</code> 尺寸大小的格式为 jpg 的一张图片：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –y –f image2 –t 0.001 –s 300x200 test.jpg</span></span><br></pre></td></tr></table></figure>
+
+<p>要截取指定时间的图片，如 5 秒之后的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –y –f image2 –ss 5 –t 0.001 –s 300x200 test.jpg</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>-ss</code> 后的单位为秒，也可写成：<code>-ss 00:00:05</code>。</p>
+<p>把视频的前 30 帧转换为一个动态的 gif 图。需要说明的是，转换成功之后，如果用 ffplay 播放是看不出效果的，建议换成其他图片播放器播放。其转换命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –vframes 30 –pix_fmt rgb24–y –f gif test.gif</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以从视频中的第 10 秒开始截取后面的 5 秒内容转换为一个无限重播的动态 gif 图。其命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i test.avi –pix_fmt rgb24 –ss 10 –t 5 –y –f gif test.gif</span></span><br></pre></td></tr></table></figure>
+
+<p>上面两种动态 gif 都是只播一次，想让其一直播，可再加一个参数：<code>-loop_output 0</code>。</p>
+<h3 id="FFmpeg-屏幕录制"><a href="#FFmpeg-屏幕录制" class="headerlink" title="FFmpeg 屏幕录制"></a>FFmpeg 屏幕录制</h3><p>屏幕录制其命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg -f x11grab -r 25 -s wxga -i :0.0 /tmp/outputFile.mpg</span></span><br></pre></td></tr></table></figure>
+
+<p>其他相关参数可自行添加。需要说明的是，各个版本的 ffmpeg 对屏幕录制的命令不一。如果你只想录制一个应用程序窗口或者桌面上的一个固定区域，那么可以指定偏移位置和区域大小。使用 <code>xwininfo -frame</code> 命令可以完成查找上述参数。</p>
+<p>注：ffmpeg 的屏幕录制功能只能在 Linux 环境下有效。并且在配置时需要添加 <code>–enable-x11grub</code> 指令，默认关闭。</p>
+<h3 id="FFmpeg-音视频采集"><a href="#FFmpeg-音视频采集" class="headerlink" title="FFmpeg 音视频采集"></a>FFmpeg 音视频采集</h3><p>把摄像头的实时视频录制下来，存储为文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg -f video4linux -s 320x240 -r 10 -i /dev/video0 test.asf</span></span><br></pre></td></tr></table></figure>
+
+<p>录音，其命令为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg –i /dev/dsp -f oss test.mp3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="FFmpeg-应用实例"><a href="#FFmpeg-应用实例" class="headerlink" title="FFmpeg 应用实例"></a>FFmpeg 应用实例</h2><h3 id="用-FFserver-从文件生成流媒体"><a href="#用-FFserver-从文件生成流媒体" class="headerlink" title="用 FFserver 从文件生成流媒体"></a>用 FFserver 从文件生成流媒体</h3><p><strong>一、安装 ffmpeg</strong></p>
+<p>在 ubuntu 下，运行 <code>sudo apt-get ffmpeg</code> 安装 ffmpeg，在其他 linux 操作系统下，见 ffmpeg 的编译过程（编译完成后可执行自动安装）。</p>
+<p><strong>二、准备预播放的媒体文件</strong></p>
+<p>如 test.Mp3，在本文档中，默认放入用户文件夹下得 Music 文件夹内.(直接从设备采集不在本文档叙述范围之内)</p>
+<p><strong>三、修改 ffserver 配置信息</strong></p>
+<p>ffserver 配置文件为: <code>/etc/ffserver.conf</code> 打开，填写配置信息.配置信息包括三方面:</p>
+<p>（1）端口绑定等基本信息，在 ·/etc/ffserver.conf· 中有详细注释，在此不再重复，最终配置信息为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Port 8090</span><br><span class="line">BindAddress 0.0.0.0</span><br><span class="line">MaxHTTPConnections 2000</span><br><span class="line">MaxClients 1000</span><br><span class="line">MaxBandwidth 1000</span><br></pre></td></tr></table></figure>
+
+<p>（2）媒体文件配置信息.本信息根据具体的媒体文件类型直接在配置文件中取消注释掉相应文件类型的配置信息，然后填写文件路径即可:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> MP3 audio</span></span><br><span class="line">&lt;Stream test.mp3&gt;</span><br><span class="line">File "/home/xiaoma/Music/test.mp3"</span><br><span class="line">Format mp2</span><br><span class="line">NoVideo</span><br><span class="line">&lt;/Stream&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>四、启动 ffserver</strong></p>
+<p>在终端中运行: <code>sudo ffserver -f /etc/ffserver.conf</code>  启动 ffserver.</p>
+<p><strong>五、播放流媒体</strong></p>
+<p>在浏览器中输入 <a href>http://127.0.0.1:8090/test.mp3</a> 即可播放音乐.</p>
+<p>在终端中输入 <code>ffplay http://localhost:8090/test.mp3</code> 可播放流媒体.</p>
+<h3 id="用-FFserver-从设备生成实时流"><a href="#用-FFserver-从设备生成实时流" class="headerlink" title="用 FFserver 从设备生成实时流"></a>用 FFserver 从设备生成实时流</h3><p><strong>一、准备媒体</strong></p>
+<p>按照上节步骤安装 ffmpeg，保证摄像头和声卡可用，将从摄像头和声卡获取音视频信息。</p>
+<p><strong>二、修改 ffserver 配置信息</strong></p>
+<p>ffserver 配置文件为: <code>/etc/ffserver.conf</code> 打开，填写配置信息.配置信息包括三方面:</p>
+<p>（1）端口绑定等基本信息，在 <code>/etc/ffserver.conf</code> 中有详细注释，在此不再重复，最终配<br>置信息为:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Port 8090</span><br><span class="line">BindAddress 0.0.0.0</span><br><span class="line">MaxHTTPConnections 2000</span><br><span class="line">MaxClients 1000</span><br><span class="line">MaxBandwidth 1000</span><br></pre></td></tr></table></figure>
+
+<p>（2）fend(传冲信息)，在文件播放中，基本不用动本配置信息，只需要根据具体情况分配缓冲文件.最终配置信息如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Feed feed1.ffm&gt;</span><br><span class="line">File /tmp/feed1.ffm</span><br><span class="line">FileMaxSize 2M</span><br><span class="line">ACL allow 127.0.0.1</span><br><span class="line">&lt;/Feed&gt;</span><br></pre></td></tr></table></figure>
+
+<p>（3）媒体文件配置信息.本信息根据具体的媒体文件类型直接在配置文件中取消注释掉相应文件类型的配置信息，然后填写文件路径即可:</p>
+<p>(中间会有很多很多配置信息，都是关于音视频的，有些配置还不懂，慢慢摸索吧)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;Stream test1.mpg&gt;</span><br><span class="line">Feed feed1.ffm</span><br><span class="line">Format mpeg</span><br><span class="line">AudioBitRate 32</span><br><span class="line">AudioChannels 1</span><br><span class="line">AudioSampleRate 44100</span><br><span class="line">VideoBitRate 64</span><br><span class="line">VideoBufferSize 40</span><br><span class="line">VideoFrameRate 3</span><br><span class="line">VideoSize 160x128</span><br><span class="line">VideoGopSize 12</span><br><span class="line">&lt;/Stream&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash"> Flash</span></span><br><span class="line">&lt;Stream test.swf&gt;</span><br><span class="line">Feed feed1.ffm</span><br><span class="line">Format swf</span><br><span class="line">VideoFrameRate 2</span><br><span class="line">VideoIntraOnly</span><br><span class="line">NoAudio</span><br><span class="line">&lt;/Stream&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>三、启动 FFserver</strong></p>
+<p>在终端中运行: <code>sudo ffserver -f /etc/ffserver.conf</code> 启动 ffserver.</p>
+<p><strong>四、启动 ffmpeg</strong></p>
+<p>本例中，以 ffmpeg 作为实时摄像头采集输入.在命令行中输入:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg -f video4linux2 -r 25 -i /dev/video0 /tmp/feed1.ffm</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有音频设备，则采集音频的命令如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./ffmpeg -f oss -i /dev/dsp -f video4linux2 -r 25 -i /dev/video0 /tmp/feed1.ffm</span></span><br></pre></td></tr></table></figure>
+
+<p>(音频格式参数自己配置)</p>
+<p><strong>五、播放流媒体</strong></p>
+<p>在浏览器中输入 <a href>http://127.0.0.1:8090/test1.mpg</a> 即可播放音乐.</p>
+<p>在终端中输入 <code>ffplay http://localhost:8090/test.swf</code> 可播放流媒体.</p>
+<h1 id="FFmpeg-架构"><a href="#FFmpeg-架构" class="headerlink" title="FFmpeg 架构"></a>FFmpeg 架构</h1><h2 id="FFmpeg-文件结构"><a href="#FFmpeg-文件结构" class="headerlink" title="FFmpeg 文件结构"></a>FFmpeg 文件结构</h2><p><img src="/images/imageFFmpeg/Thor/markdown-table.png" alt="markdown table"></p>
+<table>
+    <tr>
+        <td>目录</td>
+        <td>文件</td>
+        <td>简要说明</td>
+    </tr>
+    <tr>
+        <td rowspan="14">
+            <font style="color:red;font-weight:bold;">libavformat</font> <br><br>
+            主要存放ffmpeg<br>
+            支持的各种编解码<br>
+            器的实现及ffmpeg<br>
+            编解码功能相关的<br>
+            数据结构定义及函<br>
+            数定义和声明
+        </td>
+           <td>allcodecs.c</td>
+        <td>简单的注册类函数</td>
+    </tr>
+    <tr>
+        <td>avcodec.h</td>
+        <td>编解码相关结构体定义和函数原型声明</td>
+    </tr>
+    <tr>
+        <td>dsputil.c</td>
+        <td>限幅数组初始化</td>
+    </tr>
+    <tr>
+        <td>dsputil.h</td>
+        <td>限幅数组声明</td>
+    </tr>
+    <tr>
+        <td>imgconvert.c</td>
+        <td>颜色空间转换相关函数实现</td>
+    </tr>
+    <tr>
+        <td>imgconvert_template.h</td>
+        <td>颜色空间转换相关结构体定义和函数声明</td>
+    </tr>
+    <tr>
+        <td>utils_codec.c </td>
+        <td>一些解码相关的工具类函数的实现</td>
+    </tr>
+    <tr>
+        <td>mpeg4audio.c</td>
+        <td>mpeg4 音频编解码器的函数实现</td>
+    </tr>
+    <tr>
+        <td>mpeg4audio.h</td>
+        <td>mpeg4 音频编解码器的函数声明</td>
+    </tr>
+    <tr>
+        <td>mpeg4data.h</td>
+        <td>mpeg4 音视频编解码器的公用的函数声明及数据结构定义</td>
+    </tr>
+    <tr>
+        <td>mpeg4video.c </td>
+        <td>mpeg4 视频编解码器的函数实现</td>
+    </tr>
+    <tr>
+        <td>mpeg4video.h</td>
+        <td>mpeg4 视频编解码器的函数的声明及先关数据结构的定义</td>
+    </tr>
+    <tr>
+        <td>mpeg4videodec.c</td>
+        <td>mpeg4 视频解码器的函数实现</td>
+    </tr>
+    <tr>
+        <td>mpeg4videoenc.c</td>
+        <td>mpeg4 视频编码器的函数实现</td>
+    </tr>
+    <tr>
+        <td rowspan="14">
+            <font style="color:red;font-weight:bold;">libavformat</font> <br><br>
+            主要存放ffmpeg支<br>
+            持的各种媒体格式<br>
+            MUXER/DEMUXER<br>
+            和数据流协议的定<br>
+            义和实现文件以及<br>
+            ffmpeg解复用相<br>
+            关的数据结构及<br>
+            函数定
+        </td>
+           <td>allformats.c</td>
+        <td>简单注册类函数</td>
+    </tr>
+    <tr>
+        <td>avformat.h</td>
+        <td>文件和媒体格式相关函数声明和数据结构定义</td>
+    </tr>
+    <tr>
+        <td>avio.c</td>
+        <td>无缓冲 IO 相关函数实现</td>
+    </tr>
+    <tr>
+        <td>avio.h</td>
+        <td>无缓冲 IO 相关结构定义和函数声明</td>
+    </tr>
+    <tr>
+        <td>aviobuf.c</td>
+        <td>有缓冲数据 IO 相关函数实现</td>
+    </tr>
+    <tr>
+        <td>cutils.c</td>
+        <td>简单的字符串操作函数</td>
+    </tr>
+    <tr>
+        <td>utils_format.c</td>
+        <td>文件和媒体格式相关的工具函数的实现</td>
+    </tr>
+    <tr>
+        <td>file.c</td>
+        <td>文件 io 相关函数</td>
+    </tr>
+    <tr>
+        <td>......</td>
+        <td>其他相关媒体流 IO 的函数和数据结构实现文件。如：rtsp、http 等。</td>
+    </tr>
+    <tr>
+        <td>avi.c</td>
+        <td>AVI 格式的相关函数定西</td>
+    </tr>
+    <tr>
+        <td>avi.h</td>
+        <td>AVI 格式的相关函数声明及数据结构定义</td>
+    </tr>
+    <tr>
+        <td>avidec.c</td>
+        <td>AVI 格式 DEMUXER 相关函数定义</td>
+    </tr>
+    <tr>
+        <td>avienc.c</td>
+        <td>AVI 格式 MUXER 相关函数定义</td>
+    </tr>
+    <tr>
+        <td>......</td>
+        <td>其他媒体格式的 muxer/demuxer 相关函数及数据结构定义和声明文件</td>
+    </tr>
+    <tr>
+        <td rowspan="14">
+            <font style="color:red;font-weight:bold;">libavutil</font> <br><br>
+            主要存放ffmpeg<br>
+            工具类函数的定义
+        </td>
+           <td>avutil.h</td>
+        <td>简单的像素格式宏定义</td>
+    </tr>
+    <tr>
+        <td>bswap.h</td>
+        <td>简单的大小端转换函数的实现</td>
+    </tr>
+    <tr>
+        <td>commom.h</td>
+        <td>公共的宏定义和简单函数的实现</td>
+    </tr>
+<tr>
+        <td>mathematics.c</td>
+        <td>数学运算函数实现</td>
+    </tr>
+    <tr>
+        <td>rational.h</td>
+        <td>分数相关表示的函数实现</td>
+    </tr>
+</table>
+
+
+<h2 id="I-O-模块分析"><a href="#I-O-模块分析" class="headerlink" title="I\O 模块分析"></a>I\O 模块分析</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>ffmpeg 项目的数据 IO 部分主要是在 libavformat 库中实现，某些对于内存的操作部分在 libavutil 库中。数据 IO 是基于文件格式（Format）以及文件传输协议(Protocol)的，与具体的编解码标准无关。</p>
+<p>ffmpeg 工程转码时数据 IO 层次关系如图所示：</p>
+<p><img src="/images/imageFFmpeg/Thor/ffmpeg%E8%BD%AC%E7%A0%81%E6%95%B0%E6%8D%AEIO%E6%B5%81%E7%A8%8B.png" alt="ffmpeg转码数据IO流程"></p>
+<p>对于上面的数据 IO 流程，具体可以用下面的例子来说明，我们从一个 http 服务器获取音视频数据，格式是 flv 的，需要通过转码后变成 avi 格式，然后通过 udp 协议进行发布。其过程就如下所示：</p>
+<ul>
+<li>读入 http 协议数据流，根据 http 协议获取真正的文件数据（去除无关报文信息）；</li>
+<li>根据 flv 格式对数据进行解封装；</li>
+<li>读取帧进行转码操作；</li>
+<li>按照目标格式 avi 进行封装；</li>
+<li>通过 udp 协议发送出去。</li>
+</ul>
+<h3 id="相关数据结构介绍"><a href="#相关数据结构介绍" class="headerlink" title="相关数据结构介绍"></a>相关数据结构介绍</h3><p>在 libavformat 库中与数据 IO 相关的数据结构主要有 URLProtocol、URLContext、ByteIOContext、AVFormatContext 等，各结构之间的关系如图所示。</p>
+<p><img src="/images/imageFFmpeg/Thor/libavformat%E5%BA%93%E4%B8%ADIO%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="libavformat库中IO相关数据结构之间的关系"></p>
+<p><strong>1、URLProtocol 结构</strong></p>
+<p>表示广义的输入文件，该结构体提供了很多的功能函数，每一种广义的输入文件（如：file、pipe、tcp、rtp 等等）对应着一个 <code>URLProtocol</code> 结构，在 <code>av_register_all()</code> 中将该结构体初始化为一个链表，表头为 <code>avio.c</code> 里的 <code>URLProtocol *first_protocol = NULL;</code> 保存所有支持的输入文件协议，该结构体的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="keyword">int</span> (*url_open)(URLContext *h， <span class="keyword">const</span> <span class="keyword">char</span> *url， <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> (*url_read)(URLContext *h， <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf， <span class="keyword">int</span> size);</span><br><span class="line">    <span class="keyword">int</span> (*url_write)(URLContext *h， <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf， <span class="keyword">int</span> size);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_seek)(URLContext *h， <span class="keyword">int64_t</span> pos， <span class="keyword">int</span> whence);</span><br><span class="line">    <span class="keyword">int</span> (*url_close)(URLContext *h);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> *<span class="title">next</span>;</span></span><br><span class="line">    <span class="keyword">int</span> (*url_read_pause)(URLContext *h， <span class="keyword">int</span> pause);</span><br><span class="line">    <span class="keyword">int64_t</span> (*url_read_seek)(URLContext *h， <span class="keyword">int</span> stream_index，</span><br><span class="line">                             <span class="keyword">int64_t</span> timestamp， <span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> (*url_get_file_handle)(URLContext *h);</span><br><span class="line">    <span class="keyword">int</span> priv_data_size;</span><br><span class="line">    <span class="keyword">const</span> AVClass *priv_data_class;</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> (*url_check)(URLContext *h， <span class="keyword">int</span> mask);</span><br><span class="line">&#125; URLProtocol;</span><br></pre></td></tr></table></figure>
+
+<p>注意到，<code>URLProtocol</code> 是一个链表结构，这是为了协议的统一管理，ffmpeg 项目中将所有的用到的协议都存放在一个全局变量 first_protocol 中，协议的注册是在 <code>av_register_all</code> 中完成的，新添加单个协议可以调用 <code>av_register_protocol2</code> 函数实现。而协议的注册就是将具体的协议对象添加至 <code>first_protocol</code> 链表的末尾。</p>
+<p><code>URLProtocol</code> 在各个具体的文件协议中有一个具体的实例，如在 file 协议中定义为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">URLProtocol ff_file_protocol = &#123;</span><br><span class="line">    .name = <span class="string">"file"</span>，</span><br><span class="line">	.url_open = file_open，</span><br><span class="line">	.url_read = file_read，</span><br><span class="line">    .url_write = file_write，</span><br><span class="line">    .url_seek = file_seek，</span><br><span class="line">    .url_close = file_close，</span><br><span class="line">    .url_get_file_handle = file_get_handle，</span><br><span class="line">    .url_check = file_check，</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、URLContext 结构</strong></p>
+<p>URLContext 提供了与当前打开的具体的文件协议（URL）相关数据的描述，在该结构中定义了指定当前 URL（即 filename 项）所要用到的具体的 URLProtocol，即：提供了一个在 URLprotocol 链表中找到具体项的依据，此外还有一些其它的标志性的信息，如 flags， is_streamed 等。它可以看成某一种协议的载体。其结构定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">URLContext</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">const</span> AVClass *av_class; <span class="comment">///&lt; information for av_log(). Set by url_open().</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">URLProtocol</span> *<span class="title">prot</span>;</span></span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> is_streamed; <span class="comment">/**&lt; true if streamed (no seek possible)， default = false */</span></span><br><span class="line">    <span class="keyword">int</span> max_packet_size; <span class="keyword">void</span> *priv_data;</span><br><span class="line">    <span class="keyword">char</span> *filename; <span class="comment">/**&lt; specified URL */</span></span><br><span class="line">    <span class="keyword">int</span> is_connected;</span><br><span class="line">&#125; URLContext;</span><br></pre></td></tr></table></figure>
+
+<p>那么 ffmpeg 依据什么信息初始化 URLContext？然后又是如何初始化 URLContext的呢？</p>
+<p>在打开一个 URL 时，全局函数 ffurl_open 会根据 filename 的前缀信息来确定 URL所使用的具体协议，并为该协议分配好资源，再调用 ffurl_connect 函数打开具体协议，即调用协议的 url_open，调用关系如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_open_input_file</span><span class="params">(AVFormatContext **ic_ptr， <span class="keyword">const</span> <span class="keyword">char</span> *filename，</span></span></span><br><span class="line"><span class="function"><span class="params"> 						AVInputFormat *fmt，<span class="keyword">int</span> buf_size，AVFormatParameters *ap)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avformat_open_input</span><span class="params">(AVFormatContext **ps ， <span class="keyword">const</span> <span class="keyword">char</span> *filename ，</span></span></span><br><span class="line"><span class="function"><span class="params">						AVInputFormat *fmt， AVDictionary **options)</span></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">init_input</span><span class="params">(AVFormatContext *s， <span class="keyword">const</span> <span class="keyword">char</span> *filename)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avio_open</span><span class="params">(AVIOContext **s， <span class="keyword">const</span> <span class="keyword">char</span> *filename， <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ffurl_open</span><span class="params">(URLContext **puc， <span class="keyword">const</span> <span class="keyword">char</span> *filename， <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ffurl_alloc</span><span class="params">(URLContext **puc， <span class="keyword">const</span> <span class="keyword">char</span> *filename， <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">url_alloc_for_protocol</span><span class="params">(URLContext **puc， struct URLProtocol *up，</span></span></span><br><span class="line"><span class="function"><span class="params">									<span class="keyword">const</span> <span class="keyword">char</span> *filename， <span class="keyword">int</span> flags)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>浅蓝色部分的函数完成了 URLContext 函数的初始化，URLContext 使 ffmpeg 外所暴露的接口是统一的，而不是对于不同的协议用不同的函数，这也是面向对象思维的体现。在此结构中还有一个值得说的是 priv_data 项，这是结构的一个可扩展项，具体协议可以根据需要添加相应的结构，将指针保存在这就行。</p>
+<p><strong>3、AVIOContext 结构</strong></p>
+<p>AVIOContext（即：ByteIOContext）是由 URLProtocol 和 URLContext 结构扩展而来，也是 ffmpeg 提供给用户的接口，它将以上两种不带缓冲的读取文件抽象为带缓冲的读取和写入，为用户提供带缓冲的读取和写入操作。数据结构定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *buffer; <span class="comment">/**&lt; Start of the buffer. */</span></span><br><span class="line">    <span class="keyword">int</span> buffer_size; <span class="comment">/**&lt; Maximum buffer size */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf_ptr; <span class="comment">/**&lt; Current position in the buffer */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf_end;</span><br><span class="line">    <span class="keyword">void</span> *opaque; <span class="comment">//关联 URLContext</span></span><br><span class="line">    <span class="keyword">int</span> (*read_packet)(<span class="keyword">void</span> *opaque， <span class="keyword">uint8_t</span> *buf， <span class="keyword">int</span> buf_size);</span><br><span class="line">    <span class="keyword">int</span> (*write_packet)(<span class="keyword">void</span> *opaque， <span class="keyword">uint8_t</span> *buf， <span class="keyword">int</span> buf_size);</span><br><span class="line">    <span class="keyword">int64_t</span> (*seek)(<span class="keyword">void</span> *opaque， <span class="keyword">int64_t</span> offset， <span class="keyword">int</span> whence);</span><br><span class="line">    <span class="keyword">int64_t</span> pos;</span><br><span class="line">    <span class="keyword">int</span> must_flush;</span><br><span class="line">    <span class="keyword">int</span> eof_reached; <span class="comment">/**&lt; true if eof reached */</span></span><br><span class="line">    <span class="keyword">int</span> write_flag; <span class="comment">/**&lt; true if open for writing */</span></span><br><span class="line">    <span class="keyword">int</span> max_packet_size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> checksum;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *checksum_ptr;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">long</span> <span class="params">(*update_checksum)</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> checksum， <span class="keyword">const</span> <span class="keyword">uint8_t</span> *buf，</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="keyword">unsigned</span> <span class="keyword">int</span> size)</span></span>;</span><br><span class="line">    <span class="keyword">int</span> error;</span><br><span class="line">    <span class="keyword">int</span> (*read_pause)(<span class="keyword">void</span> *opaque， <span class="keyword">int</span> pause);</span><br><span class="line">  	<span class="keyword">int64_t</span> (*read_seek)(<span class="keyword">void</span> *opaque， <span class="keyword">int</span> stream_index，<span class="keyword">int64_t</span> timestamp，<span class="keyword">int</span> flags);</span><br><span class="line">    <span class="keyword">int</span> seekable;</span><br><span class="line">&#125; AVIOContext;</span><br></pre></td></tr></table></figure>
+
+<p>结构简单的为用户提供读写容易实现的四个操作，read_packet write_packet read_pause read_seek，极大的方便了文件的读取，四个函数在加了缓冲机制后被中转到，URLContext 指向的实际的文件协议读写函数中。</p>
+<p>下面给出 0.8 版本中是如何将 AVIOContext 的读写操作中转到实际文件中的。</p>
+<p>在 avio_open（）函数中调用了 ffio_fdopen（）函数完成了对 AVIOContex 的初始化，其调用过程如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">avio_open</span><span class="params">(AVIOContext **s， <span class="keyword">const</span> <span class="keyword">char</span> *filename， <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"><span class="title">ffio_fdopen</span><span class="params">(s， h)</span></span>; <span class="comment">//h 是 URLContext 指针</span></span><br><span class="line">ffio_init_context(*s， buffer， buffer_size，h-&gt;flags &amp; AVIO_FLAG_WRITE， h，</span><br><span class="line">					(<span class="keyword">void</span>*)ffurl_read，(<span class="keyword">void</span>*)ffurl_write，(<span class="keyword">void</span>*)ffurl_seek)</span><br></pre></td></tr></table></figure>
+
+<p>函数调用完成了对 AVIOContext 的初始化，在初始化的过程中，将AVIOContext 的 read_packet 、 write_packet 、 seek 分别初始化为： ffurl_read ffurl_write ffurl_seek ， 而这三个函数又将具体的读写操作中转为：</p>
+<p><code>h-&gt;prot-&gt;url_read、h-&gt;prot-&gt;url_write、h-&gt;prot-&gt;url_seek</code>，另外两个变量初始化时也被相应的中转，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(*s)-&gt;read_pause = (<span class="keyword">int</span> (*)(<span class="keyword">void</span> *， <span class="keyword">int</span>))h-&gt;prot-&gt;url_read_pause;</span><br><span class="line">(*s)-&gt;read_seek = (<span class="keyword">int64_t</span> (*)(<span class="keyword">void</span> *， <span class="keyword">int</span>， <span class="keyword">int64_t</span>， <span class="keyword">int</span>))h-&gt;prot-&gt;url_read_seek;</span><br></pre></td></tr></table></figure>
+
+<p>所以，可以简要的描述为：AVIOContext 的接口口是加了缓冲后的 URLProtocol 的函数接口。</p>
+<p>在 aviobuf.c 中定义了一系列关于 ByteIOContext 这个结构体的函数，如下</p>
+<p><strong>put_xxx 系列：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_byte</span><span class="params">(ByteIOContext *s， <span class="keyword">int</span> b)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_buffer</span><span class="params">(ByteIOContext *s， <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf， <span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_le64</span><span class="params">(ByteIOContext *s， <span class="keyword">uint64_t</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_be64</span><span class="params">(ByteIOContext *s， <span class="keyword">uint64_t</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_le32</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_be32</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_le24</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_be24</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_le16</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_be16</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">put_tag</span><span class="params">(ByteIOContext *s， <span class="keyword">const</span> <span class="keyword">char</span> *tag)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>get_xxx 系列：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_buffer</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf， <span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_partial_buffer</span><span class="params">(ByteIOContext *s， <span class="keyword">unsigned</span> <span class="keyword">char</span> *buf， <span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_byte</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_le24</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_le32</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="keyword">uint64_t</span> get_le64(ByteIOContext *s);</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_le16</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">get_strz</span><span class="params">(ByteIOContext *s， <span class="keyword">char</span> *buf， <span class="keyword">int</span> maxlen)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_be16</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_be24</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">get_be32</span><span class="params">(ByteIOContext *s)</span></span>;</span><br><span class="line"><span class="keyword">uint64_t</span> get_be64(ByteIOContext *s);</span><br></pre></td></tr></table></figure>
+
+<p>这些 put_xxx 及 get_xxx 函数是用于从缓冲区 buffer 中写入或者读取若干个字节，对于读写整型数据，分别实现了大端和小端字节序的版本。而缓冲区 buffer 中的数据又是从何而来呢，有一个 fill_buffer 的函数，在 fill_buffer 函数中调用了ByteIOContext 结构的 read_packet 接口。在调用 put_xxx 函数时，并没有直接进行真<br>正写入操作，而是先缓存起来，直到缓存达到最大限制或调用 flush_buffer 函数对缓冲区进行刷新，才使用 write_packet 函数进行写入操作。</p>
+<h2 id="Demuxer-和-muxer-模块分析"><a href="#Demuxer-和-muxer-模块分析" class="headerlink" title="Demuxer 和 muxer 模块分析"></a>Demuxer 和 muxer 模块分析</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>ffmpeg 的 demuxer 和 muxer 接口分别在 AVInputFormat 和 AVOutputFormat 两个结构体中实现，在 av_register_all()函数中将两个结构分别静态初始化为两个链表，保存在全局变量：first_iformat 和 first_oformat 两个变量中。在 FFmpeg 的文件转换或者打开过程中，首先要做的就是根据传入文件和传出文件的后缀名匹配合适的 demuxer和 muxer，得到合适的信息后保存在 AVFormatContext 中。</p>
+<h3 id="相关数据结构介绍-1"><a href="#相关数据结构介绍-1" class="headerlink" title="相关数据结构介绍"></a>相关数据结构介绍</h3><p><strong>1、AVInputFormat</strong></p>
+<p>该结构被称为 demuxer，是音视频文件的一个解封装器，它的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVInputFormat</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *long_name;</span><br><span class="line">    <span class="keyword">int</span> priv_data_size; <span class="comment">//具体文件容器格式对应的 Context 的大小，如：avicontext</span></span><br><span class="line">    <span class="keyword">int</span> (*read_probe)(AVProbeData *);</span><br><span class="line">    <span class="keyword">int</span> (*read_header)(struct AVFormatContext *，AVFormatParameters *ap);</span><br><span class="line">    <span class="keyword">int</span> (*read_packet)(struct AVFormatContext *， AVPacket *pkt);</span><br><span class="line">    <span class="keyword">int</span> (*read_close)(struct AVFormatContext *);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> FF_API_READ_SEEK</span></span><br><span class="line">    <span class="function">attribute_deprecated <span class="title">int</span> <span class="params">(*read_seek)</span><span class="params">(struct AVFormatContext *，</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">int</span> stream_index，<span class="keyword">int64_t</span> timestamp，<span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="keyword">int64_t</span> (*read_timestamp)(struct AVFormatContext *s， <span class="keyword">int</span> stream_index，</span><br><span class="line">                              <span class="keyword">int64_t</span> *pos， <span class="keyword">int64_t</span> pos_limit);</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *extensions;</span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">int</span> (*read_play)(struct AVFormatContext *);</span><br><span class="line">    <span class="keyword">int</span> (*read_pause)(struct AVFormatContext *);</span><br><span class="line">    <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVCodecTag</span> * <span class="title">const</span> *<span class="title">codec_tag</span>;</span></span><br><span class="line">    <span class="keyword">int</span> (*read_seek2)(struct AVFormatContext *s， <span class="keyword">int</span> stream_index， <span class="keyword">int64_t</span> min_ts，</span><br><span class="line">                      <span class="keyword">int64_t</span> ts， <span class="keyword">int64_t</span> max_ts， <span class="keyword">int</span> flags);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> FF_API_OLD_METADATA2</span></span><br><span class="line">    <span class="keyword">const</span> AVMetadataConv *metadata_conv;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="keyword">const</span> AVClass *priv_class; <span class="comment">///&lt; AVClass for the private context</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVInputFormat</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; AVInputFormat;</span><br></pre></td></tr></table></figure>
+
+<p>对于不同的文件格式要实现相应的函数接口，这样每一种格式都有一个对应的demuxer，所有的 demuxer 都保存在全局变量 first_iformat 中。红色表示提供的接口。</p>
+<p><strong>2、AVOutputFormat</strong></p>
+<p>该结构与 AVInputFormat 类似也是在编译时静态初始化，组织为一个链表结构，提供了多个 muxer 的函数接口。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*write_header)(struct AVFormatContext *);</span><br><span class="line"><span class="keyword">int</span> (*write_packet)(struct AVFormatContext *， AVPacket *pkt);</span><br><span class="line"><span class="keyword">int</span> (*write_trailer)(struct AVFormatContext *);</span><br></pre></td></tr></table></figure>
+
+<p>对于不同的文件格式要实现相应的函数接口，这样每一种格式都有一个对应的 muxer，所有的 muxer 都保存在全局变量 first_oformat 中。</p>
+<p><strong>3、AVFormatContext</strong></p>
+<p>该结构表示与程序当前运行的文件容器格式使用的上下文，着重于所有文件容器共有的属性，在运行时动态的确定其值，是 AVInputFormat 和 AVOutputFormat 的载体，但同一个结构对象只能使 AVInputFormat 和 AVOutputFormat 中的某一个有效。每一个输入和输出文件，都在</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> AVFormatContext *output_files[MAX_FILES] 和</span><br><span class="line"><span class="keyword">static</span> AVFormatContext *input_files[MAX_FILES];</span><br></pre></td></tr></table></figure>
+
+<p>定义的指针数组全局变量中有对应的实体。对于输入和输出，因为共用的是同一个结构体，所以需要分别对该结构中如下定义的 iformat 或 oformat 成员赋值。在转码时读写数据是通过 AVFormatContext 结构进行的。定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVFormatContext</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">const</span> AVClass *av_class;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVInputFormat</span> *<span class="title">iformat</span>;</span> <span class="comment">//指向具体的 demuxer</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVOutputFormat</span> *<span class="title">oformat</span>;</span> <span class="comment">//指向具体的 muxer</span></span><br><span class="line">    <span class="keyword">void</span> *priv_data; <span class="comment">//具体文件容器格式的 Context 如：avicontext</span></span><br><span class="line">    AVIOContext *pb; <span class="comment">//广义的输入输出；</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> nb_streams; <span class="comment">//本次打开的文件容器中流的数量</span></span><br><span class="line">    AVStream **streams; <span class="comment">//每个流的相关描述</span></span><br><span class="line">    <span class="keyword">char</span> filename[<span class="number">1024</span>]; <span class="comment">// input or output filename */</span></span><br><span class="line">    <span class="keyword">int64_t</span> timestamp;</span><br><span class="line">    <span class="keyword">int</span> ctx_flags;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVPacketList</span> *<span class="title">packet_buffer</span>;</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">enum</span> CodecID video_codec_id;</span><br><span class="line">    <span class="keyword">enum</span> CodecID audio_codec_id;</span><br><span class="line">    <span class="keyword">enum</span> CodecID subtitle_codec_id;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> max_index_size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> max_picture_buffer;</span><br><span class="line">    ......</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVPacketList</span> *<span class="title">raw_packet_buffer</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVPacketList</span> *<span class="title">raw_packet_buffer_end</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AVPacketList</span> *<span class="title">packet_buffer_end</span>;</span></span><br><span class="line">    ......</span><br><span class="line">&#125; AVFormatContext;</span><br></pre></td></tr></table></figure>
+
+<p>注释部分的成员是 AVFormatContext 中最为重要的成员变量，这些变量的初始化是ffmpeg 能正常工作的必要条件，那么，AVFormatContext 是如何被初始化的呢？文件的格式是如何被探测到的呢？</p>
+<p>首先我们来探讨：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AVInputFormat</span> *<span class="title">iformat</span>;</span> <span class="comment">//指向具体的 demuxer</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AVOutputFormat</span> *<span class="title">oformat</span>;</span> <span class="comment">//指向具体的 muxer</span></span><br><span class="line"><span class="keyword">void</span> *priv_data; <span class="comment">//具体文件容器格式的 Context 如：avicontext</span></span><br></pre></td></tr></table></figure>
+
+<p>三个成员的初始化。</p>
+<p>在 avformat_open_input() 函数中调用了 init_input() 函数，然后用调用了av_probe_input_format（）函数实现了对 AVFormatContext 的初始化。其调用关系如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_open_input_file</span><span class="params">(AVFormatContext **ic_ptr， <span class="keyword">const</span> <span class="keyword">char</span> *filename，</span></span></span><br><span class="line">						AVInputFormat *fmt，int buf_size，AVFormatParameters *ap)；</span><br><span class="line">int avformat_open_input(ic_ptr， filename， fmt， &amp;opts)；</span><br><span class="line">static int init_input(s， filename)；</span><br><span class="line">av_probe_input_format(&amp;pd， <span class="number">0</span>)；</span><br><span class="line">av_probe_input_format (AVProbeData *pd， <span class="keyword">int</span> is_opened， <span class="keyword">int</span> *score_max)</span><br></pre></td></tr></table></figure>
+
+<p>函数用途是根据传入的 probe data 数据，依次调用每个 demuxer 的 read_probe 接口，来进行该 demuxer 是否和传入的文件内容匹配的判断。与 demuxer 的匹配不同，muxer的匹配是调用 guess_format 函数，根据 main( ) 函数的 argv 里的输出文件后缀名来进行的。至此完成了前三个重要成员的初始化，具体的做法就不在深入分析。</p>
+<p>下面分别给出 av_read_frame 函数以及 av_write_frame 函数的基本流程。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_read_frame</span><span class="params">(AVFormatContext *s， AVPacket *pkt)</span></span>;</span><br><span class="line">	-&gt; av_read_frame_internel</span><br><span class="line">		-&gt; av_read_packet</span><br><span class="line">			-&gt; iformat-&gt;read_packet（在实现中会丢弃多余信息）</span><br><span class="line">				-&gt; av_get_packet</span><br><span class="line">					-&gt; get_xxx</span><br><span class="line">					</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">av_write_frame</span><span class="params">(AVFormatContext *s， AVPacket *pkt)</span></span>;</span><br><span class="line">	-&gt; oformat-&gt;write_packet</span><br><span class="line">		-&gt; put_xxx</span><br></pre></td></tr></table></figure>
+
+<p>由上可见，对 AVFormatContext 的读写操作最终是通过 ByteIOContext 来实现的，这样，AVFormatContext 与 URLContext 就由 ByteIOContext 结构联系到一起了。在AVFormat 结构体中有一个 packet 的缓冲区 raw_packet_buffer，是 AVPackList 的指针类型，av_read_packet 函数将读到的包添加至 raw_packet_buffer 链表末尾。</p>
+<h2 id="Decoder-Encoder-模块"><a href="#Decoder-Encoder-模块" class="headerlink" title="Decoder/Encoder 模块"></a>Decoder/Encoder 模块</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><p>编解码模块主要包含的数据结构为：AVCodec、AVCodecContext 每一个解码类型都会有自己的 Codec 静态对像，Codec 的 int priv_data_size 记录该解码器上下文的结构大小，如 MsrleContext 。这些都是编译时确定的，程序运行时通过avcodec_register_all()将所有的解码器注册成一个链表。在 av_open_input_stream()函数中调用 AVInputFormat 的 read_header()中读文件头信息时，会读出数据流的CodecID，即确定了他的解码器 Codec。</p>
+<p>在 main()函数中除了解析传入参数并初始化 demuxer 与 muxer 的 parse_options( )函数以外，其他的功能都是在 av_encode( )函数里完成的。在 libavcodec\utils.c 中有如下二个函数 : <code>AVCodec *avcodec_find_encoder(enum CodecID id)</code> 和 <code>AVCodec *avcodec_find_decoder(enum CodecID id)</code> 他们的功能就是根据传入的 CodecID，找到匹配的 encoder 和 decoder。在 av_encode( )函数的开头，首先初始化各个 AVInputStream和 AVOutputStream，然后分别调用上述二个函数，并将匹配上的 encoder 与 decoder 分<br>别保存在:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AVInputStream-&gt;AVStream *st-&gt;AVCodecContext *codec-&gt;<span class="class"><span class="keyword">struct</span> <span class="title">AVCodec</span> *<span class="title">codec</span></span></span><br><span class="line"><span class="class">与 <span class="title">AVOutputStream</span>-&gt;<span class="title">AVStream</span> *<span class="title">st</span>-&gt;<span class="title">AVCodecContext</span> *<span class="title">codec</span>-&gt;<span class="title">struct</span> <span class="title">AVCodec</span> *<span class="title">codec</span> 变量。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="相关数据结构的初始化"><a href="#相关数据结构的初始化" class="headerlink" title="相关数据结构的初始化"></a>相关数据结构的初始化</h3><p>AVCodecContext 结构</p>
+<p>AVCodecContext 保存 AVCodec 指针和与 codec 相关数据，如 video 的 width、height，audio 的 sample rate 等。</p>
+<p>AVCodecContext 中的 codec_type，codec_id 二个变量对于 encoder/decoder 的匹配来说，最为重要。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> CodecType codec_type; <span class="comment">/* see CODEC_TYPE_xxx */</span></span><br><span class="line"><span class="keyword">enum</span> CodecID codec_id; <span class="comment">/* see CODEC_ID_xxx */</span></span><br></pre></td></tr></table></figure>
+
+<p>如上所示，codec_type 保存的是 CODEC_TYPE_VIDEO，CODEC_TYPE_AUDIO 等媒体类型，codec_id 保存的是 CODEC_ID_FLV1，CODEC_ID_VP6F 等编码方式。</p>
+<p>以支持 flv 格式为例，在前述的 av_open_input_file(…… ) 函数中，匹配到正确的 AVInputFormat demuxer 后，通过 av_open_input_stream( )函数中调用 AVInputFormat的 read_header 接口来执行 flvdec.c 中的 flv_read_header( )函数。flv_read_header( )函数内，根据文件头中的数据，创建相应的视频或音频 AVStream，并设置 AVStream 中AVCodecContext 的正确的 codec_type 值。codec_id 值是在解码过程。flv_read_packet( )<br>函数执行时根据每一个 packet 头中的数据来设置的。</p>
+<p>以 avidec 为例 有如下初始化，我们主要知道的就是 code_id 和 code_type 该字段关联具体的解码器，和解码类型（音视频或 subtitle）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (st-&gt;codec-&gt;stream_codec_tag == AV_RL32(<span class="string">"Axan"</span>))</span><br><span class="line">&#123;</span><br><span class="line">    st-&gt;codec-&gt;codec_id = CODEC_ID_XAN_DPCM;</span><br><span class="line">    st-&gt;codec-&gt;codec_tag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (amv_file_format)</span><br><span class="line">&#123;</span><br><span class="line">    st-&gt;codec-&gt;codec_id = CODEC_ID_ADPCM_IMA_AMV;</span><br><span class="line">    ast-&gt;dshow_block_align = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">    	<span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> AVMEDIA_TYPE_SUBTITLE:</span><br><span class="line">        st-&gt;codec-&gt;codec_type = AVMEDIA_TYPE_SUBTITLE;</span><br><span class="line">        st-&gt;request_probe= <span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        st-&gt;codec-&gt;codec_type = AVMEDIA_TYPE_DATA;</span><br><span class="line">        st-&gt;codec-&gt;codec_id= CODEC_ID_NONE;</span><br><span class="line">        st-&gt;codec-&gt;codec_tag= <span class="number">0</span>;</span><br><span class="line">        avio_skip(pb， size);</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他重要数据结构的初始化"><a href="#其他重要数据结构的初始化" class="headerlink" title="其他重要数据结构的初始化"></a>其他重要数据结构的初始化</h2><h3 id="AVStream"><a href="#AVStream" class="headerlink" title="AVStream"></a>AVStream</h3><p>AVStream 结构保存与数据流相关的编解码器，数据段等信息。比较重要的有如下二个成员：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AVCodecContext *codec; <span class="comment">/**&lt; codec context */</span></span><br><span class="line"><span class="keyword">void</span> *priv_data;</span><br></pre></td></tr></table></figure>
+
+<p>其中 codec 指针保存的就是上节所述的 encoder 或 decoder 结构。priv_data 指针保存的是和具体编解码流相关的数据，如下代码所示，在 ASF 的解码过程中，priv_data保存的就是 ASFStream 结构的数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AVStream *st;</span><br><span class="line">ASFStream *asf_st;</span><br><span class="line">......</span><br><span class="line">st-&gt;priv_data = asf_st;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AVInputStream-AVOutputStream"><a href="#AVInputStream-AVOutputStream" class="headerlink" title="AVInputStream/ AVOutputStream"></a>AVInputStream/ AVOutputStream</h3><p>根据输入和输出流的不同，前述的 AVStream 结构都是封装在 AVInputStream 和AVOutputStream 结构中，在 av_encode( )函数中使用。AVInputStream 中还保存的有与时间有关的信息。AVOutputStream 中还保存有与音视频同步等相关的信息。</p>
+<h3 id="AVPacket"><a href="#AVPacket" class="headerlink" title="AVPacket"></a>AVPacket</h3><p>AVPacket 结构定义如下，其是用于保存读取的 packet 数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AVPacket</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int64_t</span> pts; <span class="comment">///&lt; presentation time stamp in time_base units</span></span><br><span class="line">    <span class="keyword">int64_t</span> dts; <span class="comment">///&lt; decompression time stamp in time_base units</span></span><br><span class="line">    <span class="keyword">uint8_t</span> *data;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">int</span> stream_index;</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> duration; <span class="comment">///&lt; presentation duration in time_base units</span></span><br><span class="line">    <span class="keyword">void</span> (*destruct)(struct AVPacket *);</span><br><span class="line">    <span class="keyword">void</span> *priv;</span><br><span class="line">    <span class="keyword">int64_t</span> pos; <span class="comment">///&lt; byte position in stream， -1 if unknown</span></span><br><span class="line">&#125; AVPacket;</span><br></pre></td></tr></table></figure>
+
+<p>在 av_encode() 函数中，调用 AVInputFormat 的 <code>(*read_packet)(struct AVFormatContext *， AVPacket *pkt)</code> 接口，读取输入文件的一帧数据保存在当前输入 AVFormatContext 的 AVPacket 成员中。</p>
+<h1 id="FFmpeg-裁剪说明"><a href="#FFmpeg-裁剪说明" class="headerlink" title="FFmpeg 裁剪说明"></a>FFmpeg 裁剪说明</h1><p>本文对 ffmpeg 进行裁剪采用的是配置所需的接口，不需要的不配置，而不是采用修改源代码的方式。</p>
+<h2 id="configure-参数"><a href="#configure-参数" class="headerlink" title="configure 参数"></a>configure 参数</h2><h3 id="通用选项-1"><a href="#通用选项-1" class="headerlink" title="通用选项"></a>通用选项</h3><p>在 linux 下进入终端，找到 ffmpeg 解压位置，输入如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure –<span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
+
+<p>得到 configure 的基本选项参数，其并没有中文解释。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">--help 显示此帮助信息|print this message</span><br><span class="line">--log[=FILE|yes|no] 记录测试并输出到 config.err 文件|log tests and output to FILE [config.err]</span><br><span class="line">--prefix=PREFIX 安装程序到指定目录（默认/usr/local）|install in PREFIX [/usr/local]</span><br><span class="line">--libdir=DIR 安装库到指定目录（默认 prefix/lib）|install libs in DIR [PREFIX/lib]</span><br><span class="line">--shlibdir=DIR 指定共享库路径（默认 prefix/lib）|install shared libs in DIR [PREFIX/lib]</span><br><span class="line">--incdir=DIR 指定 includes 路径（默认 prefix/include/ffmpeg）|install includes in DIR[PREFIX/include/ffmpeg]</span><br><span class="line">--mandir=DIR 指定 man page 路径（默认 prefix/man）install man page in DIR [PREFIX/man]</span><br><span class="line">--enable-mp3lame 启用 mp3 编码 libmp3lame（默认关闭）enable MP3 encoding via libmp3lame[default=no]</span><br><span class="line">--enable-libogg 启用 ogg 支持 libogg（默认关闭）enable Ogg support via libogg [default=no]</span><br><span class="line">--enable-vorbis 启用 Vorbis 支持 libvorbis（默认关闭）enable Vorbis support via libvorbis [default=no]</span><br><span class="line">--enable-faad 启用 faad 支持 libfaad（默认关闭）enable FAAD support via libfaad [default=no]</span><br><span class="line">--enable-faadbin 启用 faad 运行时链接支持（默认关闭）build FAAD support with runtime linking[default=no]</span><br><span class="line">--enable-faac 启用 faac 支持 libfaac（默认关闭）enable FAAC support via libfaac [default=no]</span><br><span class="line">--enable-libgsm 启用 GSM 支持 libgsm（默认关闭）enable GSM support via libgsm [default=no]</span><br><span class="line">--enable-xvid 启用 xvid 支持 xvidcore（默认关闭）enable XviD support via xvidcore [default=no]</span><br><span class="line">--enable-x264 启 用 H.264 编码（默认关闭） enable H.264 encoding via x264 [default=no]</span><br><span class="line">--enable-mingw32 启用 MinGW 本地/交叉 win 环境编译|enable MinGW native/cross Windows compile</span><br><span class="line">--enable-mingwce 启用 MinGW 本地/交叉 winCE 环境编译 enable MinGW native/cross WinCE compile</span><br><span class="line">--enable-a52 启用 A52 支持（默认关闭）enable GPLed A52 support [default=no]</span><br><span class="line">--enable-a52bin 启用运行时打开 liba52.so.0（默认关闭）open liba52.so.0 at runtime [default=no]</span><br><span class="line">--enable-dts 启用 DTS 支持（默认关闭）enable GPLed DTS support [default=no]</span><br><span class="line">--enable-pp 启用后加工支持（默认关闭）enable GPLed postprocessing support [default=no]</span><br><span class="line">--enable-static 构建静态库（默认启用）build static libraries [default=yes]</span><br><span class="line">--disable-static 禁止构建静态库（默认关闭）do not build static libraries [default=no]</span><br><span class="line">--enable-shared 构建共享库（默认关闭）build shared libraries [default=no]</span><br><span class="line">--disable-shared 禁止构建共享库（默认启用）do not build shared libraries [default=yes]</span><br><span class="line">--enable-amr_nb 启用 amr_nb float 音频编解码器|enable amr_nb float audio codec</span><br><span class="line">--enable-amr_nb-fixed 启用 fixed amr_nb codec | use fixed point for amr-nb codec</span><br><span class="line">--enable-amr_wb 启用 amr_wb float 音频编解码器|enable amr_wb float audio codec</span><br><span class="line">--enable-amr_if2 启用 amr_wb IF2 音频编解码器|enable amr_wb IF2 audio codec</span><br><span class="line">--enable-sunmlib 启用 Sun medialib（默认关闭） | use Sun medialib [default=no]</span><br><span class="line">--enable-pthreads 启用 pthreads（多线程）（默认关闭）use pthreads [default=no]</span><br><span class="line">--enable-dc1394 启用 libdc1394、libraw1394 抓取 IIDC-1394（默认关闭）enable IIDC-1394 grabbing using libdc1394 and libraw1394 [default=no]</span><br><span class="line">--enable-swscaler 启用计数器支持？（默认关闭）software scaler support [default=no]</span><br><span class="line">--enable-avisynth 允许读取 AVISynth 脚本本件（默认关闭）allow reading AVISynth script files [default=no]</span><br><span class="line">--enable-gpl 允许使用 GPL（默认关闭）allow use of GPL code， the resulting libav* and ffmpeg will be under GPL [default=no] Advanced options (experts only): 高级选项参数（供专业人员使用）</span><br><span class="line">--source-path=PATH 源码的路径（当前为/root/flv/ffmpeg）| path to source code [/root/flv/ffmpeg]</span><br><span class="line">--cross-prefix=PREFIX 为编译工具指定路径 | use PREFIX for compilation tools []</span><br><span class="line">--cross-compile 假定使用了交叉编译 | assume a cross-compiler is used</span><br><span class="line">--cc=CC 指定使用何种 C 编译器（默认 gcc）use C compiler CC [gcc]</span><br><span class="line">--make=MAKE 使用特定的 make | use specified make [make]</span><br><span class="line">--extra-cflags=ECFLAGS 添加 ECFLAGS 到 CFLAGS | add ECFLAGS to CFLAGS []</span><br><span class="line">--extra-ldflags=ELDFLAGS 添加 ELDFLAGS 到 LDFLAGS（默认-Wl，--as-needed）| add ELDFLAGS to LDFLAGS [ -Wl，--as-needed]</span><br><span class="line">--extra-libs=ELIBS 添加 ELIBS | add ELIBS []</span><br><span class="line">--build-suffix=SUFFIX 为专用程序添加后缀 | suffix for application specific build []</span><br><span class="line">--arch=ARCH 选择机器架构（默认 x86）select architecture [x86]</span><br><span class="line">--cpu=CPU 选用最低的 cpu（影响指令的选择，可以在老 CPU 上出错）</span><br><span class="line">	| selects the minimum cpu required (affects instruction selection， may crash on older CPUs)</span><br><span class="line">--powerpc-perf-enable 启用 PPC 上面的性能报告（需要启用 PMC）enable performance report on PPC (requires enabling PMC)</span><br><span class="line">--disable-mmx 禁用 MMX | disable MMX usage</span><br><span class="line">--disable-armv5te 禁用 armv5te | disable armv5te usage</span><br><span class="line">--disable-iwmmxt 禁用 iwmmxt | disable iwmmxt usage</span><br><span class="line">--disable-altivec 禁用 AltiVec | disable AltiVec usage</span><br><span class="line">--disable-audio-oss 禁用 OSS 音频支持（默认启用）disable OSS audio support [default=no]</span><br><span class="line">--disable-audio-beos 禁用 BeOS 音频支持（默认启用）disable BeOS audio support [default=no]</span><br><span class="line">--disable-v4l 禁用 video4linux 提取（默认启用）disable video4linux grabbing [default=no]</span><br><span class="line">--disable-v4l2 禁用 video4linux2 提取（默认启用）disable video4linux2 grabbing [default=no]</span><br><span class="line">--disable-bktr 禁用 bktr 视频提取（默认启用）disable bktr video grabbing [default=no]</span><br><span class="line">--disable-dv1394 禁用 DV1394 提取（默认启用）disable DV1394 grabbing [default=no]</span><br><span class="line">--disable-network 禁用网络支持（默认支持）disable network support [default=no]</span><br><span class="line">--disable-ipv6 禁用 ipv6 支持（默认支持）disable ipv6 support [default=no]</span><br><span class="line">--disable-zlib 禁用 zlib（默认支持）disable zlib [default=no]</span><br><span class="line">--disable-simple_idct 禁用 simple IDCT 例程（默认启用）disable simple IDCT routines [default=no]</span><br><span class="line">--disable-vhook 禁用 video hooking 支持 | disable video hooking support</span><br><span class="line">--enable-gprof enable profiling with gprof [no]</span><br><span class="line">--disable-debug 禁用调试符号 | disable debugging symbols</span><br><span class="line">--disable-opts 禁用编译器最优化 | disable compiler optimizations</span><br><span class="line">--disable-mpegaudio-hp 启用更快的解码 MPEG 音频（但精确度较低）（默认禁用）faster (but less accurate) MPEG audio decoding [default=no]</span><br><span class="line">--disable-protocols 禁用 I/O 协议支持（默认启用）disable I/O protocols support [default=no]</span><br><span class="line">--disable-ffserver 禁用生成 ffserver | disable ffserver build</span><br><span class="line">--disable-ffplay 禁用生成 ffplay | disable ffplay build</span><br><span class="line">--enable-small 启用优化文件尺寸大小（牺牲速度）optimize for size instead of speed</span><br><span class="line">--enable-memalign-hack 启用模拟内存排列，由内存调试器干涉？ | emulate memalign，interferes with memory debuggers</span><br><span class="line">--disable-strip 禁用剥离可执行程序和共享库 | disable stripping of executables and shared libraries</span><br><span class="line">--disable-encoder=NAME 禁用 XX 编码器 | disables encoder NAME</span><br><span class="line">--enable-encoder=NAME 启用 XX 编码器 | enables encoder NAME</span><br><span class="line">--disable-decoder=NAME 禁用 XX 解码器 | disables decoder NAME</span><br><span class="line">--enable-decoder=NAME 启用 XX 解码器 | enables decoder NAME</span><br><span class="line">--disable-encoders 禁用所有编码器 | disables all encoders</span><br><span class="line">--disable-decoders 禁用所有解码器 | disables all decoders</span><br><span class="line">--disable-muxer=NAME 禁用 XX 混音器 | disables muxer NAME</span><br><span class="line">--enable-muxer=NAME 启用 XX 混音器 | enables muxer NAME</span><br><span class="line">--disable-muxers 禁用所有混音器 | disables all muxers</span><br><span class="line">--disable-demuxer=NAME 禁用 XX 解轨器 | disables demuxer NAME</span><br><span class="line">--enable-demuxer=NAME 启用 XX 解轨器 | enables demuxer NAME</span><br><span class="line">--disable-demuxers 禁用所有解轨器 | disables all demuxers</span><br><span class="line">--enable-parser=NAME 启用 XX 剖析器 | enables parser NAME</span><br><span class="line">--disable-parser=NAME 禁用 XX 剖析器 | disables parser NAME</span><br><span class="line">--disable-parsers 禁用所有剖析器 | disables all parsers</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本选项介绍"><a href="#基本选项介绍" class="headerlink" title="基本选项介绍"></a>基本选项介绍</h3><p>以下为配置 ffmpeg 的基本选项，其含义如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--cache-file=FILE</span><br></pre></td></tr></table></figure>
+
+<p>configure 会在你的系统上测试存在的特性(或者 bug!)。为了加速随后进行的配置，测试的结果会存储在一个 cache file 里。当 configure 到每个子树里都有 configure 脚本的复杂的源码树时，一个很好的 cache file 的存在会有很大帮助。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--help</span><br></pre></td></tr></table></figure>
+
+<p>输出帮助信息。即使是有经验的用户也偶尔需要使用使用 <code>--help</code> 选项，因为一个复杂的项目会包含附加的选项。例如，GCC 包里的 configure 脚本就包含了允许你控制是否生成和在 GCC 中使用 GNU 汇编器的选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--no-create</span><br></pre></td></tr></table></figure>
+
+<p>configure 中的一个主要函数会制作输出文件。此选项阻止 configure 生成这个文件。你可以认为这是一种演习(dry run)，尽管缓存(cache)仍然被改写了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--quiet</span><br><span class="line">--silent</span><br></pre></td></tr></table></figure>
+
+<p>当 configure 进行他的测试时，会输出简要的信息来告诉用户正在作什么。这样做是因为 configure 可能会比较慢，没有这种输出的话用户将会被扔在一旁疑惑正在发生什么。使用这两个选项中的任何一个都会把你扔到一旁。(译注：这两句话比较有意思，原文是这样的：If there was no such output， the user would be left wondering what is happening. By using this option， you too can be left wondering!)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--version</span><br></pre></td></tr></table></figure>
+
+<p>打印用来产生 ‘configure’ 脚本的 Autoconf 的版本号。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--prefix=PEWFIX</span><br></pre></td></tr></table></figure>
+
+<p><code>--prefix</code> 是最常用的选项。制作出的 Makefile 会查看随此选项传递的参数，当一个包在安装时可以彻底的重新安置他的结构独立部分。举一个例子，当安装一个包，例如说Emacs，下面的命令将会使 Emacs Lisp file 被安装到”/opt/gnu/share”：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --prefix=/opt/gnu</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--exec-prefix=EPREFIX</span><br></pre></td></tr></table></figure>
+
+<p>与 <code>--prefix</code> 选项类似，但是他是用来设置结构倚赖的文件的安装位置。编译好的 emacs 二进制文件就是这样一个问件。如果没有设置这个选项的话，默认使用的选项值将被设为和 <code>--prefix</code> 选项值一样。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--bindir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定二进制文件的安装位置。这里的二进制文件定义为可以被用户直接执行的程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--sbindir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定超级二进制文件的安装位置。这是一些通常只能由超级用户执行的程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--libexecdir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定可执行支持文件的安装位置。与二进制文件相反，这些文件从来不直接由用户执行，但是可以被上面提到的二进制文件所执行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--datadir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定通用数据文件的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--sysconfdir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定在单个机器上使用的只读数据的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--sharedstatedir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定可以在多个机器上共享的可写数据的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--localstatedir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定只能单机使用的可写数据的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--libdir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定库文件的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--includedir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定 C 头文件的安装位置。其他语言如 C++的头文件也可以使用此选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--oldincludedir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定为除 GCC 外编译器安装的 C 头文件的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--infodir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定 Info 格式文档的安装位置。Info 是被 GNU 工程所使用的文档格式。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--mandir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>指定手册页的安装位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--srcdir=DIR</span><br></pre></td></tr></table></figure>
+
+<p>这个选项对安装没有作用。他会告诉 configure 源码的位置。一般来说不用指定此选项，因为 configure 脚本一般和源码文件在同一个目录下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--program-prefix=PREFIX</span><br></pre></td></tr></table></figure>
+
+<p>指定将被加到所安装程序的名字上的前缀。例如，使用 <code>--program-prefix=g</code> 来 configure一个名为 tar 的程序将会使安装的程序被命名为 gtar。当和其他的安装选项一起使用时，这个选项只有当他被 Makefile.in 文件使用时才会工作。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--program-suffix=SUFFIX</span><br></pre></td></tr></table></figure>
+
+<p>指定将被加到所安装程序的名字上的后缀。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--program-transform-name=PROGRAM</span><br></pre></td></tr></table></figure>
+
+<p>这里的 PROGRAM 是一个 sed 脚本。当一个程序被安装时，他的名字将经过 <code>sed -e PROGRAM</code> 来产生安装的名字。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--build=BUILD</span><br></pre></td></tr></table></figure>
+
+<p>指定软件包安装的系统平台。如果没有指定，默认值将是 <code>--host</code> 选项的值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--host=HOST</span><br></pre></td></tr></table></figure>
+
+<p>指定软件运行的系统平台。如果没有指定，将会运行 config.guess 来检测。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--target=GARGET</span><br></pre></td></tr></table></figure>
+
+<p>指定软件面向(target to)的系统平台。这主要在程序语言工具如编译器和汇编器上下文中起作用。如果没有指定，默认将使用 <code>--host</code> 选项的值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--disable-FEATURE</span><br></pre></td></tr></table></figure>
+
+<p>一些软件包可以选择这个选项来提供为大型选项的编译时配置，例如使用 Kerberos认证系统或者一个实验性的编译器最优配置。如果默认是提供这些特性，可以使用 <code>--disable-FEATURE</code> 来禁用它，这里 FEATURE 是特性的名字。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --<span class="built_in">disable</span>-gui</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--enable-FEATURE[=ARG]</span><br></pre></td></tr></table></figure>
+
+<p>相反的，一些软件包可能提供了一些默认被禁止的特性，可以使用 <code>--enable-FEATURE</code> 来起用它。这里 FEATURE 是特性的名字。一个特性可能会接受一个可选的参数。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --<span class="built_in">enable</span>-buffers=128</span></span><br></pre></td></tr></table></figure>
+
+<p><code>--enable-FEATURE=no</code> 与上面提到的 <code>--disable-FEATURE</code> 是同义的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--with-PACKAGE[=ARG]</span><br></pre></td></tr></table></figure>
+
+<p>在自由软件社区里，有使用已有软件包和库的优秀传统。当用 configure 来配置一个源码树时，可以提供其他已经安装的软件包的信息。例如，倚赖于 Tcl 和 Tk 的 BLT 器件工具包。要配置 BLT，可能需要给 configure 提供一些关于我们把 Tcl 和 Tk 装的何处的信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --with-tcl=/usr/<span class="built_in">local</span> --with-tk=/usr/<span class="built_in">local</span></span></span><br></pre></td></tr></table></figure>
+
+<p><code>--with-PACKAGE=no</code> 与下面将提到的 <code>--without-PACKAGE</code> 是同义的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--without-PACKAGE</span><br></pre></td></tr></table></figure>
+
+<p>有时候你可能不想让你的软件包与系统已有的软件包交互。例如，你可能不想让你的新编译器使用 GNU ld。通过使用这个选项可以做到这一点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --without-gnu-ld</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--x-includes=DIR</span><br></pre></td></tr></table></figure>
+
+<p>这个选项是 <code>--with-PACKAGE</code> 选项的一个特例。在 Autoconf 最初被开发出来时，流行使用 configure 来作为 Imake 的一个变通方法来制作运行于 X 的软件。–x-includes 选项提供了向 configure 脚本指明包含 X11 头文件的目录的方法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--x-libraries=DIR</span><br></pre></td></tr></table></figure>
+
+<p>类似的，<code>--x-libraries</code> 选项提供了向 configure 脚本指明包含 X11 库的目录的方法。</p>
+<h2 id="FFmpeg-裁剪优化实例"><a href="#FFmpeg-裁剪优化实例" class="headerlink" title="FFmpeg 裁剪优化实例"></a>FFmpeg 裁剪优化实例</h2><p>对 ffmpeg 的裁剪优化主要是对 ffplay 的裁剪优化，我们制定的需求是能播放测试文件（视频为 mpeg4 编码、音频为 mp2 编码，且为 AVI 复用），根据需求，找到相应的选项，或禁用或启用，最后的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./configure --<span class="built_in">disable</span>-yasm --<span class="built_in">disable</span>-parsers --<span class="built_in">disable</span>-decoders</span></span><br><span class="line">--disable-encoders --enable-decoder=mpeg4 --disable-muxers</span><br><span class="line">--disable-demuxers --enable-demuxer=avi --enable-decoder=mp2</span><br><span class="line">--disable-protocols --enable-protocol=file --disable-filters --disable-bsfs</span><br></pre></td></tr></table></figure>
+
+<p>其中针对需求，</p>
+<ul>
+<li><p><code>--disable-parsers</code> 为禁用所有解析器，</p>
+</li>
+<li><p><code>--disable-decoders</code> 为禁用所有解码器，</p>
+</li>
+<li><p><code>--disable-encoders</code> 为禁用所有编码器，</p>
+</li>
+<li><p><code>--enable-decoder=mpeg4</code> 为启用 mpeg4 的编码器 ， </p>
+</li>
+<li><p><code>--disable-muxers</code> 为禁用所有复用， </p>
+</li>
+<li><p><code>--disable-demuxers</code> 为禁用所有解复用，</p>
+</li>
+<li><p><code>--enable-demuxer=avi</code> 为启用 AVI 复用，</p>
+</li>
+<li><p><code>--enable-decoder=mp2</code> 为启用 mp2 编码，</p>
+</li>
+<li><p><code>--disable-protocols</code> 为禁用所有协议， </p>
+</li>
+<li><p><code>--enable-protocol=file</code> 为启用文件协议，</p>
+</li>
+<li><p><code>--disable-filters</code> 为禁用所有过滤器，</p>
+</li>
+<li><p><code>--disable-bsfs</code> 为禁用所有码流过滤器。</p>
+</li>
+</ul>
+<p>通过以上配置之后，编译，安装，就生成了我们要求的 ffplay，其大小为 1.8M（1864012 字节）。此次是在 linux 环境下进行的，在以后的配置中，如果需要其他的什么编码器或什么的，按照选项要求进行配置即可。</p>
+<h2 id="裁剪优化前后文件比较"><a href="#裁剪优化前后文件比较" class="headerlink" title="裁剪优化前后文件比较"></a>裁剪优化前后文件比较</h2><p>前面已经提到本次裁剪优化的内容。经过裁剪优化之后，对其文件夹进行比较，主要有 3 个地方不同，分别是 config.fate、config.h 和 config.mak。在 config.fate 中，其记录的是配置命令，由于前后两次配置命令不同，故相应内容也不同。在config.h 中，其主要是根据配置命令来改变相应预定义的值，达到裁剪优化之效果。在 config.mak 中，改变的也是配置命令中需要改变的选项。</p>
+<h1 id="FFmpeg-SDK"><a href="#FFmpeg-SDK" class="headerlink" title="FFmpeg SDK"></a>FFmpeg SDK</h1><p>FFMpeg 中比较重要的函数以及数据结构如下：</p>
+<p><strong>1、数据结构：</strong></p>
+<p><strong>(1) AVFormatContext</strong></p>
+<p><strong>(2) AVOutputFormat</strong></p>
+<p><strong>(3) AVInputFormat</strong></p>
+<p><strong>(4) AVCodecContext</strong></p>
+<p><strong>(5) AVCodec</strong></p>
+<p><strong>(6) AVFrame</strong></p>
+<p><strong>(7) AVPacket</strong></p>
+<p><strong>(8) AVPicture</strong></p>
+<p>(9) AVStream</p>
+<p><strong>2、初始化函数：</strong></p>
+<p>(1) av_register_all()</p>
+<p>(2) avcodec_open()</p>
+<p>(3) avcodec_close()</p>
+<p>(4) av_open_input_file()</p>
+<p>(5) av_find_input_format()</p>
+<p>(6) av_find_stream_info()</p>
+<p>(7) av_close_input_file()</p>
+<p><strong>3、音视频编解码函数：</strong></p>
+<p>(1) avcodec_find_decoder()</p>
+<p>(2) avcodec_alloc_frame()</p>
+<p>(3) avpicture_get_size()</p>
+<p>(4) avpicture_fill()</p>
+<p>(5) img_convert()</p>
+<p>(6) avcodec_alloc_context()</p>
+<p>(7) avcodec_decode_video()</p>
+<p>(8) av_free_packet()</p>
+<p>(9) av_free()</p>
+<p><strong>4、文件操作：</strong></p>
+<p>(1) avnew_steam()</p>
+<p>(2) av_read_frame()</p>
+<p>(3) av_write_frame()</p>
+<p>(4) dump_format()</p>
+<p><strong>5、其他函数：</strong></p>
+<p>(1) avpicture_deinterlace()</p>
+<p>(2) ImgReSampleContext() </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Miaow 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Miaow 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      <div>    
+        
+        
+            <ul class="post-copyright">
+            <li class="post-copyright-author">
+                <strong>本文作者：</strong>Mr.Miaow
+            </li>
+            <li class="post-copyright-link">
+                <strong>本文链接：</strong>
+                <a href="/2019/04/20/FFmpeg/FFmpeg入门/" title="FFmpeg入门">2019/04/20/FFmpeg/FFmpeg入门/</a>
+            </li>
+            <li class="post-copyright-license">
+                <strong>版权： </strong>
+                本站文章均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议，请勿用于商业，转载注明出处！
+            </li>
+            </ul>
+        
+      </div>
+
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FFmpeg/" rel="tag"> <i class="fa fa-tag"></i> FFmpeg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/08/Program-C/c-open-project/" rel="next" title="值得推荐的C/C++框架和库">
+                <i class="fa fa-chevron-left"></i> 值得推荐的C/C++框架和库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/23/FFmpeg/移动端音视频入门/" rel="prev" title="音视频入门知识">
+                音视频入门知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="Mr.Miaow">
+              
+                <p class="site-author-name" itemprop="name">Mr.Miaow</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          <link rel="stylesheet" href="/dist/APlayer.min.css">
+          <div id="aplayer"></div>
+          <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+          <script type="text/javascript" src="/dist/music.js"></script>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文档介绍"><span class="nav-number">1.</span> <span class="nav-text">文档介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文档目的"><span class="nav-number">1.1.</span> <span class="nav-text">文档目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档范围"><span class="nav-number">1.2.</span> <span class="nav-text">文档范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读者对象"><span class="nav-number">1.3.</span> <span class="nav-text">读者对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.4.</span> <span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#术语与缩写解释"><span class="nav-number">1.5.</span> <span class="nav-text">术语与缩写解释</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-支持能力说明"><span class="nav-number">2.</span> <span class="nav-text">FFmpeg 支持能力说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-介绍及安装"><span class="nav-number">2.1.</span> <span class="nav-text">FFmpeg 介绍及安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-简介"><span class="nav-number">2.1.1.</span> <span class="nav-text">FFmpeg 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-安装"><span class="nav-number">2.1.2.</span> <span class="nav-text">FFmpeg 安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-参数说明"><span class="nav-number">2.2.</span> <span class="nav-text">FFmpeg 参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用选项"><span class="nav-number">2.2.1.</span> <span class="nav-text">通用选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频选项"><span class="nav-number">2.2.2.</span> <span class="nav-text">视频选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级视频选项"><span class="nav-number">2.2.3.</span> <span class="nav-text">高级视频选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#音频选项"><span class="nav-number">2.2.4.</span> <span class="nav-text">音频选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#音频-视频捕获选项"><span class="nav-number">2.2.5.</span> <span class="nav-text">音频/视频捕获选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级选项"><span class="nav-number">2.2.6.</span> <span class="nav-text">高级选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-参数实例"><span class="nav-number">2.2.7.</span> <span class="nav-text">FFmpeg 参数实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-支持能力说明-1"><span class="nav-number">2.3.</span> <span class="nav-text">FFmpeg 支持能力说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-对编码解码器的支持"><span class="nav-number">2.3.1.</span> <span class="nav-text">FFmpeg 对编码解码器的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-对容器格式的支持"><span class="nav-number">2.3.2.</span> <span class="nav-text">FFmpeg 对容器格式的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-对过滤器的支持"><span class="nav-number">2.3.3.</span> <span class="nav-text">FFmpeg 对过滤器的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-对图像颜色空间的支持"><span class="nav-number">2.3.4.</span> <span class="nav-text">FFmpeg 对图像颜色空间的支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-功能及使用说明"><span class="nav-number">2.4.</span> <span class="nav-text">FFmpeg 功能及使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ffplay-对多媒体的支持能力验证"><span class="nav-number">2.4.1.</span> <span class="nav-text">ffplay 对多媒体的支持能力验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-格式转换"><span class="nav-number">2.4.2.</span> <span class="nav-text">FFmpeg 格式转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-视频截图"><span class="nav-number">2.4.3.</span> <span class="nav-text">FFmpeg 视频截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-屏幕录制"><span class="nav-number">2.4.4.</span> <span class="nav-text">FFmpeg 屏幕录制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFmpeg-音视频采集"><span class="nav-number">2.4.5.</span> <span class="nav-text">FFmpeg 音视频采集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-应用实例"><span class="nav-number">2.5.</span> <span class="nav-text">FFmpeg 应用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用-FFserver-从文件生成流媒体"><span class="nav-number">2.5.1.</span> <span class="nav-text">用 FFserver 从文件生成流媒体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-FFserver-从设备生成实时流"><span class="nav-number">2.5.2.</span> <span class="nav-text">用 FFserver 从设备生成实时流</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-架构"><span class="nav-number">3.</span> <span class="nav-text">FFmpeg 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-文件结构"><span class="nav-number">3.1.</span> <span class="nav-text">FFmpeg 文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-模块分析"><span class="nav-number">3.2.</span> <span class="nav-text">I\O 模块分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">3.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关数据结构介绍"><span class="nav-number">3.2.2.</span> <span class="nav-text">相关数据结构介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demuxer-和-muxer-模块分析"><span class="nav-number">3.3.</span> <span class="nav-text">Demuxer 和 muxer 模块分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关数据结构介绍-1"><span class="nav-number">3.3.2.</span> <span class="nav-text">相关数据结构介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoder-Encoder-模块"><span class="nav-number">3.4.</span> <span class="nav-text">Decoder/Encoder 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述-2"><span class="nav-number">3.4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关数据结构的初始化"><span class="nav-number">3.4.2.</span> <span class="nav-text">相关数据结构的初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他重要数据结构的初始化"><span class="nav-number">3.5.</span> <span class="nav-text">其他重要数据结构的初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AVStream"><span class="nav-number">3.5.1.</span> <span class="nav-text">AVStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVInputStream-AVOutputStream"><span class="nav-number">3.5.2.</span> <span class="nav-text">AVInputStream/ AVOutputStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AVPacket"><span class="nav-number">3.5.3.</span> <span class="nav-text">AVPacket</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-裁剪说明"><span class="nav-number">4.</span> <span class="nav-text">FFmpeg 裁剪说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#configure-参数"><span class="nav-number">4.1.</span> <span class="nav-text">configure 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用选项-1"><span class="nav-number">4.1.1.</span> <span class="nav-text">通用选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本选项介绍"><span class="nav-number">4.1.2.</span> <span class="nav-text">基本选项介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-裁剪优化实例"><span class="nav-number">4.2.</span> <span class="nav-text">FFmpeg 裁剪优化实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#裁剪优化前后文件比较"><span class="nav-number">4.3.</span> <span class="nav-text">裁剪优化前后文件比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-SDK"><span class="nav-number">5.</span> <span class="nav-text">FFmpeg SDK</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Miaow</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">841k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">12:44</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
