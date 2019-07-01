@@ -8,6 +8,8 @@ abbrlink: 39639
 date: 2019-05-27 10:14:50
 ---
 
+> [[总结]FFMPEG视音频编解码零基础学习方法](<https://blog.csdn.net/leixiaohua1020/article/details/84499632>)
+
 # 架构图
 
 ## FFMPEG+SDL的视频播放器

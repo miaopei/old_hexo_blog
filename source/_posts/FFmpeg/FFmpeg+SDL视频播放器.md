@@ -1,5 +1,5 @@
 ---
-title: FFmpeg 雷神笔记学习备注
+title: FFMPEG+SDL视频播放器
 tags: FFmpeg
 reward: true
 categories: FFmpeg
