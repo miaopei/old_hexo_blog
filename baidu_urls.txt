@@ -6,7 +6,6 @@ http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/
 http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
 http://miaopei.github.io/2019/05/18/FFmpeg/FFmpeg+SDL视频播放器/
 http://miaopei.github.io/2019/05/14/WebRTC/webrtc/
-http://miaopei.github.io/2019/05/09/FFmpeg/FFmpeg编译安装/
 http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
 http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/
 http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/
@@ -18,3 +17,4 @@ http://miaopei.github.io/2018/03/20/vimHotKey/
 http://miaopei.github.io/2018/03/16/web-transmission-basis/
 http://miaopei.github.io/2018/03/08/graph/
 http://miaopei.github.io/2018/02/27/git-guide/
+http://miaopei.github.io/2018/01/03/DeepLearning/DogsVsCats/
