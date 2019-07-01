@@ -17,6 +17,8 @@ date: 2019-05-14 10:14:50
 > [廖雪峰 - nodejs](<https://www.liaoxuefeng.com/wiki/1022910821149312/1023025235359040>)
 >
 > [Webrtc笔记-获取源码](<https://www.jianshu.com/p/310c0d133c3c>)
+>
+> [WebRTC音频引擎实现分析](<https://www.jianshu.com/p/5a8a91cd84ef>)
 
 ## 1. WebRTC 介绍
 
