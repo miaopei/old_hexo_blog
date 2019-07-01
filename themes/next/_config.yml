@@ -121,6 +121,7 @@ github_banner:
 # SEO Settings
 # ---------------------------------------------------------------
 
+
 # Disable Baidu transformation on mobile devices.
 disable_baidu_transformation: true
 
@@ -352,7 +353,7 @@ symbols_count_time:
   #文章中的显示是否显示文字（本文字数|阅读时长）
   item_text_post: true
   #网页底部的显示是否显示文字（站点总字数|站点阅读时长）
-  item_text_total: true
+  item_text_total: false
   awl: 4
   wpm: 275
   suffix: mins.
