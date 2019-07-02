@@ -1,6 +1,5 @@
 http://miaopei.github.io/2019/07/02/Architect/架构师之路/
 http://miaopei.github.io/2019/05/29/实用的计算机工具库/
-http://miaopei.github.io/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/
 http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/
 http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/
 http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
@@ -18,3 +17,4 @@ http://miaopei.github.io/2018/03/16/web-transmission-basis/
 http://miaopei.github.io/2018/03/08/graph/
 http://miaopei.github.io/2018/02/27/git-guide/
 http://miaopei.github.io/2018/01/03/DeepLearning/DogsVsCats/
+http://miaopei.github.io/2017/10/20/关于知识付费的理解/
