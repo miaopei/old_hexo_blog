@@ -3,6 +3,7 @@ title: 常用Git命令清单
 description: git
 category: git
 tags: git
+reward: true
 abbrlink: 60426
 date: 2017-01-27 18:02:52
 ---
@@ -138,7 +139,7 @@ Git的设置文件为 `.gitconfig`，它可以在用户主目录下（全局配�
 	$ git branch -dr [remote/branch]
 
 ## 六、标签
-	
+
 	# 列出所有tag
 	$ git tag
 	
