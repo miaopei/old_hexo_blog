@@ -1,6 +1,7 @@
 ---
 title: Hexo + Github 博客多终端同步
 tags: hexo
+categories: hexo
 reward: true
 abbrlink: 5385
 date: 2017-03-20 04:20:57
