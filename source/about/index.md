@@ -26,7 +26,7 @@ type: page
 
 **性别**：Boy
 
-**技术Tag**：C/C++、Python、HTML、JavaScript、CSS、Shell、Lua、全栈工程师、嵌入式、深度学习、FFmpeg、WebRTC
+**技术Tag**：C/C++、Python、HTML、JavaScript、CSS、Shell、Lua、Docker、全栈工程师、嵌入式、机器学习、深度学习、FFmpeg、WebRTC
 
 ## 关于本站
 

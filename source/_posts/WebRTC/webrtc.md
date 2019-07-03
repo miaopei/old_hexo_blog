@@ -8,8 +8,6 @@ abbrlink: 39639
 date: 2019-05-14 10:14:50
 ---
 
-# WebRTC
-
 > [WebRTC API](<https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API>)
 >
 > [Node.js v10.15.3 文档](<http://nodejs.cn/api/>)
@@ -19,8 +17,14 @@ date: 2019-05-14 10:14:50
 > [Webrtc笔记-获取源码](<https://www.jianshu.com/p/310c0d133c3c>)
 >
 > [WebRTC音频引擎实现分析](<https://www.jianshu.com/p/5a8a91cd84ef>)
+>
+> [实时通信RTC技术栈之：视频编解码](<http://www.52im.net/thread-1034-1-1.html>)
+>
+> [开源实时音视频技术WebRTC中RTP/RTCP数据传输协议的应用](<http://www.52im.net/thread-589-1-1.html>)
+>
+> [WebRTC项目源码在国内的镜像](<https://gitee.com/ibaoger/webrtc>)
 
-## 1. WebRTC 介绍
+## WebRTC 介绍
 
 <!-- more -->
 
@@ -68,7 +72,7 @@ WebRTC能做啥：
 
 google webrtc 示例：https://appr.tc/
 
-## 2. WebRTC 原理与架构
+## WebRTC 原理与架构
 
 WebRTC 整体架构：
 
@@ -101,17 +105,36 @@ PeerConnection调用过程：
 
 <img src="/images/imageWebRTC/PeerConnection调用过程.png">
 
-
-
 调用时序图：
 
 <img src="/images/imageWebRTC/调用时序图.png">
+
+![PeerConnection连接建立流程图](/images/imageWebRTC/PeerConnection连接建立流程图.png)
+
+对于上图中描述的PeerConnection建立的完整流程进行以下说明（上图是以ClientA主动向ClientB发起连接为例）：
+
+- 首先 ClientA 和 ClientB 均通过双向通信方式如 WebSocket 连接到 Signaling Server 上；
+- ClientA 在本地首先通 GetMedia 访问本地的 media 接口和数据，并创建 PeerConnection 对象，调用其 AddStream 方法把本地的 Media 添加到 PeerConnection 对象中。**对于 ClientA 而言，既可以在与 Signaling Server 建立连接之前就创建并初始化 PeerConnection 如阶段 1，也可以在建立 Signaling Server 连接之后创建并初始化 PeerConnection 如阶段 2；ClientB 既可以在上图的1阶段也可以在 2 阶段做同样的事情，访问自己的本地接口并创建自己的 PeerConnection 对象**。
+- 通信由 ClientA 发起，所以 ClientA 调用 PeerConnection 的 CreateOffer 接口创建自己的 SDP offer，然后把这个 SDP Offer 信息通过 Signaling Server 通道中转发给 ClientB；
+- ClientB 收到 Signaling Server 中转过来的 ClientA 的 SDP 信息也就是 offer 后，调用 CreateAnswer 创建自己的 SDP 信息也就是 answer，然后把这个 answer 同样通过 Signaling server 转发给 ClientA；
+- ClientA 收到转发的 answer 消息以后，两个 peers 就做好了建立连接并获取对方 media streaming 的准备；
+- ClientA 通过自己 PeerConnection 创建时传递的参数等待来自于 ICE server 的通信，获取自己的 candidate，当 candidate available 的时候会自动回掉 PeerConnection 的 OnIceCandidate；
+- ClientA 通过 Signling Server 发送自己的 Candidate 给 ClientB，ClientB 依据同样的逻辑把自己的 Candidate 通过 Signaling Server 中转发给 ClientA；
+- 至此 ClientA 和 ClientB 均已经接收到对方的 Candidate，通过 PeerConnection 建立连接。至此 P2P 通道建立。
 
 > [WebRTC之PeerConnection的建立过程](https://www.cnblogs.com/cther/p/myPeerConnection.html)
 >
 > [WebRTC系列（3）：PeerConnection通信建立流程](<https://www.jianshu.com/p/43957ee18f1a>)
 
-## 3. Web服务器原理与Nodejs搭建
+## Web服务器原理与Nodejs搭建
+
+> [node.js基本工作原理及流程](<https://blog.csdn.net/xiangzhihong8/article/details/53954600>)
+>
+> [Nodejs的运行原理-架构篇](https://www.cnblogs.com/peiyu1988/p/8192066.html)
+>
+> [Node.js 原理简介](https://www.cnblogs.com/bingooo/p/6720540.html)
+>
+> [NodeJS 事件循环（第一部分）- 事件循环机制概述](<https://zhuanlan.zhihu.com/p/37427130>)
 
 Web服务器选型：
 
@@ -168,7 +191,7 @@ Nodejs 搭建 https 服务：
 - 引入 server-index 模块
 - 指定发布目录
 
-## 4. JavaScript 必备知识回顾
+## JavaScript 必备知识回顾
 
 基础知识：
 
@@ -193,7 +216,7 @@ Nodejs 搭建 https 服务：
 
 <img src="/images/imageWebRTC/函数.png">
 
-## 5. WebRTC设备管理
+## WebRTC设备管理
 
 enumerateDevices：
 
@@ -203,7 +226,7 @@ JavaScript中的Promise：
 
 <img src="/images/imageWebRTC/JavaScript中的Promise.png">
 
-## 6. WebRTC音视频数据采集
+## WebRTC音视频数据采集
 
 音视频采集API：
 
@@ -295,9 +318,9 @@ MediaStream API 获取视频约束：
 
 <img src="/images/imageWebRTC/MediaStream事件.png">
 
-## 7. WebRTC音视频录制实战
+## WebRTC音视频录制实战
 
-### 7.1 WebRTC录制基本知识
+### WebRTC录制基本知识
 
 MediaRecoder类：
 
@@ -313,7 +336,7 @@ MediaRecoder类：
 
 <img src="/images/imageWebRTC/JavaScript几种存储数据的方式.png">
 
-### 7.2 WebRTC 捕获桌面
+### WebRTC 捕获桌面
 
 <img src="/images/imageWebRTC/getDisplayMedia.png">
 
@@ -321,7 +344,7 @@ MediaRecoder类：
 
 - Experimental Web Platform features 设置为 enable
 
-## 8. WebRTC信令服务器实现
+## WebRTC信令服务器实现
 
 如果没有信令服务器WebRTC之间是不能通信的。
 
@@ -393,7 +416,7 @@ Socket.IO 客户端处理消息：
   C: socket.on('action', function(data, fn){fn('a', 'b');});
   ```
 
-### 8.1 [实战] 通过 socket.io 实现信令服务器
+### [实战] 通过 socket.io 实现信令服务器
 
 改造服务端的基本流程：
 
@@ -401,9 +424,11 @@ Socket.IO 客户端处理消息：
 - 引入 socket.io
 - 处理 connection 消息
 
-## 9. WebRTC网络基础补充：P2P/STUN/TRUN/ICE知识
+## WebRTC网络基础补充：P2P/STUN/TRUN/ICE知识
 
-### 9.1 WebRTC 网络传输基本知识
+> [P2P通信原理与实现](<https://zhuanlan.zhihu.com/p/26796476>)
+
+### WebRTC 网络传输基本知识
 
 WebRTC 传输基本知识：
 
@@ -426,7 +451,7 @@ NAT 的种类：
 - 端口限制锥型 NAT（Port Restricted Cone NAT）
 - 对称型 NAT（Symmetric NAT）
 
-### 9.2 NAT 打洞原理
+### NAT 打洞原理
 
 <img src="/images/imageWebRTC/完全锥型NAT.png">
 
@@ -444,7 +469,7 @@ NAT 穿越原理：
 
 <img src="/images/imageWebRTC/NAT穿越组合.png">
 
-### 9.3 NAT 类型检测
+### NAT 类型检测
 
 <img src="/images/imageWebRTC/NAT类型判断.png">
 
@@ -460,7 +485,7 @@ Client 通过 Port2 发送消息到 STUN Port1，STUN Server 通过 Port2 给 Cl
 
 <img src="/images/imageWebRTC/NAT类型检测-03.png">
 
-### 9.4 【协议规范】STUN 协议一
+### 【协议规范】STUN 协议一
 
 STUN 介绍：
 
@@ -504,7 +529,7 @@ RFC5389 把私密类型去掉了：
 
 <img src="/images/imageWebRTC/STUN消息类型.png">
 
-### 9.5 【协议规范】STUN 协议二
+### 【协议规范】STUN 协议二
 
 Inter 机子都是小端模式：
 
@@ -522,7 +547,7 @@ Inter 机子都是小端模式：
 
 <img src="/images/imageWebRTC/Attribute的使用.png">
 
-### 9.6 【协议规范】TURN 协议
+### 【协议规范】TURN 协议
 
 TURN 介绍：
 
@@ -547,7 +572,7 @@ TURN 发送机制：
 
 <img src="/images/imageWebRTC/TURN的使用.png">
 
-### 9.7 【协议规范】ICE 框架
+### 【协议规范】ICE 框架
 
 <img src="/images/imageWebRTC/ICE.png">
 
@@ -593,7 +618,7 @@ ICE 具体做些什么：
 
 <img src="/images/imageWebRTC/连通性过程.png">
 
-### 9.8 网络协议分析方法 tcpdump 与 wireshark讲解
+### 网络协议分析方法 tcpdump 与 wireshark讲解
 
 常用工具：
 
@@ -602,7 +627,7 @@ ICE 具体做些什么：
 
 <img src="/images/imageWebRTC/tcpdump.png">
 
-### 9.9 网络协议分析方法 tcpdump 与 wireshark 实战
+### 网络协议分析方法 tcpdump 与 wireshark 实战
 
 vim 打开二进制数据：
 
@@ -662,9 +687,9 @@ WireShark 过滤内容：
 
 TODO
 
-## 10. 端对端1V1传输基本流程
+## 端对端1V1传输基本流程
 
-### 10.1 媒体能力协商过程
+### 媒体能力协商过程
 
 WebRTC 端对端连接：
 
@@ -756,7 +781,7 @@ WebRTC 端对端连接：
 - onnegotiationneeded  - 协商的时候触发这个事件
 - onicecandidate - 当收到 ICE 候选者的时候触发这个事件
 
-### 10.2 1:1 连接的基本流程
+### 1:1 连接的基本流程
 
 <img src="/images/imageWebRTC/端对端连接的基本流程.png">
 
@@ -766,17 +791,17 @@ WebRTC 端对端连接：
 - ICE 候选者的交换、连接、检测部分
 - 媒体数据流的通信部分
 
-### 10.3 【实战】WebRTC 视频传输
+### 【实战】WebRTC 视频传输
 
 TODO
 
-### 10.4 【实战】显示通讯双方的 SDP 内容
+### 【实战】显示通讯双方的 SDP 内容
 
 TODO
 
-## 11. WebRTC核心之SDP详解
+## WebRTC核心之SDP详解
 
-### 11.1 【协议规范】SDP 规范
+### 【协议规范】SDP 规范
 
 **SDP 规范**：
 
@@ -830,19 +855,23 @@ TODO
 
 <img src="/images/imageWebRTC/字段含义-07.png">
 
-### 11.2 【协议规范】WebRTC 中的 SDP
+### 【协议规范】WebRTC 中的 SDP
 
 <img src="/images/imageWebRTC/WebRTC中的SDP.png">
 
-### 11.3 【详解】WebRTC 中 Offer_Answer SDP
+### 【详解】WebRTC 中 Offer_Answer SDP
+
+TODO
+
+```js
 
 ```
 
-```
 
-## 12. 实现1V1音视频实时互动直播系统
 
-### 12.1 STUN/TURN 服务器搭建
+## 实现1V1音视频实时互动直播系统
+
+### STUN/TURN 服务器搭建
 
 coTurn Download Address：<https://github.com/coturn/coturn>
 
@@ -861,7 +890,7 @@ $ turnserver -c /usr/local/coturn/etc/turnserver.conf
 
 <img src="/images/imageWebRTC/测试turn服务.png">
 
-### 12.2 【参数介绍】再论 RTCPeerConnection
+### 【参数介绍】再论 RTCPeerConnection
 
 <img src="/images/imageWebRTC/RTCPeerConnection-01.png">
 
@@ -875,7 +904,7 @@ $ turnserver -c /usr/local/coturn/etc/turnserver.conf
 
 <img src="/images/imageWebRTC/addIceCandidate.png">
 
-### 12.3 直播系统中的信令及其逻辑关系
+### 直播系统中的信令及其逻辑关系
 
 【实战】真正的音视频传输
 
@@ -901,13 +930,13 @@ $ turnserver -c /usr/local/coturn/etc/turnserver.conf
 
 <img src="/images/imageWebRTC/直播系统消息处理流程.png">
 
-### 12.4 实现 1：1 音视频实时互动信令服务器
+### 实现 1：1 音视频实时互动信令服务器
 
 信令服务器改造
 
 TODO
 
-### 12.5 再论CreateOffer
+### 再论CreateOffer
 
 <img src="/images/imageWebRTC/createOffer.png">
 
@@ -918,7 +947,7 @@ TODO
 - 静音检测
 - ICE restart
 
-### 12.6 WebRTC 客户端状态机及处理逻辑
+### WebRTC 客户端状态机及处理逻辑
 
 直播客户端的实现：
 
@@ -930,19 +959,19 @@ TODO
 
 <img src="/images/imageWebRTC/端对端连接的基本流程.png">
 
-### 12.7 WebRTC 客户端的实现
+### WebRTC 客户端的实现
 
 <img src="/images/imageWebRTC/注意要点.png">
 
-### 12.8 共享远程桌面
+### 共享远程桌面
 
 <img src="/images/imageWebRTC/getDisplayMedia-01.png">
 
 <img src="/images/imageWebRTC/需要注意的点.png">
 
-## 13. WebRTC核心之RTP媒体控制与数据统计
+## WebRTC核心之RTP媒体控制与数据统计
 
-### 13.1 RTPPReceiver 发送器
+### RTPPReceiver 发送器
 
 RTP Media
 
@@ -952,7 +981,7 @@ RTP Media
 
 <img src="/images/imageWebRTC/RTCRtpReceiver.png">
 
-### 13.2 RTPSender 发送器
+### RTPSender 发送器
 
 <img src="/images/imageWebRTC/RTCRtpSender.png">
 
@@ -960,7 +989,7 @@ RTP Media
 
 <img src="/images/imageWebRTC/RTCRtpTransceiver.png">
 
-### 13.3 传输速率的控制
+### 传输速率的控制
 
 <img src="/images/imageWebRTC/RTPMedia-01.png">
 
@@ -968,13 +997,13 @@ RTP Media
 
 chrome WebRTC 状态查询地址：<chrome://webrtc-internals>
 
-### 13.4 【实战】WebRTC统计信息
+### 【实战】WebRTC统计信息
 
 TODO
 
-## 14. WebRTC非音视频数据传输
+## WebRTC非音视频数据传输
 
-### 14.1 传输非音视频数据基础知识
+### 传输非音视频数据基础知识
 
 <img src="/images/imageWebRTC/createDataChannel.png">
 
@@ -996,17 +1025,17 @@ TODO
 - Flow control：流控
 - Congestion control：拥塞控制
 
-### 14.2 端到端文本聊天
+### 端到端文本聊天
 
 TODO
 
-### 14.3 文件实时传输
+### 文件实时传输
 
 <img src="/images/imageWebRTC/知识点.png">
 
-## 15. WebRTC实时数据传输网络协议详解
+## WebRTC实时数据传输网络协议详解
 
-### 15.1 【协议规范】RTP-SRTP协议头详解
+### 【协议规范】RTP-SRTP协议头详解
 
 <img src="/images/imageWebRTC/协议栈.png">
 
@@ -1016,7 +1045,7 @@ TODO
 
 <img src="/images/imageWebRTC/RTP字段说明.png">
 
-### 15.2 【协议规范】RTCP 中的 SR 与 RR 报文
+### 【协议规范】RTCP 中的 SR 与 RR 报文
 
 <img src="/images/imageWebRTC/RTCP包.png">
 
@@ -1052,19 +1081,19 @@ TODO
 
 <img src="/images/imageWebRTC/RTCPAPP字段说明.png">
 
-### 15.3 【协议规范】DTSL
+### 【协议规范】DTSL
 
 <img src="/images/imageWebRTC/DTLS.png">
 
 <img src="/images/imageWebRTC/SRTP.png">
 
-### 15.4 wireshark 分析 rtp-rtcp 包
+### wireshark 分析 rtp-rtcp 包
 
 TODO
 
-## 16. Android端与浏览器互通
+## Android端与浏览器互通
 
-### 16.1 Android 与浏览器互通
+### Android 与浏览器互通
 
 <img src="/images/imageWebRTC/主要内容.png">
 
@@ -1080,7 +1109,7 @@ TODO
 
 <img src="/images/imageWebRTC/socketio接收消息.png">
 
-### 16.2 WebRTCNative 开发逻辑
+### WebRTCNative 开发逻辑
 
 <img src="/images/imageWebRTC/结构图.png">
 
@@ -1098,15 +1127,15 @@ TODO
 
 <img src="/images/imageWebRTC/两个观察者.png">
 
-### 16.3 实战-权限申请-库的引入与界面
+### 实战-权限申请-库的引入与界面
 
 <img src="/images/imageWebRTC/权限库界面.png">
 
-### 16.4 实战-通过 socket.io 实现信令收发
+### 实战-通过 socket.io 实现信令收发
 
 <img src="/images/imageWebRTC/收发信令.png">
 
-### 16.5 实战-Android 与浏览器互通
+### 实战-Android 与浏览器互通
 
 创建 PeerConnection：
 
@@ -1119,15 +1148,15 @@ TODO
 - Candidate 连通
 - 视频渲染
 
-## 17. iOS端与浏览器互通
+## iOS端与浏览器互通
 
-### 17.1 IOS权限获取
+### IOS权限获取
 
 <img src="/images/imageWebRTC/主要内容-01.png">
 
 <img src="/images/imageWebRTC/主要内容-02.png">
 
-### 17.2 IOS引入WebRTC库
+### IOS引入WebRTC库
 
 <img src="/images/imageWebRTC/引入WebRTC库的方式.png">
 
@@ -1135,7 +1164,7 @@ TODO
 
 <img src="/images/imageWebRTC/Podfile.png">
 
-### 17.3 IOS端SocketIO的使用
+### IOS端SocketIO的使用
 
 <img src="/images/imageWebRTC/socketio的使用.png">
 
@@ -1145,29 +1174,29 @@ TODO
 
 <img src="/images/imageWebRTC/注册侦听消息.png">
 
-### 17.4 IOS界面布局
+### IOS界面布局
 
 TODO
 
-### 17.5 IOS本地视频采集与展示
+### IOS本地视频采集与展示
 
 TODO
 
-### 17.6 IOS端RTCPeerConnection
+### IOS端RTCPeerConnection
 
 TODO
 
-### 17.7 IOS媒体协商
+### IOS媒体协商
 
 <img src="/images/imageWebRTC/媒体协商.png">
 
 <img src="/images/imageWebRTC/信令时序图.png">
 
-### 17.8 IOS远端视频渲染
+### IOS远端视频渲染
 
 <img src="/images/imageWebRTC/RTCPeerConnection委托.png">
 
-## 18. 课程总结
+## 课程总结
 
 <img src="/images/imageWebRTC/小结.png">
 
@@ -1200,8 +1229,6 @@ TODO
 > [Gradle 包](<http://tools.android-studio.org/index.php/9-tools/109-android-tools-download>)
 >
 > [Mac下AndroidStudio中手动配置Gradle](<https://www.jianshu.com/p/36e569c1bb12>)
-
-
 
 WebRTC的分层协议图：
 
@@ -1240,103 +1267,7 @@ Error: listen EACCES 0.0.0.0:443
 $ netstat -ntpl | grep 443
 ```
 
-## VIM 快捷键温习
 
-> [Vim 插件 tern_for_vim Javascript 自动补全](<https://wxnacy.com/2017/09/22/vim-plugin-tern/>)
->
-> [最全的vim快捷键](<http://www.cnblogs.com/jiqingwu/archive/2012/06/14/vim_notes.html#id107>)
-
-vim 格式化文本，调整缩进：
-
-> = 是格式化文本的快捷方法， 当你发现代码缩进的不整齐的，可以用这个快速对齐它们。
->
-> 直接按＝号就可以，不能进入命令模式（以 “:" 冒号开始的命令行）。
->
-> gg=G ：从头格到尾，爽。
->
-> ＝＝ 格式化一行
->
-> 如要格式化一段代码，可以先选中这些代码，再按＝号。
->
-> 调整缩进还有个比较慢的办法，按＞＞，向右缩进一格，＜＜向左缩进一格。
-
-vim常用快捷键总结：
-
-- 光标移动到行首：0
-
-- 光标移动到行尾：$
-
-- 光标移动到文件开始：GG
-
-- 光标移动到文件末尾：shift +G
-
-- 先前翻页：Ctrl+f
-
-- 向后翻页：Ctrl+b
-
-- 删至行首：d0
-
-- 删至行尾：d$
-
-- 删除当前行及其后面n-1行：ndd
-
-- 删除当前字符：x
-
-- 删除当前字符的前一个字符：X
-
-- 删除当前字符：dl
-
-- 删除到第三个字符的结尾位置：d3w
-
-- 删除到某个单词的末尾：dw
-
-- 删除到某个单词的开始：db
-
-- 删除当前行到文件的末尾：dG
-
-- 删除当前行到文件第一行：dH
-
-- 删除知道屏幕上最后一行：dL
-
-- 替换当前行所有temp为hehe：:s/temp/hehe/g
-
-- 替换每行中第一个#include为hehe：:%s/#include/hehe/
-
-- 替换每行中所有的#include为hehe：:%s/#include/hehe/g
-
-- 替换第n行开始到最后一行中每一行的第一个#include为hehe：:n,$s/#include/hehe/
-
-- 替换第n行开始到最后一行中每一行的所有#include为hehe：:n,$s/#include/hehe/g
-
-- 替换当前行到末尾的所有#include为hehe：:.,$s/#include/hehe/g
-
-- 替换正文中所有出现的#include为hehe：:1,$s/#include/hehe/g
-
-- 回复上一步操作：u
-
-- 全部回复操作：shift + u
-
-- 重做上一步操作：Ctrl + r
-
-- 把下一行合并到当前行尾：J
-
-- 选中当前行及其后面的n-1行：nV
-
-- 复制当前光标到此单词末尾：yw
-
-- 批量添加注释：Ctrl+v可视模式，上、下、左、右移动光标选择若干行开头；Shift+i进入插入模式；输入// 者；按Esc
-
-- 批量去掉注释：Ctrl+v可视模式，上、下、左、右移动关闭选择要删除的注释符，如//或#；按d删除
-
-- 横向打开另一个窗口：:sp 文件名
-
-- 竖向打开另一个窗口：:vsp 文件名
-
-- 关闭当前打开的所有窗口：:qa
-
-- 选择当前字符所在的单词：Ctrl+v可视模式，然后a+w或i+w
-
-- 选择当前字符所在的段落：Ctrl+v可视模视，然后i+p或a+p
 
 
 
