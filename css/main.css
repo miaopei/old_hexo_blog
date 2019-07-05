@@ -2004,7 +2004,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e3ff4f;
+  background: #7df5ac;
 }
 .feed-link,
 .chat {
@@ -2160,7 +2160,7 @@ img:hover {
   line-height: 1.8;
 }
 .post-toc .nav .nav-child {
-  display: block;
+  display: none;
 }
 .post-toc .nav .active > .nav-child {
   display: block;
@@ -3324,11 +3324,4 @@ body {
   .pagination {
     margin: 8px 0 0;
   }
-}
-.post-copyright {
-  margin: 2em 0 0;
-  padding: 0.5em 1em;
-  border-left: 3px solid #ff1700;
-  background-color: #f9f9f9;
-  list-style: none;
 }
