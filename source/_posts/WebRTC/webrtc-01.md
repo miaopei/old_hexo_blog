@@ -243,7 +243,7 @@ getUserMedia的不同实现：
 
 WebRTC音视频采集约束：
 
-约束详解：
+视频约束详解：
 
 - width
 
