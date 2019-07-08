@@ -233,7 +233,7 @@
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/行业痛点.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/webrtc分层协议图.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/信令会话协议.png">
-<meta property="og:updated_time" content="2019-07-04T02:33:50.975Z">
+<meta property="og:updated_time" content="2019-07-08T07:35:05.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC（二）">
 <meta name="twitter:description" content="端对端1V1传输基本流程媒体能力协商过程WebRTC 端对端连接： RTCPeerConnection：  基本格式 1pc = new RTCPeerConnection([configuration]);">
@@ -568,7 +568,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-04 10:33:50" itemprop="dateModified" datetime="2019-07-04T10:33:50+08:00">2019-07-04</time>
+                <time title="修改时间：2019-07-08 15:35:05" itemprop="dateModified" datetime="2019-07-08T15:35:05+08:00">2019-07-08</time>
               
             
           </span>
@@ -614,7 +614,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">2k</span>
               
 
               
@@ -628,7 +628,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4</span>
+                <span title="阅读时长">9</span>
               
             </div>
           
@@ -794,11 +794,39 @@
 
 <h3 id="【协议规范】WebRTC-中的-SDP"><a href="#【协议规范】WebRTC-中的-SDP" class="headerlink" title="【协议规范】WebRTC 中的 SDP"></a>【协议规范】WebRTC 中的 SDP</h3><img src="/images/imageWebRTC/WebRTC中的SDP.png">
 
-<h3 id="【详解】WebRTC-中-Offer-Answer-SDP"><a href="#【详解】WebRTC-中-Offer-Answer-SDP" class="headerlink" title="【详解】WebRTC 中 Offer_Answer SDP"></a>【详解】WebRTC 中 Offer_Answer SDP</h3><p>TODO</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="【详解】WebRTC-中-Offer-Answer-SDP"><a href="#【详解】WebRTC-中-Offer-Answer-SDP" class="headerlink" title="【详解】WebRTC 中 Offer_Answer SDP"></a>【详解】WebRTC 中 Offer_Answer SDP</h3><details><summary>SDP报文内容</summary>
 
-<h2 id="实现1V1音视频实时互动直播系统"><a href="#实现1V1音视频实时互动直播系统" class="headerlink" title="实现1V1音视频实时互动直播系统"></a>实现1V1音视频实时互动直播系统</h2><h3 id="STUN-TURN-服务器搭建"><a href="#STUN-TURN-服务器搭建" class="headerlink" title="STUN/TURN 服务器搭建"></a>STUN/TURN 服务器搭建</h3><p>coTurn Download Address：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvdHVybi9jb3R1cm4=" title="https://github.com/coturn/coturn">https://github.com/coturn/coturn<i class="fa fa-external-link"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">v=0</span><br><span class="line">o=- 2584450093346841581 2 IN IP4 127.0.0.1</span><br><span class="line">s=-</span><br><span class="line">t=0 0</span><br><span class="line">a=group:BUNDLE audio video data</span><br><span class="line">a=msid-semantic: WMS 616cfbb1-33a3-4d8c-8275-a199d6005549</span><br><span class="line">m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 110 112 113 126</span><br><span class="line">c=IN IP4 0.0.0.0 </span><br><span class="line">a=rtcp:9 IN IP4 0.0.0.0</span><br><span class="line">a=ice-ufrag:sXJ3</span><br><span class="line">a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV</span><br><span class="line">a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79</span><br><span class="line">a=setup:actpass</span><br><span class="line">a=mid:audio</span><br><span class="line">a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</span><br><span class="line">a=sendrecv</span><br><span class="line">a=rtcp-mux</span><br><span class="line">a=rtpmap:111 opus/48000/2</span><br><span class="line">a=rtcp-fb:111 transport-cc</span><br><span class="line">a=fmtp:111 minptime=10;useinbandfec=1</span><br><span class="line">a=rtpmap:103 ISAC/16000</span><br><span class="line">a=rtpmap:104 ISAC/32000</span><br><span class="line">a=rtpmap:9 G722/8000</span><br><span class="line">a=rtpmap:0 PCMU/8000</span><br><span class="line">a=rtpmap:8 PCMA/8000</span><br><span class="line">a=rtpmap:106 CN/32000</span><br><span class="line">a=rtpmap:105 CN/16000</span><br><span class="line">a=rtpmap:13 CN/8000</span><br><span class="line">a=rtpmap:110 telephone-event/48000</span><br><span class="line">a=rtpmap:112 telephone-event/32000</span><br><span class="line">a=rtpmap:113 telephone-event/16000</span><br><span class="line">a=rtpmap:126 telephone-event/8000</span><br><span class="line">a=ssrc:120276603 cname:iSkJ2vn5cYYubTve</span><br><span class="line">a=ssrc:120276603 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 1da3d329-7399-4fe9-b20f-69606bebd363</span><br><span class="line">a=ssrc:120276603 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549</span><br><span class="line">a=ssrc:120276603 label:1da3d329-7399-4fe9-b20f-69606bebd363</span><br><span class="line">m=video 9 UDP/TLS/RTP/SAVPF 96 98 100 102 127 97 99 101 125</span><br><span class="line">c=IN IP4 0.0.0.0</span><br><span class="line">a=rtcp:9 IN IP4 0.0.0.0</span><br><span class="line">a=ice-ufrag:sXJ3</span><br><span class="line">a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV</span><br><span class="line">a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79</span><br><span class="line">a=setup:actpass</span><br><span class="line">a=mid:video</span><br><span class="line">a=extmap:2 urn:ietf:params:rtp-hdrext:toffset</span><br><span class="line">a=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time</span><br><span class="line">a=extmap:4 urn:3gpp:video-orientation</span><br><span class="line">a=extmap:5 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01</span><br><span class="line">a=extmap:6 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay</span><br><span class="line">a=sendrecv</span><br><span class="line">a=rtcp-mux</span><br><span class="line">a=rtcp-rsize</span><br><span class="line">a=rtpmap:96 VP8/90000</span><br><span class="line">a=rtcp-fb:96 ccm fir</span><br><span class="line">a=rtcp-fb:96 nack</span><br><span class="line">a=rtcp-fb:96 nack pli</span><br><span class="line">a=rtcp-fb:96 goog-remb</span><br><span class="line">a=rtcp-fb:96 transport-cc</span><br><span class="line">a=rtpmap:97 rtx/90000</span><br><span class="line">a=fmtp:97 apt=96</span><br><span class="line">a=rtpmap:98 VP9/90000</span><br><span class="line">a=rtcp-fb:98 ccm fir</span><br><span class="line">a=rtcp-fb:98 nack</span><br><span class="line">a=rtcp-fb:98 nack pli</span><br><span class="line">a=rtcp-fb:98 goog-remb</span><br><span class="line">a=rtcp-fb:98 transport-cc</span><br><span class="line">a=rtpmap:100 H264/90000</span><br><span class="line">a=rtcp-fb:100 ccm fir</span><br><span class="line">a=rtcp-fb:100 nack</span><br><span class="line">a=rtcp-fb:100 nack pli</span><br><span class="line">a=rtcp-fb:100 goog-remb</span><br><span class="line">a=rtcp-fb:100 transport-cc</span><br><span class="line">a=fmtp:100 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f</span><br><span class="line">a=rtpmap:102 red/90000</span><br><span class="line">a=rtpmap:127 ulpfec/90000</span><br><span class="line">a=rtpmap:97 rtx/90000</span><br><span class="line">a=fmtp:97 apt=96</span><br><span class="line">a=rtpmap:99 rtx/90000</span><br><span class="line">a=fmtp:99 apt=98</span><br><span class="line">a=rtpmap:101 rtx/90000</span><br><span class="line">a=fmtp:101 apt=100</span><br><span class="line">a=rtpmap:125 rtx/90000</span><br><span class="line">a=fmtp:125 apt=102</span><br><span class="line">a=ssrc-group:FID 2580761338 611523443</span><br><span class="line">a=ssrc:2580761338 cname:iSkJ2vn5cYYubTve</span><br><span class="line">a=ssrc:2580761338 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 bf270496-a23e-47b5-b901-ef23096cd961</span><br><span class="line">a=ssrc:2580761338 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549</span><br><span class="line">a=ssrc:2580761338 label:bf270496-a23e-47b5-b901-ef23096cd961</span><br><span class="line">a=ssrc:611523443 cname:iSkJ2vn5cYYubTve</span><br><span class="line">a=ssrc:611523443 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 bf270496-a23e-47b5-b901-ef23096cd961</span><br><span class="line">a=ssrc:611523443 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549</span><br><span class="line">a=ssrc:611523443 label:bf270496-a23e-47b5-b901-ef23096cd961</span><br><span class="line">m=application 9 DTLS/SCTP 5000</span><br><span class="line">c=IN IP4 0.0.0.0</span><br><span class="line">a=ice-ufrag:sXJ3</span><br><span class="line">a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV</span><br><span class="line">a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79</span><br><span class="line">a=setup:actpass</span><br><span class="line">a=mid:data</span><br><span class="line">a=sctpmap:5000 webrtc-datachannel 1024</span><br></pre></td></tr></table></figure>
+
+</details>
+
+<h2 id="实现1V1音视频实时互动直播系统"><a href="#实现1V1音视频实时互动直播系统" class="headerlink" title="实现1V1音视频实时互动直播系统"></a>实现1V1音视频实时互动直播系统</h2><h3 id="STUN-TURN-服务器搭建"><a href="#STUN-TURN-服务器搭建" class="headerlink" title="STUN/TURN 服务器搭建"></a>STUN/TURN 服务器搭建</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZpcmVyb2xsL2FydGljbGUvZGV0YWlscy81MDc4MDg2Mw==" title="https://blog.csdn.net/fireroll/article/details/50780863">webrtc进阶-信令篇-之三：信令、stun、turn、ice<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xhbWI3NzU4L2FydGljbGUvZGV0YWlscy83NzA0NTczNQ==" title="https://blog.csdn.net/lamb7758/article/details/77045735">webRTC+coturn穿透服务器的安装与搭建<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9teS5vc2NoaW5hLm5ldC9hbmR5d2FuZzE5ODgvYmxvZy84NDg2NDU=" title="https://my.oschina.net/andywang1988/blog/848645">WebRTC的信令服务器Collider和Turn服务器搭建<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hMTk0NDEwMzRmMTc=" title="https://www.jianshu.com/p/a19441034f17">AppRTC(WebRTC)服务器搭建<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<p>coTurn Download Address：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvdHVybi9jb3R1cm4=" title="https://github.com/coturn/coturn">https://github.com/coturn/coturn<i class="fa fa-external-link"></i></span></p>
 <p>ICE 测试地址：<span class="exturl" data-url="aHR0cHM6Ly93ZWJydGMuZ2l0aHViLmlvL3NhbXBsZXM=" title="https://webrtc.github.io/samples">https://webrtc.github.io/samples<i class="fa fa-external-link"></i></span></p>
+<p>coturn 编译安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/coturn/coturn </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> coturn </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
+
+<p>安装sqlite</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo atp-get install sqlite</span></span><br></pre></td></tr></table></figure>
+
+<p>生成认证用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> turnadmin -A –u 用户名 -r beijing -p 密码 </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> turnadmin -a –u 用户名 -r beijing -p 密码 </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> A 是添加管理员</span></span><br></pre></td></tr></table></figure>
+
+<p>然后生成md5码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> turnadmin -k –u 用户名 -r beijing -p 密码</span></span><br></pre></td></tr></table></figure>
+
+<p>生成证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -x509 -newkey rsa:2048 -keyout /etc/turn_server_pkey.pem -out /etc/turn_server_cert.pem -days 99999 -nodes </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 一路回车就好</span></span><br></pre></td></tr></table></figure>
+
+<p>创建配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /usr/<span class="built_in">local</span>/etc/turnserver.conf </span></span><br><span class="line">listening-device=eth1 </span><br><span class="line">relay-device=eth1 </span><br><span class="line">listening-port=3478 </span><br><span class="line">listening-ip=YOU_IP </span><br><span class="line">listening-ip=YOU_IP2 </span><br><span class="line"><span class="meta">#</span><span class="bash"> (stun 需要两个公网ip，只有一个公网ip只能作文turn服务器) </span></span><br><span class="line">tls-listening-port=5349 </span><br><span class="line">lt-cred-mech </span><br><span class="line">min-port=59000 </span><br><span class="line">max-port=65000 </span><br><span class="line">realm=beijing </span><br><span class="line">no-loopback-peers </span><br><span class="line">no-multicast-peers </span><br><span class="line">mobility </span><br><span class="line">no-cli </span><br><span class="line">cert=/etc/turn_server_cert.pem </span><br><span class="line">pkey=/etc/turn_server_pkey.pem </span><br><span class="line">fingerprint </span><br><span class="line">stale-nonce=600</span><br></pre></td></tr></table></figure>
+
+<p>启动 coturn</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 启动 turn server</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> turnserver -c /usr/<span class="built_in">local</span>/coturn/etc/turnserver.conf</span></span><br></pre></td></tr></table></figure>
 
 <img src="/images/imageWebRTC/STUNTURN服务器选型.png">
@@ -1168,8 +1196,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/18/FFmpeg/FFmpeg+SDL视频播放器/" rel="prev" title="FFMPEG+SDL视频播放器">
-                FFMPEG+SDL视频播放器 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/17/WebRTC/webrtc-03/" rel="prev" title="WebRTC（三）">
+                WebRTC（三） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1248,7 +1276,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">57</span>
+                    <span class="site-state-item-count">58</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1437,8 +1465,7 @@
           <div class="post-toc">
 
             
-            
-            
+                
             
 
             
@@ -1478,7 +1505,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">880k</span>
+    <span title="站点总字数">889k</span>
   
 
   
@@ -1487,7 +1514,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">13:20</span>
+    <span title="站点阅读时长">13:28</span>
   
 
 </div>
