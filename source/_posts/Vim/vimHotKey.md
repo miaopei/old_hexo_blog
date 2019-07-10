@@ -671,9 +671,95 @@ vim自动补全
 
 - `ctrl + insert` 复制所选的内容
 
+## 12 ctags 安装
 
+> [Vim 配置 Catgs 用于前端开发](<https://yqc.im/vim-ctags-config-front-end.html>)
+>
+> [Ubuntu16.04安装配置和使用ctags](<https://www.cnblogs.com/zjutzz/p/9393397.html>)
 
+### 12.1 安装 universal-ctags
 
+`universal-ctags` 是一个现代化的`ctag`实现，本文只介绍使用Vim的安装方法
 
+```
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+```
 
+`universal-ctags` 是什么？A maintained ctags implementation,  https://ctags.io, 一个负责的 ctags 实现，在github上开源并且持续更新和维护。
+
+```shell
+$ sudo apt install autoconf
+$ cd /tmp
+$ git clone https://github.com/universal-ctags/ctags
+$ cd ctags
+$ ./autogen.sh
+$ ./configure --prefix=/opt/software/universal-ctags  # 我的安装路径。你按自己的情况调整。
+$ make -j8
+$ sudo make install
+```
+
+把 ctags 可执行文件更新到系统 PATH 上？No, 我选择创建链接的方式：
+
+```shell
+# 如果你装了 emacs-snapshot，那么现在的 ctags 命令实际上链接到了 /usr/bin/ctags-snapshot，要先删除链接文件：
+# sudo rm /usr/bin/ctags
+# 然后，把新编译安装的 universal-ctags 链接过来：
+sudo ln -s /opt/software/universal-ctags/bin/ctags /usr/bin/ctags
+```
+
+其他系统请参考项目主页：[ctags](https://github.com/universal-ctags/ctags)
+
+每次生成ctags文件都要手动run一次命令，这一点也不Vim，当然也有解决方法。
+
+### 12.2 安装vim-gutentags
+
+[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) 是一个用于自动生成 tag 文件的插件。使用 vim-plug 安装
+
+```shell
+Plug 'ludovicchabant/vim-gutentags'
+```
+
+### 12.3 配置
+
+如果只是介绍安装方法，那就必要写这篇文章了，安装完成之后还是要针对前端开发的特点手动调教一下。首先我们在任何目录打开文件，都会在目录下生成 ctags 文件，这样的话对项目代码有入侵性，并不推荐，建议把 tag 文件写在特定的目录里。可以做如下设置：
+
+```shell
+let g:gutentags_cache_dir = '~/.cachetags'
+```
+
+这样生成的 tags 文件会统一放在 `~/.cachetags` 目录下。另外默认生成的文件名叫 tags，也可以根据个从喜好修改：
+
+```shell
+let g:gutentags_ctags_tagfile = '.tags'
+```
+
+这样生成的文件是隐藏文件。另外一个很纠结的问题是有些文件我们并不想让他们生成 tags 文件，比如 `node_modules` 下文件，还有 `.git` 目录下的文件。这里有个取巧的方法是根据《[Vim配置使用FZF](https://yqc.im/vim-fzf-config.html)》中的方法，把 ctags 获取文件列表的命令改成 `ripgrep` 的搜索，这样就可以自动忽略 `.gitignore` 下的文件。如下：
+
+```shell
+let g:gutentags_file_list_command = 'rg --files'
+```
+
+另外有的文件我们也不想让其生成 ctags 文件，比如 `*.md`、`*.svg` 文件，可以通过 `universal-ctags` 的全局配置来配置，这里要注意的是 `universal-ctags` 默认的全局配置文件已经不是 `~/.ctags` 和 `./.ctags`，而是在 `~/.ctags.d/*.ctags` 和 `./.ctags.d/*.ctags`。比如我的全局配置文件放在`~/.ctags.d/ignore.ctags`。简要配置如下 ：
+
+```shell
+--exclude=node_modules
+--exclude=gulp
+--exclude=.git
+--exclude=*.md
+--exclude=*.svg
+```
+
+### 12.4 结合FZF
+
+在文章《[Vim配置使用FZF](https://yqc.im/vim-fzf-config.html)》中的介绍，FZF 是支持 ctags 的，所以可以做个快捷键配置，如下：
+
+```
+map <leader>t :Tags<CR>
+```
+
+这样就可以方便的使用 `ctrl-]` 和 `ctrl-o` 来进行 tag 跳转了。
+
+## 13. VIM 插件
+
+> [vim 入坑指南（六）插件 UltiSnips](<https://vimzijun.net/2016/10/30/ultisnip/>)
 

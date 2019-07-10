@@ -169,3 +169,7 @@ aplayer:
     meting: true
     asset_inject: false
 
+# Security
+encrypt:
+    enable: true
+    
