@@ -15,6 +15,6 @@ http://miaopei.github.io/2019/04/20/FFmpeg/FFmpeg入门/
 http://miaopei.github.io/2018/06/15/RPC机制及原理/
 http://miaopei.github.io/2018/06/08/Program-C/c-open-project/
 http://miaopei.github.io/2018/05/13/practical-programming-books/README/
-http://miaopei.github.io/2018/03/23/vimProgramHotKey/
-http://miaopei.github.io/2018/03/20/vimHotKey/
+http://miaopei.github.io/2018/03/23/Vim/vimProgramHotKey/
+http://miaopei.github.io/2018/03/20/Vim/vimHotKey/
 http://miaopei.github.io/2018/03/16/web-transmission-basis/
