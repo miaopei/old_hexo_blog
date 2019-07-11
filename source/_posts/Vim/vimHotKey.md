@@ -759,7 +759,15 @@ map <leader>t :Tags<CR>
 
 这样就可以方便的使用 `ctrl-]` 和 `ctrl-o` 来进行 tag 跳转了。
 
-## 13. VIM 插件
+## 13 Gtags
+
+> [Vim 8 中 C/C++ 符号索引：GTags](<https://zhuanlan.zhihu.com/p/36279445>)
+>
+> [Ubuntu 安裝 GNU Global(gtags) 阅读Linux内核源码](<https://blog.csdn.net/gatieme/article/details/78819740>)
+>
+> 
+
+## 14. VIM 插件
 
 > [vim 入坑指南（六）插件 UltiSnips](<https://vimzijun.net/2016/10/30/ultisnip/>)
 

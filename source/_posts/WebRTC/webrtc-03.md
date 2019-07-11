@@ -124,7 +124,7 @@ io.sockets.on('connection', (socket)=>{
     logger.log('Socket.io connection ...');
 
     socket.on('message', (room, data)=>{
-        socket.to(room).emit('message', room, data);
+        socket.to(room).emit('message', room, data); //除自己之外
     });
 
     // 该函数应该加锁
@@ -135,21 +135,20 @@ io.sockets.on('connection', (socket)=>{
         var users = (myRoom) ? Object.keys(myRoom.sockets).length : 0;
 
         logger.debug('The number of user in room is:' + users);
-        
-        // 在这里可以控制进入房间的人数,现在一个房间最多 2个人
-                // 为了便于客户端控制，如果是多人的话，应该将目前房间里
-                // 人的个数当做数据下发下去。
-                if(users < USERCOUNT) {
-                        socket.emit('joined', room, socket.id);  // 谁来了发给谁
-                        if (users > 1) {
-                                socket.to(room).emit('otherjoin', room, socket.id);//除自己之外
-                        }
-                }else {
-                        socket.leave(room);
-                        socket.emit('full', room, socket.id);
-                }
 
-                //socket.emit('joined', room, socket.id); // 发给自己
+        // 在这里可以控制进入房间的人数,现在一个房间最多 2个人
+        // 为了便于客户端控制，如果是多人的话，应该将目前房间里
+        // 人的个数当做数据下发下去。
+        if(users < USERCOUNT) {
+            socket.emit('joined', room, socket.id);  // 谁来了发给谁
+            if (users > 1) {
+                socket.to(room).emit('otherjoin', room, socket.id);//除自己之外
+            }
+        }else {
+            socket.leave(room);
+            socket.emit('full', room, socket.id);
+        }
+        //socket.emit('joined', room, socket.id); // 发给自己
         //socket.to(room).emit('joined', room, socket.id); // 发给除自己之外的房间内的所有人
         //io.in(room).emit('joined', room, socket.id); // 发给房间内所有人
         //socket.broadcast.emit('joined', room, socket.id); // 发给除自己之外，这个节点上的所有人
@@ -159,12 +158,11 @@ io.sockets.on('connection', (socket)=>{
         var myRoom = io.sockets.adapter.rooms[room];
         var users = (myRoom) ? Object.keys(myRoom.sockets).length : 0;
         // users - 1
-
         logger.debug('The number of user in room is:' + (users-1));
 
         socket.leave(room);
-                socket.to(room).emit('bye', room, socket.id); //房间内所有人,除自己外
-        socket.emit('leaved', room, socket.id);
+        socket.to(room).emit('bye', room, socket.id); //房间内所有人,除自己外
+        socket.emit('leaved', room, socket.id); // 给自己发leaved
 
         //socket.to(room).emit('leaved', room, socket.id); // 除自己之外
         //io.in(room).emit('leaved', room, socket.id); // 房间内所有人
@@ -540,20 +538,20 @@ function createPeerConnection(){
     console.log('Create RTCPeerConnection ...');
     if(!pc) {
         pc = new RTCPeerConnection(pcConfig);
-        pc.onicecandidate = (e)=> {
+        pc.onicecandidate = (e)=> {		// 监听 candidate 事件
             if(e.candidate) {
                 console.log('Find an new candidate:', e.candidate);
                 sendMessage(roomid, {
                     type: 'candidate',
-                    label: event.candidate.sdpMLineIndex,
-                    id: event.candidate.sdpMid,
-                    candidate: event.candidate.candidate
+                    label: e.candidate.sdpMLineIndex,
+                    id: e.candidate.sdpMid,
+                    candidate: e.candidate.candidate
                 });
             } else {
                 console.log('This is the end candidate');
             }
         }
-        pc.ontrack = getRemoteStream;
+        pc.ontrack = getRemoteStream;  // 监听 轨 事件
     } else {
         console.log('The pc have be created!');
     }
@@ -601,7 +599,8 @@ function call(){
     console.log('call ...');
     if(state === 'joined_conn') {
         if(pc) {
-            var options = {
+            // 控制接受远端视频和音频参数配置
+            var options = {  // 还有两个参数 1. icerestart 2. 静音检测  
                 offerToRecieveVideo: 1,
                 offerToRecieveAudio: 1
             }
@@ -630,7 +629,7 @@ function hangup(){
 }
 
 function getAnswer(desc){
-    pc.setLocalDescription(desc);
+    pc.setLocalDescription(desc);  // 通知本地手机candidate
     answer.value = desc.sdp;
     sendMessage(roomid, desc);
 }
@@ -641,7 +640,7 @@ function handleAnswerError(err){
 
 function conn(){
     socket = io.connect();  // 与信令服务器进行连接
-	// 注册接收服务端的消息信令函数
+	// 注册 接收服务端的 消息函数
     socket.on('joined', (roomid, id)=> {  // id -> 用户id
         btnConn.disabled = true;
         btnLeave.disabled = false;
@@ -675,7 +674,7 @@ function conn(){
 
     socket.on('leaved', (roomid, id)=> {
         state = 'leaved';
-        socket.disconnect();
+        socket.disconnect();  // 关闭连接
         btnConn.disabled = false;
         btnLeave.disabled = true;
         console.log('Receive leaved message: roomid=' + roomid + ' userid=' + id + ' state=' + state);
@@ -693,7 +692,6 @@ function conn(){
         hangup();
         offer.value = '';
         answer.value = '';
-        //closePeerConnection();
         console.log('Receive bye message: roomid=' + roomid + ' userid=' + id + ' state=' + state);
     });
 
@@ -705,7 +703,7 @@ function conn(){
         state = 'leaved';
         console.log('Receive disconnect message! roomid=' + roomid);
     });
-
+	// 端对端的消息
     socket.on('message', (roomid, data)=> {
         // 媒体协商
         if(data === null || data === undefined){
@@ -715,7 +713,7 @@ function conn(){
 
         if(data.hasOwnProperty('type') && data.type === 'offer') {
             offer.value = data.sdp;
-            pc.setRemoteDescription(new RTCSessionDescription(data));
+            pc.setRemoteDescription(new RTCSessionDescription(data));  // data 发送前是一个对象，发送过来的时候已经变成了一个文本，所以这儿要转换
             pc.createAnswer()
                 .then(getAnswer).catch(handleAnswerError);
         } else if(data.hasOwnProperty('type') && data.type == 'answer'){
@@ -726,7 +724,7 @@ function conn(){
                 sdpMLineIndex: data.label,
                 candidate: data.candidate
             });
-            pc.addIceCandidate(candidate);
+            pc.addIceCandidate(candidate); // 将 candidate 添加到本端
         } else {
             console.error('The message is invalid!', data);
         }
@@ -735,7 +733,7 @@ function conn(){
     });
 
     //roomid = getQueryVariable('room');
-    socket.emit('join', roomid);
+    socket.emit('join', roomid);  // 发送消息，加入 roomid 这个房间
     return;
 }
 
@@ -824,16 +822,13 @@ function closePeerConnection(){
 
 function leave(){
     if(socket) {
-        socket.emit('leave', '123123');
+        socket.emit('leave', roomid);
     }
     hangup();
     closeLocalMedia();
 
     offer.value = '';
     answer.value = '';
-
-    //closePeerConnection();
-    //closeLocalMedia();
 
     btnConn.disabled = false;
     btnLeave.disabled = true;
