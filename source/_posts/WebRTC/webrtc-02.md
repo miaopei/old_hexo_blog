@@ -469,19 +469,29 @@ TODO
 
 ### RTPPReceiver 发送器
 
-RTP Media
+RTP Media 里边两个重要的类：Receiver 和 Sender
 
 <img src="/images/imageWebRTC/Receiver和Sender.png">
+
+Receiver 和 Sender 共有的三个属性
 
 <img src="/images/imageWebRTC/RTCRtpSender属性.png">
 
 <img src="/images/imageWebRTC/RTCRtpReceiver.png">
+
+- getParameters  - 编解码器相关参数
+- getSynchronizationSources - 获取共享源（同步源），每一个媒体流都一个唯一的共享源
+- getContributingSources - 贡献来源，最主要用于混音和混频的情况
+- getStats - 获取统计信息
+- getCapabilities - 获取协商后的媒体能力
 
 ### RTPSender 发送器
 
 <img src="/images/imageWebRTC/RTCRtpSender.png">
 
 <img src="/images/imageWebRTC/RTPMedia.png">
+
+RTCRtpTransceiver 可以同时处理 sender 和 receiver
 
 <img src="/images/imageWebRTC/RTCRtpTransceiver.png">
 
@@ -505,15 +515,26 @@ TODO
 
 <img src="/images/imageWebRTC/option-01.png">
 
+- ordered - udp包不保证包是有序的（传输非音视频数据的时候包是否是按顺序到达的），webrtc传输音视频的时候使用的是udp，webrtc在upd之上做了一层协议可以保证消息是按顺序到达（底层如果包是乱序的对包进行排序）
+- maxPacketLifeTime/maxRetransmits - 包存活时间（包最大的存活时间/最大的传输次数），这两个参数是二选一，不能同时使用
+
 <img src="/images/imageWebRTC/option-02.png">
+
+- negotiated - 协商，在创建datachannel的时候可以进行协商
 
 <img src="/images/imageWebRTC/使用Options.png">
 
 <img src="/images/imageWebRTC/DataChannel事件.png">
 
+- onmessage - 当对方有数据过来的时候触发
+- onopen - 当创建好 datachannel 的时候触发
+
 <img src="/images/imageWebRTC/创建RTCDataChannel.png">
 
 <img src="/images/imageWebRTC/非音视频数据传输方式.png">
+
+- SCTP - stream control transport 流控
+- configurable - 可配置的
 
 - Reliability：可靠性
 - Delivery：可达性
@@ -531,21 +552,54 @@ TODO
 
 ## WebRTC实时数据传输网络协议详解
 
+> [浅析TCP字节流与UDP数据报的区别](<https://blog.csdn.net/oshirdey/article/details/38467391>)
+
+**tcp是流式传输， 这是什么意思？** 
+
+假设A给B通过TCP发了200字节， 然后又发了300字节， 此时B调用recv（设置预期接受1000个字节）， 那么请问B实际接受到多少字节？  根据我们之前讲得tcp粘包特性，可知， B端调用一次recv, 接受到的是500字节。
+
+所谓流式传输， 说白了， 就是管道中的水， 第一次给你发了200斤的水， 第二次给你发了300斤的水， 然后你在对端取的时候， 这200斤和300斤的水， 已经粘在一起了， 无法直接分割， 没有界限了。
+
+**udp是数据报传输，  什么意思？**  
+
+假设A给B通过udp发了200字节， 然后又发了300字节， 此时B调用recvfrom（设置预期接受1000个字节）， 那么请问B实际接受到多少字节？   写了个程序测了一下， 发现B调用recvfrom接收到的是200自己， 另外的300字节必须再次调用recvfrom来接收。
+
+所谓的数据报传输， 说白了， 就有消息和消息之间有天然的分割， 对端接收的时候， 不会出现粘包。 发10次， 就需要10次来接收。
+
 ### 【协议规范】RTP-SRTP协议头详解
 
 <img src="/images/imageWebRTC/协议栈.png">
 
 <img src="/images/imageWebRTC/传输协议.png">
 
+- DTLS - 证书检测，加密算法协商
+
 <img src="/images/imageWebRTC/RTP协议.png">
 
+- contributing source - 贡献源，CC - 表示贡献者一共有多少个（最多可以表示16个贡献者）
+
 <img src="/images/imageWebRTC/RTP字段说明.png">
+
+> [RTP报文头中的SSRC和CSRC](<https://blog.csdn.net/zhushentian/article/details/79804742>)
+>
+> [RTP/RTCP协议详解](https://www.cnblogs.com/foxmin/archive/2012/03/13/2393349.html)
+>
+> [RTP 有效负载(载荷)类型，RTP Payload Type](https://www.cnblogs.com/x_wukong/p/6391611.html)
+
+- 最大的 RTP 包包含的字节是1400多字节，压缩后的 H264 帧也能达到 1M 多。一般帧 封包 后的最后一个包 就是 M 位
+- timestamp - 同一个帧的所有封包的 timestamp 是相同的，并且 seq number 是连续的。H264 内部有封包的起始位和结束位，根据这些标识就可以将多个封包组成一个完整的帧
+- SSRC - SSRC的作用就是贡献者，视频和音频的SSRC是完全不相同的。同一个视频的SSRC有可能发生变化（产生冲突会发生变化，因为SSRC是随机数）
+- CSRC - 贡献者
 
 ### 【协议规范】RTCP 中的 SR 与 RR 报文
 
 <img src="/images/imageWebRTC/RTCP包.png">
 
 <img src="/images/imageWebRTC/RTCPPayloadType.png">
+
+- SDES - 中最重要的一个字段是 cname
+- FR - 请求关键帧
+- necho - 发现丢包重传
 
 <img src="/images/imageWebRTC/RTCPHeader.png">
 
@@ -556,6 +610,8 @@ TODO
 <img src="/images/imageWebRTC/SenderInfomationBlock.png">
 
 <img src="/images/imageWebRTC/SenderInfo说明.png">
+
+- NTP - 不同源之间的同步，比如音频和视频之间的同步
 
 <img src="/images/imageWebRTC/ReportBlock.png">
 
@@ -570,6 +626,8 @@ TODO
 <img src="/images/imageWebRTC/SDESitem.png">
 
 <img src="/images/imageWebRTC/SDES说明.png">
+
+- CNAME - 对于webrtc来说这个字段基本上是不用SDES这个消息，因为在SDP中就有CNAME的描述，除非音频源或者视频源发生了中断（or中转）会重新生成SSRC，然后再进行重新绑定
 
 <img src="/images/imageWebRTC/RTCPBYE.png">
 
