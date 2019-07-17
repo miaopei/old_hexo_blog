@@ -8,6 +8,8 @@ abbrlink: 39639
 date: 2019-05-19 10:14:50
 ---
 
+> [基于FFmpeg进行RTMP推流（二）](<https://www.jianshu.com/p/6b9ab2652147>)
+
 实战 - 基于ffmpeg，qt5，opencv视频课程
 
 ## 1. 基础知识
@@ -506,7 +508,479 @@ RTP载荷封装设计本文的网络传输是基于IP协议，所以最大传输
 
 - RTSP传输一般需要2-3个通道，命令和数据通道分离，HTTP和RTMP一般在TCP一个通道上传输命令和数据。
 
+## 10. 代码
 
+<details><summary>FFmpeg SDK解封和推流</summary>
 
+```c++
+#include <iostream>
+using namespace std;
+//引入头文件
+extern "C"
+{
+    #include "libavformat/avformat.h"
+    //引入时间
+    #include "libavutil/time.h"
+}
+//引入库
+#pragma comment(lib,"avformat.lib")
+//工具库，包括获取错误信息等
+#pragma comment(lib,"avutil.lib")
+//编解码的库
+#pragma comment(lib,"avcodec.lib")
 
+int avError(int errNum);
+
+static double r2d(AVRational r)
+{
+    return r.num == 0 || r.den == 0 ? 0. : (double)r.num / (double)r.den;
+}
+int main() {
+    int videoindex = -1;
+    //所有代码执行之前要调用av_register_all和avformat_network_init
+    //初始化所有的封装和解封装 flv mp4 mp3 mov。不包含编码和解码
+    av_register_all();
+
+    //初始化网络库
+    avformat_network_init();
+
+    //使用的相对路径，执行文件在bin目录下。test.mp4放到bin目录下即可
+    const char *inUrl = "hs.mp4";
+    //输出的地址
+    const char *outUrl = "rtmp://192.166.11.13/live";
+
+    //////////////////////////////////////////////////////////////////
+    //                   输入流处理部分
+    /////////////////////////////////////////////////////////////////
+    //打开文件，解封装 avformat_open_input
+    //AVFormatContext **ps  输入封装的上下文。包含所有的格式内容和所有的IO。如果是文件就是文件IO，网络就对应网络IO
+    //const char *url  路径
+    //AVInputFormt * fmt 封装器
+    //AVDictionary ** options 参数设置
+    AVFormatContext *ictx = NULL;
+
+    AVOutputFormat *ofmt = NULL;
+
+    //打开文件，解封文件头
+    int ret = avformat_open_input(&ictx, inUrl, 0, NULL);
+    if (ret < 0) {
+        return avError(ret);
+    }
+    cout << "avformat_open_input success!" << endl;
+    //获取音频视频的信息 .h264 flv 没有头信息
+    ret = avformat_find_stream_info(ictx, 0);
+    if (ret != 0) {
+        return avError(ret);
+    }
+    //打印视频视频信息
+    //0打印所有  inUrl 打印时候显示，
+    av_dump_format(ictx, 0, inUrl, 0);
+
+    //////////////////////////////////////////////////////////////////
+    //                   输出流处理部分
+    /////////////////////////////////////////////////////////////////
+    AVFormatContext * octx = NULL;
+    //如果是输入文件 flv可以不传，可以从文件中判断。如果是流则必须传
+    //创建输出上下文
+    ret = avformat_alloc_output_context2(&octx, NULL, "flv", outUrl);
+    if (ret < 0) {
+        return avError(ret);
+    }
+    cout << "avformat_alloc_output_context2 success!" << endl;
+
+    ofmt = octx->oformat;
+    cout << "nb_streams  " << ictx->nb_streams << endl;
+    int i;
+    for (i = 0; i < ictx->nb_streams; i++) {
+        //获取输入视频流
+        AVStream *in_stream = ictx->streams[i];
+        //为输出上下文添加音视频流（初始化一个音视频流容器）
+        AVStream *out_stream = avformat_new_stream(octx, in_stream->codec->codec);
+        if (!out_stream) {
+            printf("未能成功添加音视频流\n");
+            ret = AVERROR_UNKNOWN;
+        }
+
+        //将输入编解码器上下文信息 copy 给输出编解码器上下文
+        //ret = avcodec_copy_context(out_stream->codec, in_stream->codec);
+        ret = avcodec_parameters_copy(out_stream->codecpar, in_stream->codecpar);
+        //ret = avcodec_parameters_from_context(out_stream->codecpar, in_stream->codec);
+        //ret = avcodec_parameters_to_context(out_stream->codec, in_stream->codecpar);
+        if (ret < 0) {
+            printf("copy 编解码器上下文失败\n");
+        }
+        out_stream->codecpar->codec_tag = 0;
+
+        out_stream->codec->codec_tag = 0;
+        if (octx->oformat->flags & AVFMT_GLOBALHEADER) {
+            out_stream->codec->flags = out_stream->codec->flags | CODEC_FLAG_GLOBAL_HEADER;
+        }
+    }
+
+    //输入流数据的数量循环
+    for (i = 0; i < ictx->nb_streams; i++) {
+        if (ictx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
+            videoindex = i;
+            break;
+        }
+    }
+    av_dump_format(octx, 0, outUrl, 1);
+
+    //////////////////////////////////////////////////////////////////
+    //                   准备推流
+    /////////////////////////////////////////////////////////////////
+    //打开IO
+    ret = avio_open(&octx->pb, outUrl, AVIO_FLAG_WRITE);
+    if (ret < 0) {
+        avError(ret);
+    }
+
+    //写入头部信息
+    ret = avformat_write_header(octx, 0);
+    if (ret < 0) {
+        avError(ret);
+    }
+    cout << "avformat_write_header Success!" << endl;
+    //推流每一帧数据
+    //int64_t pts  [ pts*(num/den)  第几秒显示]
+    //int64_t dts  解码时间 [P帧(相对于上一帧的变化) I帧(关键帧，完整的数据) B帧(上一帧和下一帧的变化)]  有了B帧压缩率更高。
+    //uint8_t *data    
+    //int size
+    //int stream_index
+    //int flag
+    AVPacket pkt;
+    //获取当前的时间戳  微妙
+    long long start_time = av_gettime();
+    long long frame_index = 0;
+    while (1) {
+        //输入输出视频流
+        AVStream *in_stream, *out_stream;
+        //获取解码前数据
+        ret = av_read_frame(ictx, &pkt);
+        if (ret < 0) {
+            break;
+        }
+
+        /*
+        PTS（Presentation Time Stamp）显示播放时间
+        DTS（Decoding Time Stamp）解码时间
+        */
+        //没有显示时间（比如未解码的 H.264 ）
+        if (pkt.pts == AV_NOPTS_VALUE) {
+            //AVRational time_base：时基。通过该值可以把PTS，DTS转化为真正的时间。
+            AVRational time_base1 = ictx->streams[videoindex]->time_base;
+
+            //计算两帧之间的时间
+            /*
+            r_frame_rate 基流帧速率  （不是太懂）
+            av_q2d 转化为double类型
+            */
+            int64_t calc_duration = (double)AV_TIME_BASE / av_q2d(ictx->streams[videoindex]->r_frame_rate);
+
+            //配置参数
+            pkt.pts = (double)(frame_index*calc_duration) / (double)(av_q2d(time_base1)*AV_TIME_BASE);
+            pkt.dts = pkt.pts;
+            pkt.duration = (double)calc_duration / (double)(av_q2d(time_base1)*AV_TIME_BASE);
+        }
+
+        //延时
+        if (pkt.stream_index == videoindex) {
+            AVRational time_base = ictx->streams[videoindex]->time_base;
+            AVRational time_base_q = { 1,AV_TIME_BASE };
+            //计算视频播放时间
+            int64_t pts_time = av_rescale_q(pkt.dts, time_base, time_base_q);
+            //计算实际视频的播放时间
+            int64_t now_time = av_gettime() - start_time;
+
+            AVRational avr = ictx->streams[videoindex]->time_base;
+            cout << avr.num << " " << avr.den << "  "<<pkt.dts <<"  "<<pkt.pts<<"   "<< pts_time <<endl;
+            if (pts_time > now_time) {
+                //睡眠一段时间（目的是让当前视频记录的播放时间与实际时间同步）
+                av_usleep((unsigned int)(pts_time - now_time));
+            }
+        }
+
+        in_stream = ictx->streams[pkt.stream_index];
+        out_stream = octx->streams[pkt.stream_index];
+
+        //计算延时后，重新指定时间戳
+        pkt.pts = av_rescale_q_rnd(pkt.pts, in_stream->time_base, out_stream->time_base,(AVRounding) (AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));
+        pkt.dts = av_rescale_q_rnd(pkt.dts, in_stream->time_base, out_stream->time_base, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));
+        //到这一帧时候经历了多长时间
+        pkt.duration = (int)av_rescale_q(pkt.duration, in_stream->time_base, out_stream->time_base);
+        //字节流的位置，-1 表示不知道字节流位置
+        pkt.pos = -1;
+
+        if (pkt.stream_index == videoindex) {
+            printf("Send %8d video frames to output URL\n", frame_index);
+            frame_index++;
+        }
+
+        //向输出上下文发送（向地址推送）
+        ret = av_interleaved_write_frame(octx, &pkt);
+
+        if (ret < 0) {
+            printf("发送数据包出错\n");
+            break;
+        }
+
+        //释放
+        av_free_packet(&pkt);
+    }
+    return 0;
+}
+
+int avError(int errNum) {
+    char buf[1024];
+    //获取错误信息
+    av_strerror(errNum, buf, sizeof(buf));
+    cout << " failed! " << buf << endl;
+    return -1;
+}
+```
+
+</details>
+
+<details><summary>rtsp数据源rtmp推流 openCV磨皮</summary>
+
+```c++
+#include <opencv2/highgui.hpp>
+#include <iostream>
+extern "C"
+{
+    #include <libswscale/swscale.h>
+    #include <libavcodec/avcodec.h>
+    #include <libavformat/avformat.h>
+}
+#pragma comment(lib, "swscale.lib")
+#pragma comment(lib, "avcodec.lib")
+#pragma comment(lib, "avutil.lib")
+#pragma comment(lib, "avformat.lib")
+#pragma comment(lib,"opencv_world320.lib")
+using namespace std;
+using namespace cv;
+int main(int argc, char *argv[])
+{
+    //海康相机的rtsp url
+    char *inUrl = "rtsp://test:test123456@192.168.1.64";
+    //nginx-rtmp rtmp  直播服务器rtmp推流URL
+    char *outUrl = "rtmp://192.168.1.44/live";
+
+    //注册所有的编解码器
+    avcodec_register_all();
+
+    //注册所有的封装器
+    av_register_all();
+
+    //注册所有网络协议
+    avformat_network_init();
+
+    // opencv 接口
+    VideoCapture cam;
+    Mat frame;
+    namedWindow("video");
+
+    //像素格式转换上下文
+    SwsContext *vsc = NULL;
+
+    //输出的数据结构
+    AVFrame *yuv = NULL;
+
+    //编码器上下文
+    AVCodecContext *vc = NULL;
+
+    //rtmp flv 封装器
+    AVFormatContext *ic = NULL;
+
+    try{  
+        /// 1 使用opencv打开rtsp相机
+        cam.open(inUrl);
+        if (!cam.isOpened()){
+            throw exception("cam open failed!");
+        }
+        cout << inUrl << " cam open success" << endl;
+        int inWidth = cam.get(CAP_PROP_FRAME_WIDTH);
+        int inHeight = cam.get(CAP_PROP_FRAME_HEIGHT);
+        int fps = cam.get(CAP_PROP_FPS);
+
+        /// 2 初始化格式转换上下文
+        vsc = sws_getCachedContext(vsc,
+                 inWidth, inHeight, AV_PIX_FMT_BGR24,     // 源宽、高、像素格式
+                 inWidth, inHeight, AV_PIX_FMT_YUV420P,   // 目标宽、高、像素格式
+                 SWS_BICUBIC,  // 尺寸变化使用算法
+                 0, 0, 0
+                 );
+        if (!vsc){
+            throw exception("sws_getCachedContext failed!");
+        }
+        
+        /// 3 初始化输出的数据结构
+        yuv = av_frame_alloc();
+        yuv->format = AV_PIX_FMT_YUV420P;
+        yuv->width = inWidth;
+        yuv->height = inHeight;
+        yuv->pts = 0;
+        
+        // 配yuv空间
+        int ret = av_frame_get_buffer(yuv, 32);
+        if (ret != 0){
+            char buf[1024] = { 0 };
+            av_strerror(ret, buf, sizeof(buf) - 1);
+            throw exception(buf);
+        }
+
+        /// 4 初始化编码上下文
+        // a 找到编码器
+        AVCodec *codec = avcodec_find_encoder(AV_CODEC_ID_H264);
+        if (!codec){
+            throw exception("Can`t find h264 encoder!");
+        }
+        
+        // b 创建编码器上下文
+        vc = avcodec_alloc_context3(codec);
+        if (!vc){
+            throw exception("avcodec_alloc_context3 failed!");
+        }
+        
+        // c 配置编码器参数
+        vc->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;   // 全局参数
+        vc->codec_id = codec->id;
+        vc->thread_count = 8;
+
+        vc->bit_rate = 50 * 1024 * 8;    // 压缩后每秒视频的bit位大小 50kB
+        vc->width = inWidth;
+        vc->height = inHeight;
+        vc->time_base = { 1,fps };
+        vc->framerate = { fps,1 };
+
+        // 画面组的大小，多少帧一个关键帧
+        vc->gop_size = 50;
+        vc->max_b_frames = 0;
+        vc->pix_fmt = AV_PIX_FMT_YUV420P;
+        
+        // d 打开编码器上下文
+        ret = avcodec_open2(vc, 0, 0);
+        if (ret != 0){
+            char buf[1024] = { 0 };
+            av_strerror(ret, buf, sizeof(buf) - 1);
+            throw exception(buf);
+        }
+        cout << "avcodec_open2 success!" << endl;
+
+        /// 5 输出封装器和视频流配置
+        // a 创建输出封装器上下文
+        ret = avformat_alloc_output_context2(&ic, 0, "flv", outUrl);
+        if (ret != 0){
+            char buf[1024] = { 0 };
+            av_strerror(ret, buf, sizeof(buf) - 1);
+            throw exception(buf);
+        }
+        
+        // b 添加视频流
+        AVStream *vs = avformat_new_stream(ic, NULL);
+        if (!vs){
+            throw exception("avformat_new_stream failed");
+        }
+        vs->codecpar->codec_tag = 0;
+        
+        // 从编码器复制参数
+        avcodec_parameters_from_context(vs->codecpar, vc);
+        av_dump_format(ic, 0, outUrl, 1);
+
+        /// 6 打开rtmp 的网络输出IO
+        ret = avio_open(&ic->pb, outUrl, AVIO_FLAG_WRITE);
+        if (ret != 0){
+            char buf[1024] = { 0 };
+            av_strerror(ret, buf, sizeof(buf) - 1);
+            throw exception(buf);
+        }
+
+        // 写入封装头
+        ret = avformat_write_header(ic, NULL);
+        if (ret != 0){
+            char buf[1024] = { 0 };
+            av_strerror(ret, buf, sizeof(buf) - 1);
+            throw exception(buf);
+        }
+
+        AVPacket pack;
+        memset(&pack, 0, sizeof(pack));
+        int vpts = 0;
+        for (;;){
+            /// 取rtsp视频帧，解码视频帧
+            if (!cam.grab()){
+                continue;
+            }
+            
+            /// yuv转换为rgb
+            if (!cam.retrieve(frame)){
+                continue;
+            }
+            //imshow("video", frame);
+            //waitKey(1);
+
+            /// rgb to yuv
+            // 输入的数据结构
+            uint8_t *indata[AV_NUM_DATA_POINTERS] = { 0 };
+            //indata[0] bgrbgrbgr
+            //plane indata[0] bbbbb indata[1]ggggg indata[2]rrrrr 
+            indata[0] = frame.data;
+            int insize[AV_NUM_DATA_POINTERS] = { 0 };
+            
+            // 一行（宽）数据的字节数
+            insize[0] = frame.cols * frame.elemSize();
+            int h = sws_scale(vsc, indata, insize, 0, frame.rows,  // 源数据
+                              yuv->data, yuv->linesize);
+            if (h <= 0){
+                continue;
+            }
+            //cout << h << " " << flush;
+            
+            /// h264
+            yuv->pts = vpts;
+            vpts++;
+            ret = avcodec_send_frame(vc, yuv);
+            if (ret != 0)
+                continue;
+
+            ret = avcodec_receive_packet(vc, &pack);
+            if (ret != 0 || pack.size > 0){
+                //cout << "*" << pack.size << flush;
+            }
+            else{
+                continue;
+            }
+            
+            // 推流
+            pack.pts = av_rescale_q(pack.pts, vc->time_base, vs->time_base);
+            pack.dts = av_rescale_q(pack.dts, vc->time_base, vs->time_base);
+            pack.duration = av_rescale_q(pack.duration, vc->time_base, vs->time_base);
+            ret = av_interleaved_write_frame(ic, &pack);
+            if (ret == 0){
+                cout << "#" << flush;
+            }
+        }
+    }
+    catch (exception &ex){
+        if (cam.isOpened())
+            cam.release();
+        
+        if (vsc){
+            sws_freeContext(vsc);
+            vsc = NULL;
+        }
+
+        if (vc){
+            avio_closep(&ic->pb);
+            avcodec_free_context(&vc);
+        }
+
+        cerr << ex.what() << endl;
+    }
+    getchar();
+    return 0;
+}
+```
+
+</details>
 
