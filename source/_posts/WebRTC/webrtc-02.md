@@ -784,6 +784,88 @@ TODO
 >
 > [Mac下AndroidStudio中手动配置Gradle](<https://www.jianshu.com/p/36e569c1bb12>)
 
+### socket.io 原理详解
+
+> [socket.io 原理详解](<https://blog.csdn.net/u013243347/article/details/86669988>)
+
+### 音视频数据采集与控制
+
+> [WebRTC音频引擎实现分析](<https://www.jianshu.com/p/5a8a91cd84ef>)
+>
+> [WebRTC手记之本地音频采集](https://www.cnblogs.com/fangkm/p/4374668.html)
+>
+> [WebRTC音视频同步分析](https://blog.csdn.net/lincaig/article/details/81209895#%E5%9B%9B%E3%80%81WebRTC%E9%9F%B3%E8%A7%86%E9%A2%91%E5%90%8C%E6%AD%A5%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+>
+> [webrtc数据接收、解码、渲染等接口调用流程图](<https://blog.csdn.net/lincaig/article/details/86500656>)
+>
+> [WebRTC视频采集和编码过程](<https://blog.csdn.net/lincaig/article/details/79587417>)
+>
+> [H264中4x4、8x8和16x16尺寸对应场景](<https://blog.csdn.net/lincaig/article/details/84594764>)
+
+### NAT 穿越
+
+> [ICE协议下NAT穿越的实现（STUN&TURN）](<https://www.jianshu.com/p/84e8c78ca61d>)
+>
+> [WebRTC中NAT穿透浅析](https://www.cnblogs.com/xiaofengfengzhang/p/6590687.html)
+
+### ICE 原理
+
+> [（转）NAT与NAT穿越学习总结--ICE过程讲的不错](https://www.cnblogs.com/wangle1001986/p/6083871.html)
+>
+> [ICE 原理学习](<https://blog.csdn.net/voipmaker/article/details/8453702>)
+
+### 媒体协商过程
+
+> [完整WebRTC技术及应用概要](<http://www.ctiforum.com/news/guandian/549857.html>)
+>
+> [WebRTC SDP协议](<https://blog.csdn.net/qq_21358401/article/details/79341031>)
+>
+> [WebRTC 中的 SDP 协议](<https://www.jianshu.com/p/026c7ef271cb>)
+
+### 网络处理与流程
+
+> [WEBRTC 视频接收原理及流程](<https://blog.csdn.net/doitsjz/article/details/52022642>)
+>
+> [webrtc(11) 数据接收——总流程](<https://blog.csdn.net/NB_vol_1/article/details/82119450>)
+>
+> [WebRTC 是如何进行通信的，WebRCT 的三种网络结构 | 野狗 WebRTC 专栏](<https://blog.wilddog.com/?p=2196>)
+>
+> [WebRTC 音视频引擎研究 -- 整体架构分析](<http://ngudream.com/2016/01/18/webrtc-structure/>)
+
+### 如何实现并规模高并发
+
+> [即构自研WebRTC网关服务器架构实践](<https://juejin.im/post/5b568f7a6fb9a04fad3a1b9f>)
+>
+> [WebRTC、标准测试、大前端技术、实时网络质量……RTC2018帮你“划重点”！](<https://new.qq.com/omn/20180909/20180909A10XFQ.html>)
+
+### 如何更好的利用网络
+
+> [WebRTC 点对点直播](<https://cloud.tencent.com/developer/article/1004661>)
+
+### 回音消除与降噪
+
+> [WebRTC音频降噪使用](<https://blog.csdn.net/tanningzhong/article/details/88664338>)
+>
+> [webrtc--AudioProcessing-- 音频降噪的处理过程](<http://www.voidcn.com/article/p-wcltdqbt-bck.html>)
+>
+> [PCM音频处理——使用WebRTC音频降噪模块与其他方式的对比](<https://www.jianshu.com/p/77a363960711>)
+>
+> [音频降噪在 58 直播中的研究与实现](<https://www.infoq.cn/article/QOp4IOao_DJJ6eNsIOXp>)
+>
+> [单独编译和使用webrtc音频回声消除模块(附完整源码+测试音频文件)](<https://www.cnblogs.com/mod109/p/5469799.html>)
+>
+> [借助Webrtc音频采集、降噪、回音消除、静音检测、编解码、播放等功能，剥离Webrtc自带的RTP传输协议，使用私有的协议进行传输。从而实现自己的实时语音聊天功能。](<https://gitee.com/icedbeer/Webrtc_Audio>)
+>
+> [webrtc学习2-音频预处理模块](http://www.cclk.cc/2017/08/14/webrtc/webrtc%E5%AD%A6%E4%B9%A02-%E9%9F%B3%E9%A2%91%E9%A2%84%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97/)
+
+### OpenCV
+
+TODO
+
+### OpenGL视频渲染
+
+TODO
+
 WebRTC的分层协议图：
 
 <img src="/images/imageWebRTC/webrtc分层协议图.png">
