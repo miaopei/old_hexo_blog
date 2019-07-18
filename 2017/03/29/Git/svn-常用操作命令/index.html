@@ -676,8 +676,8 @@ svn add --non-recursive newsubdir</code></pre><p>​     在进入这个newsubdi
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/31/HTTP/lighttpd-配置https/" rel="prev" title="lighttpd 配置https">
-                lighttpd 配置https <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/31/HTTP/lighttpd-fastcgi/" rel="prev" title="lighttpd+fastcgi">
+                lighttpd+fastcgi <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -722,18 +722,18 @@ svn add --non-recursive newsubdir</code></pre><p>​     在进入这个newsubdi
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
-
       
-
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
+        
+            <ul class="sidebar-nav motion-element">
+                <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+                    文章目录
+                </li>
+                <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+                    站点概览
+                </li>
+            </ul>
+        
       
 
       <div class="site-overview-wrap sidebar-panel">
@@ -944,22 +944,25 @@ svn add --non-recursive newsubdir</code></pre><p>​     在进入这个newsubdi
       </div>
 
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+        
+        <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+                <div class="post-toc">
 
-            
                 
-            
+                    
+                
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#检出"><span class="nav-number">1.</span> <span class="nav-text">检出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出（导出一个干净的不带-svn文件夹的目录树）"><span class="nav-number">2.</span> <span class="nav-text">导出（导出一个干净的不带.svn文件夹的目录树）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加新文件"><span class="nav-number">3.</span> <span class="nav-text">添加新文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交"><span class="nav-number">4.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新文件"><span class="nav-number">5.</span> <span class="nav-text">更新文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件"><span class="nav-number">6.</span> <span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加锁-解锁"><span class="nav-number">7.</span> <span class="nav-text">加锁 / 解锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较差异"><span class="nav-number">8.</span> <span class="nav-text">比较差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件或者目录状态"><span class="nav-number">9.</span> <span class="nav-text">查看文件或者目录状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看日志"><span class="nav-number">10.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件详细信息"><span class="nav-number">11.</span> <span class="nav-text">查看文件详细信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVN-帮助"><span class="nav-number">12.</span> <span class="nav-text">SVN 帮助</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看版本库下的文件和目录列表"><span class="nav-number">13.</span> <span class="nav-text">查看版本库下的文件和目录列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建纳入版本控制下的新目录"><span class="nav-number">14.</span> <span class="nav-text">创建纳入版本控制下的新目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复本地修改"><span class="nav-number">15.</span> <span class="nav-text">恢复本地修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把工作拷贝更新到别的URL"><span class="nav-number">16.</span> <span class="nav-text">把工作拷贝更新到别的URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决冲突"><span class="nav-number">17.</span> <span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不checkout而查看输出特定文件或URL的内容"><span class="nav-number">18.</span> <span class="nav-text">不checkout而查看输出特定文件或URL的内容</span></a></li></ol></div>
-            
+                
+                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#检出"><span class="nav-number">1.</span> <span class="nav-text">检出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出（导出一个干净的不带-svn文件夹的目录树）"><span class="nav-number">2.</span> <span class="nav-text">导出（导出一个干净的不带.svn文件夹的目录树）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加新文件"><span class="nav-number">3.</span> <span class="nav-text">添加新文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交"><span class="nav-number">4.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新文件"><span class="nav-number">5.</span> <span class="nav-text">更新文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除文件"><span class="nav-number">6.</span> <span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加锁-解锁"><span class="nav-number">7.</span> <span class="nav-text">加锁 / 解锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较差异"><span class="nav-number">8.</span> <span class="nav-text">比较差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件或者目录状态"><span class="nav-number">9.</span> <span class="nav-text">查看文件或者目录状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看日志"><span class="nav-number">10.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件详细信息"><span class="nav-number">11.</span> <span class="nav-text">查看文件详细信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVN-帮助"><span class="nav-number">12.</span> <span class="nav-text">SVN 帮助</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看版本库下的文件和目录列表"><span class="nav-number">13.</span> <span class="nav-text">查看版本库下的文件和目录列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建纳入版本控制下的新目录"><span class="nav-number">14.</span> <span class="nav-text">创建纳入版本控制下的新目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复本地修改"><span class="nav-number">15.</span> <span class="nav-text">恢复本地修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把工作拷贝更新到别的URL"><span class="nav-number">16.</span> <span class="nav-text">把工作拷贝更新到别的URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决冲突"><span class="nav-number">17.</span> <span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不checkout而查看输出特定文件或URL的内容"><span class="nav-number">18.</span> <span class="nav-text">不checkout而查看输出特定文件或URL的内容</span></a></li></ol></div>
+                
 
-          </div>
-        </div>
-      <!--/noindex-->
+                </div>
+            </div>
+        <!--/noindex-->
+        
       
+
 
       
 
