@@ -11,7 +11,9 @@ type: page
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>
 
-> 一切都会好的，也许不是今天，但是最终都会好的.
+> 呲牙一笑：
+>
+> 学了点国语的老外。早晨和女秘书打招呼“你吗好？”小姐瞪了他一眼，他一楞，马上又对她说：“妈，你好！”
 
 *~~这个人很懒，什么都没有留下~~*
 
@@ -32,9 +34,9 @@ type: page
 
 ***本站介绍***：博客采用 [Hexo](https://hexo.io/zh-cn/docs/) + Git 搭建，使用 [Next](http://theme-next.iissnan.com/) 主题。
 
-## 关于未来
 
-这是一个很沉重的话题。为了生活，为了不饿着，有规划还是有必要的。短期一周、一个月规划；长期一年、三年、五年规划。人到一定年纪真的是身不由己，本着年轻人的心态过着老年人的生活。
+
+
 
 ---
 
