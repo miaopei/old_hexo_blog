@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/07/19/tea/
 http://miaopei.github.io/2019/07/10/MacOS/mac-shell/
 http://miaopei.github.io/2019/07/02/Architect/架构师之路/
 http://miaopei.github.io/2019/05/29/实用的计算机工具库/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2018/06/15/RPC机制及原理/
 http://miaopei.github.io/2018/06/08/Program-C/c-open-project/
 http://miaopei.github.io/2018/05/13/practical-programming-books/README/
 http://miaopei.github.io/2018/03/24/Vim/vim编辑常用快捷键/
-http://miaopei.github.io/2018/03/23/Vim/vimProgramHotKey/
