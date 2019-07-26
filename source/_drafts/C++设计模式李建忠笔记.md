@@ -1,3 +1,6 @@
+---
+abbrlink: 2
+---
 
 
 > [【设计模式】C++设计模式（全26讲）](<https://www.bilibili.com/video/av52251106/?p=2>)
