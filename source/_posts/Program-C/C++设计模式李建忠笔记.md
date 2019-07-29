@@ -1,5 +1,11 @@
 ---
-abbrlink: 2
+title: C++设计模式(李建忠视频笔记)
+tags: c/c++
+reward: true
+categories: c/c++
+toc: true
+abbrlink: 58357
+date: 2016-07-16 18:14:50
 ---
 
 
@@ -13,6 +19,8 @@ abbrlink: 2
 - 掌握面向对象设计原则
 - 掌握重构技法改善设计
 - 掌握GOF 核心设计模式
+
+<!-- more -->
 
 ### 什么是设计模式
 
