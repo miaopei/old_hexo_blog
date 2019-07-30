@@ -213,7 +213,7 @@ date: 2016-07-16 18:14:50
 
 - Template Method   --  模板方法
 
-- Observer / Event    --   事件模式
+- Observer / Event    --   观察者模式
 
 - Strategy   --   策略模式
 
@@ -231,7 +231,7 @@ date: 2016-07-16 18:14:50
 
 - Prototype  -- 原型模式
 
-- Builder  -- 构建器模式
+- Builder  -- 构建器模式  -- 目前已经用的不多
 
 **对象性能：**
 
@@ -245,13 +245,13 @@ date: 2016-07-16 18:14:50
 
 - Proxy  -- 代理模式
 
-- Mediator  -- 中介者模式
+- Mediator  -- 中介者模式 -- 目前已经用的不多
 
 - Adapter  -- 适配器模式
 
 **状态变化：**
 
-- Memento -- 备忘录模式
+- Memento -- 备忘录模式 -- 目前已经用的不多
 
 - State  -- 状态模式
 
@@ -259,19 +259,19 @@ date: 2016-07-16 18:14:50
 
 - Composite -- 组合模式
 
-- Iterator  -- 迭代器模式
+- Iterator  -- 迭代器模式 -- 目前已经用的不多
 
-- Chain of Resposibility  -- 职责链模式
+- Chain of Resposibility  -- 职责链模式 -- 目前已经用的不多
 
 **行为变化：**
 
-- Command -- 命令行模式
+- Command -- 命令行模式 -- 目前已经用的不多
 
-- Visitor -- 访问器模式
+- Visitor -- 访问器模式 -- 目前已经用的不多
 
 **领域问题：**
 
-- Interpreter  -- 解析器模式
+- Interpreter  -- 解析器模式 -- 目前已经用的不多
 
 ### 重构获得模式 Refactoring to Patterns
 
