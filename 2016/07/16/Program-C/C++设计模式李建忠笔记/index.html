@@ -114,15 +114,16 @@
 
 
 
-  <meta name="description" content="【设计模式】C++设计模式（全26讲）  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
+  <meta name="description" content="【设计模式】C++设计模式（全26讲）   设计模式的软件处理的核心：抽象稳定，隔离变化。实现可扩展、灵活、低耦合、稳定的框架。  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
 <meta name="keywords" content="c&#x2F;c++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++设计模式(李建忠视频笔记)">
 <meta property="og:url" content="http://miaopei.github.io/2016/07/16/Program-C/C++设计模式李建忠笔记/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
-<meta property="og:description" content="【设计模式】C++设计模式（全26讲）  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
+<meta property="og:description" content="【设计模式】C++设计模式（全26讲）   设计模式的软件处理的核心：抽象稳定，隔离变化。实现可扩展、灵活、低耦合、稳定的框架。  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E4%BB%8E%E5%B0%81%E8%A3%85%E5%8F%98%E5%8C%96%E8%A7%92%E5%BA%A6%E5%AF%B9%E6%A8%A1%E5%BC%8F%E5%88%86%E7%B1%BB.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png">
@@ -152,10 +153,10 @@
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/cplusplus%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E5%8F%98%E5%8C%96%E7%82%B9%E5%92%8C%E7%A8%B3%E5%AE%9A%E7%82%B9.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageProgramC/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81.png">
-<meta property="og:updated_time" content="2019-07-29T11:19:43.273Z">
+<meta property="og:updated_time" content="2019-07-30T08:04:30.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++设计模式(李建忠视频笔记)">
-<meta name="twitter:description" content="【设计模式】C++设计模式（全26讲）  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
+<meta name="twitter:description" content="【设计模式】C++设计模式（全26讲）   设计模式的软件处理的核心：抽象稳定，隔离变化。实现可扩展、灵活、低耦合、稳定的框架。  设计模式简介目标：  理解松耦合设计思想 掌握面向对象设计原则 掌握重构技法改善设计 掌握GOF 核心设计模式">
 <meta name="twitter:image" content="http://miaopei.github.io/images/imageProgramC/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99.png">
 
 
@@ -487,7 +488,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-29 19:19:43" itemprop="dateModified" datetime="2019-07-29T19:19:43+08:00">2019-07-29</time>
+                <time title="修改时间：2019-07-30 16:04:30" itemprop="dateModified" datetime="2019-07-30T16:04:30+08:00">2019-07-30</time>
               
             
           </span>
@@ -533,7 +534,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">12.9k</span>
+                <span title="本文字数">13k</span>
               
 
               
@@ -570,6 +571,9 @@
         <blockquote>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL2F2NTIyNTExMDYvP3A9Mg==" title="https://www.bilibili.com/video/av52251106/?p=2">【设计模式】C++设计模式（全26讲）<i class="fa fa-external-link"></i></span></p>
 </blockquote>
+<blockquote>
+<p>设计模式的软件处理的核心：<strong>抽象稳定，隔离变化</strong>。实现可扩展、灵活、低耦合、稳定的框架。</p>
+</blockquote>
 <h2 id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介</h2><p>目标：</p>
 <ul>
 <li>理解松耦合设计思想</li>
@@ -580,8 +584,7 @@
 <a id="more"></a>
 
 <h3 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h3><blockquote>
-<p>“每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心。这样，你就能一次又一次地使用该方案而不必做重复劳动”。</p>
-<p>​                                                                                                                    ——Christopher Alexander</p>
+<p>“每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心。这样，你就能一次又一次地使用该方案而不必做重复劳动”。——Christopher Alexander</p>
 </blockquote>
 <h3 id="从面向对象谈起"><a href="#从面向对象谈起" class="headerlink" title="从面向对象谈起"></a>从面向对象谈起</h3><p><strong>底层思维</strong>：向下，如何把握机器底层从微观理解对象构造</p>
 <ul>
@@ -616,8 +619,7 @@
 </ul>
 <p><strong>向上</strong>：深刻把握面向对象机制所带来的抽象意义，理解如何使用这些机制来表达现实世界，掌握什么是“好的面向对象设计”</p>
 <h3 id="软件设计固有的复杂性"><a href="#软件设计固有的复杂性" class="headerlink" title="软件设计固有的复杂性"></a>软件设计固有的复杂性</h3><blockquote>
-<p>建筑商从来不会去想给一栋已建好的100层高的楼房底下再新修一个小地下室——这样做花费极大而且注定要失败。然而令人惊奇的是，软件系统的用户在要求作出类似改变时却不会仔细考虑，而且他们认为这只是需要简单编程的事。 </p>
-<p>​                                                                    ——Object-Oriented Analysis and Design with Applications</p>
+<p>建筑商从来不会去想给一栋已建好的100层高的楼房底下再新修一个小地下室——这样做花费极大而且注定要失败。然而令人惊奇的是，软件系统的用户在要求作出类似改变时却不会仔细考虑，而且他们认为这只是需要简单编程的事。 ——Object-Oriented Analysis and Design with Applications</p>
 </blockquote>
 <h3 id="软件设计复杂的根本原因"><a href="#软件设计复杂的根本原因" class="headerlink" title="软件设计复杂的根本原因"></a>软件设计复杂的根本原因</h3><p><strong>变化</strong></p>
 <ul>
@@ -750,7 +752,8 @@
 <li><p>对象模式处理对象间的动态关系。 </p>
 </li>
 </ul>
-<h3 id="从封装变化角度对模式分类"><a href="#从封装变化角度对模式分类" class="headerlink" title="从封装变化角度对模式分类"></a>从封装变化角度对模式分类</h3><p><strong>组件协作</strong>：</p>
+<h3 id="从封装变化角度对模式分类"><a href="#从封装变化角度对模式分类" class="headerlink" title="从封装变化角度对模式分类"></a>从封装变化角度对模式分类</h3><p><img src="/images/imageProgramC/%E4%BB%8E%E5%B0%81%E8%A3%85%E5%8F%98%E5%8C%96%E8%A7%92%E5%BA%A6%E5%AF%B9%E6%A8%A1%E5%BC%8F%E5%88%86%E7%B1%BB.png" alt="从封装变化角度对模式分类"></p>
+<p><strong>组件协作</strong>：</p>
 <ul>
 <li><p>Template Method   –  模板方法</p>
 </li>
@@ -761,66 +764,66 @@
 </ul>
 <p><strong>单一职责：</strong></p>
 <ul>
-<li><p>Decorator</p>
+<li><p>Decorator – 装饰器模式</p>
 </li>
-<li><p>Bridge</p>
+<li><p>Bridge  – 桥接模式</p>
 </li>
 </ul>
 <p><strong>对象创建:</strong></p>
 <ul>
-<li><p>Factory Method</p>
+<li><p>Factory Method  – 工厂方法</p>
 </li>
-<li><p>Abstract Factory</p>
+<li><p>Abstract Factory  –  抽象工厂</p>
 </li>
-<li><p>Prototype</p>
+<li><p>Prototype  – 原型模式</p>
 </li>
-<li><p>Builder</p>
+<li><p>Builder  – 构建器模式</p>
 </li>
 </ul>
 <p><strong>对象性能：</strong></p>
 <ul>
-<li><p>Singleton</p>
+<li><p>Singleton  – 单件模式</p>
 </li>
-<li><p>Flyweight</p>
+<li><p>Flyweight  – 享元模式</p>
 </li>
 </ul>
 <p><strong>接口隔离:</strong></p>
 <ul>
-<li><p>Façade</p>
+<li><p>Façade  – 门面模式</p>
 </li>
-<li><p>Proxy</p>
+<li><p>Proxy  – 代理模式</p>
 </li>
-<li><p>Mediator</p>
+<li><p>Mediator  – 中介者模式</p>
 </li>
-<li><p>Adapter</p>
+<li><p>Adapter  – 适配器模式</p>
 </li>
 </ul>
 <p><strong>状态变化：</strong></p>
 <ul>
-<li><p>Memento</p>
+<li><p>Memento – 备忘录模式</p>
 </li>
-<li><p>State</p>
+<li><p>State  – 状态模式</p>
 </li>
 </ul>
 <p><strong>数据结构：</strong></p>
 <ul>
-<li><p>Composite</p>
+<li><p>Composite – 组合模式</p>
 </li>
-<li><p>Iterator</p>
+<li><p>Iterator  – 迭代器模式</p>
 </li>
-<li><p>Chain of Resposibility</p>
+<li><p>Chain of Resposibility  – 职责链模式</p>
 </li>
 </ul>
 <p><strong>行为变化：</strong></p>
 <ul>
-<li><p>Command</p>
+<li><p>Command – 命令行模式</p>
 </li>
-<li><p>Visitor</p>
+<li><p>Visitor – 访问器模式</p>
 </li>
 </ul>
 <p><strong>领域问题：</strong></p>
 <ul>
-<li>Interpreter </li>
+<li>Interpreter  – 解析器模式</li>
 </ul>
 <h3 id="重构获得模式-Refactoring-to-Patterns"><a href="#重构获得模式-Refactoring-to-Patterns" class="headerlink" title="重构获得模式 Refactoring to Patterns"></a>重构获得模式 Refactoring to Patterns</h3><ul>
 <li><p>面向对象设计模式是“好的面向对象设计”，所谓“好的面向对 象设计”指是那些可以满足 “应对变化，提高复用”的设计 。 </p>
@@ -858,8 +861,7 @@
 </li>
 </ul>
 <h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>定义一个操作中的算法的骨架 (稳定)，而将一些步骤延迟  (变化) 到子类中。Template Method使得子类可以不改变 (复用) 一个算法的结构即可重定义(override 重写)该算法的某些特定步骤。 </p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>定义一个操作中的算法的骨架 (稳定)，而将一些步骤延迟  (变化) 到子类中。Template Method使得子类可以不改变 (复用) 一个算法的结构即可重定义(override 重写)该算法的某些特定步骤。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）"><a href="#结构（Structure）" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.png" alt="模板方法模式"></p>
 <h3 id="要点总结"><a href="#要点总结" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -889,8 +891,7 @@
 </li>
 </ul>
 <h3 id="模式定义-1"><a href="#模式定义-1" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>定义一系列算法，把它们一个个封装起来，并且使它们可互相替换（变化）。该模式使得算法可独立于使用它的客户程序(稳定)而变化（扩展，子类化）。 </p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>定义一系列算法，把它们一个个封装起来，并且使它们可互相替换（变化）。该模式使得算法可独立于使用它的客户程序(稳定)而变化（扩展，子类化）。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-1"><a href="#结构（Structure）-1" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.png" alt="策略模式"></p>
 <h3 id="要点总结-1"><a href="#要点总结-1" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -920,8 +921,7 @@
 </li>
 </ul>
 <h3 id="模式定义-2"><a href="#模式定义-2" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>定义对象间的一种一对多（变化）的依赖关系，以便当一个 对象(Subject)的状态发生改变时，所有依赖于它的对象都得到通知并自动更新。 </p>
-<p>​                                                                                                                                    ——《设计模式》GoF</p>
+<p>定义对象间的一种一对多（变化）的依赖关系，以便当一个 对象(Subject)的状态发生改变时，所有依赖于它的对象都得到通知并自动更新。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-2"><a href="#结构（Structure）-2" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="观察者模式"></p>
 <h3 id="要点总结-2"><a href="#要点总结-2" class="headerlink" title="要点总结"></a><strong>要点总结</strong></h3><ul>
@@ -953,8 +953,7 @@
 </li>
 </ul>
 <h3 id="模式定义-3"><a href="#模式定义-3" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>动态（组合）地给一个对象增加一些额外的职责。就增加功能而言，Decorator模式比生成子类（继承）更为灵活（消除重复代码 &amp; 减少子类个数）。 </p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>动态（组合）地给一个对象增加一些额外的职责。就增加功能而言，Decorator模式比生成子类（继承）更为灵活（消除重复代码 &amp; 减少子类个数）。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-3"><a href="#结构（Structure）-3" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="装饰器模式"></p>
 <h3 id="要点总结-3"><a href="#要点总结-3" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -985,8 +984,7 @@
 </li>
 </ul>
 <h3 id="模式定义-4"><a href="#模式定义-4" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>将抽象部分(业务功能)与实现部分(平台实现)分离，使它们都可以独立地变化。 </p>
-<p>​                                                                                                                    ——《设计模式》GoF</p>
+<p>将抽象部分(业务功能)与实现部分(平台实现)分离，使它们都可以独立地变化。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-4"><a href="#结构（Structure）-4" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E6%A1%A5%E6%A8%A1%E5%BC%8F.png" alt="桥模式"></p>
 <h3 id="要点总结-4"><a href="#要点总结-4" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1022,8 +1020,7 @@
 </li>
 </ul>
 <h3 id="模式定义-5"><a href="#模式定义-5" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使得一个类的实例化延迟（目的：解耦，手段：虚函数）到子类。 </p>
-<p>​                                                                                                                    ——《设计模式》GoF</p>
+<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使得一个类的实例化延迟（目的：解耦，手段：虚函数）到子类。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-5"><a href="#结构（Structure）-5" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95.png" alt="工厂方法"></p>
 <h3 id="要点总结-5"><a href="#要点总结-5" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1059,8 +1056,7 @@
 </li>
 </ul>
 <h3 id="模式定义-6"><a href="#模式定义-6" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定它们具体的类。 </p>
-<p>​                                                                                                                                    ——《设计模式》GoF</p>
+<p>提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定它们具体的类。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-6"><a href="#结构（Structure）-6" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95.png" alt="抽象工厂方法"></p>
 <h3 id="要点总结-6"><a href="#要点总结-6" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1094,8 +1090,7 @@
 <li>如何应对这种变化？如何向“客户程序（使用这些对象的程序）”隔离出“这些易变对象”，从而使得“依赖这些易变对象的客户程序”不随着需求改变而改变？</li>
 </ul>
 <h3 id="模式定义-7"><a href="#模式定义-7" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>使用原型实例指定创建对象的种类，然后通过<strong>拷贝</strong>这些原型来创建新的对象。</p>
-<p>​                                                                                                                                ——《设计模式》GoF</p>
+<p>使用原型实例指定创建对象的种类，然后通过<strong>拷贝</strong>这些原型来创建新的对象。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-7"><a href="#结构（Structure）-7" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F.png" alt="原型模式"></p>
 <h3 id="要点总结-7"><a href="#要点总结-7" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1128,8 +1123,7 @@
 </li>
 </ul>
 <h3 id="模式定义-8"><a href="#模式定义-8" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p> 将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)。 </p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p> 将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)。 ——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-8"><a href="#结构（Structure）-8" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E6%9E%84%E5%BB%BA%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="构建器模式"></p>
 <h3 id="要点总结-8"><a href="#要点总结-8" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1160,8 +1154,7 @@
 <li>这应该是类设计者的责任，而不是使用者的责任。</li>
 </ul>
 <h3 id="模式定义-9"><a href="#模式定义-9" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>保证一个类仅有一个实例，并提供一个该实例的全局访问点。</p>
-<p>​                                                                                                                ——《设计模式》GoF</p>
+<p>保证一个类仅有一个实例，并提供一个该实例的全局访问点。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-9"><a href="#结构（Structure）-9" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E5%8D%95%E4%BB%B6%E6%A8%A1%E5%BC%8F.png" alt="单件模式"></p>
 <h3 id="要点总结-9"><a href="#要点总结-9" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1188,8 +1181,7 @@
 <li>如何在避免大量细粒度对象问题的同时，让外部客户程序任然能够透明地使用面向对象的方式来进行操作？</li>
 </ul>
 <h3 id="模式定义-10"><a href="#模式定义-10" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>运用共享技术有效地支持大量细粒度的对象。</p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>运用共享技术有效地支持大量细粒度的对象。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-10"><a href="#结构（Structure）-10" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F.png" alt="享元模式"></p>
 <h3 id="要点总结-10"><a href="#要点总结-10" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1219,8 +1211,7 @@
 <li>如何简化外部客户程序和系统间的交互接口？如何将外部客户程序的演化和内部子系统的变化之间的依赖相互解耦？</li>
 </ul>
 <h3 id="模式定义-11"><a href="#模式定义-11" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>为子系统的一组接口提供一个一致（稳定）的界面，Facade 模式定义了一个高层接口，这个接口使得这一子系统更加容易使用（复用）。</p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>为子系统的一组接口提供一个一致（稳定）的界面，Facade 模式定义了一个高层接口，这个接口使得这一子系统更加容易使用（复用）。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-11"><a href="#结构（Structure）-11" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F.png" alt="门面模式"></p>
 <h3 id="要点总结-11"><a href="#要点总结-11" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1249,8 +1240,7 @@
 <li>如何在不失去透明操作对象的同事来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式。</li>
 </ul>
 <h3 id="模式定义-12"><a href="#模式定义-12" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>为其他对象提供一种代理以控制（隔离，使用接口）对这个对象的访问。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>为其他对象提供一种代理以控制（隔离，使用接口）对这个对象的访问。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-12"><a href="#结构（Structure）-12" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" alt="代理模式"></p>
 <h3 id="要点总结-12"><a href="#要点总结-12" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1279,8 +1269,7 @@
 <li>如何应对这种 “迁移的变化”？ 如何既能利用现有对象的良好实现，同时又能满足新的应用环境所要求的接口？</li>
 </ul>
 <h3 id="模式定义-13"><a href="#模式定义-13" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>将一个类的接口转换成客户希望的另一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>将一个类的接口转换成客户希望的另一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-13"><a href="#结构（Structure）-13" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="适配器模式"></p>
 <h3 id="要点总结-13"><a href="#要点总结-13" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1309,8 +1298,7 @@
 <li>在这种情况下，我们可以使用一个 “中介对象” 来管理对象间的关联关系，避免相互交互的对象之间的紧耦合引用关系，从而更好地抵御变化。 </li>
 </ul>
 <h3 id="模式定义-14"><a href="#模式定义-14" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>用一个中介对象来封装（封装变化）一系列的对象交互。中介者使各对象不需要显式的相互引用（编译时依赖–&gt;运行时依赖），从而使得其耦合松散（管理变化），而且可以独立地改变它们之间的交互。</p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>用一个中介对象来封装（封装变化）一系列的对象交互。中介者使各对象不需要显式的相互引用（编译时依赖–&gt;运行时依赖），从而使得其耦合松散（管理变化），而且可以独立地改变它们之间的交互。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-14"><a href="#结构（Structure）-14" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="中介者模式"></p>
 <h3 id="要点总结-14"><a href="#要点总结-14" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1337,8 +1325,7 @@
 <li>如何在运行时根据对象的状态来透明的更改对象的行为？而不会为对象操作和状态转化之间引入紧耦合？</li>
 </ul>
 <h3 id="模式定义-15"><a href="#模式定义-15" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>允许一个对象在其内部状态改变时改变它的行为。从而使对象看起来似乎修改了其行为。</p>
-<p>​                                                                                                                            ——《设计模式》GoF</p>
+<p>允许一个对象在其内部状态改变时改变它的行为。从而使对象看起来似乎修改了其行为。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-15"><a href="#结构（Structure）-15" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.png" alt="状态模式"></p>
 <h3 id="要点总结-15"><a href="#要点总结-15" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1365,8 +1352,7 @@
 <li>如何实现对象状态的良好保存与恢复？但同时又不会因此而破坏对象本身的封装性。</li>
 </ul>
 <h3 id="模式定义-16"><a href="#模式定义-16" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可以将该对象恢复到原先保存的状态。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可以将该对象恢复到原先保存的状态。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-16"><a href="#结构（Structure）-16" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F.png" alt="备忘录模式"></p>
 <h3 id="要点总结-16"><a href="#要点总结-16" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1394,8 +1380,7 @@
 <li>如何将 “客户代码与复杂的对象容器结构” 解耦？让对象容器自己来实现自身的复杂结构，从而使得客户代码就像处理简单对象一样来处理复杂的对象容器？</li>
 </ul>
 <h3 id="模式定义-17"><a href="#模式定义-17" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>将对象组合成树形结构以表示 “部分—整体” 的层次结构。Composite 使得用户对单个对象和组合对象的使用具有一致性（稳定）。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>将对象组合成树形结构以表示 “部分—整体” 的层次结构。Composite 使得用户对单个对象和组合对象的使用具有一致性（稳定）。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-17"><a href="#结构（Structure）-17" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F.png" alt="组合模式"></p>
 <h3 id="要点总结-17"><a href="#要点总结-17" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1423,8 +1408,7 @@
 <li>使用面向对象技术将这种遍历机制抽象为 “迭代器对象” 为 “应对变化中的集合对象” 提供了一种优雅的方式。</li>
 </ul>
 <h3 id="模式定义-18"><a href="#模式定义-18" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露（稳定）该对象的内部表示。</p>
-<p>​                                                                                                                                ——《设计模式》GoF</p>
+<p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露（稳定）该对象的内部表示。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-18"><a href="#结构（Structure）-18" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="迭代器模式"></p>
 <h3 id="要点总结-18"><a href="#要点总结-18" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1452,8 +1436,7 @@
 <li>如何使请求的发送者不需要指定具体的接受者？让请求的接受者自己在运行时决定来处理请求，从而使两者解耦。</li>
 </ul>
 <h3 id="模式定义-19"><a href="#模式定义-19" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象连城一条链，并沿着这条链传递请求，直到有一个对象处理它位置。</p>
-<p>​                                                                                                                ——《设计模式》GoF</p>
+<p>使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象连城一条链，并沿着这条链传递请求，直到有一个对象处理它位置。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-19"><a href="#结构（Structure）-19" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F.png" alt="职责链模式"></p>
 <h3 id="要点总结-19"><a href="#要点总结-19" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1480,8 +1463,7 @@
 <li>在这种情况下，如何将 “行为请求者” 与 “行为实现者” 解耦？将一组行为抽象为对象，可以实现二者之间的松耦合。</li>
 </ul>
 <h3 id="模式定义-20"><a href="#模式定义-20" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>将一个请求（行为）封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>将一个请求（行为）封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-20"><a href="#结构（Structure）-20" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F.png" alt="命令模式"></p>
 <h3 id="要点总结-20"><a href="#要点总结-20" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1508,8 +1490,7 @@
 <li>如何在不更改类层次结构的前提下，在运行是根据需要透明的为类层次结构上的各个类动态添加新的操作，从而避免上述问题？</li>
 </ul>
 <h3 id="模式定义-21"><a href="#模式定义-21" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>表示一个作用于某对象结构中的各元素的操作。使得可以在不改变（稳定）各元素的类的前提下定义（扩展）作用于这些元素的新操作（变化）。</p>
-<p>​                                                                                                                                ——《设计模式》GoF</p>
+<p>表示一个作用于某对象结构中的各元素的操作。使得可以在不改变（稳定）各元素的类的前提下定义（扩展）作用于这些元素的新操作（变化）。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-21"><a href="#结构（Structure）-21" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F.png" alt="访问者模式"></p>
 <h3 id="要点总结-21"><a href="#要点总结-21" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1536,8 +1517,7 @@
 </ul>
 <p><img src="/images/imageProgramC/%E7%BB%93%E6%9E%84%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98.png" alt></p>
 <h3 id="模式定义-22"><a href="#模式定义-22" class="headerlink" title="模式定义"></a>模式定义</h3><blockquote>
-<p>给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。</p>
-<p>​                                                                                                                        ——《设计模式》GoF</p>
+<p>给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。——《设计模式》GoF</p>
 </blockquote>
 <h3 id="结构（Structure）-22"><a href="#结构（Structure）-22" class="headerlink" title="结构（Structure）"></a>结构（Structure）</h3><p><img src="/images/imageProgramC/%E8%A7%A3%E6%9E%90%E5%99%A8%E6%A8%A1%E5%BC%8F.png" alt="解析器模式"></p>
 <h3 id="要点总结-22"><a href="#要点总结-22" class="headerlink" title="要点总结"></a>要点总结</h3><ul>
@@ -1637,6 +1617,9 @@
 </blockquote>
 <blockquote>
 <p>扩展就是继承+多态</p>
+</blockquote>
+<blockquote>
+<p>继承表明子类遵循基类定义的规范</p>
 </blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p><span class="exturl" data-url="aHR0cDovL2MuYmlhbmNoZW5nLm5ldC92aWV3LzEzMTcuaHRtbA==" title="http://c.biancheng.net/view/1317.html">软件设计模式概述<i class="fa fa-external-link"></i></span></p>
@@ -1744,8 +1727,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/23/Docker-学习笔记/" rel="prev" title="Docker 学习笔记">
-                Docker 学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/23/Hexo/Hexo的Next主题个性化设置/" rel="prev" title="Hexo的Next主题个性化设置">
+                Hexo的Next主题个性化设置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1824,7 +1807,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2073,7 +2056,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">24:38</span>
+    <span title="站点阅读时长">24:36</span>
   
 
 </div>
