@@ -1,17 +1,9 @@
 ---
-title: C++设计模式(李建忠视频笔记)
-tags: c/c++
-reward: true
-categories: c/c++
-toc: true
-abbrlink: 58357
-date: 2016-07-16 18:14:50
+abbrlink: 2
 ---
 
 
 > [【设计模式】C++设计模式（全26讲）](<https://www.bilibili.com/video/av52251106/?p=2>)
-
-> 设计模式的软件处理的核心：**抽象稳定，隔离变化**。实现可扩展、灵活、低耦合、稳定的框架。
 
 ## 设计模式简介
 
@@ -22,12 +14,9 @@ date: 2016-07-16 18:14:50
 - 掌握重构技法改善设计
 - 掌握GOF 核心设计模式
 
-<!-- more -->
-
 ### 什么是设计模式
 
 > “每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心。这样，你就能一次又一次地使用该方案而不必做重复劳动”。——Christopher Alexander
->
 
 ### 从面向对象谈起
 
@@ -219,23 +208,23 @@ date: 2016-07-16 18:14:50
 
 **单一职责：**
 
-- Decorator -- 装饰器模式
+- Decorator -- 装饰模式
 
-- Bridge  -- 桥接模式
+- Bridge -- 桥接模式
 
 **对象创建:**
 
-- Factory Method  -- 工厂方法
+- Factory Method -- 工厂方法
 
-- Abstract Factory  --  抽象工厂
+- Abstract Factory  -- 抽象工厂方法
 
 - Prototype  -- 原型模式
 
-- Builder  -- 构建器模式
+- Builder  -- 构建器
 
 **对象性能：**
 
-- Singleton  -- 单件模式
+- Singleton  - 单件模式
 
 - Flyweight  -- 享元模式
 
@@ -243,21 +232,21 @@ date: 2016-07-16 18:14:50
 
 - Façade  -- 门面模式
 
-- Proxy  -- 代理模式
+- Proxy -- 代理模式
 
-- Mediator  -- 中介者模式
+- Mediator -- 中介者模式
 
 - Adapter  -- 适配器模式
 
 **状态变化：**
 
-- Memento -- 备忘录模式
+- Memento  -- 备忘录模式
 
 - State  -- 状态模式
 
 **数据结构：**
 
-- Composite -- 组合模式
+- Composite  -- 组合模式
 
 - Iterator  -- 迭代器模式
 
@@ -265,13 +254,13 @@ date: 2016-07-16 18:14:50
 
 **行为变化：**
 
-- Command -- 命令行模式
+- Command  -- 命令模式
 
-- Visitor -- 访问器模式
+- Visitor  -- 访问器模式
 
 **领域问题：**
 
-- Interpreter  -- 解析器模式
+- Interpreter   -- 解析器模式
 
 ### 重构获得模式 Refactoring to Patterns
 
@@ -1334,8 +1323,6 @@ date: 2016-07-16 18:14:50
 
 > 扩展就是继承+多态
 
-> 继承表明子类遵循基类定义的规范
-
 ## Reference
 
 > [软件设计模式概述](<http://c.biancheng.net/view/1317.html>)
@@ -1349,4 +1336,3 @@ date: 2016-07-16 18:14:50
 > [手把手带你深入浅出神秘的设计模式](<https://www.jianshu.com/p/6e5eda3a51af>)
 >
 > [看懂UML类图和时序图](<https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html>)
-

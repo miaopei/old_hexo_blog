@@ -11,9 +11,7 @@ type: page
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script>
 
-> 呲牙一笑：
->
-> 学了点国语的老外。早晨和女秘书打招呼“你吗好？”小姐瞪了他一眼，他一楞，马上又对她说：“妈，你好！”
+
 
 *~~这个人很懒，什么都没有留下~~*
 
