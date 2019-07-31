@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言 这篇文章主要想说明的是WebRTC内部对视频上下行延时、抖动、丢包如何更新，上层又怎么获取到这些统计信息的。对应的WebRTC版本：63。  背景 最近在内网情况下测试视频会议，视频下行延时很大，很多时候超过100ms。另外，视频的上下行抖动总是稳定在30~40ms这个区间。这些统计在内网环境下是不正常的，于是决定看看是哪里导致这些问题的。 在解决这些问题的过程中，也对WebRTC内部视频统">
+<meta name="keywords" content="WebRTC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebRTC视频统计信息之延迟抖动与丢包">
+<meta property="og:url" content="http://miaopei.github.io/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="前言 这篇文章主要想说明的是WebRTC内部对视频上下行延时、抖动、丢包如何更新，上层又怎么获取到这些统计信息的。对应的WebRTC版本：63。  背景 最近在内网情况下测试视频会议，视频下行延时很大，很多时候超过100ms。另外，视频的上下行抖动总是稳定在30~40ms这个区间。这些统计在内网环境下是不正常的，于是决定看看是哪里导致这些问题的。 在解决这些问题的过程中，也对WebRTC内部视频统">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/WebRTC%E5%86%85%E9%83%A8%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%92%8C%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%9B%B4%E6%96%B0%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/SR%E5%92%8CRR%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/SR%E5%92%8CRR%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F-02.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/RTT%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/%E5%BB%B6%E6%97%B6%E7%9A%84%E6%9B%B4%E6%96%B0%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E5%AE%9A%E4%B9%89.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/transmission_time_offset.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/WebRTC%E5%86%85%E9%83%A8%E8%AE%A1%E7%AE%97%E4%B8%8B%E8%A1%8C%E4%B8%A2%E5%8C%85.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/others/%E4%B8%8B%E8%A1%8C%E4%B8%A2%E5%8C%85%E8%AE%A1%E7%AE%97.png">
+<meta property="og:updated_time" content="2019-07-31T10:42:33.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebRTC视频统计信息之延迟抖动与丢包">
+<meta name="twitter:description" content="前言 这篇文章主要想说明的是WebRTC内部对视频上下行延时、抖动、丢包如何更新，上层又怎么获取到这些统计信息的。对应的WebRTC版本：63。  背景 最近在内网情况下测试视频会议，视频下行延时很大，很多时候超过100ms。另外，视频的上下行抖动总是稳定在30~40ms这个区间。这些统计在内网环境下是不正常的，于是决定看看是哪里导致这些问题的。 在解决这些问题的过程中，也对WebRTC内部视频统">
+<meta name="twitter:image" content="http://miaopei.github.io/images/imageWebRTC/others/WebRTC%E5%86%85%E9%83%A8%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%92%8C%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%9B%B4%E6%96%B0%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WebRTC视频统计信息之延迟抖动与丢包 | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Do what you say, say what you do.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.Miaow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">WebRTC视频统计信息之延迟抖动与丢包
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-07 19:14:50" itemprop="dateCreated datePublished" datetime="2019-06-07T19:14:50+08:00">2019-06-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/" class="leancloud_visitors" data-flag-title="WebRTC视频统计信息之延迟抖动与丢包">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>这篇文章主要想说明的是WebRTC内部对视频<code>上下行延时、抖动、丢包</code>如何更新，上层又怎么获取到这些统计信息的。对应的<code>WebRTC版本：63</code>。</p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
+<p>最近在内网情况下测试视频会议，视频下行延时很大，很多时候超过<code>100ms</code>。另外，视频的上下行抖动总是稳定在<code>30~40ms</code>这个区间。这些统计在内网环境下是不正常的，于是决定看看是哪里导致这些问题的。</p>
+<p>在解决这些问题的过程中，也对WebRTC内部视频统计数据做了一次梳理。</p>
+<p>阅读这篇文章之前，最好对RTP、RTCP、SR、RR有一些了解。这里就不过多展开，可以参考以下文章：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzM1NTAjc2VjdGlvbi01" title="https://tools.ietf.org/html/rfc3550#section-5">RTP Data Transfer Protocol<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzM1NTAjc2VjdGlvbi02" title="https://tools.ietf.org/html/rfc3550#section-6">RTP Control Protocol – RTC<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjc4NjM1L2Fuc3dlci8xNDU5MDk0NQ==" title="https://www.zhihu.com/question/20278635/answer/14590945">RTP/RTSP/RTCP有什么区别<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p>下图是WebRTC内部获取视频统计信息和统计信息如何被更新的流程图：（其中的箭头代表函数调用）</p>
+<p><img src="/images/imageWebRTC/others/WebRTC%E5%86%85%E9%83%A8%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%92%8C%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E6%9B%B4%E6%96%B0%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="WebRTC内部获取视频统计信息和统计信息如何被更新的流程图"></p>
+<p>上图共有两个大的模块，<strong>如何取</strong> 和 <strong>如何更新</strong>：</p>
+<h3 id="如何取"><a href="#如何取" class="headerlink" title="如何取"></a>如何取</h3><p>上面部分“客户端视频数据统计入口”中，左下角的<code>WebRtcVideoChannel::GetStats</code>是WebRTC对外暴露的获取统计信息的入口，视频的上下行统计数据最终分别使用右上角<code>SendStatisticsProxy::stats_</code>、<code>ReceiveStatisticsProxy::stats_</code>和<code>CallStats::avg_rtt_ms_</code>来填充返回。</p>
+<h3 id="如何更新"><a href="#如何更新" class="headerlink" title="如何更新"></a>如何更新</h3><p>下面部分“延时、抖动、丢包更新流程”部分，从网络接收到RTP/RTCP之后，使用三个不同颜色代表三种统计信息的更新流程，比如红色代表下行抖动/丢包更新流程、蓝色代表RTT的更新流程等。</p>
+<p>统计信息大多不是由一条调用流程完成的（这就是下文会说到的“阶段”），会有几次类似缓冲区的“中转”，然后由另外的线程或函数继续做统计信息的整理，最终达到上一步的 <code>SendStatisticsProxy::stats_</code>、<code>ReceiveStatisticsProxy::stats_</code> 和 <code>CallStats::avg_rtt_ms_</code>，等待上层获取。</p>
+<h2 id="几个统计信息详细介绍"><a href="#几个统计信息详细介绍" class="headerlink" title="几个统计信息详细介绍"></a>几个统计信息详细介绍</h2><h3 id="延时"><a href="#延时" class="headerlink" title="延时"></a>延时</h3><blockquote>
+<p>这里统计的延时指的是往返延时 rtt。<code>WebRTC使用SR/RR来计算rtt</code>。</p>
+</blockquote>
+<h4 id="1-延时的计算"><a href="#1-延时的计算" class="headerlink" title="(1) 延时的计算"></a>(1) 延时的计算</h4><h5 id="1-SR和RR报文格式"><a href="#1-SR和RR报文格式" class="headerlink" title="1) SR和RR报文格式"></a>1) SR和RR报文格式</h5><table>
+<thead>
+<tr>
+<th>Sender Report RTCP Packet</th>
+<th>Receiver Report RTCP Packet</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/images/imageWebRTC/others/SR%E5%92%8CRR%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F-01.png" alt></td>
+<td><img src="/images/imageWebRTC/others/SR%E5%92%8CRR%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F-02.png" alt></td>
+</tr>
+</tbody></table>
+<h5 id="2-计算rtt"><a href="#2-计算rtt" class="headerlink" title="2) 计算rtt"></a>2) 计算rtt</h5><blockquote>
+<p>以下流程通过结合SR/RR包报文格式，浏览<code>RTCPReceiver::HandleReceiverReport</code>、<code>RTCPReceiver::HandleReportBlock</code>、<code>ModuleRtpRtcpImpl::SendCompoundRTCP</code>、<code>RTCPSender::BuildSR</code>、<code>RTCPSender::BuildRR</code>函数。前面2个函数是接收端计算rtt，后面3个函数是对端在构造RR时LSR/DLSR如何设置的。</p>
+</blockquote>
+<ul>
+<li>首先，发送端构造SR时，<code>sender info</code>部分的NTP字段被设置为当前ntp时间戳；</li>
+<li>接收端收到最新的SR之后，使用<code>last_received_sr_ntp_</code>字段记录当前ntp时间戳；</li>
+<li>接收端构造RR时，设置RR的DLSR字段为<code>当前ntp时间戳 - last_received_sr_ntp_</code>，之后发出RR包；</li>
+<li>发送端在接收到RR包之后，记录RR包到达时间A；</li>
+<li>使用公式 <code>A - LSR - DLSR</code> 计算rtt。</li>
+</ul>
+<h5 id="3-用一个图描述上述RTT计算流程"><a href="#3-用一个图描述上述RTT计算流程" class="headerlink" title="3) 用一个图描述上述RTT计算流程"></a>3) 用一个图描述上述RTT计算流程</h5><p><img src="/images/imageWebRTC/others/RTT%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B.png" alt="RTT计算流程"></p>
+<blockquote>
+<p>SR与RR的个数并不完全相同，因为RR并不是对SR的回应，它们的发送各自独立；另外丢包也会导致一部分SR/RR没有被对方接收。因此上图中，SR和RR传输中，实线代表发了一次SR/RR，并且被被对方接收了。这里想说明的是：<strong>即便SR或RR丢失一部分，只要发送端收到了RR，它总能计算出rtt，因为RR中使用的LSR和DLSR字段都是从最近一次收到的SR中取到的。</strong></p>
+</blockquote>
+<h4 id="2-延时的更新流程"><a href="#2-延时的更新流程" class="headerlink" title="(2) 延时的更新流程"></a>(2) 延时的更新流程</h4><blockquote>
+<p>下文所说的第一阶段、第二阶段等，都是指 <strong>数据从一个位置转移到另一个位置的过程，或者说是一次推或拉模式</strong>。比如：F1函数把数据从A点转移到B点就返回了，F2函数把数据从B点转移到C点就返回了，那A-&gt;B就是第一阶段，B-&gt;C就是第二阶段。如下：</p>
+</blockquote>
+<p><img src="/images/imageWebRTC/others/%E5%BB%B6%E6%97%B6%E7%9A%84%E6%9B%B4%E6%96%B0%E6%B5%81%E7%A8%8B.png" alt="延时的更新流程"></p>
+<h5 id="1-rtt统计第一阶段"><a href="#1-rtt统计第一阶段" class="headerlink" title="1) rtt统计第一阶段"></a>1) rtt统计第一阶段</h5><p>由上文可知：从RR可以计算出往返延时rtt，这个rtt最终保存在<code>RTCPReceiver::received_report_blocks_</code>。</p>
+<p><img src="/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5.png" alt="rtt统计第一阶段"></p>
+<h5 id="2-rtt统计第二阶段"><a href="#2-rtt统计第二阶段" class="headerlink" title="2) rtt统计第二阶段"></a>2) rtt统计第二阶段</h5><p><code>ModuleRtpRtcpImpl::Process</code>会定时把rtt从<code>RTCPReceiver::received_report_blocks_</code>更新到<code>CallStats::reports_</code>，这个更新过程，<code>CallStats::reports_</code>中每个rtt都会与一个更新时间戳绑定。参考<code>CallStats::OnRttUpdate</code> 函数。</p>
+<p><img src="/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5.png" alt="rtt统计第二阶段"></p>
+<h5 id="3-rtt统计第三阶段"><a href="#3-rtt统计第三阶段" class="headerlink" title="3) rtt统计第三阶段"></a>3) rtt统计第三阶段</h5><p><code>CallStats</code>继承<code>Module</code>，<code>CallStats::Process</code>函数会定时做以下三个步骤：</p>
+<ul>
+<li>根据第二阶段绑定的时间戳，清理掉 <code>reports_</code> 中距当前时间1.5s以前的rtt；</li>
+<li>计算1.5s内的平均rtt；</li>
+<li>使用平均rtt，更新 <code>avg_rtt_ms</code> 成员；</li>
+</ul>
+<p><img src="/images/imageWebRTC/others/rtt%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5.png" alt="rtt统计第三阶段"></p>
+<h4 id="3-获取延时"><a href="#3-获取延时" class="headerlink" title="(3) 获取延时"></a>(3) 获取延时</h4><p>调用<code>CallStats::avg_rtt_ms</code>函数获取rtt时，直接返回avg_rtt<em>ms</em> ;</p>
+<h3 id="2、下行抖动和丢包"><a href="#2、下行抖动和丢包" class="headerlink" title="2、下行抖动和丢包"></a>2、下行抖动和丢包</h3><blockquote>
+<p>下行抖动和丢包，通过在接收端根据收到的RTP包来计算和更新。</p>
+</blockquote>
+<h4 id="1-抖动和丢包的计算"><a href="#1-抖动和丢包的计算" class="headerlink" title="(1) 抖动和丢包的计算"></a>(1) 抖动和丢包的计算</h4><h5 id="1-抖动定义"><a href="#1-抖动定义" class="headerlink" title="1) 抖动定义"></a>1) 抖动定义</h5><p>抖动被定义为：一对数据包在接收端与发送端的数据包时间间距之差。如下：</p>
+<p><img src="/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E5%AE%9A%E4%B9%89.png" alt="一对数据包在接收端与发送端的数据包时间间距之差"></p>
+<p>如果Si代表第i个包的发送时间戳，Ri代表第i个包的接收时间戳。Sj、Rj同理。<br><code>抖动(i, j)</code> = <code>|(Rj - Ri) - (Sj - Si)|</code> = <code>|(Rj - Sj) - (Ri - Si)|</code></p>
+<p>WebRTC为了统一抖动，并且为了很好的降噪、降低突发抖动的影响，把上面的<code>抖动(i, j)</code>定义为<code>D(i, j)</code>，<code>抖动J(i)</code>定义为:<br><code>J(i) = J(i-1) + (|D(i-1, i)| - J(i - 1)) / 16</code></p>
+<p>我虽然看不出J(i)和D(i)的关系，但是<code>D(i-1, j)</code>是唯一引起<code>J(i)</code>变化的因素，是需要重点关注的。</p>
+<h5 id="2-抖动计算存在的问题："><a href="#2-抖动计算存在的问题：" class="headerlink" title="2) 抖动计算存在的问题："></a>2) 抖动计算存在的问题：</h5><p>RTP报文头部，有timestamp字段，该字段用来表示该RTP包所属帧的<code>capture time</code>。接收RTP包时如果记录接收时间戳，再根据头部的<code>timestamp</code>字段，D(i, j)就可以计算出来，J也就有了。（事实上webrtc原本也是这样干的，而且这种方式计算的抖动还对外暴露，可以参考<code>StreamStatisticianImpl::UpdateJitter</code>函数）</p>
+<p>但是这样计算抖动是存在问题的：<strong>每一帧的视频数据放进多个RTP包之后，这些RTP包的头部timestamp字段都是一样的（都是帧的capture time），但是实际发送时间不一样，到达时间也不同。</strong></p>
+<h5 id="3-如何正确计算抖动："><a href="#3-如何正确计算抖动：" class="headerlink" title="3) 如何正确计算抖动："></a>3) 如何正确计算抖动：</h5><p>计算D(i, j)时，Si不能只使用RTP timestamp，而是应该使用该RTP实际发送到网络的时间戳。这种抖动被命名为<code>jitter_q4_transmission_time_offset</code>，意为考虑了transmission_time_offset的jitter。</p>
+<ul>
+<li><strong>a. transmission_time_offset是什么?</strong></li>
+</ul>
+<blockquote>
+<p>transmission_time_offset是一段时间间隔，该时间间隔代表属于同一帧的RTP的<code>实际发送时间</code>距离帧的<code>capture time</code>的 <strong>偏移量</strong> 。下图是对transmission_offset_time的解释：</p>
+</blockquote>
+<p><img src="/images/imageWebRTC/others/transmission_time_offset.png" alt="transmission_time_offset"></p>
+<blockquote>
+<p>其中，箭头代表一个RTP，发送端的竖线代表时间轴，虚线代表帧的capture time。</p>
+<p>最开始三个RTP包在距离capture time <code>offset1</code>时间之后发送到网络，因此这三个RTP包的transmission_time_offset应该是offset1。同理第四个RTP包的transmission_time_offset应该是offset2，第五个RTP包的transmission_time_offset应该是offset3。</p>
+</blockquote>
+<ul>
+<li><strong>b. transmission_time_offset在RTP包的哪里放着?</strong></li>
+</ul>
+<p>transmission_time_offset存在于RTP的扩展头部，设置该扩展头可以参考<code>RTPSender::SendToNetwork</code>函数，但使用之前该扩展头之前需要注册，否则在设置transmission_time_offset扩展头会失败。</p>
+<p>下面的代码段是WebRTC中<code>D(i, j)</code>的计算：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Extended jitter report, RFC 5450.</span></span><br><span class="line"><span class="comment">// Actual network jitter, excluding the source-introduced jitter.</span></span><br><span class="line"><span class="keyword">int32_t</span> time_diff_samples_ext =</span><br><span class="line">  (receive_time_rtp - last_receive_time_rtp) -</span><br><span class="line">  ((header.timestamp +</span><br><span class="line">    header.extension.transmissionTimeOffset) -</span><br><span class="line">   (last_received_timestamp_ +</span><br><span class="line">    last_received_transmission_time_offset_));</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<blockquote>
+<ul>
+<li><code>receive_time_rtp</code> 代表当前RTP的到达时间戳；</li>
+<li><code>last_receive_time_rtp</code> 是上一个RTP到达时记录的时间戳；</li>
+<li><code>header.timestamp + header.extension.transmissionTimeOffset</code> 前者是capture time，后者是对应的transmission time offset，两者相加代表该RTP实际发送到网络的时间戳；</li>
+<li><code>last_received_timestamp_ + last_received_transmission_time_offset_</code> 含义同上，但是代表的是<strong>上一个</strong>RTP的实际发送到网络的时间戳；</li>
+</ul>
+</blockquote>
+<h4 id="2-下行抖动的更新流程"><a href="#2-下行抖动的更新流程" class="headerlink" title="(2) 下行抖动的更新流程"></a>(2) 下行抖动的更新流程</h4><h5 id="1-抖动统计第一阶段"><a href="#1-抖动统计第一阶段" class="headerlink" title="1) 抖动统计第一阶段"></a>1) 抖动统计第一阶段</h5><p>接收端收到的RTP包，会经过<code>StreamStatisticianImpl::UpdateJitter</code>函数，该函数内部会计算经过这个RTP包之后的抖动值，并更新到成员<code>jitter_q4_transmission_time_offset_</code>成员中。</p>
+<p><img src="/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5.png" alt="抖动统计第一阶段"></p>
+<h5 id="2-抖动统计第二阶段"><a href="#2-抖动统计第二阶段" class="headerlink" title="2) 抖动统计第二阶段"></a>2) 抖动统计第二阶段</h5><p><code>ModuleRtpRtcpImpl::Process</code>会定时发送RR，在构建RR的Report Block时，会搜集本地接收报告并把第一阶段保存的<code>jitter_q4_transmission_time_offset_</code>信息更新到<code>ReceiveStatisticsProxy::stats_</code> 。</p>
+<p><img src="/images/imageWebRTC/others/%E6%8A%96%E5%8A%A8%E7%BB%9F%E8%AE%A1%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5.png" alt="抖动统计第二阶段"></p>
+<h4 id="3-下行丢包的更新流程"><a href="#3-下行丢包的更新流程" class="headerlink" title="(3) 下行丢包的更新流程"></a>(3) 下行丢包的更新流程</h4><h5 id="1-丢包统计第一阶段"><a href="#1-丢包统计第一阶段" class="headerlink" title="1) 丢包统计第一阶段"></a>1) 丢包统计第一阶段</h5><p>接收端收到的RTP包，会经过<code>StreamStatisticianImpl::UpdateCounters</code> 函数，在该函数内部，会累加接收到的RTP包的个数和重传包的个数，以及当前收到的最大的sequence。</p>
+<h5 id="2-丢包统计第二阶段"><a href="#2-丢包统计第二阶段" class="headerlink" title="2) 丢包统计第二阶段"></a>2) 丢包统计第二阶段</h5><p>下图是WebRTC内部计算下行丢包：</p>
+<p><img src="/images/imageWebRTC/others/WebRTC%E5%86%85%E9%83%A8%E8%AE%A1%E7%AE%97%E4%B8%8B%E8%A1%8C%E4%B8%A2%E5%8C%85.png" alt="WebRTC内部计算下行丢包"></p>
+<p>丢包率更新的周期是发送一次RR，在发送RR时，会根据第一阶段记录的数据统计丢包，丢包根据下面的公式：</p>
+<p><code>fraction_lost</code> = <code>RTP包丢失个数</code> / `期望接收的RTP包个数</p>
+<blockquote>
+<p>其中：</p>
+<p><code>包丢失个数</code> = <code>期望接收的RTP包个数</code> - <code>实际收到的RTP包个数</code></p>
+<p><code>期望接收的RTP包个数</code> = <code>当前最大sequence</code> - <code>上次最大sequence</code></p>
+<p><code>实际收到的RTP包个数</code> = <code>正常有序RTP包</code> + <code>重传包</code></p>
+</blockquote>
+<p>计算出来的丢包，连同抖动一起被更新到<code>ReceiveStatisticsProxy::stats_</code>。</p>
+<p><img src="/images/imageWebRTC/others/%E4%B8%8B%E8%A1%8C%E4%B8%A2%E5%8C%85%E8%AE%A1%E7%AE%97.png" alt="下行丢包计算"></p>
+<h4 id="3-获取下行抖动和丢包"><a href="#3-获取下行抖动和丢包" class="headerlink" title="(3) 获取下行抖动和丢包"></a>(3) 获取下行抖动和丢包</h4><p>下行抖动和丢包最终会从<code>ReceiveStatisticsProxy::stats_</code> 获取。</p>
+<h3 id="3、上行抖动和丢包"><a href="#3、上行抖动和丢包" class="headerlink" title="3、上行抖动和丢包"></a>3、上行抖动和丢包</h3><blockquote>
+<p>下行抖动和丢包，从对方发来的RR包中获取。RR包格式参考上文链接。</p>
+</blockquote>
+<h4 id="1-上行抖动和丢包的更新流程"><a href="#1-上行抖动和丢包的更新流程" class="headerlink" title="(1) 上行抖动和丢包的更新流程"></a>(1) 上行抖动和丢包的更新流程</h4><p>本地上行抖动和丢包，就是对端下行抖动和丢包，对端按照上面介绍的方式计算下行抖动和丢包，然后通过RR返回。</p>
+<p>从RR获取抖动和丢包，没有太多阶段，只有一次<code>推</code>过程。接收端在收到RR之后，就把内部的抖动和丢包更新到<code>SendStatisticsProxy::stats_</code>中，这里就是客户端主动获取上行抖动和丢包时最终的数据源。</p>
+<h4 id="2-获取上行抖动和丢包"><a href="#2-获取上行抖动和丢包" class="headerlink" title="(2) 获取上行抖动和丢包"></a>(2) 获取上行抖动和丢包</h4><p>上行抖动和丢包最终会从<code>SendStatisticsProxy::stats_</code> 获取。</p>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <footer class="post-footer">
+      
+
+      <div>    
+        
+        
+            <ul class="post-copyright">
+            <li class="post-copyright-author">
+                <strong>本文作者：</strong>Mr.Miaow
+            </li>
+            <li class="post-copyright-link">
+                <strong>本文链接：</strong>
+                <a href="/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/" title="WebRTC视频统计信息之延迟抖动与丢包">2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/</a>
+            </li>
+            <li class="post-copyright-license">
+                <strong>版权： </strong>
+                本站文章均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议，请勿用于商业，转载注明出处！
+            </li>
+            </ul>
+        
+      </div>
+    
+      
+
+      
+        
+      
+      
+        <div>
+          <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Miaow 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Miaow 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+        </div>
+      
+
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WebRTC/" rel="tag"> <i class="fa fa-tag"></i> WebRTC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/29/实用的计算机工具库/" rel="next" title="实用的计算机工具库">
+                <i class="fa fa-chevron-left"></i> 实用的计算机工具库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/09/WebRTC/01-实时音视频互动系列/" rel="prev" title="实时音视频互动系列">
+                实时音视频互动系列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+      
+      
+        
+            <ul class="sidebar-nav motion-element">
+                <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+                    文章目录
+                </li>
+                <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+                    站点概览
+                </li>
+            </ul>
+        
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="Mr.Miaow">
+              
+                <p class="site-author-name" itemprop="name">Mr.Miaow</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">65</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          <link rel="stylesheet" href="/dist/APlayer.min.css">
+          <div id="aplayer"></div>
+          <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+          <script type="text/javascript" src="/dist/music.js"></script>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+        
+        <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+                <div class="post-toc">
+
+                
+                    
+                
+
+                
+                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综述"><span class="nav-number">3.</span> <span class="nav-text">综述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何取"><span class="nav-number">3.1.</span> <span class="nav-text">如何取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何更新"><span class="nav-number">3.2.</span> <span class="nav-text">如何更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个统计信息详细介绍"><span class="nav-number">4.</span> <span class="nav-text">几个统计信息详细介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#延时"><span class="nav-number">4.1.</span> <span class="nav-text">延时</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-延时的计算"><span class="nav-number">4.1.1.</span> <span class="nav-text">(1) 延时的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-SR和RR报文格式"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">1) SR和RR报文格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-计算rtt"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">2) 计算rtt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-用一个图描述上述RTT计算流程"><span class="nav-number">4.1.1.3.</span> <span class="nav-text">3) 用一个图描述上述RTT计算流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-延时的更新流程"><span class="nav-number">4.1.2.</span> <span class="nav-text">(2) 延时的更新流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-rtt统计第一阶段"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">1) rtt统计第一阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-rtt统计第二阶段"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">2) rtt统计第二阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-rtt统计第三阶段"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">3) rtt统计第三阶段</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-获取延时"><span class="nav-number">4.1.3.</span> <span class="nav-text">(3) 获取延时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、下行抖动和丢包"><span class="nav-number">4.2.</span> <span class="nav-text">2、下行抖动和丢包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-抖动和丢包的计算"><span class="nav-number">4.2.1.</span> <span class="nav-text">(1) 抖动和丢包的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-抖动定义"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">1) 抖动定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-抖动计算存在的问题："><span class="nav-number">4.2.1.2.</span> <span class="nav-text">2) 抖动计算存在的问题：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-如何正确计算抖动："><span class="nav-number">4.2.1.3.</span> <span class="nav-text">3) 如何正确计算抖动：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下行抖动的更新流程"><span class="nav-number">4.2.2.</span> <span class="nav-text">(2) 下行抖动的更新流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-抖动统计第一阶段"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">1) 抖动统计第一阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-抖动统计第二阶段"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">2) 抖动统计第二阶段</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-下行丢包的更新流程"><span class="nav-number">4.2.3.</span> <span class="nav-text">(3) 下行丢包的更新流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-丢包统计第一阶段"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">1) 丢包统计第一阶段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-丢包统计第二阶段"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">2) 丢包统计第二阶段</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-获取下行抖动和丢包"><span class="nav-number">4.2.4.</span> <span class="nav-text">(3) 获取下行抖动和丢包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、上行抖动和丢包"><span class="nav-number">4.3.</span> <span class="nav-text">3、上行抖动和丢包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-上行抖动和丢包的更新流程"><span class="nav-number">4.3.1.</span> <span class="nav-text">(1) 上行抖动和丢包的更新流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-获取上行抖动和丢包"><span class="nav-number">4.3.2.</span> <span class="nav-text">(2) 获取上行抖动和丢包</span></a></li></ol></li></ol></li></ol></div>
+                
+
+                </div>
+            </div>
+        <!--/noindex-->
+        
+      
+
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Miaow</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">1m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">15:31</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz", "qU7onoX7aRWpLf04JedNtwXo");</script>
+<script>
+function showTime(Counter) {
+    var query = new AV.Query(Counter);
+    $(".leancloud_visitors").each(function() {
+                                  var url = $(this).attr("id").trim();
+                                  query.equalTo("url", url);
+                                  query.find({
+success: function(results) {
+if (results.length == 0) {
+var content = $(document.getElementById(url)).text() + ': 0';
+$(document.getElementById(url)).text(content);
+return;
+
+}
+for (var i = 0; i < results.length; i++) {
+var object = results[i];
+var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+$(document.getElementById(url)).text(content);
+
+}
+
+},
+error: function(object, error) {
+console.log("Error: " + error.code + " " + error.message);
+
+}
+
+});
+
+
+});
+
+}
+
+function addCount(Counter) {
+    var Counter = AV.Object.extend("Counter");
+    url = $(".leancloud_visitors").attr('id').trim();
+    title = $(".leancloud_visitors").attr('data-flag-title').trim();
+    var query = new AV.Query(Counter);
+    query.equalTo("url", url);
+    query.find({
+success: function(results) {
+if (results.length > 0) {
+var counter = results[0];
+counter.fetchWhenSave(true);
+counter.increment("time");
+counter.save(null, {
+success: function(counter) {
+var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+$(document.getElementById(url)).text(content);
+
+},
+error: function(counter, error) {
+console.log('Failed to save Visitor num, with error message: ' + error.message);
+
+}
+
+});
+
+} else {
+var newcounter = new Counter();
+newcounter.set("title", title);
+newcounter.set("url", url);
+newcounter.set("time", 1);
+newcounter.save(null, {
+success: function(newcounter) {
+console.log("newcounter.get('time')="+newcounter.get('time'));
+var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+$(document.getElementById(url)).text(content);
+
+},
+error: function(newcounter, error) {
+console.log('Failed to create');
+
+}
+
+});
+
+}
+
+},
+error: function(error) {
+           console.log('Error:' + error.code + " " + error.message);
+
+       }
+
+});
+
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+  addCount(Counter);
+
+  } else if ($('.post-title-link').length > 1) {
+  showTime(Counter);
+
+  }
+
+  });
+</script>
+
+  
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
