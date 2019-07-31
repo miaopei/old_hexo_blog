@@ -412,7 +412,11 @@
                 <div class="fb-like" data-layout="button_count" data-share="true"></div>
               </div>
             {% endif %}
-          </div>
+
+            {% if theme.leancloud_visitors.enable %}
+                <span id="{{ url_for(post.path)  }}"class="leancloud_visitors"  data-flag-title="{{ post.title  }}">&nbsp; | &nbsp; {{__('post.visitors')}}</span>
+            {% endif %}
+         </div>
         {% endif %}
 
         {% if theme.likely.enable or (theme.needmoreshare2.enable and theme.needmoreshare2.postbottom.enable) or (theme.baidushare.type === "button") %}

@@ -854,6 +854,12 @@ TCP协议封装了消息的重传机制，在丢包的情况下，采用TCP协�
 >
 > [Mac下AndroidStudio中手动配置Gradle](<https://www.jianshu.com/p/36e569c1bb12>)
 
+> [WebRTC的拥塞控制和带宽策略](<https://mp.weixin.qq.com/s?__biz=MzU1NTEzOTM5Mw==&mid=2247485966&idx=1&sn=113920ae7c4f908f4576fbcc1484781a&chksm=fbd9a220ccae2b36aa8796f02f37da4e19748a42635a5f8ad72554dd05ab97fe094e28227905&mpshare=1&scene=1&srcid=05292tFBxW7U2DRJaaSvqwG2#rd>)
+>
+> [小议WebRTC拥塞控制算法：GCC介绍](http://yunxin.163.com/blog/video18-0905/)
+>
+> [***详读webrtc的视频统计信息之延迟、抖动与丢包](<https://www.servercoder.com/2019/04/24/webrtc-statistics/>)
+
 ### socket.io 原理详解
 
 > [socket.io 原理详解](<https://blog.csdn.net/u013243347/article/details/86669988>)

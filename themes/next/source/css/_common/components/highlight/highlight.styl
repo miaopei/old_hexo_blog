@@ -20,7 +20,7 @@ code {
   word-wrap();
   padding: 2px 4px;
   color: $code-foreground;
-  background: $code-background;
+  background: #ffc0cb;
   border-radius: $code-border-radius;
   font-size: $code-font-size;
 }
@@ -40,7 +40,11 @@ pre {
   @extend $code-block;
   // Read values from NexT config and set they as local variables to use as string variables (in any CSS section).
   hexo-config('codeblock.border_radius') is a 'unit' ? (cbradius = unit(hexo-config('codeblock.border_radius'), px)) : (cbradius = 1px)
-  border-radius: cbradius;
+  border-radius: 1em;
+  border-color: #e0dfcc;
+  border-width: 0.3em;
+  border-style: solid;
+  margin: 2em 2em;
 
   pre {
     border: none;
