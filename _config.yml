@@ -127,7 +127,7 @@ deploy:
     repo: https://github.com/miaopei/miaopei.github.io.git
     branch: master
 
-# -  
+#-  
 #type: leancloud_counter_security_sync
 
 sitemap:
