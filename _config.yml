@@ -169,6 +169,13 @@ aplayer:
     meting: true
     asset_inject: false
 
+leancloud_counter_security:
+    enable_sync: true
+    app_id:  XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz  
+    app_key: qU7onoX7aRWpLf04JedNtwXo 
+    username: miaopei
+    password: mp123456
+
 # Security
 encrypt:
     enable: true
