@@ -122,12 +122,13 @@ baidu_url_submit:
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
- -  type: git
+ -  
+    type: git
     repo: https://github.com/miaopei/miaopei.github.io.git
     branch: master
 
-
- -  type: baidu_url_submitter
+ -  
+    type: leancloud_counter_security_sync
 
 sitemap:
     path: sitemap.xml
