@@ -127,8 +127,8 @@ deploy:
     repo: https://github.com/miaopei/miaopei.github.io.git
     branch: master
 
- -  
-    type: leancloud_counter_security_sync
+# -  
+#type: leancloud_counter_security_sync
 
 sitemap:
     path: sitemap.xml
@@ -154,7 +154,7 @@ math:
     # MathJax config
 
 # 跳过渲染
-skip_render: ["README.md", "404/**", "404.html", "_posts/*.markdown"]
+skip_render: ["README.md", "404/**", "404.html", "_posts/*.markdown", "leancloud.memo"]
 
 # hexo-generator-indexed
 index_generator:
