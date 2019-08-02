@@ -2008,7 +2008,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffd452;
+  background: #ff83c6;
 }
 .feed-link,
 .chat {
@@ -2390,8 +2390,9 @@ i.fa {
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #ddd;
   border: none;
+  border-radius: 5px;
   user-select: none;
   outline: 0;
 }
@@ -2400,8 +2401,9 @@ i.fa {
   opacity: 0;
   padding: 2px 6px;
   position: absolute;
-  right: 0px;
-  height: 42px;
+  right: 35px;
+  height: 2rem;
+  top: 8px;
 }
 .highlight-wrap:hover .copy-btn,
 .highlight-wrap .copy-btn:focus {
