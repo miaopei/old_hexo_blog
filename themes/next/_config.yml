@@ -342,7 +342,7 @@ post_meta:
   item_text: true
   created_at: true
   updated_at:
-    enable: false
+    enable: true
     another_day: true
   categories: true
 
@@ -363,7 +363,7 @@ codeblock:
   border_radius:
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Show text copy result
     show_result: true
     # Style: only 'flat' is currently available, leave it blank if you prefer default theme
@@ -663,8 +663,8 @@ changyan:
 # More info available at https://valine.js.org
 valine:
   enable: false # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version.
-  appid: XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz # your leancloud application appid
-  appkey: qU7onoX7aRWpLf04JedNtwXo # your leancloud application appkey
+  appid: 8my53W9pnVTOdpPvvH1P76YB-gzGzoHsz # your leancloud application appid
+  appkey: DxtWRruxKOO4SPacKO9Mxe8g # your leancloud application appkey
   notify: false # mail notifier, See: https://github.com/xCss/Valine/wiki
   verify: false # Verification code
   placeholder: ヾﾉ≧∀≦)o快来评论一下吧! # comment box placeholder
@@ -835,14 +835,14 @@ rating:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn to get AppID and AppKey.
 leancloud_visitors:
-  enable: true
-  app_id: XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz
-  app_key: qU7onoX7aRWpLf04JedNtwXo
+  enable: false
+  app_id: 8my53W9pnVTOdpPvvH1P76YB-gzGzoHsz
+  app_key: DxtWRruxKOO4SPacKO9Mxe8g
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
   # If you don't care about security in leancloud counter and just want to use it directly
   # (without hexo-leancloud-counter-security plugin), set `security` to `false`.
   security: true
-  betterPerformance: true
+  betterPerformance: false
 
 # Another tool to show number of visitors to each article.
 # Visit https://console.firebase.google.com/u/0/ to get apiKey and projectId.
@@ -862,7 +862,7 @@ busuanzi_count:
   total_visitors_icon: user
   total_views: false
   total_views_icon: eye
-  post_views: false
+  post_views: true
   post_views_icon: eye
 
 # Tencent analytics ID

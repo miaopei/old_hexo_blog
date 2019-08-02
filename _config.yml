@@ -119,16 +119,22 @@ baidu_url_submit:
     host: miaopei.github.io
     token: T41H8pjFOJHIVPJ3
     path: baidu_urls.txt
+
+leancloud_counter_security:
+    enable_sync: true
+    app_id: 8my53W9pnVTOdpPvvH1P76YB-gzGzoHsz
+    app_key: DxtWRruxKOO4SPacKO9Mxe8g
+    username: miaopei
+    password: mp123456
+
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
- -  
+  -  
     type: git
     repo: https://github.com/miaopei/miaopei.github.io.git
     branch: master
-
-#-  
-#type: leancloud_counter_security_sync
+  - type: leancloud_counter_security_sync
 
 sitemap:
     path: sitemap.xml
@@ -169,13 +175,6 @@ aplayer:
     enable: true
     meting: true
     asset_inject: false
-
-leancloud_counter_security:
-    enable_sync: true
-    app_id:  XmEEJizQS0jhsCqlTDm3QOK5-gzGzoHsz  
-    app_key: qU7onoX7aRWpLf04JedNtwXo 
-    username: miaopei
-    password: mp123456
 
 # Security
 encrypt:
