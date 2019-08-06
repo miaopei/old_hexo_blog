@@ -280,8 +280,10 @@ span.exturl {
 }
 a:hover,
 span.exturl:hover {
-  color: #222;
-  border-bottom-color: #222;
+  color: #22f;
+  border-bottom-color: #22f;
+/*color: $link-hover-color;
+    border-bottom-color: $link-decoration-hover-color;*/
 }
 video {
   max-width: 100%;
@@ -2008,7 +2010,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff83c6;
+  background: #999099;
 }
 .feed-link,
 .chat {
