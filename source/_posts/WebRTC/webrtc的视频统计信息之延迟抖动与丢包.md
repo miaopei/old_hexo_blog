@@ -105,9 +105,9 @@ date: 2019-06-07 19:14:50
 
 #### (3) 获取延时
 
-调用`CallStats::avg_rtt_ms`函数获取rtt时，直接返回avg_rtt*ms* ;
+调用`CallStats::avg_rtt_ms`函数获取rtt时，直接返回 `avg_rtt_ms_` ;
 
-### 2、下行抖动和丢包
+### 下行抖动和丢包
 
 > 下行抖动和丢包，通过在接收端根据收到的RTP包来计算和更新。
 
@@ -199,7 +199,7 @@ int32_t time_diff_samples_ext =
 
 丢包率更新的周期是发送一次RR，在发送RR时，会根据第一阶段记录的数据统计丢包，丢包根据下面的公式：
 
-`fraction_lost` = `RTP包丢失个数` / `期望接收的RTP包个数
+`fraction_lost` = `RTP包丢失个数` / `期望接收的RTP包个数`
 
 > 其中：
 >
@@ -217,7 +217,7 @@ int32_t time_diff_samples_ext =
 
 下行抖动和丢包最终会从`ReceiveStatisticsProxy::stats_` 获取。
 
-### 3、上行抖动和丢包
+### 上行抖动和丢包
 
 > 下行抖动和丢包，从对方发来的RR包中获取。RR包格式参考上文链接。
 

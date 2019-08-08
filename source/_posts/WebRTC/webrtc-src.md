@@ -13,7 +13,15 @@ date: 2019-05-30 19:14:50
 
 > [webrtc src](http://120.92.49.206:3232/chromiumsrc/webrtc)
 
-
+> [WebRTC-编译以及运行IOS的Demo](<https://www.jianshu.com/p/1b4c79b45055>)
+>
+> [WebRTC iOS&OSX 库的编译](<http://www.enkichen.com/2017/05/12/webrtc-ios-build/>)
+>
+> [生成WebRTC的DEMO并运行](<https://www.binss.me/blog/build-webrtc-demo-and-run/>)
+>
+> [使用xcode来生成webrtc的Demo](<https://www.binss.me/blog/use-xcode-to-bulid-webrtc-demo/>)
+>
+> [webrtc ios client 源码拉取和编译](<https://blog.csdn.net/liwenlong_only/article/details/79422673>)
 
 # 查看和下载特定版本的webrtc代码
 
@@ -47,12 +55,12 @@ https://code.google.com/p/webrtc/source/browse/?r=7643
 
 **其中7643是版本号**
 
-
-
 ```shell
 # 同步第三方依赖库
 $ gclient sync
 ```
+
+
 
 
 
