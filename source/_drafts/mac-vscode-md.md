@@ -1,8 +1,11 @@
 ---
 title: Mac VScode快捷键
-tags: [MacOS]
-categories: [MacOS]
+tags:
+  - MacOS
+categories:
+  - MacOS
 reward: true
+abbrlink: 64604
 date: 2019-08-08 16:34:04
 ---
 
