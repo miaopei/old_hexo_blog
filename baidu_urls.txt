@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/08/09/MacOS/mac-understand/
 http://miaopei.github.io/2019/07/19/tea/
 http://miaopei.github.io/2019/07/10/MacOS/mac-shell/
 http://miaopei.github.io/2019/07/02/Architect/架构师之路/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2019/05/14/WebRTC/webrtc-01/
 http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
 http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/
 http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/
-http://miaopei.github.io/2019/04/20/FFmpeg/FFmpeg入门/
