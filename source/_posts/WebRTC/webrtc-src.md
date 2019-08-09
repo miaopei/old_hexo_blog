@@ -23,6 +23,14 @@ date: 2019-05-30 19:14:50
 >
 > [webrtc ios client 源码拉取和编译](<https://blog.csdn.net/liwenlong_only/article/details/79422673>)
 
+> [webrtc视频jitterbuffer原理机制(描述版)](<https://www.jianshu.com/p/bd10d60cebcd>)
+>
+> [jitter buffer QoS的解决方案](https://www.cnblogs.com/lidabo/p/6846548.html)
+>
+> [webrtc中的码率控制](<https://blog.csdn.net/chinabinlang/article/details/78294464?locationNum=7&fps=1>)
+>
+> 
+
 # 查看和下载特定版本的webrtc代码
 
 **注**：*这个方法已经不适用了*
