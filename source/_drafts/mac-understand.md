@@ -1,8 +1,11 @@
 ---
 title: understand 快捷键
-tags: [MacOS]
-categories: [MacOS]
+tags:
+  - MacOS
+categories:
+  - MacOS
 reward: true
+abbrlink: 22896
 date: 2019-08-09 16:01:01
 ---
 
