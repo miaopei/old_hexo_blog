@@ -28,8 +28,22 @@ date: 2019-05-30 19:14:50
 > [jitter buffer QoS的解决方案](https://www.cnblogs.com/lidabo/p/6846548.html)
 >
 > [webrtc中的码率控制](<https://blog.csdn.net/chinabinlang/article/details/78294464?locationNum=7&fps=1>)
+
+> [WebRTC介绍](<https://github.com/bovinphang/WebRTC>)
 >
-> 
+> [WebRTC源码解读一](<https://blog.csdn.net/languobeibei/article/details/77447081>)
+>
+> [WebRTC架构简介](<https://blog.csdn.net/fishmai/article/details/69681595>)
+>
+> [C/C++ Linux 程序员必须了解的 10 个工具](<https://blog.csdn.net/temotemo/article/details/7917010>)
+>
+> [C++设计一个类不能偷懒的地方](<https://blog.csdn.net/temotemo/article/details/7763040>)
+>
+> [设计性能良好系统的指导思想](<https://blog.csdn.net/temotemo/article/details/7696215>)
+>
+> [WebRTC实时音视频技术的整体架构介绍](<http://www.52im.net/thread-284-1-1.html>)
+>
+> [WebRTC 开发（二）源码下载与编译](<https://depthlove.github.io/2019/05/02/webrtc-development-2-source-code-download-and-build/>)
 
 # 查看和下载特定版本的webrtc代码
 
