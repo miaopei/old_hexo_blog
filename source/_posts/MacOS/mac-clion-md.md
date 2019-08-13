@@ -1,8 +1,11 @@
 ---
 title: IntelliJ IDEA 常用快捷键
-tags: [MacOS]
-categories: [MacOS]
+tags:
+  - MacOS
+categories:
+  - MacOS
 reward: true
+abbrlink: 38848
 date: 2019-08-12 19:35:21
 ---
 
