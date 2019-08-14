@@ -198,7 +198,8 @@
                 <i class="fa fa-eye"></i>
             </span>
             {% if theme.post_meta.item_text %}
-                <span class="post-meta-item-text">{{ __('post.views') + __('symbol.colon')  }}</span>
+                <span class="post-meta-item-text">{{__('post.visitors')}}</span>
+                <!--<span class="post-meta-item-text">{{ __('post.views') + __('symbol.colon')  }}</span>-->
             {% endif %}
             <span class="leancloud-visitors-count"></span>
             </span>
@@ -411,17 +412,6 @@
               <div class="fb_like">
                 <div class="fb-like" data-layout="button_count" data-share="true"></div>
               </div>
-            {% endif %}
-
-            {% if theme.leancloud_visitors.enable %}
-                <span id="{{ url_for(post.path)  }}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
-                    <span class="post-meta-divider">|</span>
-                    <span class="post-meta-item-icon">
-                        <i class="fa fa-eye"></i>
-                    </span>
-
-                    <span class="post-meta-item-text">{{__('post.visitors')}}</span>
-                </span>
             {% endif %}
          </div>
         {% endif %}
