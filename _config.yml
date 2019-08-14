@@ -121,7 +121,7 @@ baidu_url_submit:
     path: baidu_urls.txt
 
 leancloud_counter_security:
-    enable_sync: false
+    enable_sync: true
     app_id: 8my53W9pnVTOdpPvvH1P76YB-gzGzoHsz
     app_key: DxtWRruxKOO4SPacKO9Mxe8g
     username: miaopei
