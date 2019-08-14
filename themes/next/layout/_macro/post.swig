@@ -414,8 +414,13 @@
             {% endif %}
 
             {% if theme.leancloud_visitors.enable %}
-                <span id="{{ url_for(post.path)  }}"class="leancloud_visitors"  data-flag-title="{{ post.title  }}">
-                    &nbsp; | &nbsp; {{__('post.visitors')}}
+                <span id="{{ url_for(post.path)  }}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
+                    <span class="post-meta-divider">|</span>
+                    <span class="post-meta-item-icon">
+                        <i class="fa fa-eye"></i>
+                    </span>
+
+                    <span class="post-meta-item-text">{{__('post.visitors')}}</span>
                 </span>
             {% endif %}
          </div>
