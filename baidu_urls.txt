@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/08/15/人生算法/
 http://miaopei.github.io/2019/08/12/MacOS/mac-clion-md/
 http://miaopei.github.io/2019/07/19/tea/
 http://miaopei.github.io/2019/07/10/MacOS/mac-shell/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2019/05/15/WebRTC/webrtc-02/
 http://miaopei.github.io/2019/05/14/WebRTC/webrtc-01/
 http://miaopei.github.io/2019/05/04/FFmpeg/FFmpeg命令大全/
 http://miaopei.github.io/2019/04/30/FFmpeg/音视频核心技术/
-http://miaopei.github.io/2019/04/23/FFmpeg/移动端音视频入门/
