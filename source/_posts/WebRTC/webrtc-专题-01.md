@@ -1,8 +1,11 @@
 ---
 title: webrtc-专题-01-WebRTC框架介绍
-tags: [WebRTC]
-categories: [WebRTC]
+tags:
+  - WebRTC
+categories:
+  - WebRTC
 reward: true
+abbrlink: 42839
 date: 2019-06-16 19:17:23
 ---
 
