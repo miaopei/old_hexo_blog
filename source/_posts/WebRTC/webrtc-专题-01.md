@@ -814,7 +814,7 @@ NAT（Network Address Translation，网络地址转换）属接入广域网(WAN)
 
 例如：
 
-```shell
+​```shell
 A: 192.168.8.100 
 NAT: 202.100.100.100 
 C: 292.88.88.88 
