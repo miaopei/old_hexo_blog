@@ -1,4 +1,5 @@
-http://miaopei.github.io/2019/08/15/人生算法/
+http://miaopei.github.io/2019/08/18/人生算法-02/
+http://miaopei.github.io/2019/08/15/人生算法-01/
 http://miaopei.github.io/2019/08/12/MacOS/mac-clion-md/
 http://miaopei.github.io/2019/07/19/tea/
 http://miaopei.github.io/2019/07/10/MacOS/mac-shell/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
 http://miaopei.github.io/2019/05/18/FFmpeg/FFmpeg+SDL视频播放器/
 http://miaopei.github.io/2019/05/17/WebRTC/webrtc-03/
 http://miaopei.github.io/2019/05/15/WebRTC/webrtc-02/
-http://miaopei.github.io/2019/05/14/WebRTC/webrtc-01/
