@@ -1,11 +1,6 @@
 http://miaopei.github.io/2019/09/03/HouJieCPlus/
 http://miaopei.github.io/2019/09/03/BuyHouseGuide/
 http://miaopei.github.io/2019/08/27/Android/android-learn-note/
-http://miaopei.github.io/2019/08/22/人生算法-05/
-http://miaopei.github.io/2019/08/22/人生算法-04/
-http://miaopei.github.io/2019/08/21/人生算法-03/
-http://miaopei.github.io/2019/08/18/人生算法-02/
-http://miaopei.github.io/2019/08/15/人生算法-01/
 http://miaopei.github.io/2019/08/12/MacOS/mac-clion-md/
 http://miaopei.github.io/2019/07/19/tea/
 http://miaopei.github.io/2019/07/10/MacOS/mac-shell/
@@ -18,3 +13,8 @@ http://miaopei.github.io/2019/05/30/WebRTC/webrtc-src/
 http://miaopei.github.io/2019/05/29/实用的计算机工具库/
 http://miaopei.github.io/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/
 http://miaopei.github.io/2019/05/27/WebRTC/webrtc-opensrc/
+http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/
+http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/
+http://miaopei.github.io/2019/05/19/FFmpeg/ffmpeg实时美颜推流/
+http://miaopei.github.io/2019/05/18/FFmpeg/FFmpeg+SDL视频播放器/
+http://miaopei.github.io/2019/05/17/WebRTC/webrtc-03/
