@@ -1,11 +1,14 @@
 ---
 title: BuyHouseGuide
-tags: [Other]
-categories: [Other]
+tags:
+  - Other
+categories:
+  - Other
 reward: true
 password: mp123456
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
+abstract: 'Welcome to my blog, enter password to read.'
+message: 'Welcome to my blog, enter password to read.'
+abbrlink: 48450
 date: 2019-09-03 14:40:48
 ---
 
