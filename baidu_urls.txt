@@ -1,3 +1,4 @@
+http://miaopei.github.io/2019/09/03/HouJieCPlus/
 http://miaopei.github.io/2019/09/03/BuyHouseGuide/
 http://miaopei.github.io/2019/08/27/Android/android-learn-note/
 http://miaopei.github.io/2019/08/22/人生算法-05/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2019/05/30/WebRTC/webrtc-src/
 http://miaopei.github.io/2019/05/29/实用的计算机工具库/
 http://miaopei.github.io/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/
 http://miaopei.github.io/2019/05/27/WebRTC/webrtc-opensrc/
-http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/
