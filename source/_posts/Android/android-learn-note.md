@@ -1,8 +1,11 @@
 ---
 title: Android学习笔记
-tags: [Android]
-categories: [Android]
+tags:
+  - Android
+categories:
+  - Android
 reward: true
+abbrlink: 13252
 date: 2019-08-27 18:04:02
 ---
 
@@ -23,4 +26,8 @@ date: 2019-08-27 18:04:02
 > [PWA超简单入门](https://juejin.im/post/5abba6a7f265da239706ec60)
 >
 > [PWA，现代前端必会的黑科技](https://zhuanlan.zhihu.com/p/40236256)
+
+## Java 知识汇总
+
+> [JAVA的abstract修饰符 && 接口interface用法 && 抽象类和interface的差别](https://blog.csdn.net/zhandoushi1982/article/details/8458081)
 
