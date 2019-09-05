@@ -122,7 +122,7 @@
 <meta property="og:site_name" content="Mr.Miaow Blog">
 <meta property="og:description" content="面向对象高级编程">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-03T11:01:43.160Z">
+<meta property="og:updated_time" content="2019-09-05T03:54:59.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HouJieCPlus">
 <meta name="twitter:description" content="面向对象高级编程">
@@ -566,7 +566,7 @@
       
 
       
-        <h2 id="面向对象高级编程"><a href="#面向对象高级编程" class="headerlink" title="面向对象高级编程"></a>面向对象高级编程</h2><div class="pdf" target="./ObjectOriented.pdf" height></div>
+        <h2 id="面向对象高级编程"><a href="#面向对象高级编程" class="headerlink" title="面向对象高级编程"></a>面向对象高级编程</h2><div class="pdf" target="/books/ObjectOriented.pdf" height></div>
 
 
       
@@ -1644,6 +1644,32 @@
 
 
   
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
 
   
 <script>

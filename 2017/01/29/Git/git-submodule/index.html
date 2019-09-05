@@ -769,8 +769,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/27/Git/git-using-standard-process/" rel="next" title="Git使用规范流程">
-                <i class="fa fa-chevron-left"></i> Git使用规范流程
+              <a href="/2017/01/27/Git/git-common-list/" rel="next" title="常用Git命令清单">
+                <i class="fa fa-chevron-left"></i> 常用Git命令清单
               </a>
             
           </div>
@@ -1761,6 +1761,32 @@
 
 
   
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
 
   
 <script>

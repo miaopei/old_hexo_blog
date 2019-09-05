@@ -753,9 +753,9 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2017/03/31/HTTP/lighttpd-配置https/" itemprop="url">
+          <a class="post-title-link" href="/2017/03/31/HTTP/lighttpd-fastcgi/" itemprop="url">
             
-              <span itemprop="name">lighttpd 配置https</span>
+              <span itemprop="name">lighttpd+fastcgi</span>
             
           </a>
         
@@ -788,9 +788,9 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2017/03/31/HTTP/lighttpd-fastcgi/" itemprop="url">
+          <a class="post-title-link" href="/2017/03/31/HTTP/lighttpd-配置https/" itemprop="url">
             
-              <span itemprop="name">lighttpd+fastcgi</span>
+              <span itemprop="name">lighttpd 配置https</span>
             
           </a>
         
@@ -998,9 +998,9 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2017/01/27/Git/git-using-standard-process/" itemprop="url">
+          <a class="post-title-link" href="/2017/01/27/Git/git-common-list/" itemprop="url">
             
-              <span itemprop="name">Git使用规范流程</span>
+              <span itemprop="name">常用Git命令清单</span>
             
           </a>
         
@@ -1033,9 +1033,9 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2017/01/27/Git/git-common-list/" itemprop="url">
+          <a class="post-title-link" href="/2017/01/27/Git/git-using-standard-process/" itemprop="url">
             
-              <span itemprop="name">常用Git命令清单</span>
+              <span itemprop="name">Git使用规范流程</span>
             
           </a>
         
@@ -1976,6 +1976,32 @@
 
 
   
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
 
   
 <script>
