@@ -12,6 +12,5 @@ date: 2019-09-03 18:22:18
 ## 面向对象高级编程
 
 
-
-{% pdf ./ObjectOriented.pdf %}
+{% pdf /books/ObjectOriented.pdf %}
 

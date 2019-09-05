@@ -25,7 +25,6 @@
     "hexo-inject": "^1.0.0",
     "hexo-leancloud-counter-security": "^1.4.0",
     "hexo-math": "^3.0.4",
-    "hexo-pdf": "^1.1.1",
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-marked": "^1.0.1",
     "hexo-renderer-stylus": "^0.3.1",
@@ -37,6 +36,7 @@
     "leancloud-storage": "^2.5.4",
     "lodash": "^4.17.15",
     "npm": "^6.7.0",
+    "package.json": "^2.0.1",
     "underscore.string": "^3.3.5",
     "webpack": "^4.29.3"
   }
