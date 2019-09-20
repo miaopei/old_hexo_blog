@@ -16,3 +16,12 @@ date: 2019-09-03 18:22:18
 ## 面向对象高级编程 Part2
 
 {% pdf /books/ObjectOrientedPart2.pdf %}
+
+## 内存管理 Part1
+
+{% pdf /books/MemoryManagementPart1.pdf %}
+
+## 内存管理 Part2
+
+{% pdf /books/MemoryManagementPart2.pdf %}
+
