@@ -1,11 +1,11 @@
 ---
 title: WebRTC 流媒体服务器
-tags: [WebRTC]
-categories: [WebRTC]
+tags:
+  - WebRTC
+categories:
+  - WebRTC
 reward: true
-#password: Miaow
-#abstract: Welcome to my blog, enter password to read.
-#message: Welcome to my blog, enter password to read.
+abbrlink: 63461
 date: 2019-10-09 11:39:14
 ---
 
@@ -204,17 +204,30 @@ $ clang++ -std=c++11 -g -o class Human.cpp class.cpp
 
 析构函数一般都是多态的
 
+### 内存地址空间与指针
+
+![内存管理与指针](/images/imageWebRTC/mediaserver/内存管理与指针.png)
+
+![内存地址空间](/images/imageWebRTC/mediaserver/内存地址空间.png)
+
+### 堆空间与栈空间
+
+![堆空间与栈空间](/images/imageWebRTC/mediaserver/堆空间与栈空间.png)
+
+内存的申请与释放：
+
+- new
+- delete/delete[]
+
+### 深拷贝与浅拷贝
+
+![深拷贝与浅拷贝](/images/imageWebRTC/mediaserver/深拷贝与浅拷贝.png)
+
+## 服务器基础编程
+
+### Linux系统下的信号
 
 
-
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
 
 ![](/images/imageWebRTC/mediaserver/)
 
