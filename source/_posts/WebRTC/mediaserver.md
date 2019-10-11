@@ -1078,7 +1078,678 @@ int main(){
 - `flag fcntl(fd, F_SETFL/F_GETFL, flag)`
 - `events select(nfds, readfds, writefds, exceptfds, timeout)`
 
+<details><summary>select_tcp_server.c</summary>
 
+```c++
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+#define PORT 8888
+#define FD_SIZE 1024
+#define MESSAGE_SIZE 1024
+
+int main(){
+    int ret = -1;
+
+    int pid;
+    int accept_fd = -1;
+    int socket_fd = -1;
+    int accept_fds[FD_SIZE] = {-1, };
+
+    int curpos = -1;
+    int maxpos = 0;
+    int backlog = 10;
+    int flags = 1; //open REUSEADDR option
+
+    int max_fd = -1;
+    fd_set fd_sets;
+    int events=0;
+
+    struct sockaddr_in local_addr, remote_addr;
+
+    //create a tcp socket
+    socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if ( socket_fd == -1 ){
+        perror("create socket error");
+        exit(1);
+    }
+
+    //set option of socket
+    ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &flags, sizeof(flags));
+    if ( ret == -1 ){
+        perror("setsockopt error");
+    }
+
+    //NONBLOCK
+    flags = fcntl(socket_fd, F_GETFL, 0);
+    fcntl(socket_fd, F_SETFL, flags | O_NONBLOCK);
+
+    //set local address
+    local_addr.sin_family = AF_INET;
+    local_addr.sin_port = htons(PORT);
+    local_addr.sin_addr.s_addr = INADDR_ANY;
+    bzero(&(local_addr.sin_zero), 8);
+
+    //bind socket
+    ret = bind(socket_fd, (struct sockaddr *)&local_addr, sizeof(struct sockaddr_in));
+    if(ret == -1 ) {
+        perror("bind error");
+        exit(1);
+    }
+
+    ret = listen(socket_fd, backlog);
+    if ( ret == -1 ){
+        perror("listen error");
+        exit(1);
+    }
+
+    max_fd = socket_fd; //每次都重新设置 max_fd
+    for(int i=0; i< FD_SIZE; i++){
+        accept_fds[i] = -1; 
+    }
+
+    for(;;) {
+        FD_ZERO(&fd_sets); //清空sets
+        FD_SET(socket_fd, &fd_sets); //将socket_fd 添加到sets
+
+        for(int k=0; k < maxpos; k++){
+            if(accept_fds[k] != -1){
+                if(accept_fds[k] > max_fd){
+                    max_fd = accept_fds[k]; 
+                }
+                printf("fd:%d, k:%d, max_fd:%d\n", accept_fds[k], k, max_fd);
+                FD_SET(accept_fds[k], &fd_sets); //继续向sets添加fd
+            }
+        }
+
+        //遍历所有的fd
+        events = select( max_fd + 1, &fd_sets, NULL, NULL, NULL );
+        if(events < 0) {
+            perror("select");
+            break;
+        }else if(events == 0){
+            printf("select time out ......");
+            continue;
+        }else if( events ){
+            printf("events:%d\n", events);
+            if( FD_ISSET(socket_fd, &fd_sets)){ // 如果来的是新连接
+                printf("listen event :1\n");
+                for( int a=0; a < FD_SIZE; a++){
+                    if(accept_fds[a] == -1){
+                        curpos = a;
+                        break;
+                    }
+                }
+
+                if(a == FD_SIZE){
+                    printf("the connection is full!\n");
+                    continue;
+                }
+
+                int addr_len = sizeof( struct sockaddr_in );
+                accept_fd = accept(socket_fd, (struct sockaddr *)&remote_addr, &addr_len); //创建一个新连接的fd
+
+                int flags = fcntl(accept_fd, F_GETFL, 0); //取出新连接的 fd 的相关选项
+                fcntl(accept_fd, F_SETFL, flags | O_NONBLOCK); //设置为非阻塞
+
+                accept_fds[curpos] = accept_fd;
+
+                if(curpos+1 > maxpos){
+                    maxpos = curpos + 1; 
+                }
+
+                if(accept_fd > max_fd){
+                    max_fd = accept_fd; 
+                }
+                printf("new connection fd:%d, curpos = %d \n",accept_fd, curpos);
+            }
+
+            for(int j=0; j < maxpos; j++ ){
+                if( (accept_fds[j] != -1) && FD_ISSET(accept_fds[j], &fd_sets)){ //有事件时
+                    printf("accept event :%d, accept_fd: %d\n",j, accept_fds[j]);
+                    char in_buf[MESSAGE_SIZE];
+                    memset(in_buf, 0, MESSAGE_SIZE);
+                    int ret = recv(accept_fds[j], &in_buf, MESSAGE_SIZE, 0);
+                    if(ret == 0){
+                        close(accept_fds[j]);
+                        accept_fds[j] = -1;
+                    } 
+
+                    printf( "receive message:%s\n", in_buf );
+                    send(accept_fds[j], (void*)in_buf, MESSAGE_SIZE, 0);
+                }
+            }
+        }
+    }
+
+    printf("quit server...\n");
+    close(socket_fd);
+    return 0;
+}
+```
+
+</details>
+
+设置 select 超时时间（一般情况想设置成500毫秒）：
+
+```c++
+struct timeval {
+    long tv_sec; /*秒*/
+    long tv_usec; /*微妙*/
+}
+```
+
+select 函数输入参数的意义：
+
+- 我们关心的文件描述符
+- 对每个文件描述符我们关心的状态（读，写，异常）
+- 我们要等待的时间（永远（`NULL`），一段时间（`timeval`），不等待（`0`））
+
+从 select 函数得到的信息：
+
+- 已经做好准备的文件描述符的个数
+- 对于读、写、异常，那些文件描述符准备好了
+
+理解 select 模型：
+
+- 理解 select 模型的关键在于理解 `fd_set` 类型
+- `fd_set` 就是多个整型字的集合，每个 bit 代表一个文件描述符
+- `FD_ZERO` 表示将说有的位置 0 
+- `FD_SET` 是将 `fd_set` 中的某一位置 1
+- select 函数执行后，系统会修改 `fd_set` 中的内容
+- select 函数执行后，应用层要重新设置 `fd_set` 中的内容
+
+![理解select模型示意图](/images/imageWebRTC/mediaserver/理解select模型示意图.png)
+
+## epoll实现高性能服务器
+
+### epoll基本知识
+
+使用 Epoll 的好处：
+
+- 没有文件描述符的限制
+- 工作效率不会随着文件描述符的增加而下降
+- Epoll 经过系统优化更高效
+
+Epoll 事件的触发模式（默认是水平触发模式）：
+
+- `Level Trigger` （水平触发）没有处理反复发送
+- `Edge Trigger` （边缘触发）只发送一次
+
+Epoll 重要的 API ：
+
+- `int epoll_create()` 参数无意义，可忽略
+- `int epoll_ctl(epfd, op, fd, struct epoll_event *event)`
+- `int epoll_wait(epfd, events, maxevents, timeout)`
+
+Epoll 的事件：
+
+- `EPOLLET`  -- 可以设置边缘触发模式
+- `EPOLLIN`
+- `EPOLLOUT`
+- `EPOLLPRI`  -- 出现中断的时候
+- `EPOLLERR`
+- `EPOLLHUB` -- 程序挂起的时候出现
+
+`epoll_ctl` 相关操作：
+
+- `EPOLL_CTL_ADD` 
+- `EPOLL_CTL_MOD`  -- 修改
+- `EPOLL_CTL_DEL`
+
+Epoll 重要的结构体：
+
+```c++
+typedef union epoll_data {
+    void		*ptr;
+    int 		fd;
+    uint32_t	u32;
+    uint64_t	u64;
+} epoll_data_t;
+
+struct epoll_event {
+    uint32_t 	events;  /*Epoll events*/
+    epoll_data_t data;  /*User data variable*/
+}
+```
+
+<details><summary>epoll_tcp_server.c</summary>
+
+```c++
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+
+#include <sys/epoll.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+#define PORT 8888
+
+#define FD_SIZE 20
+#define MAX_EVENTS 20
+#define TIME_OUT 500
+
+#define MESSAGE_SIZE 1024
+
+int main(){
+    int ret = -1;
+
+    int socket_fd = -1;
+    int accept_fd = -1;
+
+    int flags = 1;
+    int backlog = 10;
+
+    struct sockaddr_in local_addr, remote_addr;
+
+    struct epoll_event ev, events[FD_SIZE];
+    int epoll_fd = -1; 
+    int event_number = 0;
+
+    //creat a tcp socket
+    socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if ( socket_fd  == -1 ){
+        perror("create socket error");
+        exit(1);
+    }
+
+    //set REUSERADDR
+    ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&flags, sizeof(flags)); 
+    if ( ret == -1 ){
+        perror("setsockopt error");
+    }
+
+    //set NONBLOCK
+    flags = fcntl(socket_fd, F_GETFL, 0);
+    fcntl(socket_fd, F_SETFL, flags|O_NONBLOCK);
+
+    //set address
+    local_addr.sin_family = AF_INET;
+    local_addr.sin_port = htons(PORT);
+    local_addr.sin_addr.s_addr = INADDR_ANY;
+    bzero(&(local_addr.sin_zero),8);
+
+    //bind addr
+    ret = bind(socket_fd, (struct sockaddr *)&local_addr, sizeof(struct sockaddr_in));
+    if( ret == -1 ) {
+        perror("bind error");
+        exit(1);
+    }
+
+    if (listen(socket_fd, backlog) == -1 ){
+        perror("listen error");
+        exit(1);
+    }
+
+    //create epoll
+    epoll_fd = epoll_create(256);//the size argument is ignored
+    ev.data.fd=socket_fd;
+    ev.events=EPOLLIN;
+    epoll_ctl(epoll_fd, EPOLL_CTL_ADD, socket_fd, &ev); //将socket_fd 添加到epoll中
+    for(;;){
+        //events 表示一共有多少事件被侦听
+        //MAX_EVENTS 表示在 events 个事件中，本次调用最多能返回多少个被触发的事件
+        //TIME_OUT 表示本次调用最多等多长时间
+        //event_number 表示本次调用真正有多少事件被解发
+        event_number = epoll_wait(epoll_fd, events, MAX_EVENTS, TIME_OUT);
+        for(int i=0; i < event_number; i++){
+            if(events[i].data.fd == socket_fd){ // 如果是侦听端口的事件
+                printf("listen event... \n");
+                int addr_len = sizeof( struct sockaddr_in );
+                accept_fd = accept(socket_fd, (struct sockaddr *)&remote_addr, &addr_len);
+
+                //将新创建的socket设置为 NONBLOCK 模式
+                flags = fcntl(accept_fd, F_GETFL, 0);
+                fcntl(accept_fd, F_SETFL, flags|O_NONBLOCK);
+
+                ev.data.fd=accept_fd;
+                ev.events=EPOLLIN | EPOLLET;
+                epoll_ctl(epoll_fd, EPOLL_CTL_ADD, accept_fd, &ev);
+
+                printf("new accept fd:%d\n",accept_fd);
+            } else if(events[i].events & EPOLLIN){
+                //printf("accept event :%d\n",i);
+                char in_buf[MESSAGE_SIZE];
+                
+                memset(in_buf, 0, MESSAGE_SIZE);
+
+                //receive data
+                ret = recv( events[i].data.fd, &in_buf, MESSAGE_SIZE, 0 );
+                if(ret == MESSAGE_SIZE ){
+                    printf("maybe have data....");
+                }
+
+                if(ret <= 0){
+                    switch (errno){
+                        case EAGAIN: //说明暂时已经没有数据了，要等通知
+                            break;
+                        case EINTR: //被终断了，再来一次
+                            printf("recv EINTR... \n");
+                            ret = recv(events[i].data.fd, &in_buf, MESSAGE_SIZE, 0);
+                            break;
+                        default:
+                            printf("the client is closed, fd:%d\n", events[i].data.fd);
+                            epoll_ctl(epoll_fd, EPOLL_CTL_DEL, events[i].data.fd, &ev); 
+                            close(events[i].data.fd);
+                    }
+                }
+
+                printf(">>>receive message:%s\n", in_buf);
+                send(events[i].data.fd, &in_buf, ret, 0);
+            }
+        }
+    }
+    return 0;
+}
+```
+
+</details>
+
+### epoll+fork实现高性能网络服务器
+
+<details><summary>epoll_fork_tcp_server.c</summary>
+
+```c++
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+
+#include <sys/epoll.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+#define PORT 8111
+
+#define FD_SIZE 20
+#define MAX_EVENTS 20
+#define TIME_OUT 500
+
+#define MESSAGE_SIZE 1024
+#define NB_PROCESS 4
+
+int main(){
+    int ret = -1;
+
+    int socket_fd = -1;
+    int accept_fd = -1;
+
+    int flags = 1;
+    int backlog = 10;
+
+    struct sockaddr_in local_addr,remote_addr;
+
+    struct epoll_event ev, events[FD_SIZE];
+    int epoll_fd = -1; 
+    int event_number = 0;
+
+    int pid;
+    int status;
+    int max_subprocess = NB_PROCESS;
+
+    //creat a tcp socket
+    socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if ( socket_fd  == -1 ){
+        perror("create socket error");
+        exit(1);
+    }
+
+    //set REUSERADDR
+    ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&flags, sizeof(flags)); 
+    if ( ret == -1 ){
+        perror("setsockopt error");
+    }
+
+    //set NONBLOCK
+    flags = fcntl(socket_fd, F_GETFL, 0);
+    fcntl(socket_fd, F_SETFL, flags|O_NONBLOCK);
+
+    //set address
+    local_addr.sin_family = AF_INET;
+    local_addr.sin_port = htons(PORT);
+    local_addr.sin_addr.s_addr = INADDR_ANY;
+    bzero(&(local_addr.sin_zero),8);
+
+    //bind addr
+    ret = bind(socket_fd, (struct sockaddr *)&local_addr, sizeof(struct sockaddr_in));
+    if( ret == -1 ) {
+        perror("bind error");
+        exit(1);
+    }
+
+    if (listen(socket_fd, backlog) == -1 ){
+        perror("listen error");
+        exit(1);
+    }
+
+    //fork some subprocess
+    for(int a=0; a < max_subprocess; a++){
+        if(pid !=0){
+            pid = fork(); 
+        }
+    }
+
+    //child process
+    if(pid == 0) {
+        printf("create an new child process...");
+        //create epoll
+        epoll_fd = epoll_create(256);//the size argument is ignored
+        ev.data.fd=socket_fd; // 多个子进程使用一个监听 fd 会有一些问题
+        ev.events=EPOLLIN;
+        epoll_ctl(epoll_fd, EPOLL_CTL_ADD, socket_fd, &ev); //将socket_fd 添加到epoll中
+        for(;;){
+            //events 表示一共有多少事件被侦听
+            //MAX_EVENTS 表示在events个事件中，本次调用最多能返回多少个被解发的事件
+            //TIME_OUT 表示本次调用最多等多长时间
+            //event_number 表示本次调用真正有多少事件被解发
+            event_number = epoll_wait(epoll_fd, events, MAX_EVENTS, TIME_OUT);
+            for(int i=0; i < event_number; i++){
+                if(events[i].data.fd == socket_fd){ // 如果是侦听端口的事件
+                    printf("listen event... \n");
+
+                    int addr_len = sizeof( struct sockaddr_in );
+                    accept_fd = accept(socket_fd, (struct sockaddr *)&remote_addr, &addr_len);
+
+                    //将新创建的socket设置为 NONBLOCK 模式
+                    flags = fcntl(accept_fd, F_GETFL, 0);
+                    fcntl(accept_fd, F_SETFL, flags|O_NONBLOCK);
+
+                    ev.data.fd=accept_fd;
+                    ev.events=EPOLLIN | EPOLLET;
+                    epoll_ctl(epoll_fd, EPOLL_CTL_ADD, accept_fd, &ev);
+
+                    printf("new accept fd:%d\n",accept_fd);
+                } else if(events[i].events & EPOLLIN){
+                    //printf("accept event :%d\n",i);
+                    char in_buf[MESSAGE_SIZE];
+                    memset(in_buf, 0, MESSAGE_SIZE);
+
+                    //receive data
+                    ret = recv( events[i].data.fd, &in_buf, MESSAGE_SIZE, 0 );
+                    if(ret == MESSAGE_SIZE ){
+                        printf("maybe have data....");
+                    }
+
+                    if(ret <= 0){
+                        switch (errno){
+                            case EAGAIN:
+                                ret = recv(events[i].data.fd, &in_buf, MESSAGE_SIZE, 0);
+                                break;
+                            case EINTR:
+                                printf("recv EINTR... \n");
+                                break;
+                            default:
+                                printf("the client is closed, fd:%d\n", events[i].data.fd);
+                                epoll_ctl(epoll_fd, EPOLL_CTL_DEL, events[i].data.fd, &ev); 
+                                close(events[i].data.fd);
+                                ;
+                        }
+                    }
+                    printf(">>>receive message:%s\n", in_buf);
+                    send(events[i].data.fd, &in_buf, ret, 0);
+                }
+            }
+        }
+
+    }else {// pid != 0
+        //wait child process to quit 
+        wait(&status);
+        #if 0
+        do {
+            pid = waitpid(-1, NULL, 0);  // -1 表示所有等待所有子进程退出
+        } while(pid != -1);
+        #endif
+    }
+    return 0;
+}
+```
+
+</details>
+
+**epoll + fork 异步事件的惊群现象：**
+
+- 解决方法：
+  - 将侦听的套接字只放在一个进程里边处理，这个进程专门处理连接或者其他一些事务。缺点：大并发连接的时候负担比较大
+  - 还是负载，分担出去，在某一个时刻只有一个epoll来管理侦听
+  - 加锁
+
+## libevent实现高性能网络服务器
+
+### 比较有名的异步 IO 处理库的介绍
+
+比较有名的异步事件处理库：
+
+- `libevent` -- 跨平台
+- `libevthp` -- 底层使用的是libevent，处理http比较高效
+- `libuv`  -- nodejs 底层使用的库
+- `libev` -- 只支持linux
+
+libevent 重要的函数：
+
+- `event_base_new`
+- `event_base_dispatch`  -- 事件处理
+- `event_new`
+- `event_add`
+- `event_del`
+- `event_free`
+
+![evconnlistener_new_bind](/images/imageWebRTC/mediaserver/libevent-01.png)
+
+libevent编译与安装：
+
+- [libevent](http://libevent.org)
+- `wget -c addr --no-check-certificate`
+- `./configure --prefix=/usr/local/libevent`
+- `make && sudo make install`
+
+bufferevent 的作用：
+
+- 从外面看它就是一个缓冲区，可以与socket绑定
+- 内部由输入和输出缓冲区组成
+- 每一个socket对应一个 bufferevent
+- 当socket有事件触发时，可以设置回调函数
+
+<details><summary>libevent_tcp_server.cpp</summary>
+
+```c++
+#include <iostream>
+
+#include <event2/listener.h>
+#include <event2/bufferevent.h>
+#include <event2/buffer.h>
+
+#include <arpa/inet.h>
+
+#define PORT 8111
+
+void on_read_cb(struct bufferevent *bev, void* ctx)
+{
+    struct evbuffer *input = NULL;
+    struct evbuffer *output = NULL;
+    
+    input = bufferevent_get_input(bev);
+    output = bufferevent_get_output(bev);
+    evbuffer_add_buffer(output, input);  // 将input数据拷贝到output
+}
+
+void on_accept_cb(struct evconnlistener *listener,
+                  evutil_socket_t fd,
+                  struct sockaddr *addr,
+                  int socklen,
+                  void* ctx)
+{
+    struct event_base *base = NULL;
+    struct bufferevent *bev = NULL;
+    
+    base = evconnlistener_get_base(listener);
+    bev = bufferevent_socket_new(base, fd, 0);
+    bufferevent_enable(bev, EV_READ | EV_WRITE);
+    bufferevent_setcb(bev, on_read_cb, NULL, NULL, NULL);
+}
+
+int main(int argc, char* argv[])
+{
+    struct sockaddr_in serveraddr;
+    struct event_base *base = NULL;
+    struct evconnlistener *listener = NULL;
+    
+    base = event_base_new();
+    
+    serveraddr.sin_family = AF_INET;
+    serveraddr.sin_port = htons(PORT);
+    serveraddr.sin_addr.s_addr = INADDR_ANY;
+    
+    listener = evconnlistener_new_bind(base, 
+                            		   on_accept_cb,
+                                       NULL,
+                                       LEV_OPT_REUSEABLE,
+                                       10,
+                                       (struct sockaddr*)&serveraddr,
+                                       sizeof(serveraddr));
+    event_base_dispath(base);
+    
+    return 0;
+}
+```
+
+</details>
+
+```shell
+# 编译完设置 libevent 环境变量
+$ vi ~/.bashrc
+unset PKG_CONFIG_LIB
+export PKG_CONFIG_PATH=/usr/local/libevent/lib/pkgconfig:$PKG_CONFIG_PATH
+export LD_LIBRARY_PATH=/usr/local/libevent/lib:$LD_LIBRARY_PATH
+# 查看库路径、头文件路径，以及要引用的库名字
+$ pkg-config --libs --cflags libevent
+-I/usr/local/libevent/include -L/usr/local/libevent/lib -levent
+$ evn | grep LD
+LD_LIBRARY_PATH=/usr/local/libevent/lib:
+$ g++ -g -o libevent_tcp_server libevent_tcp_server.cpp `pkg-config --libs --cflags libevent`
+$ netstat -ntpl | grep 8111
+```
+
+
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
 
 ![](/images/imageWebRTC/mediaserver/)
 
