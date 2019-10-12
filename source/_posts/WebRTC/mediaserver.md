@@ -1,5 +1,5 @@
 ---
-title: WebRTC 流媒体服务器
+title: WebRTC 流媒体服务器（一）
 tags:
   - WebRTC
 categories:
@@ -1743,30 +1743,7 @@ $ g++ -g -o libevent_tcp_server libevent_tcp_server.cpp `pkg-config --libs --cfl
 $ netstat -ntpl | grep 8111
 ```
 
+### libevent实现对UDP的处理
 
+### libuv实现对UDP的处理
 
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-
-
-<details><summary></summary>
-
-```c++
-
-```
-
-</details>
