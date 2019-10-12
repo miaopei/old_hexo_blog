@@ -149,7 +149,45 @@ Ack Number 表示可靠性：
 
 ![RTCP FB Header](/images/imageWebRTC/mediaserver/RTCPFBHeader.png)
 
-![](/images/imageWebRTC/mediaserver/)
+## WebRTC协议
+
+### STUN协议介绍
+
+STUN协议介绍：
+
+- STUN存在的目的就是进行 NAT 穿越
+- STUN是典型的客户端 / 服务器模式。客户端发送请求，服务器进行响应
+
+![RFC STUN规范](/images/imageWebRTC/mediaserver/RFCSTUN规范.png)
+
+STUN协议：
+
+- 包括 20 字节的 STUN header
+- Body 中可以有 0 个或多个 Attribute
+
+![STUN Header格式](/images/imageWebRTC/mediaserver/STUNHeader格式.png)
+
+![STUN Header](/images/imageWebRTC/mediaserver/STUNHeader.png)
+
+### STUN Message Type消息
+
+![STUN Message Type](/images/imageWebRTC/mediaserver/STUNMessageType-01.png)
+
+![STUN Message Type](/images/imageWebRTC/mediaserver/STUNMessageType-02.png)
+
+![C0C1](/images/imageWebRTC/mediaserver/STUNMessageType-03.png)
+
+![STUN消息类型](/images/imageWebRTC/mediaserver/STUNMessageType-04.png)
+
+**大小端模式：**
+
+- **大端模式**：数据的高字节保存在内存的低地址中
+- **小端模式**：数据的高字节保存在内存的高地址中
+- **网络字节顺序**：采用大端排序方式
+
+![STUN Message Type](/images/imageWebRTC/mediaserver/STUNMessageType-05.png)
+
+![Transaction ID](/images/imageWebRTC/mediaserver/STUNMessageType-06.png)
 
 ![](/images/imageWebRTC/mediaserver/)
 
@@ -162,6 +200,12 @@ Ack Number 表示可靠性：
 ![](/images/imageWebRTC/mediaserver/)
 
 ![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+
 
 
 
