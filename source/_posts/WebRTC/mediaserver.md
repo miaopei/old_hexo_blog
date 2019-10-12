@@ -25,7 +25,7 @@ date: 2019-10-09 11:39:14
 
 ![学习流媒体服务器的难点](/images/imageWebRTC/mediaserver/学习流媒体服务器的难点.png)
 
-![整个流媒体服务器的构成](/images/imageWebRTC/mediaserver/整个流媒体服务器的构成)
+![整个流媒体服务器的构成](/images/imageWebRTC/mediaserver/整个流媒体服务器的构成.png)
 
 ![学习内容](/images/imageWebRTC/mediaserver/学习内容.png)
 
