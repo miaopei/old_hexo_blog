@@ -383,19 +383,122 @@ Media Description：
 
 ### WebRTC中的SDP
 
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
-
-![](/images/imageWebRTC/mediaserver/)
+![WebRTC中的SDP](/images/imageWebRTC/mediaserver/WebRTC中的SDP.png)
 
 ### WebRTC中的SDP各个字段含义讲解
 
-![](/images/imageWebRTC/mediaserver/)
+WebRTC Offer / Answer SDP：
 
-![](/images/imageWebRTC/mediaserver/)
+<details><summary>SDP报文内容</summary>
 
-![](/images/imageWebRTC/mediaserver/)
+```shell
+v=0
+o=- 2584450093346841581 2 IN IP4 127.0.0.1
+s=-
+t=0 0   # 0 0 表示持续有效
+a=group:BUNDLE audio video data
+a=msid-semantic: WMS 616cfbb1-33a3-4d8c-8275-a199d6005549 # WMS：WebRTC Media Stream
+
+m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 110 112 113 126
+c=IN IP4 0.0.0.0 
+a=rtcp:9 IN IP4 0.0.0.0
+a=ice-ufrag:sXJ3					# 安全认证的时候使用，STUN 中会使用这两个参数
+a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV	# 安全认证的时候使用
+a=ice-options:trickle	# 新版本中使用trickle之后就没有candidate字段了，只要有合适的就检测连接，然后传输数据，如果有更好的则替换掉
+a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79	# 验证证书是否被串改了
+a=setup:actpass		# setup表示建立链接的时候是主动建立还是被动建立，actpass：既可以主动连接也可以被动作为服务端
+a=mid:audio
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level # extmap 对与rtp扩展头
+a=sendrecv	# 控制数据流向
+a=rtcp-mux 	# rtp与rtcp端口是否复用
+a=rtpmap:111 opus/48000/2
+a=rtcp-fb:111 transport-cc
+a=fmtp:111 minptime=10;useinbandfec=1
+a=rtpmap:103 ISAC/16000
+a=rtpmap:104 ISAC/32000
+a=rtpmap:9 G722/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:106 CN/32000
+a=rtpmap:105 CN/16000
+a=rtpmap:13 CN/8000
+a=rtpmap:110 telephone-event/48000
+a=rtpmap:112 telephone-event/32000
+a=rtpmap:113 telephone-event/16000
+a=rtpmap:126 telephone-event/8000
+a=ssrc:120276603 cname:iSkJ2vn5cYYubTve		# cname 唯一的标识
+a=ssrc:120276603 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 1da3d329-7399-4fe9-b20f-69606bebd363
+a=ssrc:120276603 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549
+a=ssrc:120276603 label:1da3d329-7399-4fe9-b20f-69606bebd363		# label代表了具体设备ID
+
+m=video 9 UDP/TLS/RTP/SAVPF 96 98 100 102 127 97 99 101 125
+c=IN IP4 0.0.0.0
+a=rtcp:9 IN IP4 0.0.0.0
+a=ice-ufrag:sXJ3
+a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV
+a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79
+a=setup:actpass
+a=mid:video
+a=extmap:2 urn:ietf:params:rtp-hdrext:toffset
+a=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time
+a=extmap:4 urn:3gpp:video-orientation
+a=extmap:5 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01
+a=extmap:6 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay
+a=sendrecv
+a=rtcp-mux
+a=rtcp-rsize	# rtcp传输量太大的时候，网络承受不住的时候，可以简化成最小的trcp
+a=rtpmap:96 VP8/90000
+a=rtcp-fb:96 ccm fir
+a=rtcp-fb:96 nack
+a=rtcp-fb:96 nack pli
+a=rtcp-fb:96 goog-remb
+a=rtcp-fb:96 transport-cc
+a=rtpmap:97 rtx/90000	# 97 表示重传
+a=fmtp:97 apt=96	# 关联关系：表示 97 是 96 丢包重传的通道
+a=rtpmap:98 VP9/90000
+a=rtcp-fb:98 ccm fir
+a=rtcp-fb:98 nack
+a=rtcp-fb:98 nack pli
+a=rtcp-fb:98 goog-remb
+a=rtcp-fb:98 transport-cc
+a=rtpmap:100 H264/90000
+a=rtcp-fb:100 ccm fir
+a=rtcp-fb:100 nack
+a=rtcp-fb:100 nack pli
+a=rtcp-fb:100 goog-remb
+a=rtcp-fb:100 transport-cc
+a=fmtp:100 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f
+a=rtpmap:102 red/90000
+a=rtpmap:127 ulpfec/90000
+a=rtpmap:97 rtx/90000
+a=fmtp:97 apt=96
+a=rtpmap:99 rtx/90000
+a=fmtp:99 apt=98
+a=rtpmap:101 rtx/90000
+a=fmtp:101 apt=100
+a=rtpmap:125 rtx/90000
+a=fmtp:125 apt=102
+a=ssrc-group:FID 2580761338 611523443
+a=ssrc:2580761338 cname:iSkJ2vn5cYYubTve
+a=ssrc:2580761338 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 bf270496-a23e-47b5-b901-ef23096cd961
+a=ssrc:2580761338 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549
+a=ssrc:2580761338 label:bf270496-a23e-47b5-b901-ef23096cd961
+a=ssrc:611523443 cname:iSkJ2vn5cYYubTve
+a=ssrc:611523443 msid:616cfbb1-33a3-4d8c-8275-a199d6005549 bf270496-a23e-47b5-b901-ef23096cd961
+a=ssrc:611523443 mslabel:616cfbb1-33a3-4d8c-8275-a199d6005549
+a=ssrc:611523443 label:bf270496-a23e-47b5-b901-ef23096cd961
+
+m=application 9 DTLS/SCTP 5000
+c=IN IP4 0.0.0.0
+a=ice-ufrag:sXJ3
+a=ice-pwd:yEclOTrLg1gEubBFefOqtmyV
+a=fingerprint:sha-256 22:14:B5:AF:66:12:C7:C7:8D:EF:4B:DE:40:25:ED:5D:8F:17:54:DD:88:33:C0:13:2E:FD:1A:FA:7E:7A:1B:79
+a=setup:actpass
+a=mid:data
+a=sctpmap:5000 webrtc-datachannel 1024
+```
+
+</details>
 
 ## 各流媒体服务器的比较
 
