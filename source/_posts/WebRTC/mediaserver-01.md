@@ -500,32 +500,3 @@ a=sctpmap:5000 webrtc-datachannel 1024
 
 </details>
 
-## 各流媒体服务器的比较
-
-![](/images/imageWebRTC/mediaserver/)
-
-## mediasoup服务器的部署与使用
-
-![](/images/imageWebRTC/mediaserver/)
-
-## mediasoup的信令系统
-
-![](/images/imageWebRTC/mediaserver/)
-
-## mediasoup源码分析
-
-![](/images/imageWebRTC/mediaserver/)
-
-## 总结
-
-![](/images/imageWebRTC/mediaserver/)
-
-
-
-<details><summary></summary>
-
-```c++
-
-```
-
-</details>
