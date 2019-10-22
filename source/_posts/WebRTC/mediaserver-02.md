@@ -1,8 +1,11 @@
 ---
 title: WebRTC 流媒体服务器（三）
-tags: [WebRTC]
-categories: [WebRTC]
+tags:
+  - WebRTC
+categories:
+  - WebRTC
 reward: true
+abbrlink: 6958
 date: 2019-10-21 10:07:32
 ---
 
@@ -68,7 +71,31 @@ Medooze可以作为MCU也可以作为SFU
 
 ![](/images/imageWebRTC/mediaserver/)
 
+## Reference
 
+> [mediasoup介绍](https://zhuanlan.zhihu.com/p/33618940)
+>
+> [Mediasoup官网V3设计文档](https://mediasoup.org/documentation/v3/mediasoup/design/)
+>
+> [Mediasoup官网V3 API文档](https://mediasoup.org/documentation/v3/mediasoup/api/)
+
+> [Ubuntu中安装部署Mediasoup](https://blog.csdn.net/cgs1999/article/details/89703995)
+>
+> [Mediasoup源码分析（1）——架构分析](https://blog.csdn.net/cgs1999/article/details/100133917)
+>
+> [基于mediasoup的多方通话研究（一）](https://blog.csdn.net/gupar/article/details/83788934)
+
+> [WebRTC网关服务器搭建：开源技术 vs 自行研发](https://yq.aliyun.com/articles/625996)
+>
+> [基于webrtc多人音视频的研究（一）](https://blog.csdn.net/gupar/article/details/53101435)
+>
+> [如何打造自己的WebRTC 服务器](https://kuaibao.qq.com/s/20180524G1DQ7P00?refer=spider)
+>
+> [webrtc学习: 部署stun和turn服务器](https://blog.csdn.net/gupar/article/details/52782897)
+
+> [C++ 技术面试基础知识总结](https://github.com/huihut/interview)
+>
+> [K6K4 笔试面试网](http://www.k6k4.com/simple_question/qlist)
 
 <details><summary></summary>
 
