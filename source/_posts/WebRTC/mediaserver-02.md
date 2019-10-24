@@ -84,6 +84,8 @@ Medooze可以作为MCU也可以作为SFU
 > [Mediasoup源码分析（1）——架构分析](https://blog.csdn.net/cgs1999/article/details/100133917)
 >
 > [基于mediasoup的多方通话研究（一）](https://blog.csdn.net/gupar/article/details/83788934)
+>
+> [mediasoup-demo解析-客户端](https://www.cnblogs.com/jixiaohua/p/11573957.html)
 
 > [WebRTC网关服务器搭建：开源技术 vs 自行研发](https://yq.aliyun.com/articles/625996)
 >
