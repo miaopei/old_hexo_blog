@@ -130,10 +130,21 @@
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/JanusSFU%E6%9E%B6%E6%9E%84.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/Medooze%E6%9E%B6%E6%9E%84.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/Mediasoup%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/mediasoup-demp.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/Demo%E7%9B%AE%E5%BD%95%E7%9A%84%E4%BD%9C%E7%94%A8.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/%E5%8F%98%E9%87%8F%E4%B8%8E%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/ifelse.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/for%E5%BE%AA%E7%8E%AF.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/ES6%E8%AF%AD%E6%B3%95.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/ES6%E8%AF%AD%E6%B3%95-01.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/Promise.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/EventEmitter.png">
+<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/Demo%E6%94%AF%E6%8C%81%E7%9A%84%E4%BF%A1%E4%BB%A4.png">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
-<meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
-<meta property="og:updated_time" content="2019-10-28T10:57:59.307Z">
+<meta property="og:updated_time" content="2019-11-04T10:45:50.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 流媒体服务器（三）">
 <meta name="twitter:description" content="各流媒体服务器的比较多人互动架构方案">
@@ -544,7 +555,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">702</span>
+                <span title="本文字数">851</span>
               
 
               
@@ -656,7 +667,52 @@
 <h3 id="作业-客户端是如何与信令服务建立连接的"><a href="#作业-客户端是如何与信令服务建立连接的" class="headerlink" title="作业 - 客户端是如何与信令服务建立连接的"></a>作业 - 客户端是如何与信令服务建立连接的</h3><p>TODO</p>
 <p>app 443端口 是如何和 server 4443端口通信的？</p>
 <p>如何知道信令服务器的地址？</p>
-<h2 id="mediasoup的信令系统"><a href="#mediasoup的信令系统" class="headerlink" title="mediasoup的信令系统"></a>mediasoup的信令系统</h2><p><img src="/images/imageWebRTC/mediaserver/" alt></p>
+<h2 id="mediasoup的信令系统"><a href="#mediasoup的信令系统" class="headerlink" title="mediasoup的信令系统"></a>mediasoup的信令系统</h2><h3 id="mediasoup-demo整体分析"><a href="#mediasoup-demo整体分析" class="headerlink" title="mediasoup-demo整体分析"></a>mediasoup-demo整体分析</h3><p><img src="/images/imageWebRTC/mediaserver/mediasoup-demp.png" alt="Mediasoup Demp"></p>
+<p><img src="/images/imageWebRTC/mediaserver/Demo%E7%9B%AE%E5%BD%95%E7%9A%84%E4%BD%9C%E7%94%A8.png" alt="Demo目录的作用"></p>
+<h3 id="JavaScript-基本语法"><a href="#JavaScript-基本语法" class="headerlink" title="JavaScript 基本语法"></a>JavaScript 基本语法</h3><p><strong>Nodejs基本语法</strong></p>
+<p>基础知识：</p>
+<ul>
+<li>变量与类型</li>
+<li>基本运算</li>
+<li>if/else</li>
+<li>for循环</li>
+<li>函数</li>
+<li>日志打印</li>
+</ul>
+<p><img src="/images/imageWebRTC/mediaserver/%E5%8F%98%E9%87%8F%E4%B8%8E%E7%B1%BB%E5%9E%8B.png" alt="变量与类型"></p>
+<p><img src="/images/imageWebRTC/mediaserver/%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97.png" alt="基本运算"></p>
+<p><img src="/images/imageWebRTC/mediaserver/ifelse.png" alt="if else"></p>
+<p><img src="/images/imageWebRTC/mediaserver/for%E5%BE%AA%E7%8E%AF.png" alt="for循环"></p>
+<p><img src="/images/imageWebRTC/mediaserver/%E5%87%BD%E6%95%B0.png" alt="函数"></p>
+<h3 id="JavaScriptES6高级特性"><a href="#JavaScriptES6高级特性" class="headerlink" title="JavaScriptES6高级特性"></a>JavaScriptES6高级特性</h3><p><img src="/images/imageWebRTC/mediaserver/ES6%E8%AF%AD%E6%B3%95.png" alt="ES6语法"></p>
+<p><img src="/images/imageWebRTC/mediaserver/ES6%E8%AF%AD%E6%B3%95-01.png" alt="ES6语法"></p>
+<h3 id="Promise与EventEmitter详解"><a href="#Promise与EventEmitter详解" class="headerlink" title="Promise与EventEmitter详解"></a>Promise与EventEmitter详解</h3><p><img src="/images/imageWebRTC/mediaserver/Promise.png" alt="Promise"></p>
+<p><img src="/images/imageWebRTC/mediaserver/EventEmitter.png" alt="EventEmitter"></p>
+<h3 id="剖析serverjs"><a href="#剖析serverjs" class="headerlink" title="剖析serverjs"></a>剖析serverjs</h3><p>TODO</p>
+<p>阅读源码</p>
+<h3 id="剖析roomjs"><a href="#剖析roomjs" class="headerlink" title="剖析roomjs"></a>剖析roomjs</h3><p>mediasoup基本概念：</p>
+<ul>
+<li>Room/Router</li>
+<li>Transport/WebRTCTransport</li>
+<li>Produce/Consume</li>
+</ul>
+<p>Room 的主要逻辑：</p>
+<ul>
+<li>创建房间</li>
+<li>信令处理</li>
+</ul>
+<p><img src="/images/imageWebRTC/mediaserver/Demo%E6%94%AF%E6%8C%81%E7%9A%84%E4%BF%A1%E4%BB%A4.png" alt="Demo支持的信令"></p>
+<h3 id="如何调试MediasoupDemo"><a href="#如何调试MediasoupDemo" class="headerlink" title="如何调试MediasoupDemo"></a>如何调试MediasoupDemo</h3><p>Nodejs调试方法：</p>
+<ul>
+<li><code>node --inspect-brk server.js</code></li>
+<li><code>chrome://inspect</code></li>
+<li>设置断点</li>
+</ul>
+<h3 id="运行时查看Mediasoup的核心信息"><a href="#运行时查看Mediasoup的核心信息" class="headerlink" title="运行时查看Mediasoup的核心信息"></a>运行时查看Mediasoup的核心信息</h3><p>Demo Dump工具：</p>
+<ul>
+<li>方法一：<code>export INTERACTIVE=1; ndoe server.js</code>  – 调试的时候使用</li>
+<li>方法二：<code>node connect.js</code> – 查看线上内容的时候使用</li>
+</ul>
 <h2 id="mediasoup源码分析"><a href="#mediasoup源码分析" class="headerlink" title="mediasoup源码分析"></a>mediasoup源码分析</h2><p><img src="/images/imageWebRTC/mediaserver/" alt></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="/images/imageWebRTC/mediaserver/" alt></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
@@ -1077,7 +1133,7 @@
                 
 
                 
-                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#各流媒体服务器的比较"><span class="nav-number">1.</span> <span class="nav-text">各流媒体服务器的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多人互动架构方案"><span class="nav-number">1.1.</span> <span class="nav-text">多人互动架构方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesh架构模型详解"><span class="nav-number">1.2.</span> <span class="nav-text">Mesh架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCU架构模型详解"><span class="nav-number">1.3.</span> <span class="nav-text">MCU架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SFU架构模型详解"><span class="nav-number">1.4.</span> <span class="nav-text">SFU架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Licode架构"><span class="nav-number">1.5.</span> <span class="nav-text">Licode架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Janus流媒体服务器的架构及特点"><span class="nav-number">1.6.</span> <span class="nav-text">Janus流媒体服务器的架构及特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Medooze流媒体服务器架构及特点"><span class="nav-number">1.7.</span> <span class="nav-text">Medooze流媒体服务器架构及特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup流媒体服务器架构及特点"><span class="nav-number">1.8.</span> <span class="nav-text">Mediasoup流媒体服务器架构及特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup服务器的部署与使用"><span class="nav-number">2.</span> <span class="nav-text">mediasoup服务器的部署与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup的运行环境"><span class="nav-number">2.1.</span> <span class="nav-text">Mediasoup的运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup-Demo的部署"><span class="nav-number">2.2.</span> <span class="nav-text">Mediasoup Demo的部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Nodejs实现HTTP服务"><span class="nav-number">2.3.</span> <span class="nav-text">通过Nodejs实现HTTP服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS基本知识"><span class="nav-number">2.4.</span> <span class="nav-text">HTTPS基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过WWW服务发布mediasoup客户端代码"><span class="nav-number">2.5.</span> <span class="nav-text">通过WWW服务发布mediasoup客户端代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业-客户端是如何与信令服务建立连接的"><span class="nav-number">2.6.</span> <span class="nav-text">作业 - 客户端是如何与信令服务建立连接的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup的信令系统"><span class="nav-number">3.</span> <span class="nav-text">mediasoup的信令系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup源码分析"><span class="nav-number">4.</span> <span class="nav-text">mediasoup源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#各流媒体服务器的比较"><span class="nav-number">1.</span> <span class="nav-text">各流媒体服务器的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多人互动架构方案"><span class="nav-number">1.1.</span> <span class="nav-text">多人互动架构方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesh架构模型详解"><span class="nav-number">1.2.</span> <span class="nav-text">Mesh架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCU架构模型详解"><span class="nav-number">1.3.</span> <span class="nav-text">MCU架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SFU架构模型详解"><span class="nav-number">1.4.</span> <span class="nav-text">SFU架构模型详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Licode架构"><span class="nav-number">1.5.</span> <span class="nav-text">Licode架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Janus流媒体服务器的架构及特点"><span class="nav-number">1.6.</span> <span class="nav-text">Janus流媒体服务器的架构及特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Medooze流媒体服务器架构及特点"><span class="nav-number">1.7.</span> <span class="nav-text">Medooze流媒体服务器架构及特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup流媒体服务器架构及特点"><span class="nav-number">1.8.</span> <span class="nav-text">Mediasoup流媒体服务器架构及特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup服务器的部署与使用"><span class="nav-number">2.</span> <span class="nav-text">mediasoup服务器的部署与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup的运行环境"><span class="nav-number">2.1.</span> <span class="nav-text">Mediasoup的运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mediasoup-Demo的部署"><span class="nav-number">2.2.</span> <span class="nav-text">Mediasoup Demo的部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Nodejs实现HTTP服务"><span class="nav-number">2.3.</span> <span class="nav-text">通过Nodejs实现HTTP服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS基本知识"><span class="nav-number">2.4.</span> <span class="nav-text">HTTPS基本知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过WWW服务发布mediasoup客户端代码"><span class="nav-number">2.5.</span> <span class="nav-text">通过WWW服务发布mediasoup客户端代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业-客户端是如何与信令服务建立连接的"><span class="nav-number">2.6.</span> <span class="nav-text">作业 - 客户端是如何与信令服务建立连接的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup的信令系统"><span class="nav-number">3.</span> <span class="nav-text">mediasoup的信令系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mediasoup-demo整体分析"><span class="nav-number">3.1.</span> <span class="nav-text">mediasoup-demo整体分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-基本语法"><span class="nav-number">3.2.</span> <span class="nav-text">JavaScript 基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScriptES6高级特性"><span class="nav-number">3.3.</span> <span class="nav-text">JavaScriptES6高级特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise与EventEmitter详解"><span class="nav-number">3.4.</span> <span class="nav-text">Promise与EventEmitter详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剖析serverjs"><span class="nav-number">3.5.</span> <span class="nav-text">剖析serverjs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剖析roomjs"><span class="nav-number">3.6.</span> <span class="nav-text">剖析roomjs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何调试MediasoupDemo"><span class="nav-number">3.7.</span> <span class="nav-text">如何调试MediasoupDemo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时查看Mediasoup的核心信息"><span class="nav-number">3.8.</span> <span class="nav-text">运行时查看Mediasoup的核心信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mediasoup源码分析"><span class="nav-number">4.</span> <span class="nav-text">mediasoup源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
                 
 
                 </div>
@@ -1124,7 +1180,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">17:04</span>
+    <span title="站点阅读时长">17:05</span>
   
 
 </div>
