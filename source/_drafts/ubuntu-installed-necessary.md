@@ -3,6 +3,7 @@ title: ubuntu-installed-necessary
 tags: []
 categories: []
 reward: true
+abbrlink: 10634
 date: 2019-10-29 19:34:38
 ---
 

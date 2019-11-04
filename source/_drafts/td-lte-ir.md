@@ -26,7 +26,7 @@ date: 2019-10-27 16:46:12
 | S-GW   | Serving Gateway                       | 服务网关                                                     |
 | EPC    | Evolved Packet Core                   | 分组核心网                                                   |
 | eNodeB | Evolved Node B                        | 演进型[Node B](https://baike.baidu.com/item/Node B/5128355)，简称eNB，LTE中基站的名称 |
-|        |                                       |                                                              |
+| IE     | information element                   | 信息元素                                                     |
 
 
 
