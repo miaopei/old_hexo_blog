@@ -197,7 +197,82 @@ app 443端口 是如何和 server 4443端口通信的？
 
 ## mediasoup的信令系统
 
-![](/images/imageWebRTC/mediaserver/)
+### mediasoup-demo整体分析
+
+![Mediasoup Demp](/images/imageWebRTC/mediaserver/mediasoup-demp.png)
+
+![Demo目录的作用](/images/imageWebRTC/mediaserver/Demo目录的作用.png)
+
+### JavaScript 基本语法
+
+**Nodejs基本语法**
+
+基础知识：
+
+- 变量与类型
+- 基本运算
+- if/else
+- for循环
+- 函数
+- 日志打印
+
+![变量与类型](/images/imageWebRTC/mediaserver/变量与类型.png)
+
+![基本运算](/images/imageWebRTC/mediaserver/基本运算.png)
+
+![if else](/images/imageWebRTC/mediaserver/ifelse.png)
+
+![for循环](/images/imageWebRTC/mediaserver/for循环.png)
+
+![函数](/images/imageWebRTC/mediaserver/函数.png)
+
+### JavaScriptES6高级特性
+
+![ES6语法](/images/imageWebRTC/mediaserver/ES6语法.png)
+
+![ES6语法](/images/imageWebRTC/mediaserver/ES6语法-01.png)
+
+### Promise与EventEmitter详解
+
+![Promise](/images/imageWebRTC/mediaserver/Promise.png)
+
+![EventEmitter](/images/imageWebRTC/mediaserver/EventEmitter.png)
+
+### 剖析serverjs
+
+TODO
+
+阅读源码
+
+### 剖析roomjs
+
+mediasoup基本概念：
+
+- Room/Router
+- Transport/WebRTCTransport
+- Produce/Consume
+
+Room 的主要逻辑：
+
+- 创建房间
+- 信令处理
+
+![Demo支持的信令](/images/imageWebRTC/mediaserver/Demo支持的信令.png)
+
+### 如何调试MediasoupDemo
+
+Nodejs调试方法：
+
+- `node --inspect-brk server.js`
+- `chrome://inspect`
+- 设置断点
+
+### 运行时查看Mediasoup的核心信息
+
+Demo Dump工具：
+
+- 方法一：`export INTERACTIVE=1; ndoe server.js`  -- 调试的时候使用
+- 方法二：`node connect.js` -- 查看线上内容的时候使用
 
 ## mediasoup源码分析
 
