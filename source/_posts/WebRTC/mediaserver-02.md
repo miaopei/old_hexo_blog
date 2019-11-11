@@ -276,6 +276,202 @@ Demo Dump工具：
 
 ## mediasoup源码分析
 
+### mediasoup 库的架构讲解
+
+Mediasoup基本概念：
+
+- Worker
+- Router
+- Producer - 生产者
+- Consumer - 消费者
+- Transport
+
+![mediasoup v3 architecture](/images/imageWebRTC/mediaserver/mediasoup-v3-architecture-01.svg)
+
+Mediasoup包括的特性（一）
+
+- 支持 IPv6
+- ICE / DTLS / RTP / RTCP / over UDP and TCP
+- 支持 Simulcast 和 SVC
+
+Mediasoup包括的特性（二）
+
+- 支持拥塞控制
+- 带宽评估 
+- 支持STCP协议 - 通过修改 TCP的窗口增加和减少参数来调整[发送窗口](https://baike.baidu.com/item/发送窗口/9032560)大小 ,以适应高速网络的环境。
+
+Mediasoup包括的特性（三）
+
+- 多流使用同一个 ICE + DTLS 传输通道
+- 极其强大的性能 - 进程 + libuv，linux下一般使用epoll
+
+### Mediasoup_JS_的作用
+
+```shell
+Mr.Miaow mediasoup git:(v3) $ tree lib                     
+lib
+├── AudioLevelObserver.js	-- 用于检测声音的
+├── Channel.js				-- 与 C++ 部分进行信令通信
+├── Consumer.js				-- 消费者
+├── DataConsumer.js		
+├── DataProducer.js
+├── EnhancedEventEmitter.js	-- 向C++层抛事件
+├── errors.js
+├── index.js				-- 整个mediasoup库的索引，通过nodejs引入的时候第一个导入的就是indexjs
+├── Logger.js
+├── ortc.js					-- 与SDP相对应，以对象方式描述SDP信息
+├── PipeTransport.js		-- worker之间不同route流的转发
+├── PlainRtpTransport.js	-- 普通RTP数据，不使用webrtc传输协议的，比如与ffmpeg通信
+├── Producer.js				-- 生产者
+├── Router.js				-- 一个房间或路由器
+├── RtpObserver.js			-- RTP的一个观察者，回调用的
+├── scalabilityModes.js
+├── supportedRtpCapabilities.js	-- 媒体协商一些相关的内容
+├── Transport.js			-- 基类
+├── utils.js				-- 常用的工具函数
+├── WebRtcTransport.js		-- 浏览器的传输协议
+└── Worker.js				-- 一个节点或进程
+```
+
+![MediasoupJS类关系图](/images/imageWebRTC/mediaserver/MediasoupJS类关系图.png)
+
+Mediasoup JS 的作用：
+
+- 起到管理的作用
+- 生成 json 字符串，传给 C++
+
+![createRouter](/images/imageWebRTC/mediaserver/createRouter.png)
+
+### WebRTC中的C++类关系图
+
+![Mediasoup核心类图](/images/imageWebRTC/mediaserver/Mediasoup核心类图.png)
+
+![Mediasoup类图](/images/imageWebRTC/mediaserver/Mediasoup类图.png)
+
+### Mediasoup启动详解
+
+```shell
+$ fg --切回到代码
+```
+
+```c++
+[mediasoup-demo/server/] server.js (runMediasoupWorkers->createWorker) --> 
+    [mediasoup/lib/] index.js (createWorker->new Worker) -- >
+    [mediasoup/lib/] worker.js (constructor()->spawn()) -->
+    [mediasoup/worker/src/] main.cpp
+```
+
+### 匿名管道进程间通信的原理
+
+常见的进程间通信方式（IPC）
+
+- 管道：匿名管道，有名管道
+- socket：unixsocket，普通socket
+- 共享内存
+- 信号
+
+### 实战通过socketpair进行进程间通信
+
+![socketpair真实情况](/images/imageWebRTC/mediaserver/socketpair真实情况.png)
+
+```c++
+// testsocketpair.c
+#include<stdio.h>
+#include<sys/socket.h>
+#include<string>
+#include<unistd.h>
+
+int main(int argc, char* argv[])
+{
+    int sv[2];
+    if (socketpair(AF_UNIX, SOCK_STREAM, 0, sv[]) < 0) {
+        perror("socketpair error\n");
+        return -1;
+    }
+    pid_t id = fork();
+    
+    if (id == 0) { // subprocess
+        char *msg = "I'm children!\n";
+        char buffer[1024] = {0, };
+        
+        close(sv[1]);
+        
+        while(1) {
+            write(sv[0], msg, strlen(msg));
+            sleep(1);
+            
+            ssize_t len = read(sv[0], buffer, sizeof(buffer));
+            if (len > 0) {
+                buffer[len] = '\0';
+                printf("children, recv from parent: %s \n", buffer);
+            }
+        }
+    } else if (id > 0) { // parent process
+        char *msg = "I'm father!\n";
+        char buffer[1024] = {0, };
+        
+        close(sv[0]);
+        
+        while(1) {
+            ssize_t len = read(sv[1], buffer, sizeof(buffer));
+            if (len) {
+                buffer[len] = '\0';
+                printf("father, recv from children: %s \n", buffer);
+                sleep(1);
+            }
+            
+            write(sv[1], msg, strlen(msg));
+        }
+    } else {
+        perror("Failed to create process\n");
+    }
+    
+    return 0;
+}
+```
+
+```shell
+$ clang -g -o testsocketpair testsocketpair.c
+```
+
+### mediasoup下channel创建的详细过程
+
+
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
+![](/images/imageWebRTC/mediaserver/)
+
 ![](/images/imageWebRTC/mediaserver/)
 
 ## 总结
