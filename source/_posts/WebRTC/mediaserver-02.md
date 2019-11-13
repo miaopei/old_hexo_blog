@@ -436,6 +436,12 @@ $ clang -g -o testsocketpair testsocketpair.c
 
 ### mediasoup下channel创建的详细过程
 
+```c++
+[mediasoup/lib/] index.js (createWorker->new Worker) -- >
+    [mediasoup/lib/] worker.js (constructor()->new channel()) -->
+    [mediasoup/lib/] Channel.js () -->
+```
+
 
 
 ![](/images/imageWebRTC/mediaserver/)
