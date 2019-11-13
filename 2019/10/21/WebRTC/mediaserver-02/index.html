@@ -167,7 +167,7 @@
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
 <meta property="og:image" content="http://miaopei.github.io/images/imageWebRTC/mediaserver/">
-<meta property="og:updated_time" content="2019-11-11T11:21:10.530Z">
+<meta property="og:updated_time" content="2019-11-12T02:29:50.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 流媒体服务器（三）">
 <meta name="twitter:description" content="各流媒体服务器的比较多人互动架构方案">
@@ -789,7 +789,9 @@
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> clang -g -o testsocketpair testsocketpair.c</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="mediasoup下channel创建的详细过程"><a href="#mediasoup下channel创建的详细过程" class="headerlink" title="mediasoup下channel创建的详细过程"></a>mediasoup下channel创建的详细过程</h3><p><img src="/images/imageWebRTC/mediaserver/" alt></p>
+<h3 id="mediasoup下channel创建的详细过程"><a href="#mediasoup下channel创建的详细过程" class="headerlink" title="mediasoup下channel创建的详细过程"></a>mediasoup下channel创建的详细过程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mediasoup/lib/] index.js (createWorker-&gt;<span class="keyword">new</span> Worker) -- &gt;</span><br><span class="line">    [mediasoup/lib/] worker.js (constructor()-&gt;<span class="keyword">new</span> channel()) --&gt;</span><br><span class="line">    [mediasoup/lib/] Channel.js () --&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/imageWebRTC/mediaserver/" alt></p>
 <p><img src="/images/imageWebRTC/mediaserver/" alt></p>
 <p><img src="/images/imageWebRTC/mediaserver/" alt></p>
 <p><img src="/images/imageWebRTC/mediaserver/" alt></p>
