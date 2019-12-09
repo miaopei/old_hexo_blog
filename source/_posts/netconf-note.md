@@ -1,9 +1,12 @@
 ---
 title: netconf-note
-tags: [netconf]
-categories: [netconf]
+tags:
+  - netconf
+categories:
+  - netconf
 toc: true
 reward: true
+abbrlink: 9950
 date: 2019-11-26 17:08:04
 ---
 
