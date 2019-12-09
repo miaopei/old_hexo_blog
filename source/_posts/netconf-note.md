@@ -1,10 +1,10 @@
 ---
-title: td-lte-ir
-tags: []
-categories: []
+title: netconf-note
+tags: [netconf]
+categories: [netconf]
+toc: true
 reward: true
-abbrlink: 3124
-date: 2019-10-27 16:46:12
+date: 2019-11-26 17:08:04
 ---
 
 # TD-LTE 蜂窝移动通信分布式基站 IR 接口技术学习笔记
@@ -101,6 +101,8 @@ https://github.com/CESNET/libnetconf
 > [Set up Netopeer Server to use with NETCONFc](http://www.seguesoft.com/index.php/how-to-set-up-netopeer-server-to-use-with-netconfc)
 >
 > [YANG 1.1数据建模语言](https://www.bookstack.cn/read/rfc7950-zh/README.md)
+>
+> [Yang解析]( https://blog.csdn.net/CSND_PAN/article/details/79542917 )
 
 
 
@@ -129,3 +131,8 @@ https://github.com/CESNET/libnetconf
 > [SDN 是什么？](https://www.zhihu.com/question/20279620)
 >
 > [SDN介绍](https://www.cnblogs.com/ssyfj/tag/SDN/)
+
+**DHCP：**
+
+> [DHCP源码分析-dhcp模块](https://blog.csdn.net/wuyongpeng0912/article/details/50445486)
+
