@@ -55,7 +55,7 @@ Medooze可以作为MCU也可以作为SFU
 
 ![Mediasoup整体结构](/images/imageWebRTC/mediaserver/Mediasoup整体结构.png)
 
-## mediasoup服务器的部署与使用
+## Mediasoup服务器的部署与使用
 
 ### Mediasoup的运行环境
 
@@ -195,9 +195,9 @@ app 443端口 是如何和 server 4443端口通信的？
 
 如何知道信令服务器的地址？
 
-## mediasoup的信令系统
+## Mediasoup的信令系统
 
-### mediasoup-demo整体分析
+### Mediasoup-demo整体分析
 
 ![Mediasoup Demp](/images/imageWebRTC/mediaserver/mediasoup-demp.png)
 
@@ -274,9 +274,9 @@ Demo Dump工具：
 - 方法一：`export INTERACTIVE=1; ndoe server.js`  -- 调试的时候使用
 - 方法二：`node connect.js` -- 查看线上内容的时候使用
 
-## mediasoup源码分析
+## Mediasoup源码分析
 
-### mediasoup 库的架构讲解
+### Mediasoup 库的架构讲解
 
 Mediasoup基本概念：
 
@@ -434,55 +434,209 @@ int main(int argc, char* argv[])
 $ clang -g -o testsocketpair testsocketpair.c
 ```
 
-### mediasoup下channel创建的详细过程
+### Mediasoup下channel创建的详细过程
 
 ```c++
 [mediasoup/lib/] index.js (createWorker->new Worker) -- >
     [mediasoup/lib/] worker.js (constructor()->new channel()) -->
-    [mediasoup/lib/] Channel.js () -->
+    [mediasoup/lib/] Channel.js (socket)
+    
+[mediasoup/worker/src/] main.cpp (new Channel::UnixStreamSocket(ChannelFd)) -->
+    [mediasoup/worker/src/Channel/] UnixStreamSocker.cpp (::UnixStreamSocket::UnixStreamSocket(fd, NsMessageMaxLen)) -->
+    [mediasoup/worker/src/handles/] UnixStreamSocker.cpp (static_cast<uv_read_cb>(onRead))) -->
+    [mediasoup/worker/src/handles/] UnixStreamSocker.cpp (onRead()) --> 
+    [mediasoup/worker/src/handles/] UnixStreamSocker.cpp (OnUvRead() --> UserOnUnixStreamRead()-->调用子类中的实现) -->
+    [mediasoup/worker/src/Channel/] UnixStreamSocker.cpp (UserOnUnixStreamRead() --> new Channel::Request()) -->
+    [mediasoup/worker/src/Channel/] Request.cpp(this 对象数据返回给创建者) -->
+    [mediasoup/worker/src/Channel/] UnixStreamSocker.cpp (this->listener->OnChannelRequest(this, request)) -->
+    [mediasoup/worker/src/] Worker.cpp (OnChannelRequest())
 ```
 
+### Mediasoup中消息的确认与事件通知
 
+返回信令确认消息：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+...
+request->Accept(data);
+...
+```
 
-![](/images/imageWebRTC/mediaserver/)
+例子：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+[mediasoup/worker/src/] Worker.cpp (OnChannelRequest(中使用request->Accept(data)情景))
+    [mediasoup/worker/src/Channel/] Request.cpp (Accept(data) -- > this->channel->Send(jsonResponse)) -->
+    [mediasoup/worker/src/Channel/] UnixStreamSocker.cpp (Send() --> Write() --> 向管道写数据给 js 端)
+```
 
-![](/images/imageWebRTC/mediaserver/)
+创建Notifier：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+...
+main{
+    ...
+    Channel::Notifier::ClassInit(channel);
+    ...
+}
+```
 
-![](/images/imageWebRTC/mediaserver/)
+向上层发送通知：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+...
+Channel::Noetifier::Emit(this->id, "icestatechange", data);
+...
+```
 
-![](/images/imageWebRTC/mediaserver/)
+### Mediasoup主业务流程
 
-![](/images/imageWebRTC/mediaserver/)
+![主业务的创建](/images/imageWebRTC/mediaserver/主业务的创建.png)
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+[mediasoup/worker/src/] Worker.cpp (OnChannelRequest()) --> 
+    [mediasoup/worker/src/] Worker.cpp (new RTC::Router(routerId))
+    
+[mediasoup/worker/src/] Worker.cpp (OnChannelRequest( default )) --> 
+    [mediasoup/worker/src/] Worker.cpp (router->HandleRequest(request)) --> 
+    [mediasoup/worker/src/RTC] Router.cpp (HandleRequest(Channel::Request* request)) -->
+    [mediasoup/worker/src/RTC] Router.cpp (new RTC::WebRtcTransport(transportId, this, request->data)) 
+    
+[mediasoup/worker/src/RTC] Router.cpp (HandleRequest( default )) -->
+    [mediasoup/worker/src/RTC] Router.cpp (transport->HandleRequest(request)) -->
+    [mediasoup/worker/src/RTC] WebRtcTransport.cpp (WebRtcTransport::HandleRequest( TRANSPORT_CONNECT )) 
+    
+[mediasoup/worker/src/RTC] Router.cpp (HandleRequest( default )) -->
+    [mediasoup/worker/src/RTC] Transport.cpp (HandleRequest(TRANSPORT_PRODUCE)) -->
+    [mediasoup/worker/src/RTC] Transport.cpp (new RTC::Producer(producerId, this, request->data)) -->
+    [mediasoup/worker/src/RTC] Producer.cpp (Producer()) -->
+    [mediasoup/worker/src/RTC] Transport.cpp (HandleRequest(TRANSPORT_PRODUCE) --> this->rtpListener.AddProducer(producer) --> this->listener->OnTransportNewProducer(this, producer))
+    
+[mediasoup/worker/src/RTC] Router.cpp (HandleRequest( default )) -->
+    [mediasoup/worker/src/RTC] Transport.cpp (HandleRequest(TRANSPORT_CONSUME)) -->
+    [mediasoup/worker/src/RTC] Transport.cpp (new RTC::SimpleConsumer())
+```
 
-![](/images/imageWebRTC/mediaserver/)
+### Mediasoup连接的创建
 
-![](/images/imageWebRTC/mediaserver/)
+基础知识回顾：
 
-![](/images/imageWebRTC/mediaserver/)
+- 用户身份的认证
+- DTLS证书的认证
+- ice-ufrags
+- ice-password
+- ice-role   -- 服务端和客户端的选择
+- fingerprint
 
-![](/images/imageWebRTC/mediaserver/)
+各模块初始化：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+...
+DepOpenSSL::ClassInit();
+DepLibSRTP::ClassInit();
+Utils::Crypto::ClassInit();
+RTC::DtlsTransport::ClassInit();
+RTC::SrtpSession::ClassInit();
+...
+```
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+[mediasoup/worker/src] main.cpp (main()) -->
+    [mediasoup/worker/src] main.cpp (各个模块的初始化部分) -->
+    [mediasoup/worker/src] main.cpp (RTC::DtlsTransport::ClassInit()) -->
+    	[mediasoup/worker/src/RTC] DtlsTransport.cpp (ClassInit()) -->
+    		ReadCertificateAndPrivateKeyFromFiles() --> CreateSslCtx() --> GenerateFingerprints()
+    [mediasoup/worker/src] main.cpp (RTC::SrtpSession::ClassInit()) -->
+    	[mediasoup/worker/src/RTC] SrtpSession.cpp () -->
+    		srtp_install_event_handler() --> OnSrtpEvent()
+```
 
-![](/images/imageWebRTC/mediaserver/)
+再论创建WebRtcTransport命令：
 
-![](/images/imageWebRTC/mediaserver/)
+```c++
+[mediasoup/worker/src/RTC] WebRtcTransport.cpp () -->
+    TODO
+```
+
+详解创建CONNECT命令：
+
+```c++
+[mediasoup/worker/src/RTC] WebRtcTransport.cpp (HandleRequest( TRANSPORT_CONNECT )) -->
+    TODO
+```
+
+### Mediasoup数据流转
+
+![Mediasoup时序图](/images/imageWebRTC/mediaserver/Mediasoup时序图.png)
+
+![Mediasoup时序图](/images/imageWebRTC/mediaserver/Mediasoup时序图-01.png)
+
+```c++
+[mediasoup/worker/src/RTC] WebRtcTransport.cpp (WebRtcTransport()) -->
+    (new RTC::UdpSocket(this, listenIp.ip)) -->
+    TODO
+```
+
+### WebRTC大规模部署方案
+
+![WebRTC大规模部署方案-01](/images/imageWebRTC/mediaserver/WebRTC大规模部署方案-01.png)
+
+![WebRTC大规模部署方案-02](/images/imageWebRTC/mediaserver/WebRTC大规模部署方案-02.png)
+
+![WebRTC大规模部署方案-03](/images/imageWebRTC/mediaserver/WebRTC大规模部署方案-03.png)
+
+![WebRTC大规模部署方案-04](/images/imageWebRTC/mediaserver/WebRTC大规模部署方案-04.png)
 
 ## 总结
 
-![](/images/imageWebRTC/mediaserver/)
+小结：
+
+- C/C++ 服务器开发
+- 编写高性能的网络服务器
+- 各种传输协议详解
+- Mediasoup的使用与详解
+
+C/C++ 服务器开发：
+
+- 如何实现一个最简单的服务器
+- Linux信号的处理
+- fork子进程
+- 基础网络编程
+
+编写高性能的网络服务器：
+
+- 网络异步I/O事件处理
+- epoll + fork实现高性能网络服务器
+- Libevent/libuv实现高性能网络服务器
+
+各种传输协议详解：
+
+- TCP/IP 详解
+- UDP/RTP/RTCP 详解
+- WebRTC协议详解
+- SDP协议与媒体协商
+
+Mediasoup的使用与详解：
+
+- 各种WebRTC流媒体服务器的比较
+- Mediasoup服务器的部署与使用
+- Mediasoup的信令系统
+- Mediasoup源码分析
+
+进阶：
+
+- 大规模WebRTC流媒体服务器的实现 -- 路由器 路由表
+- WebRTC源码分析
+- 如何评测和提升音视频服务质量
+- OpenCV / 人工智能
+- OpenGL / Metal 视频特效
+
+行业痛点：
+
+- 如何通过mediasoup实现自有网络
+- 如何更好的利用好网络
+- 3A 问题
+- 如何将 AI 引入到直播系统中搞服务质量
 
 ## Reference
 
@@ -518,11 +672,5 @@ $ clang -g -o testsocketpair testsocketpair.c
 
 > [如何阅读开源项目](https://zhijianshusheng.github.io/2017/06/07/2017/6/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/)
 
-<details><summary></summary>
 
-```c++
-
-```
-
-</details>
 
