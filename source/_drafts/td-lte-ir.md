@@ -129,3 +129,58 @@ https://github.com/CESNET/libnetconf
 > [SDN 是什么？](https://www.zhihu.com/question/20279620)
 >
 > [SDN介绍](https://www.cnblogs.com/ssyfj/tag/SDN/)
+
+
+
+
+
+**netconf开发学习资料：**
+
+> [网络基础](https://tonydeng.github.io/sdn-handbook/sdn/sbi/netconf.html)
+>
+> [关于RFC6241中文翻译](https://tonydeng.github.io/rfc6241-zh/)
+
+
+
+```xml
+netconf> status
+Current NETCONF session:
+  ID          : 1
+  Host        : 127.0.0.1
+  Port        : 830
+  User        : root
+  Transport   : SSH
+  Capabilities:
+	urn:ietf:params:netconf:base:1.0
+	urn:ietf:params:netconf:base:1.1
+	urn:ietf:params:netconf:capability:writable-running:1.0
+	urn:ietf:params:netconf:capability:candidate:1.0
+	urn:ietf:params:netconf:capability:startup:1.0
+	urn:ietf:params:netconf:capability:rollback-on-error:1.0
+	urn:ietf:params:netconf:capability:interleave:1.0
+	urn:ietf:params:netconf:capability:notification:1.0
+	urn:ietf:params:netconf:capability:validate:1.0
+	urn:ietf:params:netconf:capability:validate:1.1
+	urn:ietf:params:netconf:capability:with-defaults:1.0?basic-mode=explicit&also-supported=report-all,report-all-tagged,trim,explicit
+	urn:ietf:params:netconf:capability:url:1.0?scheme=scp,file
+	http://example.net/turing-machine?module=turing-machine&revision=2013-12-27
+	urn:cesnet:tmc:netopeer:1.0?module=netopeer-cfgnetopeer&revision=2015-05-19&features=ssh,dynamic-modules
+	urn:ietf:params:xml:ns:yang:ietf-netconf-server?module=ietf-netconf-server&revision=2014-01-24&features=ssh,inbound-ssh,outbound-ssh
+	urn:ietf:params:xml:ns:yang:ietf-x509-cert-to-name?module=ietf-x509-cert-to-name&revision=2013-03-26
+	urn:ietf:params:xml:ns:yang:ietf-netconf-acm?module=ietf-netconf-acm&revision=2012-02-22
+	urn:ietf:params:xml:ns:yang:ietf-netconf-with-defaults?module=ietf-netconf-with-defaults&revision=2010-06-09
+	urn:cesnet:params:xml:ns:libnetconf:notifications?module=libnetconf-notifications&revision=2016-07-21
+	urn:ietf:params:xml:ns:netconf:notification:1.0?module=notifications&revision=2008-07-14
+	urn:ietf:params:xml:ns:netmod:notification?module=nc-notifications&revision=2008-07-14
+	urn:ietf:params:xml:ns:yang:ietf-netconf-notifications?module=ietf-netconf-notifications&revision=2012-02-06
+	urn:ietf:params:xml:ns:yang:ietf-netconf-monitoring?module=ietf-netconf-monitoring&revision=2010-10-04
+	urn:ietf:params:xml:ns:netconf:base:1.0?module=ietf-netconf&revision=2011-06-01&features=writable-running,candidate,rollback-on-error,validate,startup,url
+	urn:ietf:params:xml:ns:yang:ietf-yang-types?module=ietf-yang-types&revision=2013-07-15
+	urn:ietf:params:xml:ns:yang:ietf-inet-types?module=ietf-inet-types&revision=2013-07-15
+netconf>
+```
+
+
+
+
+
