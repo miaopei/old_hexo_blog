@@ -1,3 +1,6 @@
+---
+abbrlink: 0
+---
 # Netconf 学习笔记
 
 ## 1. Netconf简介
