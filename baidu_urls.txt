@@ -1,3 +1,4 @@
+http://miaopei.github.io/2020/02/10/执行文件出现lib库缺失问题解决/
 http://miaopei.github.io/2019/11/26/netconf-note/
 http://miaopei.github.io/2019/10/21/WebRTC/mediaserver-02/
 http://miaopei.github.io/2019/10/12/WebRTC/mediaserver-01/
@@ -17,4 +18,3 @@ http://miaopei.github.io/2019/05/29/实用的计算机工具库/
 http://miaopei.github.io/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/
 http://miaopei.github.io/2019/05/27/WebRTC/webrtc-opensrc/
 http://miaopei.github.io/2019/05/27/FFmpeg/FFmpeg框架函数分析/
-http://miaopei.github.io/2019/05/25/FFmpeg/FFmpeg源代码结构note/
