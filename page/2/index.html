@@ -752,7 +752,7 @@ W3Cschool架构师之路
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">11.8k</span>
+                <span title="本文字数">10.2k</span>
               
 
               
@@ -766,7 +766,7 @@ W3Cschool架构师之路
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">46</span>
+                <span title="阅读时长">63</span>
               
             </div>
           
@@ -787,14 +787,7 @@ W3Cschool架构师之路
 
       
         
-          
-            <p>
-              WebRTC浏览器APIWebRTC实现了多个Web API接口，其中三个重要的Web API分别是:
-
-MediaStream：通过 MediaStream 的 API 能够通过设备的摄像头及话筒获得视频、音频的同步流。
-RTCPeerConnection：RTCPeerConnection 是 
-              ...
-            </p>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -969,7 +962,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">8.9k</span>
+                <span title="本文字数">4.2k</span>
               
 
               
@@ -983,7 +976,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">32</span>
+                <span title="阅读时长">26</span>
               
             </div>
           
@@ -1004,7 +997,7 @@ RTCPeerConnection：RTCPeerConnection 是
 
       
         
-          <h2 id="什么是WebRTC？"><a href="#什么是WebRTC？" class="headerlink" title="什么是WebRTC？"></a>什么是WebRTC？</h2><p>众所周知，浏览器本身不支持相互之间直接建立信道进行通信，都是通过服务器进行中转。比如现在有两个客户端，甲和乙，他们俩想要通信，首先需要甲和服务器、乙和服务器之间建立信道。甲给乙发送消息时，甲先将消息发送到服务器上，服务器对甲的消息进行中转，发送到乙处，反过来也是一样。这样甲与乙之间的一次消息要通过两段信道，通信的效率同时受制于这两段信道的带宽。同时这样的信道并不适合数据流的传输，如何建立浏览器之间的点对点传输，一直困扰着开发者。WebRTC应运而生。</p>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1179,7 +1172,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.6k</span>
+                <span title="本文字数">1.2k</span>
               
 
               
@@ -1193,7 +1186,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">8</span>
+                <span title="阅读时长">7</span>
               
             </div>
           
@@ -1214,8 +1207,7 @@ RTCPeerConnection：RTCPeerConnection 是
 
       
         
-          <h2 id="又拍云UTUN网络详解"><a href="#又拍云UTUN网络详解" class="headerlink" title="又拍云UTUN网络详解"></a>又拍云UTUN网络详解</h2><h3 id="如何定义实时音视频互动-延迟-400ms-内才能无异步感"><a href="#如何定义实时音视频互动-延迟-400ms-内才能无异步感" class="headerlink" title="如何定义实时音视频互动, 延迟 400ms 内才能无异步感"></a>如何定义实时音视频互动, 延迟 400ms 内才能无异步感</h3><p>实时音视频互动如果存在1秒左右的延时会给交流者带来异步感，必须将视频播放延迟限制在 400ms 以内，才能给用户较好的交互体验。</p>
-<p>当延迟控制在 400ms 以内时，两个人音视频互动是实时的，不会有异步感存在，即实时音视频互动。</p>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1390,7 +1382,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.5k</span>
+                <span title="本文字数">1.8k</span>
               
 
               
@@ -1404,7 +1396,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">9</span>
+                <span title="阅读时长">11</span>
               
             </div>
           
@@ -1425,17 +1417,7 @@ RTCPeerConnection：RTCPeerConnection 是
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>这篇文章主要想说明的是WebRTC内部对视频<code>上下行延时、抖动、丢包</code>如何更新，上层又怎么获取到这些统计信息的。对应的<code>WebRTC版本：63</code>。</p>
-</blockquote>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
-<p>最近在内网情况下测试视频会议，视频下行延时很大，很多时候超过<code>100ms</code>。另外，视频的上下行抖动总是稳定在<code>30~40ms</code>这个区间。这些统计在内网环境下是不正常的，于是决定看看是哪里导致这些问题的。</p>
-<p>在解决这些问题的过程中，也对WebRTC内部视频统计数据做了一次梳理。</p>
-<p>阅读这篇文章之前，最好对RTP、RTCP、SR、RR有一些了解。这里就不过多展开，可以参考以下文章：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzM1NTAjc2VjdGlvbi01" title="https://tools.ietf.org/html/rfc3550#section-5">RTP Data Transfer Protocol<i class="fa fa-external-link"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzM1NTAjc2VjdGlvbi02" title="https://tools.ietf.org/html/rfc3550#section-6">RTP Control Protocol – RTC<i class="fa fa-external-link"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIwMjc4NjM1L2Fuc3dlci8xNDU5MDk0NQ==" title="https://www.zhihu.com/question/20278635/answer/14590945">RTP/RTSP/RTCP有什么区别<i class="fa fa-external-link"></i></span></p>
-</blockquote>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1610,7 +1592,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">617</span>
+                <span title="本文字数">933</span>
               
 
               
@@ -1624,7 +1606,7 @@ RTCPeerConnection：RTCPeerConnection 是
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2</span>
+                <span title="阅读时长">5</span>
               
             </div>
           
@@ -1645,25 +1627,7 @@ RTCPeerConnection：RTCPeerConnection 是
 
       
         
-          
-            <p>
-              WebRTC 镜像源
-WebRTC 镜像源
-
-
-webrtc src
-
-
-WebRTC-编译以及运行IOS的Demo
-WebRTC iOS&amp;OSX 库的编译
-生成WebRTC的DEMO并运行
-使用xcode来生成webrtc的Demo
-webrtc ios client 源码拉取和编译
-
-
-
-              ...
-            </p>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -2263,7 +2227,7 @@ webrtc ios client 源码拉取和编译
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">42</span>
+                <span title="本文字数">76</span>
               
 
               
@@ -2298,9 +2262,7 @@ webrtc ios client 源码拉取和编译
 
       
         
-          <p>web端用webRTC实现的一对一视频，互动直播和会议。<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0YXJydGMvYW5kcm9pZC1kZW1v" title="https://github.com/starrtc/android-demo">https://github.com/starrtc/android-demo<i class="fa fa-external-link"></i></span></p>
-<p>ios源码<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0YXJydGMvaW9zLWRlbW8=" title="https://github.com/starrtc/ios-demo">https://github.com/starrtc/ios-demo<i class="fa fa-external-link"></i></span> </p>
-<p>web端源码 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0YXJydGMvd2VicnRjLWRlbW8=" title="https://github.com/starrtc/webrtc-demo">https://github.com/starrtc/webrtc-demo<i class="fa fa-external-link"></i></span>  </p>
+          Welcome to my blog, enter password to read.
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -2858,7 +2820,7 @@ webrtc ios client 源码拉取和编译
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">4.2m</span>
   
 
   
@@ -2867,7 +2829,7 @@ webrtc ios client 源码拉取和编译
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">17:15</span>
+    <span title="站点阅读时长">63:21</span>
   
 
 </div>
