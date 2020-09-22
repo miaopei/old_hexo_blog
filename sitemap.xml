@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://miaopei.github.io/2020/09/22/Netconf/sysrepo-note/</loc>
+    
+    <lastmod>2020-09-22T11:52:29.328Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://miaopei.github.io/2020/09/22/Netconf/sysrepo-doc/</loc>
+    
+    <lastmod>2020-09-22T11:34:36.561Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://miaopei.github.io/2020/06/17/%E4%BC%98%E7%A7%80%E7%9A%84Blog%E9%93%BE%E6%8E%A5/</loc>
     
     <lastmod>2020-07-08T09:13:51.823Z</lastmod>
@@ -499,6 +513,13 @@
   </url>
   
   <url>
+    <loc>http://miaopei.github.io/2017/04/12/HTTP/HTTP%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/</loc>
+    
+    <lastmod>2019-06-05T04:03:57.392Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://miaopei.github.io/2017/04/13/Linux%E5%91%BD%E4%BB%A4eval%E7%9A%84%E7%94%A8%E6%B3%95/</loc>
     
     <lastmod>2019-06-05T04:03:57.392Z</lastmod>
@@ -514,13 +535,6 @@
   
   <url>
     <loc>http://miaopei.github.io/2017/05/16/WebSocket%E6%95%99%E7%A8%8B/</loc>
-    
-    <lastmod>2019-06-05T04:03:57.392Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://miaopei.github.io/2017/04/12/HTTP/HTTP%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/</loc>
     
     <lastmod>2019-06-05T04:03:57.392Z</lastmod>
     
