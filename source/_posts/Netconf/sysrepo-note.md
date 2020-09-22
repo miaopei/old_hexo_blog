@@ -1,10 +1,13 @@
 ---
 title: sysrepo-note
-tags: [Netconf]
-categories: [Netconf]
+tags:
+  - Netconf
+categories:
+  - Netconf
 reward: true
 toc: true
 p: Netconf/sysrepo-note
+abbrlink: 63382
 date: 2020-09-22 19:50:28
 ---
 
