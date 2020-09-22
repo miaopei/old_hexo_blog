@@ -1,5 +1,4 @@
 http://miaopei.github.io/2020/09/22/Netconf/sysrepo-note/
-http://miaopei.github.io/2020/09/22/Netconf/sysrepo-doc/
 http://miaopei.github.io/2020/06/17/优秀的Blog链接/
 http://miaopei.github.io/2020/02/10/执行文件出现lib库缺失问题解决/
 http://miaopei.github.io/2019/11/26/netconf-note/
@@ -18,3 +17,4 @@ http://miaopei.github.io/2019/06/09/WebRTC/01-实时音视频互动系列/
 http://miaopei.github.io/2019/06/07/WebRTC/webrtc的视频统计信息之延迟抖动与丢包/
 http://miaopei.github.io/2019/05/30/WebRTC/webrtc-src/
 http://miaopei.github.io/2019/05/29/实用的计算机工具库/
+http://miaopei.github.io/2019/05/28/FFmpeg/FFmpeg的H.264解码器源代码简单分析/
