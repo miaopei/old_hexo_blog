@@ -1,9 +1,11 @@
 ---
 title: Git使用规范流程
-description: git
-category: git
-tag: git
+tags:
+  - Git
+categories:
+  - Git
 reward: true
+toc: true
 abbrlink: 24537
 date: 2017-01-27 18:02:52
 ---

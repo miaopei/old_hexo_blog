@@ -1,9 +1,11 @@
 ---
 title: 常用Git命令清单
-description: git
-category: git
-tags: git
+tags:
+  - Git
+categories:
+  - Git
 reward: true
+toc: true
 abbrlink: 60426
 date: 2017-01-27 18:02:52
 ---

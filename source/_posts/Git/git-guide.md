@@ -1,8 +1,10 @@
 ---
-title: Git操作手册|命令速查表 
-tags: git
+title: Git操作手册|命令速查表
+tags:
+  - Git
+categories:
+  - Git
 reward: true
-categories: git
 toc: true
 abbrlink: 61505
 date: 2018-02-27 18:02:52

@@ -1,9 +1,11 @@
 ---
 title: Git note
-description: git
-category: git
-tag: git
+tags:
+  - Git
+categories:
+  - Git
 reward: true
+toc: true
 abbrlink: 24537
 date: 2020-08-29 18:02:52
 ---
@@ -13,6 +15,8 @@ date: 2020-08-29 18:02:52
 ## 5 Git workflows you can use to deliver better code and improve your development process
 
 I haven't met a developer who looked at a conflict message and did not pull their hair strands with frustration.
+
+<!-- more -->
 
 Trying to resolve each merge conflict is one of those things that every developer hates. Especially if it hits you when you're gearing up for a production deploy!
 

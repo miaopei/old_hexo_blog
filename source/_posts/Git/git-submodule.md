@@ -1,9 +1,11 @@
 ---
 title: 使用Git Submodule管理子模块
-description: git
-category: git
-tag: git
+tags:
+  - Git
+categories:
+  - Git
 reward: true
+toc: true
 abbrlink: 24537
 date: 2017-01-29 18:02:52
 ---

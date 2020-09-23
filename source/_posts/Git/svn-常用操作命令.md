@@ -1,8 +1,11 @@
 ---
 title: svn 常用操作命令
-tags: svn
-toc: true
+tags:
+  - SVN
+categories:
+  - SVN
 reward: true
+toc: true
 abbrlink: 1543
 date: 2017-03-29 16:23:27
 ---
