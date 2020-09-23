@@ -1,5 +1,5 @@
 ---
-title: sysrepo-note
+title: sysrepo note
 tags:
   - Netconf
 categories:
@@ -18,6 +18,8 @@ date: 2020-09-22 19:50:28
 ## 1. sysrepo 概述
 
 `Sysrepo` 是 `Linux/Unix` 系统下一个基于 `YANG` 模型的配置和操作数据库，为应用程序提供统一的操作数据的接口。应用程序使用 `YANG` 模型来建模，通过利用 `YANG` 模型完成数据合法性的检查，保证的风格的一致，不需要应用程序直接操作配置文件的一种数据管理方式。
+
+<!-- more -->
 
 ### 1.1 基本特性与原则
 
@@ -40,7 +42,7 @@ date: 2020-09-22 19:50:28
 
 应用程序可以通过两种方法来访问 `sysrepo`，一种是直接的方法，即当应用程序需要配置数据或者执行相应的 `callback` 来响应配置变化时，可以通过 `sysrepo` 自带的应用程序来触发用 `sysrepo` 的功能函数来实现。这种方法一般用于开发人员自测或验证某个模块时使用；另一种是间接的方法，即应用程序通过创建 `Deamon` 进程的方法，该方法是通过将对 `sysrepo` 的调用转化为对应用程序的特定操作，该方法也最容易扩展，也无需为了使用 `sysrepo` 数据库而做相应的更改。如果有多个类似的 `Deamon` 进程，可以将这些进程合成一个 `plugind`，最后由一个进程统一纳管。可扩展性得到大大的提高。间接方法的使用如图所示：
 
-![sysrepo 使用方法](images_sr/sr_apps.png)
+![sysrepo 使用方法](/images/images_sr/sr_apps.png)
 
 ### 1.4 数据库
 
@@ -519,7 +521,7 @@ void sr_plugin_cleanup_cb(sr_session_ctx_t *session, void *private_ctx)
 
 连接与会话的关系如下所示，可能不是特别准备，但大概就是这个意思。
 
-![连接与会话关系](images_sr/connect_session.png)
+![连接与会话关系](/images/images_sr/connect_session.png)
 
 ### 4.2 核心数据结构
 
@@ -1043,7 +1045,7 @@ sr_session_stop(sr_session_ctx_t *session)
 
 简单说一说什么是共享内存，共享内存就是允许两个或多个进程共享一定的存储区，说白了，就是两个进程访问同一块内存区域，当一个进程改变了这块地址中的内容的时候，其它进程都会察觉到这个更改，所以数据不需要在客户机和服务器端之间复制，数据直接写到内存，不用若干次数据拷贝，是一种最快的 `IPC` 。原理图如下所示，需要注意的是，共享内存本向并没有任何的同步与互斥机制，所以必须使用信号量来实现对共享内存的存取的同步。其它有关的共享内存的概念使用，网上有很多，可自行查阅理解。本处这分析与 `sysrepo` 相关的共享内存机制的使用。
 
-![共享内存原理](images_sr/shm.png)
+![共享内存原理](/images/images_sr/shm.png)
 
 ### 5.2 数据结构
 
@@ -1131,7 +1133,7 @@ struct sr_mod_s {
 
 ### 5.3 源码分析
 
-![](images_sr/shmmain_add.png)
+![](/images/images_sr/shmmain_add.png)
 
 此添加 `shm main` 的入口代码，将全部模块以 `lydmod` 数据形式添加到 `main SHM` 中。参考前一章的 `sr_connect` 函数，这就是将在与 `sysrepo` 连接时，会将全部模块的加载到共享内存中。
 
