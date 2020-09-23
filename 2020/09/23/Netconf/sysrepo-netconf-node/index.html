@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat_32px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat_16px_1165145_easyicon.net.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: true,
+    lazyload: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '5HERDWLKZV',
+      apiKey: '7876dff207d78e6df0721656b26ee0af',
+      indexName: 'hexo-algolia',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Netopper2 安装 环境 centos   1. 基础软件安装">
+<meta name="keywords" content="Netconf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netopper2 note">
+<meta property="og:url" content="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-netconf-node/index.html">
+<meta property="og:site_name" content="Mr.Miaow Blog">
+<meta property="og:description" content="Netopper2 安装 环境 centos   1. 基础软件安装">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://miaopei.github.io/images/images_sr/sr_apps.png">
+<meta property="og:image" content="http://miaopei.github.io/images/images_sr/high_level_architecture.png">
+<meta property="og:image" content="http://miaopei.github.io/images/images_sr/syarepo-install.png">
+<meta property="og:image" content="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-netconf-node/images_sr/high_level_architecture.png">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?BBU->RU&space;DL_{Delay}&space;=&space;T12&space;+&space;TBdelayDL&space;+&space;{T12}'&space;+&space;T2a">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?{T12}''&space;=&space;\left&space;(&space;{T14}''&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle">
+<meta property="og:image" content="https://latex.codecogs.com/gif.latex?BBU&space;->&space;RU&space;DL_{Delay}&space;=&space;T12&space;+&space;TBdelayDL&space;+&space;{T12}'&space;+&space;{TBdelayDL}'&space;+&space;{T12}''&space;+&space;T2a">
+<meta property="og:updated_time" content="2020-09-23T02:42:00.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="netopper2 note">
+<meta name="twitter:description" content="Netopper2 安装 环境 centos   1. 基础软件安装">
+<meta name="twitter:image" content="http://miaopei.github.io/images/images_sr/sr_apps.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mr.Miaow Blog" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-netconf-node/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>netopper2 note | Mr.Miaow Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Miaow Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">Do what you say, say what you do.</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-messages">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/messages/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>留言板</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>阅读Top</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-netconf-node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.Miaow">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Miaow Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">netopper2 note
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-23 19:50:28" itemprop="dateCreated datePublished" datetime="2020-09-23T19:50:28+08:00">2020-09-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Netconf/" itemprop="url" rel="index"><span itemprop="name">Netconf</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2020/09/23/Netconf/sysrepo-netconf-node/" class="leancloud_visitors" data-flag-title="netopper2 note">
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+                <span class="post-meta-item-text">阅读次数：</span>
+                <!--<span class="post-meta-item-text">阅读次数：</span>-->
+            
+            <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">10.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">44</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Netopper2-安装"><a href="#Netopper2-安装" class="headerlink" title="Netopper2 安装"></a>Netopper2 安装</h1><ul>
+<li>环境 centos </li>
+</ul>
+<h2 id="1-基础软件安装"><a href="#1-基础软件安装" class="headerlink" title="1. 基础软件安装"></a>1. 基础软件安装</h2><a id="more"></a>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y upgrade</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y groupinstall <span class="string">'Development Tools'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install pcre-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install cmake</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install doxygen</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install valgrind</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install zlib-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install openssl-devel</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install dnssec-trigger</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install autoconf libtool</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum -y install libev-devel</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Netopeer2-Requirements"><a href="#2-Netopeer2-Requirements" class="headerlink" title="2. Netopeer2 Requirements"></a>2. Netopeer2 Requirements</h2><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5n" title="https://github.com/CESNET/libyang">libyang<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJuZXRjb25mMg==" title="https://github.com/CESNET/libnetconf2">libnetconf2<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N5c3JlcG8vc3lzcmVwbw==" title="https://github.com/sysrepo/sysrepo">sysrepo<i class="fa fa-external-link"></i></span></li>
+</ul>
+<h3 id="2-1-安装-libyang"><a href="#2-1-安装-libyang" class="headerlink" title="2.1 安装 libyang"></a>2.1 安装 libyang</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/CESNET/libyang.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> libyang; mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Documentation：</strong></p>
+<p>可以使用 Doxygen 工具直接从源代码生成库文档:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> make doc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> google-chrome ../doc/html/index.html</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>更改扩展插件目录：</strong></p>
+<p>至于 YANG 扩展，libyang 允许加载扩展插件。默认情况下，存储插件的目录是 LIBDIR/libyang。要更改它，使用下面的 cmake 选项，该选项的值指定所需的目录:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cmake -DPLUGINS_DIR:PATH=`<span class="built_in">pwd</span>`<span class="string">"/src/extensions/"</span> ..</span></span><br></pre></td></tr></table></figure>
+
+<p>目录路径也可以通过环境变量文件改变运行时，例如:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_EXTENSIONS_PLUGINS_DIR=`<span class="built_in">pwd</span>`/my/relative/path yanglint</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>yanglint：</strong></p>
+<p>Libyang 项目包括一个名为 yanglint (1)的功能丰富的工具，用于验证和转换模式和 YANG 模型数据。源代码位于/tools/lint，可用于探索应用程序如何使用 libyang 库。Yanglint (1)二进制文件及其手册页与库本身一起安装。</p>
+<p>There is also <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5nL2Jsb2IvbWFzdGVyL3Rvb2xzL2xpbnQvZXhhbXBsZXMvUkVBRE1FLm1k" title="https://github.com/CESNET/libyang/blob/master/tools/lint/examples/README.md">README<i class="fa fa-external-link"></i></span> describing some examples of using <code>yanglint</code>.</p>
+<p>还有自述文件，描述了使用阳光棉的一些例子。</p>
+<p>Libyang 通过插件机制支持 YANG 扩展。一些插件(针对 NACM 或 Metadata)可以开箱即用，并与 libyang 一起安装。但是，如果没有安装 libyang，而是从构建目录中使用 yanglint (1) ，那么这些插件就不可用。有两种选择:</p>
+<ol>
+<li>安装 libyang</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>设置环境变量 <code>LIBYANG_EXTENSIONS_PLUGINS_DIR</code> 包含路径到构建的扩展插件(从构建目录 <code>./src/extensions</code> )</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_EXTENSIONS_PLUGINS_DIR=<span class="string">"`pwd`/src/extensions"</span> ./yanglint</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-安装-libnetconf2"><a href="#2-2-安装-libnetconf2" class="headerlink" title="2.2 安装 libnetconf2"></a>2.2 安装 libnetconf2</h3><p>依赖：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5n" title="https://github.com/CESNET/libyang">libyang<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXQubGlic3NoLm9yZy9wcm9qZWN0cy9saWJzc2guZ2l0" title="https://git.libssh.org/projects/libssh.git">libssh<i class="fa fa-external-link"></i></span></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> http://git.libssh.org/projects/libssh.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> libssh; mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> or</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://git.libssh.org/projects/libssh.git/snapshot/libssh-0.7.5.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -xzf libssh-0.7.5.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir libssh-0.7.5/build &amp;&amp; <span class="built_in">cd</span> libssh-0.7.5/build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/<span class="built_in">local</span> .. &amp;&amp; make &amp;&amp; sudo make install</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ../..</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git://git.cryptomilk.org/projects/cmocka.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> cmocka</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout tags/cmocka-1.0.1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/CESNET/libnetconf2.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> install</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make doc</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-安装-sysrepo"><a href="#2-3-安装-sysrepo" class="headerlink" title="2.3 安装 sysrepo"></a>2.3 安装 sysrepo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/sysrepo/sysrepo.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake -DCMAKE_BUILD_TYPE=Debug ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make doc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> google-chrome ../doc/html/index.html</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-netopper2-安装"><a href="#3-netopper2-安装" class="headerlink" title="3. netopper2 安装"></a>3. netopper2 安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/CESNET/Netopeer2.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> Netopeer2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> LD_LIBRARY_PATH=/usr/<span class="built_in">local</span>/lib64:/usr/<span class="built_in">local</span>/lib</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build &amp;&amp; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo make install</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="libyang-简介"><a href="#libyang-简介" class="headerlink" title="libyang 简介"></a>libyang 简介</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2MvbGlieWFuZy9tYXN0ZXIvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/libyang/master/index.html">libyang doc<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="1-About"><a href="#1-About" class="headerlink" title="1. About"></a>1. About</h2><p>libyang is a library implementing processing of the YANG schemas and data modeled by the YANG language. The library is implemented in C for GNU/Linux and provides C API.</p>
+<p>Libyang 是一个用 YANG 语言实现 YANG 模式和数据处理的库。该库是用 c 语言为 GNU/Linux 实现的，并提供了 c API。</p>
+<h2 id="2-Main-Features"><a href="#2-Main-Features" class="headerlink" title="2. Main Features"></a>2. Main Features</h2><ul>
+<li>YANG 格式模式的解析(和验证)。</li>
+<li>YIN 格式模式的解析(和验证)。</li>
+<li>解析、验证和打印 XML 格式的实例数据。</li>
+<li>解析、验证和打印 JSON 格式的实例数据 (RFC 7951)。</li>
+<li>操作实例数据。</li>
+<li>支持实例数据中的默认值 (RFC 6243)。</li>
+<li>支持 YANG 扩展和用户类型。</li>
+<li>支持 YANG 元数据 (RFC 7952)。</li>
+<li>yanglint - 特征丰富的 YANG 工具</li>
+</ul>
+<p>当前的实现包括 YANG 1.0 (RFC 6020) 和 YANG 1.1 (RFC 7950)。</p>
+<h2 id="3-Extra-side-effect-Features"><a href="#3-Extra-side-effect-Features" class="headerlink" title="3. Extra (side-effect) Features"></a>3. Extra (side-effect) Features</h2><ul>
+<li>XML 解析器。</li>
+<li>优化字符串存储 (字典)。</li>
+</ul>
+<h1 id="libnetconf2-简介"><a href="#libnetconf2-简介" class="headerlink" title="libnetconf2 简介"></a>libnetconf2 简介</h1><h2 id="1-About-1"><a href="#1-About-1" class="headerlink" title="1. About"></a>1. About</h2><p>libnetconf2 is a NETCONF library in C handling NETCONF authentication and all NETCONF RPC communication both server and client-side. Note that NETCONF datastore implementation is not a part of this library. The library supports both NETCONF 1.0 (<span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzQ3NDE=" title="https://tools.ietf.org/html/rfc4741">RFC 4741<i class="fa fa-external-link"></i></span>) as well as NETCONF 1.1 (<span class="exturl" data-url="aHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzYyNDE=" title="https://tools.ietf.org/html/rfc6241">RFC 6241<i class="fa fa-external-link"></i></span>).</p>
+<p>libnetconf2 是一个 C 语言的 NETCONF 库，处理 NETCONF 认证和所有 NETCONF RPC 通信服务器和客户端。注意，NETCONF 数据存储实现不是这个库的一部分。这个库同时支持 NETCONF 1.0 (RFC 4741) 和 NETCONF 1.1 (RFC 6241)。</p>
+<h2 id="2-Main-Features-1"><a href="#2-Main-Features-1" class="headerlink" title="2. Main Features"></a>2. Main Features</h2><ul>
+<li>使用 libssh 创建 SSH (RFC 4742、RFC 6242)，或使用 OpenSSL、经过身份验证的 NETCONF 会话创建 TLS (RFC 7589)。</li>
+<li>使用预先建立的传输协议创建 NETCONF 会话(例如，使用这种机制可以通过 sshd(8) 进行隧道通信)。</li>
+<li>创建 NETCONF 呼叫家庭会话(RFC 8071)。</li>
+<li>创建、发送、接收和回复 RPC (RFC 4741，RFC 6241)。</li>
+<li>创建、发送和接收 NETCONF 事件通知(RFC 5277)</li>
+</ul>
+<h1 id="libyang-学习总结"><a href="#libyang-学习总结" class="headerlink" title="libyang 学习总结"></a>libyang 学习总结</h1><h2 id="YANG-模型"><a href="#YANG-模型" class="headerlink" title="YANG 模型"></a>YANG 模型</h2><p><code>YANG</code>是最初设计用于为<code>NETCONF</code>协议建模的语言。 <code>YANG</code>模块定义了可用于基于<code>NETCONF</code>的操作（包括配置，状态数据，<code>RPC</code>和通知）的数据层次结构。这允许在<code>NETCONF</code>客户端和服务器之间发送的所有数据的完整描述。虽然不在本规范的范围之内，但是也可以使用除<code>NETCONF</code>以外的协议。</p>
+<p><code>YANG</code>将数据的分层组织模型化为一个树，其中每个节点都有一个名称，或者一个值或一组子节点。<code>YANG</code>提供了对节点的清晰简洁的描述，以及这些节点之间的交互。</p>
+<p><code>YANG</code>将数据模型组织成模块和子模块。模块可以从其他外部模块导入定义，并可以包含子模块的定义。可以增加层次结构，允许一个模块将数据节点添加到另一个模块中定义的层次结构中。这种增加可以是有条件的，只有在满足某些条件的情况下才会出现新的节点。</p>
+<p>一个<strong>模块</strong>包含三种类型的语句：</p>
+<ul>
+<li><p>模块头(<code>module header</code>)语句，</p>
+</li>
+<li><p>“修订”(<code>revision</code>)语句</p>
+</li>
+<li><p>定义(<code>definition</code>)语句。</p>
+<p>  模块头部语句<strong>描述模块并提供关于模块本身的信息</strong>，“修订”语句提供<strong>关于模块历史的信息</strong>，定义语句是<strong>定义数据模型的模块的主体</strong>。</p>
+</li>
+</ul>
+<p><strong>数据模型(<code>data model</code>)</strong>：</p>
+<ul>
+<li>数据模型描述如何表示和访问数据。</li>
+</ul>
+<p><strong>数据节点(<code>data node</code>)</strong>：</p>
+<ul>
+<li>模式树中可以在数据树中实例化的节点。<code>container</code>，<code>leaf</code>，<code>leaf-list</code>，<code>list</code>，<code>anydata</code>和<code>anyxml</code>之一。</li>
+</ul>
+<p><strong>数据树(<code>data tree</code>)</strong>：</p>
+<ul>
+<li>用<code>YANG</code>建模的任何数据的实例化树，例如配置数据，状态数据，组合配置和状态数据，<code>RPC</code>或操作输入，<code>RPC</code>或操作输出或通知。</li>
+</ul>
+<p><strong>叶节点(<code>leaf</code>)</strong>：</p>
+<ul>
+<li>数据树中至多存在一个实例的数据节点。叶子有一个值，但没有子节点。</li>
+</ul>
+<p><strong>叶列表(<code>leaf-list</code>)</strong>：</p>
+<ul>
+<li>与叶节点类似，但定义了一组唯一可识别的节点，而不是单个节点。每个节点都有一个值，但没有子节点。</li>
+</ul>
+<p><strong><code>RPC</code>操作(<code>RPC operation</code>)</strong>：</p>
+<ul>
+<li>特定的远程过程调用。</li>
+</ul>
+<p><strong>模式节点(<code>schema node</code>)</strong>：</p>
+<ul>
+<li>模式树中的节点。 <code>action</code>，<code>container</code>，<code>leaf</code>，<code>leaf-list</code>，<code>list</code>，<code>choice</code>，<code>case</code>，<code>rpc</code>，<code>input</code>，<code>output</code>，<code>notification</code>，<code>anydata</code>和<code>anyxml</code>中的一个。</li>
+</ul>
+<p><strong>模式树(<code>schema tree</code>)</strong>：</p>
+<ul>
+<li>模块中指定的定义层次结构。</li>
+</ul>
+<h3 id="Data-Model"><a href="#Data-Model" class="headerlink" title="Data Model"></a>Data Model</h3><p>叶节点（Leaf Nodes）</p>
+<p>“<code>leaf</code>”语句用于在模式树中定义叶节点。 它需要一个参数，它是一个标识符，后面是一个包含详细叶子信息的子状态块。一个<code>leaf node</code>包含且只包含一个<code>value</code>，可以是数字或是字符串，具体是什么，看关键字”type”后面跟什么。<code>leaf node</code>下面不能挂子节点。如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">YANG</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">leaf</span> <span class="string">host-name</span> <span class="string">&#123;</span></span><br><span class="line">    	<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">    	<span class="string">description</span> <span class="string">"Hostname for this system"</span><span class="string">;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">----------------------</span></span><br><span class="line"><span class="string">NETCONF</span> <span class="string">XML</span> <span class="attr">Example:</span></span><br><span class="line">	<span class="string">&lt;host-name&gt;my.example.com&lt;/host-name&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>叶列表节点（Leaf-List Nodes）</p>
+<p>可以认为Leaf-List Nodes表示的是一个“数组”，“数组”中的元素的值的type必须保持一致，可以有一系列同类型的值，而且不能重复。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">YANG</span> <span class="attr">Example:</span></span><br><span class="line">	<span class="string">leaf-list</span> <span class="string">domain-search</span> <span class="string">&#123;</span></span><br><span class="line">		<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">		<span class="string">description</span> <span class="string">"List of domain names to search"</span><span class="string">;</span></span><br><span class="line">	<span class="string">&#125;</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">----------------------</span></span><br><span class="line"><span class="string">NETCONF</span> <span class="string">XML</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">&lt;domain-search&gt;high.example.com&lt;/domain-search&gt;</span></span><br><span class="line">    <span class="string">&lt;domain-search&gt;low.example.com&lt;/domain-search&gt;</span></span><br><span class="line">    <span class="string">&lt;domain-search&gt;everywhere.example.com&lt;/domain-search&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>容器节点（Container Nodes）</p>
+<p>一个容器用于分组子树中的相关节点。 一个容器只有子节点，没有值。 容器可以包含任何类型的任何数量的子节点（叶子，列表，容器，叶子列表，动作和通知）。只能装东西，本身不具有意义。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">YANG</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">container</span> <span class="string">system</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">container</span> <span class="string">login</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="string">leaf</span> <span class="string">message</span> <span class="string">&#123;</span></span><br><span class="line">            	<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">            	<span class="string">description</span></span><br><span class="line">            		<span class="string">"Message given at start of login session"</span><span class="string">;</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">----------------------</span></span><br><span class="line"><span class="string">NETCONF</span> <span class="string">XML</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">&lt;system&gt;</span></span><br><span class="line">        <span class="string">&lt;login&gt;</span></span><br><span class="line">        	<span class="string">&lt;message&gt;Good</span> <span class="string">morning&lt;/message&gt;</span></span><br><span class="line">        <span class="string">&lt;/login&gt;</span></span><br><span class="line">    <span class="string">&lt;/system&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>列表节点（List Nodes)</p>
+<p>列表定义了一系列列表条目。每个条目就像一个容器，如果它定义了任何关键的叶子（指明一个叶子为 <code>key</code>），它就被其关键叶子的值唯一标识。列表可以定义多个关键叶子，并且可以包含任何类型的任何数量的子节点（包括树叶，列表，容器等）。实例化的时候，<code>key</code>的值(也就是”name”的值)是必须不同的，其它的值(full-name/class)没有这个要求。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">YANG</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">list</span> <span class="string">user</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">key</span> <span class="string">"name"</span><span class="string">;</span></span><br><span class="line">        <span class="string">leaf</span> <span class="string">name</span> <span class="string">&#123;</span></span><br><span class="line">        	<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="string">leaf</span> <span class="string">full-name</span> <span class="string">&#123;</span></span><br><span class="line">        	<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="string">leaf</span> <span class="string">class</span> <span class="string">&#123;</span></span><br><span class="line">        	<span class="string">type</span> <span class="string">string;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line"><span class="bullet">-</span><span class="bullet">----------------------</span></span><br><span class="line"><span class="string">NETCONF</span> <span class="string">XML</span> <span class="attr">Example:</span></span><br><span class="line">    <span class="string">&lt;user&gt;</span></span><br><span class="line">        <span class="string">&lt;name&gt;glocks&lt;/name&gt;</span></span><br><span class="line">        <span class="string">&lt;full-name&gt;Goldie</span> <span class="string">Locks&lt;/full-name&gt;</span></span><br><span class="line">        <span class="string">&lt;class&gt;intruder&lt;/class&gt;</span></span><br><span class="line">    <span class="string">&lt;/user&gt;</span></span><br><span class="line">    <span class="string">&lt;user&gt;</span></span><br><span class="line">        <span class="string">&lt;name&gt;snowey&lt;/name&gt;</span></span><br><span class="line">        <span class="string">&lt;full-name&gt;Snow</span> <span class="string">White&lt;/full-name&gt;</span></span><br><span class="line">        <span class="string">&lt;class&gt;free-loader&lt;/class&gt;</span></span><br><span class="line">    <span class="string">&lt;/user&gt;</span></span><br><span class="line">    <span class="string">&lt;user&gt;</span></span><br><span class="line">        <span class="string">&lt;name&gt;rzell&lt;/name&gt;</span></span><br><span class="line">        <span class="string">&lt;full-name&gt;Rapun</span> <span class="string">Zell&lt;/full-name&gt;</span></span><br><span class="line">        <span class="string">&lt;class&gt;tower&lt;/class&gt;</span></span><br><span class="line">    <span class="string">&lt;/user&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Libyang"><a href="#Libyang" class="headerlink" title="Libyang"></a>Libyang</h2><p><code>libyang</code>是一个实现<code>YANG</code>模式处理的<code>library</code>和由<code>YANG</code>语言建模的数据</p>
+<p><strong>主要特点</strong>：</p>
+<ol>
+<li>以 <code>YANG</code> 格式解析（和验证） <code>schema</code></li>
+<li>以 <code>YIN</code> 格式解析（和验证） <code>schema</code></li>
+<li>以 <code>XML</code> 格式解析，验证和打印实例数据</li>
+<li>以 <code>JSON</code> 格式解析，验证和打印实例数据</li>
+<li>使用实例数据进行操作</li>
+<li>支持示例数据中的默认值</li>
+<li>支持 <code>YANG</code> 扩展和实例类型</li>
+<li>支持 <code>YANG</code> 元数据</li>
+<li><code>XML</code> 解析器</li>
+<li>优化的字符串存储（字典）</li>
+</ol>
+<p><strong>过程：先创建一个context，解析yang文件生成schema tree（schema tree 相当于类型定义，指定生成的数据类型），然后根据文件读入，生成对应的data tree（相当于实例化的数据）</strong></p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><h4 id="context（上下文）"><a href="#context（上下文）" class="headerlink" title="context（上下文）"></a>context（上下文）</h4><p>上下文概念允许调用者在具有不同 <code>YANG</code> 模式集的环境中工作，具体工作流程（代码过程）见下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">ly_ctx_new()                                    <span class="comment">//创建新的上下文</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">/**************设置搜索路径****************/</span></span><br><span class="line">ly_ctx_set_searchdir()                          <span class="comment">//设置搜索路径</span></span><br><span class="line">ly_ctx_unset_searchdirs()                       <span class="comment">//不设置搜索路径</span></span><br><span class="line">ly_ctx_set_disable_searchdir_cwd()              <span class="comment">//设置不在当前工作路径搜索</span></span><br><span class="line">ly_ctx_set_disable_searchdir()                  <span class="comment">//避免在所有上下文的搜索目录搜索</span></span><br><span class="line">ly_ctx_set_module_imp_clb()                     <span class="comment">//设置自定义模块搜索回调</span></span><br><span class="line"><span class="comment">/**************设置搜索路径****************/</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">/**************解析器函数******************/</span></span><br><span class="line"><span class="comment">//使用解析器函数 lys_parse_*（） 将 schema / tree 加入到 context 中</span></span><br><span class="line"><span class="comment">//schema的函数都有lys_的前缀，实例数据的函数有lyd_的前缀。发生于在数据解析时，schema在context中并未找到或者schema只是被导入但并未实现</span></span><br><span class="line">    </span><br><span class="line">ly_ctx_load_module()                            <span class="comment">//在ctx搜索路径中找到model并将其加载到其中 </span></span><br><span class="line">ly_ctx_set_module_data_clb()                    <span class="comment">//设置回调函数</span></span><br><span class="line"><span class="comment">/**************解析器函数******************/</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//imported的函数可以变成implemented，但是implemented的函数不能变回imported</span></span><br><span class="line">lys_set_implemented()                           <span class="comment">//将imported函数变为implemented</span></span><br><span class="line">lys_set_allimplemented()                        <span class="comment">//将所有imported函数变为implemented</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**************module********************/</span></span><br><span class="line">ly_ctx_get_module()                             <span class="comment">//获得确切的model</span></span><br><span class="line">ly_ctx_get_submodule()                          <span class="comment">//获得确切的submodel</span></span><br><span class="line">ly_ctx_get_module_iter()                        <span class="comment">//对context中所有model进行某操作的迭代</span></span><br><span class="line">ly_ctx_info()                                   <span class="comment">//获取有关context中模式的复杂信息</span></span><br><span class="line">ly_ctx_find_path()                              <span class="comment">//获取上下文中模块中定义的特定节点</span></span><br><span class="line">ly_ctx_get_node()                               <span class="comment">//获取上下文中模块中定义的特定节点</span></span><br><span class="line">ly_ctx_remove_module()                          <span class="comment">//删除context保存的模块</span></span><br><span class="line">ly_ctx_disable()                                <span class="comment">//禁用某模块</span></span><br><span class="line">ly_ctx_clean()                                  <span class="comment">//清除所有已加载model的context</span></span><br><span class="line">ly_ctx_destroy()                                <span class="comment">//删除上下文</span></span><br><span class="line"><span class="comment">/**************module********************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*********context dictionary*************/</span></span><br><span class="line">lydict_insert()                                 <span class="comment">//将字符串插入字典</span></span><br><span class="line">lydict_remove()                                 <span class="comment">//将字符串从字典中删除</span></span><br><span class="line"><span class="comment">/*********context dictionary*************/</span></span><br></pre></td></tr></table></figure>
+
+<p>对于<code>context</code>，第一次请求<code>module</code>的最新版本时，将正确搜索并加载该<code>module</code>。但是，当第二次请求此<code>module</code>（没有修订）时，将返回先前找到的<code>module</code>。这样做的好处是不会反复搜索<code>module</code>，但缺点是如果稍后可以使用<code>module</code>的后续版本，则此<code>context</code>不会使用它。</p>
+<p><code>context</code> 在内部保存所有<code>model</code>及其 <code>submodel</code></p>
+<p><code>context</code> 包括更有效地存储字符串的字典。大多数字符串在 <code>schema</code> 和 <code>data tree</code> 经常重复。因此，<code>libyang</code> 不会在每次出现时分配这些字符串，而是将它们存储为字典中的记录。</p>
+<h4 id="schema（架构）"><a href="#schema（架构）" class="headerlink" title="schema（架构）"></a>schema（架构）</h4><p><code>schema</code>是 <code>YANG</code> 数据模型在 <code>libyang</code> 中的内部表示，每个 <code>schema</code> 都与其 <code>context</code> 连接，并使用解析器函数加载，因此无法以编程方式创建（更改） <code>schema</code> 。在 <code>libyang</code> 中，<code>schema</code> 仅用于访问数据模型定义模式树节点能够保存调用者应用程序使用的私有对象（通过指向结构，函数，变量等的指针）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lys_set_private()                <span class="comment">//将私有对象分配给特定节点</span></span><br></pre></td></tr></table></figure>
+
+<p><code>schema</code> 解析器允许从特定格式读取 <code>schema</code>。<code>libyang</code> 支持以下架构格式：<code>YANG</code>，<code>YIN</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以lys_features_为前缀的函数组用于访问和操作模式的功能。</span></span><br><span class="line">lys_features_list()              <span class="comment">//提供特定schema及其子schema中定义的所有功能的列表，或者提供有关所有功能状态的信息</span></span><br><span class="line">lys_features_state()             <span class="comment">//获取一个特定特征的状态</span></span><br><span class="line">lys_features_(dis)enable()       <span class="comment">//启用/禁用特定功能</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="plugins（插件）"><a href="#plugins（插件）" class="headerlink" title="plugins（插件）"></a>plugins（插件）</h4><p><code>plugins</code> 形式支持扩展和用户类型。无论何时创建上下文，都会从 <code>plugins</code> 目录 <code>LIBDIR/libyang/</code> 加载它们。扩展 <code>plugins</code> 目录路径（默认 <code>LIBDIR/libyang/extensions/</code>）可以通过<code>LIBYANG_EXTENSIONS_PLUGINS_DIR</code> 环境变量更改，类似地通过用户类型目录（默认<code>LIBDIR/libyang/user_types/</code>）更改 <code>LIBYANG_USER_TYPES_PLUGINS_DIR</code>。请注意，不会删除不可用的<code>plugins</code>，只会加载任何新 <code>plugins</code>。另请注意，新 <code>plugins</code> 的可用性不会影响上下文中的当前 <code>schema</code>，它们仅应用于新解析的 <code>schema</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 扩展 plugins 目录路径</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_EXTENSIONS_PLUGINS_DIR=LIBDIR/libyang/extensions/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 用户类型目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_USER_TYPES_PLUGINS_DIR=LIBDIR/libyang/user_types/</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ly_load_plugins()                <span class="comment">//手动刷新plugins列表</span></span><br><span class="line">ly_clean_plugins()               <span class="comment">//清空plugins列表</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Printing-Schemas（打印模式）"><a href="#Printing-Schemas（打印模式）" class="headerlink" title="Printing Schemas（打印模式）"></a>Printing Schemas（打印模式）</h4><p><code>schema printing</code> 允许以特定格式序列化模式 <code>schema</code> 的内部表示 ，包括：<code>YING</code>，<code>YANG</code>，<code>Tree</code></p>
+<p>每个节点的模块的简单树结构被打印为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;status&gt; &lt;flags&gt; &lt;name&gt; &lt;opts&gt; &lt;type&gt; &lt;if-features&gt;</span><br><span class="line">&lt;status&gt;</span><br><span class="line">	+ 对于当前</span><br><span class="line">	x 不推荐使用</span><br><span class="line">	o 过时的</span><br><span class="line">&lt;flags&gt;</span><br><span class="line">	rw 用于配置数据</span><br><span class="line">    ro 用于状态数据</span><br><span class="line">    -x 对于RPC</span><br><span class="line">    -n 通知</span><br><span class="line">&lt;name&gt;</span><br><span class="line">    (&lt;name&gt;) 表示该节点是一个选择节点</span><br><span class="line">    :(&lt;name&gt;) 表示节点是案例节点</span><br><span class="line">    如果节点从另一个模块扩充到树中，则使用模块名称打印&lt;module-name&gt;:&lt;name&gt;</span><br><span class="line">&lt;opts&gt;</span><br><span class="line">    ? 对于可选的叶子或选择</span><br><span class="line">    ! 对于存在容器</span><br><span class="line">    * 对于叶子列表或列表</span><br><span class="line">    [&lt;keys&gt;] 对于列表的键</span><br><span class="line">&lt;type&gt;</span><br><span class="line">    如果定义了默认值，则将其打印在尖括号内 &lt;default-value&gt;</span><br><span class="line">    如果类型是leafref，则类型打印为 - &gt; TARGET`</span><br><span class="line">&lt;if-features&gt;</span><br><span class="line">	是此节点所依赖的功能列表，打印在大括号和问号内 &#123;...&#125;?</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据实例"><a href="#数据实例" class="headerlink" title="数据实例"></a>数据实例</h4><p><code>data tree</code> 中的所有 <code>data</code> 节点都和他们的 <code>schema</code> 节点相连</p>
+<p>与 <code>schema</code> 解析器相反，如果根据 libyang 上下文中的 <code>schema</code>，这样的空数据树是有效的，则 <code>data</code> 解析器也接受空输入数据。</p>
+<p>在创建/插入节点时，该操作中的所有对象必须属于同一个上下文</p>
+<p>创建数据：</p>
+<ol>
+<li><p>根据节点名称或其父节点逐个添加节点</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lyd_new()</span><br><span class="line">lyd_new_leaf()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用简单的 <code>XPath</code> 寻址</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lyd_new_path()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="sysrepo-简介"><a href="#sysrepo-简介" class="headerlink" title="sysrepo 简介"></a>sysrepo 简介</h1><h2 id="1-sysrepo-引言"><a href="#1-sysrepo-引言" class="headerlink" title="1. sysrepo 引言"></a>1. sysrepo 引言</h2><p>Sysrepo 是一个基于 yang 的 Unix/Linux 系统数据存储。使用 YANG 建模配置的应用程序可以使用 Sysrepo 进行管理。</p>
+<p>申请使用 Sysrepo 的方法主要有两种。直接方法包括在需要配置数据时从应用程序本身调用 Sysrepo 函数，或者执行特定的回调以对配置更改做出反应。还可以实现一个独立的守护进程，将 Sysrepo 调用转换为应用程序特定的操作。对于现有的应用程序，这种间接方法通常比较容易使用，因为这样就不需要修改它们自己来利用 Sysrepo 数据存储，而代价是需要一个额外的中间进程(守护进程)。如果有几个这样的守护进程，它们可以作为插件编写，然后由一个进程管理。</p>
+<p><img src="/images/images_sr/sr_apps.png" alt="Sysrepo application approaches"></p>
+<p>Sysrepo 是用于 Unix/Linux 应用程序的基于 yang 的配置和操作状态数据存储。</p>
+<p>Sysrepo是一个基于YANG模型的配置和操作数据库，为应用程序提供一致的操作数据的接口，解决了配置读写困难的问题。应用程序使用YANG模型来建模，这样就可以利用YANG模型完成数据合法性的检查，保证的风格的一致，不需要应用程序直接操作配置文件了。</p>
+<p>目前，应用程序可以使用 sysrepo Client Library 的 c 语言 API 访问数据存储中的配置，但是对其他编程语言的支持也计划在以后使用(因为 sysrepo 使用 Google 协议缓冲作为数据存储和客户端库之间的接口，为任何支持 GPB 的编程语言编写本地客户端库是可能的)。</p>
+<p>Sysrepo 可以很容易地与管理代理(如 NETCONF 或 RESTCONF 服务器)集成，使用应用程序用于访问其配置的相同的客户端库 API。到目前为止，sysrepo 已经与 Netopeer 2 NETCONF 服务器集成。这意味着使用 sysrepo 存储其配置的应用程序可以自动受益于通过 NETCONF 进行控制的能力。</p>
+<p><img src="/images/images_sr/high_level_architecture.png" alt></p>
+<p>SYSREPO数据库它提供了以下特性:</p>
+<ul>
+<li>模型配置文件和状态数据的集中存储</li>
+<li>应用程序可以通过XPATH访问配置</li>
+<li>支持启动、运行和临时数据存储</li>
+<li>支持事务，符合ACID</li>
+<li>根据YANG模型，进行数据一致性和约束的检查</li>
+<li>没有单一故障点，应用程序不需要运行任何其他进程来访问其配置</li>
+</ul>
+<p>sysrepo 实际只是保存配置，并调用回调函数这两件事。</p>
+<h2 id="2-命令行工具"><a href="#2-命令行工具" class="headerlink" title="2. 命令行工具"></a>2. 命令行工具</h2><p>有一些二进制文件是严格可选的，因为它们只使用Sysrepo API。但是，它们对于一些常见任务可能很有用，通过包含它们，每个用户不必从头开始编写它们。</p>
+<h3 id="2-1-sysrepo-plugind"><a href="#2-1-sysrepo-plugind" class="headerlink" title="2.1 sysrepo-plugind"></a>2.1 sysrepo-plugind</h3><p>这个应用程序是一个简单的守护进程，它将所有可用的 Sysrepo 插件分组到一个单独的进程中。这个守护进程从插件路径目录加载插件，并支持一些选项， <code>--verbosity</code> 和 <code>--debug</code>，以避免进入守护进程模式，并保持将所有消息打印到 stderr。</p>
+<p>Plugin 是一个共享对象，它必须公开两个函数: <code>sr_plugin_init_cb()</code> 和 <code>sr_plugin_cleanup_cb()</code>，这两个函数分别在 sysrepo-plugind 的开始和结束时被调用。初始化函数必须执行所有运行时任务，因为守护进程不会调用其他函数。它通常包括创建各种订阅，然后自己处理事件。清理通常会停止这些订阅。</p>
+<p>插件路径，这是存储插件的唯一途径。默认路径可以在编译过程中修改(<code>PLUGINS_PATH</code> 选项) ，但是如果设置了 <code>$SRPD_PLUGINS_PATH</code> 环境变量，则总是会覆盖这个默认路径。</p>
+<h3 id="2-2-sysrepoctl"><a href="#2-2-sysrepoctl" class="headerlink" title="2.2 sysrepoctl"></a>2.2 sysrepoctl</h3><p>它是一个实用工具，可以更改模式(模块)。具体来说，它可以列出、安装、卸载或更新它们。此外，还可以更改模块的特性、重播支持和权限。重要的是要记住哪些操作是立即执行的，哪些操作是延期的(模式中的详细信息)。</p>
+<p><strong>-l，–list</strong></p>
+<p>所有当前安装的模块都列在一个简明的表格中，其中包含有关它们的基本信息。还有关于任何准备好的更改的信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --list</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-i，–install &lt;path&gt;</strong></p>
+<p>YANG 模块的安装只需要指定它们的路径(YANG 或者 YIN 格式)。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --install ~/Documents/modules/ietf-interfaces.yang</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-u，–uninstall &lt;module&gt;</strong></p>
+<p>要删除 YANG 模块，必须指定它的名称(而不是文件名)。所有可以移除的已安装模块都是通过 <code>--list</code> 打印的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --uninstall ietf-interfaces</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-c，–change &lt;module&gt;</strong></p>
+<p>已安装的模块可以通过多种方式进行更改，可以选择性地组合成一个命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --change ietf-interfaces --(<span class="built_in">disable</span>|<span class="built_in">enable</span>)-feature</span></span><br></pre></td></tr></table></figure>
+
+<p>然后，它们的重播支持(存储接收到的通知)可以被打开或关闭。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --change ietf-interfaces --replay on</span></span><br></pre></td></tr></table></figure>
+
+<p>最后，可以调整文件系统权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --change ietf-interfaces --owner netconf --group netconf --permissions 660</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-U，–update &lt;path&gt;</strong></p>
+<p>已安装的 YANG 模块可以更新为更新的版本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --update ~/Documents/modules/ietf-netconf@2013-09-29.yang</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-C，–connection-count</strong></p>
+<p>获取当前连接的客户端的数量。可用于检查是否可以立即应用某些架构更改(如果没有连接)。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --connection-count</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-sysrepocfg"><a href="#2-3-sysrepocfg" class="headerlink" title="2.3 sysrepocfg"></a>2.3 sysrepocfg</h3><p>这个二进制文件允许以多种方式处理配置，比如导入、导出、编辑和替换(从文件或数据存储中复制)。还可以发送 <code>rpc/action</code> 或通知。</p>
+<p>所有操作都在 <code>--datastore</code> (默认运行、启动或操作)上执行，或者只在特定的 <code>--module</code> 上执行，并以支持的 <code>--format</code> (默认 xml、 json 或 lyb)处理数据。</p>
+<p><strong>-I， –import[=&lt;file-path&gt;]</strong></p>
+<p>为了导入配置，通常会提供一个文件。它的格式将根据扩展自动检测。如果不适用(或者从 STDIN 读取数据) ，可以手动确定。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --import=~/Documents/data/running.xml</span></span><br></pre></td></tr></table></figure>
+
+<p>还可以导入模块的启动配置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --import=~/Documents/data/ietf-interfaces_startup.json --datastore startup --module ietf-interfaces</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-X，–export[=&lt;file-path&gt;]</strong></p>
+<p>可以将导出的配置打印到文件中，也可以直接打印到 STDOUT。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --<span class="built_in">export</span> --datastore operational</span></span><br></pre></td></tr></table></figure>
+
+<p>此外，只能检索配置的特定部分</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --<span class="built_in">export</span>=ietf-interfaces_running.lyb --format lyb --module ietf-interfaces</span></span><br></pre></td></tr></table></figure>
+
+<p>或者 XPath 选择。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --<span class="built_in">export</span> --xpath /ietf-interfaces:interfaces/interface[name=<span class="string">'eth0'</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-E，–edit[=&lt;file-path&gt;/&lt;editor&gt;]</strong></p>
+<p>可以在文件中或使用任意文本编辑器提供要合并的数据(作为编辑应用)。另外，在更改运行的数据时，可以锁定数据存储。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --edit=candidate.xml --datastore candidate</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --edit=vim --lock</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-R，–rpc[=&lt;file-path&gt;/&lt;editor&gt;]</strong></p>
+<p>也可以从文件或使用编辑器发送 RPC 或操作。任何输出都打印到 STDOUT。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --rpc=vim</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-N，–notification[=&lt;file-path&gt;/&lt;editor&gt;]</strong></p>
+<p>以类似的方式执行发送通知。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --notification=notif.xml</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>-C，–copy-from &lt;file-path&gt;/&lt;source-datastore&gt;</strong></p>
+<p>此操作可以用文件或其他数据存储的内容替换模块或数据存储数据。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --copy-from=ietf-interfaces_startup.xml --module ietf-interfaces --datastore startup</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --copy-from=candidate</span></span><br></pre></td></tr></table></figure>
+
+<p>第二个命令实际上是 NETCONF <code>&lt;commit&gt;</code> ，因为它将候选数据存储复制到默认运行的数据存储中。</p>
+<h2 id="3-插件示例"><a href="#3-插件示例" class="headerlink" title="3. 插件示例"></a>3. 插件示例</h2><p>这部分教你如何编写一个简单的 YANG 模块，然后让 Sysrepo 以插件或独立守护程序的形式处理数据。在继续之前，最好至少对 Sysrepo 有一个基本的了解。</p>
+<h3 id="3-1-简单的-YANG-模块"><a href="#3-1-简单的-YANG-模块" class="headerlink" title="3.1 简单的 YANG 模块"></a>3.1 简单的 YANG 模块</h3><p>对于任何你想用 Sysrepo 管理的设备，你都需要一个设备的 YANG 模块。该语言非常丰富，几乎可以对任何系统进行描述。例如，一个烤箱将完全由 Sysrepo 管理。将介绍 YANG 的所有基本部分，即配置数据、状态数据、 rpc 和通知。</p>
+<p>为了简化事情，我们的烤箱是一个便宜的型号，只有一个开关和滑块来设置温度。但是，它可以提供内部实际温度的信息，并且当内部温度达到设定温度时通知厨师。此外，生的食物可以预先准备好，如果有提示，烤箱可以自动将食物放入或取出。这样我们就得到了 YANG 模型:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">module oven &#123;</span><br><span class="line">    namespace "urn:sysrepo:oven";</span><br><span class="line">    prefix ov;</span><br><span class="line">    revision 2018-01-19 &#123;</span><br><span class="line">        description "Initial revision.";</span><br><span class="line">    &#125;</span><br><span class="line">    typedef oven-temperature &#123;</span><br><span class="line">        description "Temperature range that is accepted by the oven.";</span><br><span class="line">        type uint8 &#123;</span><br><span class="line">            range "0..250";</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    container oven &#123;</span><br><span class="line">        description "Configuration container of the oven.";</span><br><span class="line">        leaf turned-on &#123;</span><br><span class="line">            description "Main switch determining whether the oven is on or off.";</span><br><span class="line">            type boolean;</span><br><span class="line">            default false;</span><br><span class="line">        &#125;</span><br><span class="line">        leaf temperature &#123;</span><br><span class="line">            description "Slider for configuring the desired temperature.";</span><br><span class="line">            type oven-temperature;</span><br><span class="line">            default 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    container oven-state &#123;</span><br><span class="line">        description "State data container of the oven.";</span><br><span class="line">        config false;</span><br><span class="line">        leaf temperature &#123;</span><br><span class="line">            description "Actual temperature inside the oven.";</span><br><span class="line">            type oven-temperature;</span><br><span class="line">        &#125;</span><br><span class="line">        leaf food-inside &#123;</span><br><span class="line">            description "Informs whether the food is inside the oven or not.";</span><br><span class="line">            type boolean;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rpc insert-food &#123;</span><br><span class="line">        description "Operation to order the oven to put the prepared food inside.";</span><br><span class="line">        input &#123;</span><br><span class="line">            leaf time &#123;</span><br><span class="line">                description "Parameter determining when to perform the operation.";</span><br><span class="line">                type enumeration &#123;</span><br><span class="line">                    enum now &#123;</span><br><span class="line">                        description "Put the food in the oven immediately.";</span><br><span class="line">                    &#125;</span><br><span class="line">                    enum on-oven-ready &#123;</span><br><span class="line">                        description</span><br><span class="line">                            "Put the food in once the temperature inside</span><br><span class="line">                             the oven is at least the configured one. If it</span><br><span class="line">                             is already, the behaviour is similar to 'now'.";</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rpc remove-food &#123;</span><br><span class="line">        description "Operation to order the oven to take the food out.";</span><br><span class="line">    &#125;</span><br><span class="line">    notification oven-ready &#123;</span><br><span class="line">        description</span><br><span class="line">            "Event of the configured temperature matching the actual</span><br><span class="line">             temperature inside the oven. If the configured temperature</span><br><span class="line">             is lower than the actual one, no notification is generated</span><br><span class="line">             when the oven cools down to the configured temperature.";</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-烤箱插件"><a href="#3-2-烤箱插件" class="headerlink" title="3.2 烤箱插件"></a>3.2 烤箱插件</h3><p>这里将一步一步地解释如何写一个合适的插件，将管理烤箱。所有代码片段都取自实际的实现。<span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX3BsdWdpbl9fYXBpLmh0bWw=" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__plugin__api.html">插件 API<i class="fa fa-external-link"></i></span></p>
+<p><strong>初始化</strong></p>
+<p>在初始化函数中，通常必须初始化设备并创建对任何相关 YANG 节点的订阅。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">food_inside = <span class="number">0</span>;</span><br><span class="line">insert_food_on_ready = <span class="number">0</span>;</span><br><span class="line">oven_temperature = <span class="number">25</span>;</span><br></pre></td></tr></table></figure>
+
+<p>首先，肯定要通知烤箱其配置参数的任何变化，这样最容易订阅整个模块。设置标志 <span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX3N1YnNfX2FwaS5odG1sI2dnYWM5MTg5ODYyN2FkNWFlYjU4OWU2YTM5OTNhNjk3ZDE0YWM1Yjc4MmRmYmJmZTc0YzhmZjJiMTY0MmE4YmIwYWZl" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__subs__api.html#ggac91898627ad5aeb589e6a3993a697d14ac5b782dfbbfe74c8ff2b1642a8bb0afe">SR_SUBSCR_ENABLED<i class="fa fa-external-link"></i></span>，以便在 sysrepo-plugind 启动时，独立于烤箱(设备)的状态，将当前存储的配置应用于设备并保持一致性。另一个标志 <span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX3N1YnNfX2FwaS5odG1sI2dnYWM5MTg5ODYyN2FkNWFlYjU4OWU2YTM5OTNhNjk3ZDE0YTA1MzBhNzcxNWUxNjJlZTkwZTI5OGNlNTA0MjM5NDQ0" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__subs__api.html#ggac91898627ad5aeb589e6a3993a697d14a0530a7715e162ee90e298ce504239444">SR_SUBSCR_DONE_ONLY<i class="fa fa-external-link"></i></span> 被使用，因此不会调用回调来验证任何挂起的更改。对于我们的示例，只要基于 YANG 限制的值有效，它就总是正确的。</p>
+<p>还可以订阅任意的配置数据子树，但这个示例不需要这样做。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rc = sr_module_change_subscribe(session, <span class="string">"oven"</span>, oven_config_change_cb, <span class="literal">NULL</span>, <span class="number">0</span>,</span><br><span class="line">        SR_SUBSCR_ENABLED | SR_SUBSCR_DONE_ONLY, &amp;subscription);</span><br></pre></td></tr></table></figure>
+
+<p>然后，由于在 oven 模型中还有状态数据，将执行标记该插件为它们的(独占)提供者的订阅。当 Sysrepo 需要状态数据子树时，通常在客户机请求它们时调用它。</p>
+<p>值得注意的是，使用了相同的订阅对象，因此必须指定标志 <span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX3N1YnNfX2FwaS5odG1sI2dnYWM5MTg5ODYyN2FkNWFlYjU4OWU2YTM5OTNhNjk3ZDE0YTA4YzA3NWI3NmI4Mjk5ZWE0YjRlZDBmYmJjYjViOWFl" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__subs__api.html#ggac91898627ad5aeb589e6a3993a697d14a08c075b76b8299ea4b4ed0fbbcb5b9ae">SR_SUBSCR_CTX_REUSE<i class="fa fa-external-link"></i></span>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc = sr_dp_get_items_subscribe(session, <span class="string">"/oven:oven-state"</span>, oven_state_cb, <span class="literal">NULL</span>, SR_SUBSCR_CTX_REUSE, &amp;subscription);</span><br></pre></td></tr></table></figure>
+
+<p>最后，该插件还可以处理任何 RPC 调用，这些调用也需要副本。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rc = sr_rpc_subscribe(session, <span class="string">"/oven:insert-food"</span>, oven_insert_food_cb, <span class="literal">NULL</span>, SR_SUBSCR_CTX_REUSE, &amp;subscription);</span><br><span class="line"></span><br><span class="line">rc = sr_rpc_subscribe(session, <span class="string">"/oven:remove-food"</span>, oven_remove_food_cb, <span class="literal">NULL</span>, SR_SUBSCR_CTX_REUSE, &amp;subscription);</span><br></pre></td></tr></table></figure>
+
+<p>Sysrepo 为插件提供了能够以统一方式打印消息的宏，因此建议使用它们。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SRP_LOG_DBGMSG(<span class="string">"OVEN: Oven plugin initialized successfully."</span>);</span><br></pre></td></tr></table></figure>
+
+<p>一般格式为 <code>SRP_LOG_(level)(MSG)</code> 。消息的严重性是由 DBG、 VRB、 WRN 或 ERR 之一编写的，而不是(级别)。在示例中，由于没有指定其他变量参数，因此使用了后缀 MSG。如果有，则省略此后缀。参数与 <code>printf ()</code>函数使用的参数相同。</p>
+<h3 id="3-3-清除"><a href="#3-3-清除" class="headerlink" title="3.3 清除"></a>3.3 清除</h3><p>至于清理，所执行的任务差别很大，并且取决于设备。但是，总是需要适当地终止 init 函数中的订阅，这是本示例中所需的惟一工作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sr_unsubscribe(subscription);</span><br></pre></td></tr></table></figure>
+
+<p>为了简化代码，subscription 被定义为一个全局变量，但是也可以使用 private_data，例如，也可以使用应用程序需要的任何附加数据来存储它。之前分配的所有其他回调都可以在需要时使用相同的机制传递附加数据。</p>
+<h3 id="3-4-配置数据"><a href="#3-4-配置数据" class="headerlink" title="3.4 配置数据"></a>3.4 配置数据</h3><p>在示例中，它用 <code>oven_config_change_cb()</code> 订阅模块更改。这里看到的代码是实际代码的简化，但是更好地理解回调应该做什么。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">oven_config_change_cb(<span class="keyword">sr_session_ctx_t</span> *session, <span class="keyword">const</span> <span class="keyword">char</span> *module_name, <span class="keyword">sr_notif_event_t</span> event, <span class="keyword">void</span> *private_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> rc;</span><br><span class="line">    <span class="keyword">sr_val_t</span> *val;</span><br><span class="line">    rc = sr_get_item(session, <span class="string">"/oven:oven/temperature"</span>, &amp;val);</span><br><span class="line">    <span class="keyword">if</span> (rc != SR_ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">goto</span> sr_error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//apply the temperature to the device</span></span><br><span class="line">    sr_free_val(val);</span><br><span class="line">    rc = sr_get_item(session, <span class="string">"/oven:oven/turned-on"</span>, &amp;val);</span><br><span class="line">    <span class="keyword">if</span> (rc != SR_ERR_OK) &#123;</span><br><span class="line">        <span class="keyword">goto</span> sr_error;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//apply the switch state to the device</span></span><br><span class="line">    sr_free_val(val);</span><br><span class="line">    <span class="keyword">return</span> SR_ERR_OK;</span><br><span class="line">sr_error:</span><br><span class="line">    SRP_LOG_ERR(<span class="string">"OVEN: Oven config change callback failed: %s."</span>, sr_strerror(rc));</span><br><span class="line">    <span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先，可以观察到，事件变量被忽略。在我们的示例中，无论处理哪个事件，我们都执行相同的操作，由于订阅标志，它将不会是除 <span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX2NoYW5nZV9fc3Vic19fYXBpLmh0bWwjZ2dhZjUyODk3NjRjNzlkODY3YmFiNjQyOTk3YzIzYjM1NWFhNTJlOTczNDZkNGJmMjdhYjY0YWQ5MjMzNjI3Y2NmMzk=" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__change__subs__api.html#ggaf5289764c79d867bab642997c23b355aa52e97346d4bf27ab64ad9233627ccf39">SR_EV_DONE<i class="fa fa-external-link"></i></span> 之外的任何事件。</p>
+<p>然后，读取并应用所有相关的数据节点。这种方法是最简单的方法，不能总是使用，但在这种情况下可以使用，因为可以重新应用更改而不会产生任何效果。更详细的机制(返回更改)是使用 <span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvZ3JvdXBfX2NoYW5nZV9fc3Vic19fYXBpLmh0bWwjZ2E2MTMwNjRlN2E3NDMxYTMwZWZmMmI5OWI4N2FmNTM0OA==" title="https://netopeer.liberouter.org/doc/sysrepo/master/group__change__subs__api.html#ga613064e7a7431a30eff2b99b87af5348">sr_get_changes_iter()<i class="fa fa-external-link"></i></span> 和提供的会话，从而只获得特定的更改值。</p>
+<h3 id="3-5-状态数据"><a href="#3-5-状态数据" class="headerlink" title="3.5 状态数据"></a>3.5 状态数据</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">oven_state_cb(<span class="keyword">sr_session_ctx_t</span> *session, <span class="keyword">const</span> <span class="keyword">char</span> *module_name, <span class="keyword">const</span> <span class="keyword">char</span> *path, struct lyd_node **parent, <span class="keyword">void</span> *private_data)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">32</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(str, <span class="string">"%u"</span>, oven_temperature);</span><br><span class="line">    lyd_new_path(*parent, <span class="literal">NULL</span>, <span class="string">"/oven:oven-state/temperature"</span>, str, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    lyd_new_path(*parent, <span class="literal">NULL</span>, <span class="string">"/oven:oven-state/food-inside"</span>, food_inside ? <span class="string">"true"</span> : <span class="string">"false"</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> SR_ERR_OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>状态数据回调是自我解释的。由于订阅只针对一个有两片叶子的容器，因此路径只能有一个值。创建相应的子元素。</p>
+<h3 id="3-6-RPC-订阅"><a href="#3-6-RPC-订阅" class="headerlink" title="3.6 RPC 订阅"></a>3.6 RPC 订阅</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">oven_insert_food_cb(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">sr_val_t</span> *input, <span class="keyword">const</span> <span class="keyword">size_t</span> input_cnt, <span class="keyword">sr_val_t</span> **output, <span class="keyword">size_t</span> *output_cnt, <span class="keyword">void</span> *private_data)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (food_inside) &#123;</span><br><span class="line">        SRP_LOG_ERRMSG(<span class="string">"OVEN: Food already in the oven."</span>);</span><br><span class="line">        <span class="keyword">return</span> SR_ERR_OPERATION_FAILED;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">strcmp</span>(input[<span class="number">0</span>].data.enum_val, <span class="string">"on-oven-ready"</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (insert_food_on_ready) &#123;</span><br><span class="line">            SRP_LOG_ERRMSG(<span class="string">"OVEN: Food already waiting for the oven to be ready."</span>);</span><br><span class="line">            <span class="keyword">return</span> SR_ERR_OPERATION_FAILED;</span><br><span class="line">        &#125;</span><br><span class="line">        insert_food_on_ready = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> SR_ERR_OK;</span><br><span class="line">    &#125;</span><br><span class="line">    insert_food_on_ready = <span class="number">0</span>;</span><br><span class="line">    food_inside = <span class="number">1</span>;</span><br><span class="line">    SRP_LOG_DBGMSG(<span class="string">"OVEN: Food put into the oven."</span>);</span><br><span class="line">    <span class="keyword">return</span> SR_ERR_OK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">oven_remove_food_cb(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">const</span> <span class="keyword">sr_val_t</span> *input, <span class="keyword">const</span> <span class="keyword">size_t</span> input_cnt, <span class="keyword">sr_val_t</span> **output, <span class="keyword">size_t</span> *output_cnt, <span class="keyword">void</span> *private_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!food_inside) &#123;</span><br><span class="line">        SRP_LOG_ERRMSG(<span class="string">"OVEN: Food not in the oven."</span>);</span><br><span class="line">        <span class="keyword">return</span> SR_ERR_OPERATION_FAILED;</span><br><span class="line">    &#125;</span><br><span class="line">    food_inside = <span class="number">0</span>;</span><br><span class="line">    SRP_LOG_DBGMSG(<span class="string">"OVEN: Food taken out of the oven."</span>);</span><br><span class="line">    <span class="keyword">return</span> SR_ERR_OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RPC 回调应该执行相应的 RPC。移除食物只能做到这一点。但是插入食物有一些定义的输入参数，所以它们需要被处理。同样，如果存在某些输出参数，则需要创建并返回这些参数，但这不是我们的情况。</p>
+<h3 id="3-7-Notifications"><a href="#3-7-Notifications" class="headerlink" title="3.7 Notifications"></a>3.7 Notifications</h3><p>通知的提供者不需要订阅任何东西，只需在发生通知时生成任何通知即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rc = sr_event_notif_send(sess, <span class="string">"/oven:oven-ready"</span>, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>从这个例子中可以看出，这是相当简单的。此外，如果有通知的任何子节点，则需要创建它们，然后将其传递给函数。</p>
+<h3 id="3-8-尝试一下"><a href="#3-8-尝试一下" class="headerlink" title="3.8 尝试一下"></a>3.8 尝试一下</h3><p>模型和完整的插件源可以在 <code>sysrepo/examples/plugin</code> 中找到。生成 Sysrepo 后，烤箱共享库存储在示例中，但不会自动安装。在安装和实际运行插件之前，最好仔细阅读源代码。它只是一个很小的文档化的文件，所以它不应该花费很长时间，而且人们应该了解实现的烤箱功能。此外，上面章节中所涉及的大多数信息只是对所有这些机制的基本和详细描述。</p>
+<p>在考虑这个特定的插件之前，必须正确构建和安装 Sysrepo。完成之后，您必须首先安装模型，然后安装插件。为了安装模型，可以使用 sysrepoctl。然后，您必须将共享库放入 liboven。进入插件路径。</p>
+<p>之后，您应该准备启动 <code>sysrepo-plugind</code>，它将加载插件。如果您启用了调试消息，您应该会看到烤箱插件已成功初始化。</p>
+<p>现在您可以自由地使用烤箱配置、rpc和通知了。它应该像YANG模型中描述的那样工作，以及人们期望烤箱如何工作。下面是一个用例：</p>
+<ol>
+<li><p>作为第一步，使用 notif 订阅示例订阅烤箱通知</p>
+ <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">notif_subscribe_example oven</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备好待烤箱温度达到一定温度后放入的食物，稍后再进行配置。烤箱默认是关闭的。在NETCONF术语中，执行插入-食物 RPC。您可以使用 sysrepocfg 实现这一点</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --rpc=vim</span></span><br></pre></td></tr></table></figure>
+
+<p> 和输入：</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert-food</span> <span class="attr">xmlns</span>=<span class="string">"urn:sysrepo:oven"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">time</span>&gt;</span>on-oven-ready<span class="tag">&lt;/<span class="name">time</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert-food</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 作为 RPC 内容。您应该会看到一些信息 sysrepo-plugind 输出。</p>
+</li>
+<li><p>现在你要打开烤箱，期待当它达到设定的温度时得到通知。同时，食物应该在那个时候插入。所以,你执行</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --edit=vim --datastore running</span></span><br></pre></td></tr></table></figure>
+
+<p> 与内容</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">oven</span> <span class="attr">xmlns</span>=<span class="string">"urn:sysrepo:oven"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">turned-on</span>&gt;</span>true<span class="tag">&lt;/<span class="name">turned-on</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">temperature</span>&gt;</span>200<span class="tag">&lt;/<span class="name">temperature</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">oven</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在~4秒后，你应该收到通知。您还可以验证是否一切正常</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --<span class="built_in">export</span> --xpath /oven:*</span></span><br></pre></td></tr></table></figure>
+
+<p> 食物应该放在烤箱里。</p>
+</li>
+<li><p>一旦你认为食物烤得恰到好处，就用另一个RPC移走它</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --rpc=vim</span></span><br></pre></td></tr></table></figure>
+
+<p> 和</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">remove-food</span> <span class="attr">xmlns</span>=<span class="string">"urn:sysrepo:oven"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="3-9-Oven-Daemon"><a href="#3-9-Oven-Daemon" class="headerlink" title="3.9 Oven Daemon"></a>3.9 Oven Daemon</h3><p>如果您希望您的设备有一个独立的守护进程，它将作为独立的进程运行，而不使用 sysrepo-plugind，那么您不需要开发插件。拥有一个独立的守护进程实际上只有上一句中提到的几个区别。</p>
+<p>至于代码本身，不需要特定的函数，因为代码将编译为可执行二进制文件而不是共享库。但是，如果要将插件转换为应用程序，没有什么可以阻止重用整个代码。</p>
+<p>所需要的只是一个 <code>main()</code> 函数，该函数将在开始处调用 <code>sr_plugin_init_cb()</code> 并在终止之前调用<code>sr_plugin_cleanup_cb()</code>。 此外，这些功能需要 Sysrepo 会话。 要创建一个，我们首先需要一个连接。 因此，使用 <code>sr_connect()</code> 创建连接，如果成功，则使用 <code>sr_session_start()</code> 创建会话。 现在，可以通过调用清除函数并释放会话和连接来调用 init 函数并在守护程序终止时正确地进行清理。 此外，在编译此类应用程序之前，必须更改打印宏，因为将不再有处理打印消息的主守护程序。 完成这些更改后，烤箱守护程序应已准备就绪。</p>
+<h1 id="B4860-环境编译-libyang"><a href="#B4860-环境编译-libyang" class="headerlink" title="B4860 环境编译 libyang"></a>B4860 环境编译 libyang</h1><p>下载：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5nL3JlbGVhc2Vz" title="https://github.com/CESNET/libyang/releases">libyang release<i class="fa fa-external-link"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf libyang-1.0.184.tar.gz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> libyang-1.0.184</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir build; <span class="built_in">cd</span> build</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cmake -DCMAKE_INSTALL_PREFIX:PATH=`<span class="built_in">pwd</span>`/4860lib -DCMAKE_BUILD_TYPE:String=<span class="string">"Release"</span> ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+
+<p>更改扩展插件目录</p>
+<p>对于 YANG 扩展，libyang 允许加载扩展插件。 默认情况下，存储插件的目录是 <code>libdir/libyang</code>。 要更改它，使用env环境更改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_EXTENSIONS_PLUGINS_DIR=`<span class="built_in">pwd</span>`/my/relative/path yanglint</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> LIBYANG_USER_TYPES_PLUGINS_DIR=`<span class="built_in">pwd</span>`/my/relative/path yanglint</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="netopeer2-sysrepo研究总结"><a href="#netopeer2-sysrepo研究总结" class="headerlink" title="netopeer2 + sysrepo研究总结"></a>netopeer2 + sysrepo研究总结</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1Z3VvemhlbmcxMTAvYXJ0aWNsZS9kZXRhaWxzLzEwNDA0MzAzOQ==" title="https://blog.csdn.net/xuguozheng110/article/details/104043039">netopeer2 + sysrepo研究总结<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<h2 id="sysrepo是干什么的"><a href="#sysrepo是干什么的" class="headerlink" title="sysrepo是干什么的"></a>sysrepo是干什么的</h2><p>sysrepo是一个数据库。可以用来保存可读可写的配置，例如 IP,netmask。你可以坐在家里，给远端的设备的sysrepo下修改配置命令。另外远端设备还有一些只读的状态，也可以读回来，例如温度。</p>
+<h2 id="sysrepo的订阅功能"><a href="#sysrepo的订阅功能" class="headerlink" title="sysrepo的订阅功能"></a>sysrepo的订阅功能</h2><p>订阅实际上就是回调函数。</p>
+<p>例如我们的程序告诉sysrepo，我们要订阅 /net/eth0/ip 这个 xml 地址，当有人发消息给 sysrepo，写这个路径时，sysrepo就会告诉我们这个 xml 发生变化了，我们就执行实际的操作。</p>
+<h2 id="sysrepo的修改配置"><a href="#sysrepo的修改配置" class="headerlink" title="sysrepo的修改配置"></a>sysrepo的修改配置</h2><p>修改配置用写xml路径的方法, 例如写xml路径/net/eth0/ip，那么sysrepo就会把修改的信息写到此路径中，保存到sysrepo的数据库中。</p>
+<p>但是sysrepo并没有去做修改ip的实际工作，这个实际工作是怎么完成的呢？sysrepo提供了一个回调函数，我们只要把这个回调函数写好就行。当写xml路径时，sysrepo就会调用回调函数，完成实际的工作。sysrepo实际只是保存配置，并调用回调函数这两件事。</p>
+<p>完成一个修改配置的操作，共需要3个程序，一个是发命令的程序，一个收命令的sysrepo，另外我们自己还要写个程序，接收sysrepo发过来的修改配置的路径，我们自己的程序发现是要修改ip的路径，那么就改ip了。</p>
+<h2 id="sysrepo返回状态"><a href="#sysrepo返回状态" class="headerlink" title="sysrepo返回状态"></a>sysrepo返回状态</h2><p>和 2 类似，我们的程序收到读某个路径的消息，就把数据写到指定路径中就可以</p>
+<h2 id="如何下载安装"><a href="#如何下载安装" class="headerlink" title="如何下载安装"></a>如何下载安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/sysrepo/sysrepo.git</span></span><br></pre></td></tr></table></figure>
+
+<p>Sysrepo/Netopeer2 tools and programs:</p>
+<ul>
+<li>sysrepoctl</li>
+<li>sysrepocfg</li>
+<li>sysrepod</li>
+<li>sysrepo-plugind</li>
+<li>netopeer2-cli</li>
+<li>netopeer2-server</li>
+</ul>
+<p><img src="/images/images_sr/syarepo-install.png" alt></p>
+<h2 id="基于YANG模型的数据库sysrepo介绍"><a href="#基于YANG模型的数据库sysrepo介绍" class="headerlink" title="基于YANG模型的数据库sysrepo介绍"></a>基于YANG模型的数据库sysrepo介绍</h2><p>多数linux的应用程序需要有配置，配置文件的保存和读写通常的实现方式是通过操作文件来完成的。各应用程序都自定配置文件的格式，格式风格存在诸多差异。</p>
+<p>Sysrepo是一个基于YANG模型的配置和操作数据库，为应用程序提供一致的操作数据的接口，解决了配置读写困难的问题。应用程序使用YANG模型来建模，这样就可以利用YANG模型完成数据合法性的检查，保证的风格的一致，不需要应用程序直接操作配置文件了。</p>
+<p><img src="images_sr/high_level_architecture.png" alt></p>
+<p>SYSREPO数据库它提供了以下特性:</p>
+<ul>
+<li>模型配置文件和状态数据的集中存储</li>
+<li>应用程序可以通过XPATH访问配置</li>
+<li>支持启动、运行和临时数据存储</li>
+<li>支持事务，符合ACID</li>
+<li>根据YANG模型，进行数据一致性和约束的检查</li>
+<li>没有单一故障点，应用程序不需要运行任何其他进程来访问其配置</li>
+</ul>
+<h1 id="Sysrepo-常用操作"><a href="#Sysrepo-常用操作" class="headerlink" title="Sysrepo 常用操作"></a>Sysrepo 常用操作</h1><p>sysrepo 提供两个独立的，非常实用的程序。方便开发者便捷地使用 sysrepo 来开发与调试自己的应用。</p>
+<h2 id="sysrepoctl"><a href="#sysrepoctl" class="headerlink" title="sysrepoctl"></a>sysrepoctl</h2><p>sysrepoctl，它用于列出，安装，卸载或更新 sysrepo 模块，也能用于修改一个 sysrepo 模块的特性，权限等。开发过程中经常使用的命令如下</p>
+<ol>
+<li>列出全部已经安装在 sysrepo 中的 Yang 模块，并包含模块的基本信息</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl -l, --list</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装指定Yang模型</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl -i， --install</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --install /root/ietf-interfaces.yang  <span class="comment"># 以默认权限安装ietf-interfaces模型</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --install /root/ietf-interfaces.yang --owner=admin:admin --permissions=644   <span class="comment"># 为特定admin用户安装可访问权限为644的ietf-interfaces.yang模型</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>卸载已安装的 Yang 模型</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl -u, --uninstall </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --uninstall ietf-interfaces</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改 Yang 模型，常用的是设置模型支持的特性</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl -c, --chang</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --change ietf-interfaces --(<span class="built_in">disable</span>|<span class="built_in">enable</span>)-feature <span class="keyword">if</span>-mib</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>更新 Yang 模型，如果已安装的 Yang 模型有更新，可以执行该命令</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl -U, --update</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepoctl --update /root/ietf-netconf@2013-09-29.yang</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="sysrepocfg"><a href="#sysrepocfg" class="headerlink" title="sysrepocfg"></a>sysrepocfg</h2><p>sysrepocfg 是用于 importing，exporting，exporting，replacing 配置到指定的数据库中。命令默认是操作running 库，也支持多种数据格式：json, xml, lyb，除非通过 <code>–format</code> 特定指出，默认的采用 xml 格式。常用的命令如下:</p>
+<ol>
+<li>导入一个配置</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg -I, --import[=]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --import=/root/ietf-interfaces.xml   <span class="comment"># 将ietf-interfaces配置导入默认running下的ietf-interfaces模块</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --import=/root/ietf-interfaces_startup.json --datastore startup --module ietf-interfaces  <span class="comment"># 将json格式的ietf-interfaces配置导入startup的ietf-interfaces模块</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>导出一个配置</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg -X, --<span class="built_in">export</span>[=] </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --<span class="built_in">export</span>=ietf-interfaces_running.xml --format xml --module ietf-interfaces 	<span class="comment"># 将running库ietf-interfaces 的配置xml的格式导出，并以ietf-interfaces_running.xml名字命令配置文件</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>编辑或修改配置文件，应用到指定的数据库</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg -E, --edit[=/]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --edit=candidate.xml --datastore candidate   <span class="comment"># 如果是修改running库，需要加相应的锁</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --edit=vim --lock</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>发一个RPC请求，RPC返回的结果直接输出于终端</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg -R, --rpc[=/]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepocfg --rpc=vim</span></span><br></pre></td></tr></table></figure>
+
+<p>更多sysrepocfg的使用，请参考sysrepocfg -h。</p>
+<h1 id="o-hub-netconf-相关开发"><a href="#o-hub-netconf-相关开发" class="headerlink" title="o-hub netconf 相关开发"></a>o-hub netconf 相关开发</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp /tmp/o-ran-software-management.so /usr/lib/sysrepo/plugins/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> sysrepo-plugind -d -v 4</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> netopeer2-server -d -v 3</span></span><br></pre></td></tr></table></figure>
+
+<p>o-hub software download xml fotmat:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* sftp://<span class="tag">&lt;<span class="name">username</span>&gt;</span>@<span class="tag">&lt;<span class="name">host</span>&gt;</span>[:<span class="tag">&lt;<span class="name">port</span>&gt;</span>]/path */ </span><br><span class="line"><span class="tag">&lt;<span class="name">software-download</span> <span class="attr">xmlns</span>=<span class="string">"urn:o-ran:software-management:1.0"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">remote-file-path</span>&gt;</span>sftp://sftp-admin@192.168.2.76:sysupgrade-BaiHub_1.0.4.bin<span class="tag">&lt;/<span class="name">remote-file-path</span>&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">password</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">software-download</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>o-hub software install xml fotmat：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">software-install</span> <span class="attr">xmlns</span>=<span class="string">"urn:o-ran:software-management:1.0"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">slot-name</span>&gt;</span>system_slot<span class="tag">&lt;/<span class="name">slot-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">file-names</span>&gt;</span>test_file<span class="tag">&lt;/<span class="name">file-names</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">software-install</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>o-hub software activate xml fotmat：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">software-activate</span> <span class="attr">xmlns</span>=<span class="string">"urn:o-ran:software-management:1.0"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">slot-name</span>&gt;</span>system_slot<span class="tag">&lt;/<span class="name">slot-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">software-activate</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="B4860-4G-HUB-级连口-T14-测量问题查看方式"><a href="#B4860-4G-HUB-级连口-T14-测量问题查看方式" class="headerlink" title="B4860 4G HUB 级连口 T14 测量问题查看方式"></a>B4860 4G HUB 级连口 T14 测量问题查看方式</h1><h3 id="1-首先查看级联口是否存在链路闪断或者异常"><a href="#1-首先查看级联口是否存在链路闪断或者异常" class="headerlink" title="1) 首先查看级联口是否存在链路闪断或者异常"></a>1) 首先查看级联口是否存在链路闪断或者异常</h3> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mpi_read 0x2 0x1000 0x20  <span class="comment"># 读2次</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 主要看 1002的 bit7~4，如果是4 ，表示是稳定的</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> mpi_read 0x2 0x1070 0x20  <span class="comment"># 读2次</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 主要看1078 107a 107c 107e  4个寄存器是否有变化，没变化表示cpri状态ok的</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-若-1-状态ok，则开始读取-T14-的值"><a href="#2-若-1-状态ok，则开始读取-T14-的值" class="headerlink" title="2) 若 1) 状态ok，则开始读取 T14 的值"></a>2) 若 1) 状态ok，则开始读取 T14 的值</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mpi_read 0x2 0x1040 0x20  <span class="comment"># 读2次</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看 1040 和 1042 ，这两个值就是 T14 测量的值</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-若-1-状态不-ok，则开始读取上联口的-CPRI-状态"><a href="#3-若-1-状态不-ok，则开始读取上联口的-CPRI-状态" class="headerlink" title="3) 若 1) 状态不 ok，则开始读取上联口的 CPRI 状态"></a>3) 若 1) 状态不 ok，则开始读取上联口的 CPRI 状态</h3> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mpi_read 0x2 0x0000 0x20   <span class="comment"># 读2次</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 主要看 1002的 bit7~4，如果是4 ，表示是稳定的</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> mpi_read 0x2 0x0070 0x20   <span class="comment"># 读2次</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 主要看1078 107a 107c 107e  4个寄存器是否有变化，没变化表示cpri状态ok的</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-若3-读取看到状态不正常，则需要去查看上联口的光纤连接情况。若-3-看到正常，则需要检测级联端口的连接情况以及下一级-rhub-的情况"><a href="#4-若3-读取看到状态不正常，则需要去查看上联口的光纤连接情况。若-3-看到正常，则需要检测级联端口的连接情况以及下一级-rhub-的情况" class="headerlink" title="4) 若3) 读取看到状态不正常，则需要去查看上联口的光纤连接情况。若 3) 看到正常，则需要检测级联端口的连接情况以及下一级 rhub 的情况"></a>4) 若3) 读取看到状态不正常，则需要去查看上联口的光纤连接情况。若 3) 看到正常，则需要检测级联端口的连接情况以及下一级 rhub 的情况</h3><h1 id="B4860-BU-TO-RU-时延计算"><a href="#B4860-BU-TO-RU-时延计算" class="headerlink" title="B4860 BU TO RU 时延计算"></a>B4860 BU TO RU 时延计算</h1><p>参数说明：</p>
+<ul>
+<li>HUB上联口 Toffset = 2 * Cycle ，HUB 级联口 Toffset = 3 * Cycle，  HUB下联口 Toffset = 53 * Cycle</li>
+<li>RU Toffset = 6 * Cycle</li>
+<li>Cycle = 8.013ns</li>
+</ul>
+<p><strong>一级HUB BU 到 RU 时延值：</strong></p>
+<p>环境：BU –&gt; HUB –&gt; RU</p>
+<p>1） BU –&gt; HUB  T12</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PVQxMj1cbGVmdCZzcGFjZTsoJnNwYWNlO1QxNCZzcGFjZTstJnNwYWNlO1RvZmZzZXQmc3BhY2U7KiZzcGFjZTtDeWNsZSZzcGFjZTtccmlnaHQmc3BhY2U7KSZzcGFjZTsvJnNwYWNlOzI=" title="https://www.codecogs.com/eqnedit.php?latex=T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2"><img src="https://latex.codecogs.com/gif.latex?T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2" title="T12=\left ( T14 - Toffset * Cycle \right ) / 2"><i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>T14 BBU侧测量值，单位ns</li>
+<li>Toffset = 2* Cycle （hub上联口 Toffset）</li>
+</ul>
+<p>2） TBdelayDL –&gt; HUB上联口到对应 RU接HUB下联口的时延值，单位Cycle</p>
+<p>3）HUB –&gt; RU  T12_1</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PXtUMTJ9Jz0mc3BhY2U7XGxlZnQmc3BhY2U7KCZzcGFjZTt7VDE0fScmc3BhY2U7LSZzcGFjZTtUb2Zmc2V0JnNwYWNlO1xyaWdodCZzcGFjZTspJnNwYWNlOy8mc3BhY2U7MiZzcGFjZTsqJnNwYWNlO0N5Y2xl" title="https://www.codecogs.com/eqnedit.php?latex={T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle"><img src="https://latex.codecogs.com/gif.latex?{T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle" title="{T12}'= \left ( {T14}' - Toffset \right ) / 2 * Cycle"><i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>T14_1 RU 接 HUB 下联口的 T14 测量值，HUB侧测量值，单位Cycle</li>
+<li>Toffset = 6 * Cycle （RU Toffset）</li>
+</ul>
+<p>4） T2a  RU 上报，单位Cycle</p>
+<p>下行 BU 到 RU 时延值：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PUJCVS0+UlUmc3BhY2U7RExfe0RlbGF5fSZzcGFjZTs9JnNwYWNlO1QxMiZzcGFjZTsmcGx1czsmc3BhY2U7VEJkZWxheURMJnNwYWNlOyZwbHVzOyZzcGFjZTt7VDEyfScmc3BhY2U7JnBsdXM7JnNwYWNlO1QyYQ==" title="https://www.codecogs.com/eqnedit.php?latex=BBU->RU&space;DL_{Delay}&space;=&space;T12&space;&plus;&space;TBdelayDL&space;&plus;&space;{T12}'&space;&plus;&space;T2a"><img src="https://latex.codecogs.com/gif.latex?BBU->RU&space;DL_{Delay}&space;=&space;T12&space;&plus;&space;TBdelayDL&space;&plus;&space;{T12}'&space;&plus;&space;T2a" title="BBU->RU DL_{Delay} = T12 + TBdelayDL + {T12}' + T2a"><i class="fa fa-external-link"></i></span></p>
+<p><strong>二级HUB BU 到 RU 时延值：</strong></p>
+<p>环境：BU –&gt; HUB –&gt; HUB –&gt; RU</p>
+<p>1） BU –&gt; HUB  T12</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PVQxMj1cbGVmdCZzcGFjZTsoJnNwYWNlO1QxNCZzcGFjZTstJnNwYWNlO1RvZmZzZXQmc3BhY2U7KiZzcGFjZTtDeWNsZSZzcGFjZTtccmlnaHQmc3BhY2U7KSZzcGFjZTsvJnNwYWNlOzI=" title="https://www.codecogs.com/eqnedit.php?latex=T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2"><img src="https://latex.codecogs.com/gif.latex?T12=\left&space;(&space;T14&space;-&space;Toffset&space;*&space;Cycle&space;\right&space;)&space;/&space;2" title="T12=\left ( T14 - Toffset * Cycle \right ) / 2"><i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>T14  BBU侧测量值，单位ns</li>
+<li>Toffset = 2 * Cycle （HUB上联口 Toffset）</li>
+</ul>
+<p>2） TBdelayDL –&gt; 一级HUB 上联口到 一级HUB 级联口时延值，单位Cycle</p>
+<p>3） HUB –&gt; HUB  T12_1</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PXtUMTJ9Jz0mc3BhY2U7XGxlZnQmc3BhY2U7KCZzcGFjZTt7VDE0fScmc3BhY2U7LSZzcGFjZTtUb2Zmc2V0JnNwYWNlO1xyaWdodCZzcGFjZTspJnNwYWNlOy8mc3BhY2U7MiZzcGFjZTsqJnNwYWNlO0N5Y2xl" title="https://www.codecogs.com/eqnedit.php?latex={T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle"><img src="https://latex.codecogs.com/gif.latex?{T12}'=&space;\left&space;(&space;{T14}'&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle" title="{T12}'= \left ( {T14}' - Toffset \right ) / 2 * Cycle"><i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>T14_1  一级HUB 级联口 到 二级 HUB 上联口 T14，单位Cycle</li>
+<li>Toffset = 2 * Cycle （二级HUB上联口 Toffset）</li>
+</ul>
+<p>4）TBdelayDL_1 –&gt; 二级HUB上联口到对应 RU接 二级HUB下联口的时延值，单位Cycle</p>
+<p>5）HUB –&gt; RU  T12_2</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PXtUMTJ9Jycmc3BhY2U7PSZzcGFjZTtcbGVmdCZzcGFjZTsoJnNwYWNlO3tUMTR9Jycmc3BhY2U7LSZzcGFjZTtUb2Zmc2V0JnNwYWNlO1xyaWdodCZzcGFjZTspJnNwYWNlOy8mc3BhY2U7MiZzcGFjZTsqJnNwYWNlO0N5Y2xl" title="https://www.codecogs.com/eqnedit.php?latex={T12}''&space;=&space;\left&space;(&space;{T14}''&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle"><img src="https://latex.codecogs.com/gif.latex?{T12}''&space;=&space;\left&space;(&space;{T14}''&space;-&space;Toffset&space;\right&space;)&space;/&space;2&space;*&space;Cycle" title="{T12}'' = \left ( {T14}'' - Toffset \right ) / 2 * Cycle"><i class="fa fa-external-link"></i></span></p>
+<ul>
+<li>T14_2  RU 接 二级HUB 下联口的 T14 测量值，二级HUB侧测量值，单位Cycle</li>
+<li>Toffset = 6 * Cycle （RU Toffset）</li>
+</ul>
+<p>6） T2a  RU 上报，单位Cycle</p>
+<p>下行 BU 到 RU时延值：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY29kZWNvZ3MuY29tL2VxbmVkaXQucGhwP2xhdGV4PUJCVSZzcGFjZTstPiZzcGFjZTtSVSZzcGFjZTtETF97RGVsYXl9JnNwYWNlOz0mc3BhY2U7VDEyJnNwYWNlOyZwbHVzOyZzcGFjZTtUQmRlbGF5REwmc3BhY2U7JnBsdXM7JnNwYWNlO3tUMTJ9JyZzcGFjZTsmcGx1czsmc3BhY2U7e1RCZGVsYXlETH0nJnNwYWNlOyZwbHVzOyZzcGFjZTt7VDEyfScnJnNwYWNlOyZwbHVzOyZzcGFjZTtUMmE=" title="https://www.codecogs.com/eqnedit.php?latex=BBU&space;->&space;RU&space;DL_{Delay}&space;=&space;T12&space;&plus;&space;TBdelayDL&space;&plus;&space;{T12}'&space;&plus;&space;{TBdelayDL}'&space;&plus;&space;{T12}''&space;&plus;&space;T2a"><img src="https://latex.codecogs.com/gif.latex?BBU&space;->&space;RU&space;DL_{Delay}&space;=&space;T12&space;&plus;&space;TBdelayDL&space;&plus;&space;{T12}'&space;&plus;&space;{TBdelayDL}'&space;&plus;&space;{T12}''&space;&plus;&space;T2a" title="BBU -> RU DL_{Delay} = T12 + TBdelayDL + {T12}' + {TBdelayDL}' + {T12}'' + T2a"><i class="fa fa-external-link"></i></span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> snmptrap -v1 -c public 192.168.2.124 .1.3.6.1.4.1.1 192.168.2.125 6 10 100 1.3.6.1.9.9.44.1.2.1 i 12</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 命令 版本 -c 共同体 TrapServerIP Enterprise-OID AgentIP 陷阱类型 oid 时间 被发送参数的OID  数据类型 值</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> i  整形 u  无符号型    c  COUNTER32    s  字符串   x  16进制字符串   d  10进制字符串  n  空对象 o  对象ID  t  计时器  a  IP地址 b  比特</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Generic Type包括7种, 分别是:</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 0  coldStart  1  warmStart  2  linkDown  3  linkUp 4  authenticationFailure          5  egpNeighborLoss        6  enterpriseSpecific</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5n" title="https://github.com/CESNET/libyang">libyang – GitHub<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9uZXRvcGVlcjI=" title="https://github.com/CESNET/netopeer2">netopeer2 – GitHub<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N5c3JlcG8vc3lzcmVwbw==" title="https://github.com/sysrepo/sysrepo">sysrepo – GitHub<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2MvbGlieWFuZy9tYXN0ZXIvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/libyang/master/index.html">libyang – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2MvbGlibmV0Y29uZjIvZGV2ZWwvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/libnetconf2/devel/index.html">libnetconf2 – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/sysrepo/master/index.html">sysrepo – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS94cGF0aC94cGF0aC10dXRvcmlhbC5odG1s" title="https://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程 – RUNOOB.COM<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cueWlpYmFpLmNvbS94cGF0aA==" title="https://www.yiibai.com/xpath">XPath教程 – 易百教程<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1Z3VvemhlbmcxMTAvYXJ0aWNsZS9kZXRhaWxzLzEwNDA0MzAzOQ==" title="https://blog.csdn.net/xuguozheng110/article/details/104043039">netopeer2 + sysrepo研究总结<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3OTIzMDQ3L2FydGljbGUvZGV0YWlscy8xMDgwNjk0MDk=" title="https://blog.csdn.net/qq_27923047/article/details/108069409">sysrepo简单使用<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ3NDEzMDE5L2FydGljbGUvZGV0YWlscy8xMDU4Njc0MDY=" title="https://blog.csdn.net/m0_47413019/article/details/105867406">第三章 sysrepo-plugind源码分析<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <footer class="post-footer">
+      
+
+      <div>    
+        
+        
+            <ul class="post-copyright">
+            <li class="post-copyright-author">
+                <strong>本文作者：</strong>Mr.Miaow
+            </li>
+            <li class="post-copyright-link">
+                <strong>本文链接：</strong>
+                <a href="/2020/09/23/Netconf/sysrepo-netconf-node/" title="netopper2 note">2020/09/23/Netconf/sysrepo-netconf-node/</a>
+            </li>
+            <li class="post-copyright-license">
+                <strong>版权： </strong>
+                本站文章均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow noopener noreferrer" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议，请勿用于商业，转载注明出处！
+            </li>
+            </ul>
+        
+      </div>
+    
+      
+
+      
+        
+      
+      
+        <div>
+          <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+      	<a href="/images/wechatpay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Mr.Miaow 微信支付">
+	</a>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+      	<a href="/images/alipay.jpg" class="fancybox fancybox.image" rel="group">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Mr.Miaow 支付宝">
+	</a>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+        </div>
+      
+
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Netconf/" rel="tag"> <i class="fa fa-tag"></i> Netconf</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/22/Netconf/netconf-note/" rel="next" title="netconf note">
+                <i class="fa fa-chevron-left"></i> netconf note
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+      
+      
+        
+            <ul class="sidebar-nav motion-element">
+                <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+                    文章目录
+                </li>
+                <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+                    站点概览
+                </li>
+            </ul>
+        
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <!-- 添加头像链接 -->
+            <a href="/about">
+              
+                <img class="site-author-image" itemprop="image" src="http://wx4.sinaimg.cn/orj360/e9d04169ly1fde7jy4bquj20ek0hf7gh.jpg" alt="Mr.Miaow">
+              
+                <p class="site-author-name" itemprop="name">Mr.Miaow</p>
+            </a>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pYW9wZWk=" title="GitHub &rarr; https://github.com/miaopei"><i class="fa fa-fw fa-github"></i>GitHub</span>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/miaopei163@163.com" title="E-Mail &rarr; miaopei163@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          <link rel="stylesheet" href="/dist/APlayer.min.css">
+          <div id="aplayer"></div>
+          <script type="text/javascript" src="/dist/APlayer.min.js"></script>
+          <script type="text/javascript" src="/dist/music.js"></script>
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+        
+        <!--noindex-->
+            <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+                <div class="post-toc">
+
+                
+                    
+                
+
+                
+                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netopper2-安装"><span class="nav-number">1.</span> <span class="nav-text">Netopper2 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基础软件安装"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基础软件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Netopeer2-Requirements"><span class="nav-number">1.2.</span> <span class="nav-text">2. Netopeer2 Requirements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-安装-libyang"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 安装 libyang</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-安装-libnetconf2"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 安装 libnetconf2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-安装-sysrepo"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 安装 sysrepo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-netopper2-安装"><span class="nav-number">1.3.</span> <span class="nav-text">3. netopper2 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#libyang-简介"><span class="nav-number">2.</span> <span class="nav-text">libyang 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-About"><span class="nav-number">2.1.</span> <span class="nav-text">1. About</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Main-Features"><span class="nav-number">2.2.</span> <span class="nav-text">2. Main Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Extra-side-effect-Features"><span class="nav-number">2.3.</span> <span class="nav-text">3. Extra (side-effect) Features</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#libnetconf2-简介"><span class="nav-number">3.</span> <span class="nav-text">libnetconf2 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-About-1"><span class="nav-number">3.1.</span> <span class="nav-text">1. About</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Main-Features-1"><span class="nav-number">3.2.</span> <span class="nav-text">2. Main Features</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#libyang-学习总结"><span class="nav-number">4.</span> <span class="nav-text">libyang 学习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#YANG-模型"><span class="nav-number">4.1.</span> <span class="nav-text">YANG 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Model"><span class="nav-number">4.1.1.</span> <span class="nav-text">Data Model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Libyang"><span class="nav-number">4.2.</span> <span class="nav-text">Libyang</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">4.2.1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#context（上下文）"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">context（上下文）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#schema（架构）"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">schema（架构）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#plugins（插件）"><span class="nav-number">4.2.1.3.</span> <span class="nav-text">plugins（插件）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Printing-Schemas（打印模式）"><span class="nav-number">4.2.1.4.</span> <span class="nav-text">Printing Schemas（打印模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据实例"><span class="nav-number">4.2.1.5.</span> <span class="nav-text">数据实例</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sysrepo-简介"><span class="nav-number">5.</span> <span class="nav-text">sysrepo 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sysrepo-引言"><span class="nav-number">5.1.</span> <span class="nav-text">1. sysrepo 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-命令行工具"><span class="nav-number">5.2.</span> <span class="nav-text">2. 命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-sysrepo-plugind"><span class="nav-number">5.2.1.</span> <span class="nav-text">2.1 sysrepo-plugind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-sysrepoctl"><span class="nav-number">5.2.2.</span> <span class="nav-text">2.2 sysrepoctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-sysrepocfg"><span class="nav-number">5.2.3.</span> <span class="nav-text">2.3 sysrepocfg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-插件示例"><span class="nav-number">5.3.</span> <span class="nav-text">3. 插件示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-简单的-YANG-模块"><span class="nav-number">5.3.1.</span> <span class="nav-text">3.1 简单的 YANG 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-烤箱插件"><span class="nav-number">5.3.2.</span> <span class="nav-text">3.2 烤箱插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-清除"><span class="nav-number">5.3.3.</span> <span class="nav-text">3.3 清除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-配置数据"><span class="nav-number">5.3.4.</span> <span class="nav-text">3.4 配置数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-状态数据"><span class="nav-number">5.3.5.</span> <span class="nav-text">3.5 状态数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-RPC-订阅"><span class="nav-number">5.3.6.</span> <span class="nav-text">3.6 RPC 订阅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-Notifications"><span class="nav-number">5.3.7.</span> <span class="nav-text">3.7 Notifications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-尝试一下"><span class="nav-number">5.3.8.</span> <span class="nav-text">3.8 尝试一下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-Oven-Daemon"><span class="nav-number">5.3.9.</span> <span class="nav-text">3.9 Oven Daemon</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B4860-环境编译-libyang"><span class="nav-number">6.</span> <span class="nav-text">B4860 环境编译 libyang</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netopeer2-sysrepo研究总结"><span class="nav-number">7.</span> <span class="nav-text">netopeer2 + sysrepo研究总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepo是干什么的"><span class="nav-number">7.1.</span> <span class="nav-text">sysrepo是干什么的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepo的订阅功能"><span class="nav-number">7.2.</span> <span class="nav-text">sysrepo的订阅功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepo的修改配置"><span class="nav-number">7.3.</span> <span class="nav-text">sysrepo的修改配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepo返回状态"><span class="nav-number">7.4.</span> <span class="nav-text">sysrepo返回状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何下载安装"><span class="nav-number">7.5.</span> <span class="nav-text">如何下载安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于YANG模型的数据库sysrepo介绍"><span class="nav-number">7.6.</span> <span class="nav-text">基于YANG模型的数据库sysrepo介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sysrepo-常用操作"><span class="nav-number">8.</span> <span class="nav-text">Sysrepo 常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepoctl"><span class="nav-number">8.1.</span> <span class="nav-text">sysrepoctl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysrepocfg"><span class="nav-number">8.2.</span> <span class="nav-text">sysrepocfg</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#o-hub-netconf-相关开发"><span class="nav-number">9.</span> <span class="nav-text">o-hub netconf 相关开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B4860-4G-HUB-级连口-T14-测量问题查看方式"><span class="nav-number">10.</span> <span class="nav-text">B4860 4G HUB 级连口 T14 测量问题查看方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先查看级联口是否存在链路闪断或者异常"><span class="nav-number">10.0.1.</span> <span class="nav-text">1) 首先查看级联口是否存在链路闪断或者异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-若-1-状态ok，则开始读取-T14-的值"><span class="nav-number">10.0.2.</span> <span class="nav-text">2) 若 1) 状态ok，则开始读取 T14 的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-若-1-状态不-ok，则开始读取上联口的-CPRI-状态"><span class="nav-number">10.0.3.</span> <span class="nav-text">3) 若 1) 状态不 ok，则开始读取上联口的 CPRI 状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-若3-读取看到状态不正常，则需要去查看上联口的光纤连接情况。若-3-看到正常，则需要检测级联端口的连接情况以及下一级-rhub-的情况"><span class="nav-number">10.0.4.</span> <span class="nav-text">4) 若3) 读取看到状态不正常，则需要去查看上联口的光纤连接情况。若 3) 看到正常，则需要检测级联端口的连接情况以及下一级 rhub 的情况</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#B4860-BU-TO-RU-时延计算"><span class="nav-number">11.</span> <span class="nav-text">B4860 BU TO RU 时延计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">12.</span> <span class="nav-text">Reference</span></a></li></div>
+                
+
+                </div>
+            </div>
+        <!--/noindex-->
+        
+      
+
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <!--<i class="fa fa-user"></i>-->
+    <i class="fa fa-heart" aria-hidden="true" style="color:red"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.Miaow</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">4.3m</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">65:42</span>
+  
+
+</div>
+
+
+   <div>
+   <span id="sitetime"></span>
+   <span id="year" style="display:none">2016</span> 
+   <span id="month" style="display:none">12</span>   
+   <span id="day" style="display:none">23</span>   
+   <span id="hour" style="display:none">15</span>   
+   <span id="minute" style="display:none">0</span>   
+   <span id="second" style="display:none">0</span>   
+	<script language="javascript">
+	function siteTime(){        
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */        
+		var year = document.getElementById("year").innerHTML;
+		var month = document.getElementById("month").innerHTML;
+		var day = document.getElementById("day").innerHTML;
+		var hour = document.getElementById("hour").innerHTML;
+		var minute = document.getElementById("minute").innerHTML;
+		var second = document.getElementById("second").innerHTML;//北京时间2018-2-13 00:00:00
+		var t1 = Date.UTC(year,month,day,hour,minute,second); 
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		if(diffYears==0){
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "/*+diffYears+" 年 "*/+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		} else{
+		document.getElementById("sitetime").innerHTML=" 网站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+		}
+	}
+	//siteTime(document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,document.getElementById("year").innerHTML,0);
+	siteTime();
+	</script>
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!--
+
+
+
+
+
+
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+  
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+  
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+  <script src="/js/exturl.js?v=7.1.1"></script>
+
+
+  
+  
+  
+    
+  
+
+  
+
+  
+  
+  
+
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8c7770a2f56149bd67f7',
+    clientSecret: '1f8bcd6210eaf36b727bcf0546a16cb68dc9012a',
+    repo: 'gitment-comments',
+    owner: 'miaopei',
+    admin: ['miaopei'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script>pangu.spacingPage();</script>
+
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+  
+  
+    
+
+    
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+    <script>AV.initialize("8my53W9pnVTOdpPvvH1P76YB-gzGzoHsz", "DxtWRruxKOO4SPacKO9Mxe8g");</script>
+    <script>
+        function showTime(Counter) {
+            var query = new AV.Query(Counter);
+            var entries = [];
+            var $visitors = $(".leancloud_visitors");
+
+            $visitors.each(function () {
+                entries.push( $(this).attr("id").trim()  );
+            });
+
+            query.containedIn('url', entries);
+            query.find()
+                .done(function (results) {
+                    var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+                    if (results.length === 0) {
+                        $visitors.find(COUNT_CONTAINER_REF).text(0);
+                        return;
+                    }
+
+                    for (var i = 0; i < results.length; i++) {
+                        var item = results[i];
+                        var url = item.get('url');
+                        var time = item.get('time');
+                        var element = document.getElementById(url);
+
+                        $(element).find(COUNT_CONTAINER_REF).text(time);
+
+                    }
+                    for(var i = 0; i < entries.length; i++) {
+                        var url = entries[i];
+                        var element = document.getElementById(url);
+                        var countSpan = $(element).find(COUNT_CONTAINER_REF);
+                        if( countSpan.text() == '' ) {
+                            countSpan.text(0);
+                        }
+                    }
+
+                })
+                .fail(function (object, error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                });
+        }
+
+        function addCount(Counter) {
+            var $visitors = $(".leancloud_visitors");
+            var url = $visitors.attr('id').trim();
+            var title = $visitors.attr('data-flag-title').trim();
+            var query = new AV.Query(Counter);
+
+            query.equalTo("url", url);
+            query.find({
+                success: function(results) {
+                    if (results.length > 0) {
+                        var counter = results[0];
+                        counter.fetchWhenSave(true);
+                        counter.increment("time");
+                        counter.save(null, {
+                            success: function(counter) {
+                                var $element = $(document.getElementById(url));
+                                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                            },
+                            error: function(counter, error) {
+                                console.log('Failed to save Visitor num, with error message: ' + error.message);
+                            }
+                        });
+                    } else {
+                        var newcounter = new Counter();
+                        /* Set ACL */
+                        var acl = new AV.ACL();
+                        acl.setPublicReadAccess(true);
+                        acl.setPublicWriteAccess(true);
+                        newcounter.setACL(acl);
+                        /* End Set ACL */
+                        newcounter.set("title", title);
+                        newcounter.set("url", url);
+                        newcounter.set("time", 1);
+                        newcounter.save(null, {
+                            success: function(newcounter) {
+                                var $element = $(document.getElementById(url));
+                                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                            },
+                            error: function(newcounter, error) {
+                                console.log('Failed to create');
+                            }
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.log('Error:' + error.code + " " + error.message);
+                }
+            });
+        }
+
+        $(function() {
+            var Counter = AV.Object.extend("Counter");
+            if ($('.leancloud_visitors').length == 1) {
+                addCount(Counter);
+            } else if ($('.post-title-link').length > 1) {
+                showTime(Counter);
+            }
+        });
+    </script>
+
+
+
+  
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src>
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

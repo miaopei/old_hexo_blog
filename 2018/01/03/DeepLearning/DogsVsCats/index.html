@@ -585,7 +585,7 @@
 <a id="more"></a>
 
 <h2 id="项目环境"><a href="#项目环境" class="headerlink" title="项目环境"></a>项目环境</h2><p>项目使用Anaconda搭建环境。可是使用environment目录下的yml进行环境安装。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda env create -f environment.yml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> conda env create -f environment.yml</span><br></pre></td></tr></table></figure>
 
 <h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p>数据集来自 kaggle 上的一个竞赛：<span class="exturl" data-url="aHR0cHM6Ly93d3cua2FnZ2xlLmNvbS9jL2RvZ3MtdnMtY2F0cy1yZWR1eC1rZXJuZWxzLWVkaXRpb24vZGF0YQ==" title="https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data">Dogs vs. Cats Redux: Kernels Edition<i class="fa fa-external-link"></i></span>。</p>
 <p>下载kaggle猫狗数据集解压后分为 3 个文件 train.zip、 test.zip 和 sample_submission.csv。</p>
@@ -608,7 +608,7 @@
 </li>
 </ul>
 <p>对数损失越小，代表模型的性能越好。上述评估指标可用于评估该项目的解决方案以及基准模型。</p>
-<h2 id="设计大纲"><a href="#设计大纲" class="headerlink" title="设计大纲"></a>设计大纲</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> model_graphviz/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make</span></span><br></pre></td></tr></table></figure>
+<h2 id="设计大纲"><a href="#设计大纲" class="headerlink" title="设计大纲"></a>设计大纲</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd model_graphviz/</span><br><span class="line"><span class="meta">$</span> make</span><br></pre></td></tr></table></figure>
 
 <img src="/images/imageDeepLearning/model.png">
 
@@ -642,13 +642,13 @@
 <p>项目目录结构：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── ResNet50_image_predict.ipynb</span><br><span class="line">├── app.py</span><br><span class="line">├── environmert.yml</span><br><span class="line">├── static</span><br><span class="line">│   ├── css</span><br><span class="line">│   │   └── main.css</span><br><span class="line">│   └── js</span><br><span class="line">│       └── main.js</span><br><span class="line">├── templates</span><br><span class="line">│   ├── base.html</span><br><span class="line">│   └── index.html</span><br><span class="line">├── models</span><br><span class="line">│   └── ResNet50_catdog_model.h5</span><br><span class="line">├── uploads</span><br><span class="line">│   ├── test01.jpg</span><br><span class="line">│   └── test02.jpg</span><br><span class="line">└── webapp_image_predict.ipynb</span><br></pre></td></tr></table></figure>
 
-<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> conda env create -f environmert.yml</span></span><br></pre></td></tr></table></figure>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> conda env create -f environmert.yml</span><br></pre></td></tr></table></figure>
 
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python app.py</span></span><br></pre></td></tr></table></figure>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> python app.py</span><br></pre></td></tr></table></figure>
 
 <p>这时候用浏览器打开 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo1MDAwLw==" title="http://localhost:5000/">http://localhost:5000/<i class="fa fa-external-link"></i></span> 就可以进行网页导入图片预测图片是狗的概率了。</p>
 <h3 id="快速复现webapp预测结果"><a href="#快速复现webapp预测结果" class="headerlink" title="快速复现webapp预测结果"></a>快速复现webapp预测结果</h3><p>如果不想搭建环境复现实验结果，可以按照以下操作分分钟复现实验结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull miaowmiaow/webapp:1.1.0</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -p 5000:5000 miaowmiaow/webapp:1.1.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> docker pull miaowmiaow/webapp:1.1.0</span><br><span class="line"><span class="meta">$</span> docker run -p 5000:5000 miaowmiaow/webapp:1.1.0</span><br></pre></td></tr></table></figure>
 
 <p>到此就可以在浏览器中输入 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo1MDAw" title="http://localhost:5000">http://localhost:5000<i class="fa fa-external-link"></i></span> 就可以使用网页对导入的猫狗图片做预测了。</p>
 <p>下图为预测的效果图：</p>
@@ -740,7 +740,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/WebSocket教程/" rel="next" title="WebSocket教程">
+              <a href="/2017/05/16/Web/WebSocket教程/" rel="next" title="WebSocket教程">
                 <i class="fa fa-chevron-left"></i> WebSocket教程
               </a>
             
@@ -830,7 +830,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-count">81</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -893,9 +893,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -970,9 +968,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1086,7 +1082,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">4.2m</span>
+    <span title="站点总字数">4.3m</span>
   
 
   
@@ -1095,7 +1091,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">64:07</span>
+    <span title="站点阅读时长">65:42</span>
   
 
 </div>
