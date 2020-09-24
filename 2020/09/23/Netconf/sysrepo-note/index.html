@@ -118,7 +118,7 @@
 <meta name="keywords" content="Netconf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sysrepo note">
-<meta property="og:url" content="http://miaopei.github.io/2020/09/22/Netconf/sysrepo-note/index.html">
+<meta property="og:url" content="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-note/index.html">
 <meta property="og:site_name" content="Mr.Miaow Blog">
 <meta property="og:description" content="sysrepo sysrepo - 1.4.2 笔记  1. sysrepo 概述Sysrepo 是 Linux/Unix 系统下一个基于 YANG 模型的配置和操作数据库，为应用程序提供统一的操作数据的接口。应用程序使用 YANG 模型来建模，通过利用 YANG 模型完成数据合法性的检查，保证的风格的一致，不需要应用程序直接操作配置文件的一种数据管理方式。">
 <meta property="og:locale" content="zh-CN">
@@ -126,7 +126,7 @@
 <meta property="og:image" content="http://miaopei.github.io/images/images_sr/connect_session.png">
 <meta property="og:image" content="http://miaopei.github.io/images/images_sr/shm.png">
 <meta property="og:image" content="http://miaopei.github.io/images/images_sr/shmmain_add.png">
-<meta property="og:updated_time" content="2020-09-23T02:17:28.392Z">
+<meta property="og:updated_time" content="2020-09-23T07:50:35.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sysrepo note">
 <meta name="twitter:description" content="sysrepo sysrepo - 1.4.2 笔记  1. sysrepo 概述Sysrepo 是 Linux/Unix 系统下一个基于 YANG 模型的配置和操作数据库，为应用程序提供统一的操作数据的接口。应用程序使用 YANG 模型来建模，通过利用 YANG 模型完成数据合法性的检查，保证的风格的一致，不需要应用程序直接操作配置文件的一种数据管理方式。">
@@ -140,7 +140,7 @@
 
   
   
-  <link rel="canonical" href="http://miaopei.github.io/2020/09/22/Netconf/sysrepo-note/">
+  <link rel="canonical" href="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-note/">
 
 
 
@@ -435,7 +435,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2020/09/22/Netconf/sysrepo-note/">
+    <link itemprop="mainEntityOfPage" href="http://miaopei.github.io/2020/09/23/Netconf/sysrepo-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.Miaow">
@@ -478,7 +478,7 @@
                 
               
 
-              <time title="创建时间：2020-09-22 19:50:28" itemprop="dateCreated datePublished" datetime="2020-09-22T19:50:28+08:00">2020-09-22</time>
+              <time title="创建时间：2020-09-23 19:50:28" itemprop="dateCreated datePublished" datetime="2020-09-23T19:50:28+08:00">2020-09-23</time>
             
 
             
@@ -511,7 +511,7 @@
 
           
           
-            <span id="/2020/09/22/Netconf/sysrepo-note/" class="leancloud_visitors" data-flag-title="sysrepo note">
+            <span id="/2020/09/23/Netconf/sysrepo-note/" class="leancloud_visitors" data-flag-title="sysrepo note">
             <span class="post-meta-divider">|</span>
             <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -551,7 +551,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">42</span>
+                <span title="阅读时长">43</span>
               
             </div>
           
@@ -676,6 +676,25 @@
 
 <p>共享内存间在初始操作，包括信号的创建与初始化，也是在 <code>sr_connet</code> 函数中处理。``sr_connet<code>是</code>plugind<code>与</code>sysrepo<code>的连接入口，</code>SHM<code>是在入口中初始的一种机制，用来保证</code>sysrepo<code>与</code>plugind` 的通信高效，快速。</p>
 <p>先用 <code>sysrepo</code> 共享内存机制为后面的各类订阅打个底。先了解一下 <code>sysrepo</code> 的共享内存机理的实现。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9saWJ5YW5n" title="https://github.com/CESNET/libyang">libyang – GitHub<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0NFU05FVC9uZXRvcGVlcjI=" title="https://github.com/CESNET/netopeer2">netopeer2 – GitHub<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N5c3JlcG8vc3lzcmVwbw==" title="https://github.com/sysrepo/sysrepo">sysrepo – GitHub<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21iajQ2NjgvcHlhbmc=" title="https://github.com/mbj4668/pyang">pyang – GitHub<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2MvbGlieWFuZy9tYXN0ZXIvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/libyang/master/index.html">libyang – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2MvbGlibmV0Y29uZjIvZGV2ZWwvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/libnetconf2/devel/index.html">libnetconf2 – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uZXRvcGVlci5saWJlcm91dGVyLm9yZy9kb2Mvc3lzcmVwby9tYXN0ZXIvaW5kZXguaHRtbA==" title="https://netopeer.liberouter.org/doc/sysrepo/master/index.html">sysrepo – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovLzY2LjIxOC4yNDUuMzkvZG9jL2h0bWwvcm4wMXJlMDguaHRtbA==" title="http://66.218.245.39/doc/html/rn01re08.html">pyang – Doc<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS94cGF0aC94cGF0aC10dXRvcmlhbC5odG1s" title="https://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程 – RUNOOB.COM<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cueWlpYmFpLmNvbS94cGF0aA==" title="https://www.yiibai.com/xpath">XPath教程 – 易百教程<i class="fa fa-external-link"></i></span></p>
+</blockquote>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3h1Z3VvemhlbmcxMTAvYXJ0aWNsZS9kZXRhaWxzLzEwNDA0MzAzOQ==" title="https://blog.csdn.net/xuguozheng110/article/details/104043039">netopeer2 + sysrepo研究总结<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI3OTIzMDQ3L2FydGljbGUvZGV0YWlscy8xMDgwNjk0MDk=" title="https://blog.csdn.net/qq_27923047/article/details/108069409">sysrepo简单使用<i class="fa fa-external-link"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ3NDEzMDE5L2FydGljbGUvZGV0YWlscy8xMDU4Njc0MDY=" title="https://blog.csdn.net/m0_47413019/article/details/105867406">第三章 sysrepo-plugind源码分析<i class="fa fa-external-link"></i></span></p>
+</blockquote>
 
       
     </div>
@@ -698,7 +717,7 @@
             </li>
             <li class="post-copyright-link">
                 <strong>本文链接：</strong>
-                <a href="/2020/09/22/Netconf/sysrepo-note/" title="sysrepo note">2020/09/22/Netconf/sysrepo-note/</a>
+                <a href="/2020/09/23/Netconf/sysrepo-note/" title="sysrepo note">2020/09/23/Netconf/sysrepo-note/</a>
             </li>
             <li class="post-copyright-license">
                 <strong>版权： </strong>
@@ -764,8 +783,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/09/20/Vim/VimNote/" rel="next" title="Vim note">
-                <i class="fa fa-chevron-left"></i> Vim note
+              <a href="/2020/09/22/Netconf/sysrepo-netconf-node/" rel="next" title="netopper2 note">
+                <i class="fa fa-chevron-left"></i> netopper2 note
               </a>
             
           </div>
@@ -773,10 +792,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/09/22/Netconf/netconf-note/" rel="prev" title="netconf note">
-                netconf note <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1070,7 +1085,7 @@
                 
 
                 
-                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sysrepo"><span class="nav-number">1.</span> <span class="nav-text">sysrepo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sysrepo-概述"><span class="nav-number">1.1.</span> <span class="nav-text">1. sysrepo 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本特性与原则"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基本特性与原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-主要特点"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 主要特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-访问方法"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 访问方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-数据库"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-运行模式"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 运行模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-sysrepo-常用操作命令"><span class="nav-number">1.2.</span> <span class="nav-text">2. sysrepo 常用操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Sysrepoctl"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Sysrepoctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-sysrepocfg"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 sysrepocfg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sysrepo-plugind-源码分析"><span class="nav-number">1.3.</span> <span class="nav-text">3. sysrepo-plugind 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-数据结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-main-函数实现"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 main 函数实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-load-plugins"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 load_plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-init-cb"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 init_cb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-cleanup-cb"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 cleanup_cb</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sysrepo-连接与会话"><span class="nav-number">1.4.</span> <span class="nav-text">4. sysrepo 连接与会话</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-何为连接与会话"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 何为连接与会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-核心数据结构"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 核心数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-connection-函数"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 connection 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-session"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 session</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-sysrepo-共享内存机制"><span class="nav-number">1.5.</span> <span class="nav-text">5. sysrepo 共享内存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-共享内存机制"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 共享内存机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-数据结构"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-源码分析"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 源码分析</span></a></li></ol></li></ol></li></ol></div>
+                    <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sysrepo"><span class="nav-number">1.</span> <span class="nav-text">sysrepo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sysrepo-概述"><span class="nav-number">1.1.</span> <span class="nav-text">1. sysrepo 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本特性与原则"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 基本特性与原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-主要特点"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 主要特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-访问方法"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 访问方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-数据库"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-运行模式"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 运行模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-sysrepo-常用操作命令"><span class="nav-number">1.2.</span> <span class="nav-text">2. sysrepo 常用操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Sysrepoctl"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Sysrepoctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-sysrepocfg"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 sysrepocfg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sysrepo-plugind-源码分析"><span class="nav-number">1.3.</span> <span class="nav-text">3. sysrepo-plugind 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-数据结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-main-函数实现"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 main 函数实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-load-plugins"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 load_plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-init-cb"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 init_cb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-cleanup-cb"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 cleanup_cb</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sysrepo-连接与会话"><span class="nav-number">1.4.</span> <span class="nav-text">4. sysrepo 连接与会话</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-何为连接与会话"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 何为连接与会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-核心数据结构"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 核心数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-connection-函数"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 connection 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-session"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 session</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-sysrepo-共享内存机制"><span class="nav-number">1.5.</span> <span class="nav-text">5. sysrepo 共享内存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-共享内存机制"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 共享内存机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-数据结构"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-源码分析"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 源码分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
                 
 
                 </div>
@@ -1117,7 +1132,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">65:42</span>
+    <span title="站点阅读时长">65:43</span>
   
 
 </div>
