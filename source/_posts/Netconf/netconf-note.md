@@ -8,7 +8,7 @@ reward: true
 toc: true
 p: Netconf/netconf-note
 abbrlink: 63382
-date: 2020-09-22 21:50:28
+date: 2020-09-21 21:50:28
 ---
 
 # Netconf 学习笔记

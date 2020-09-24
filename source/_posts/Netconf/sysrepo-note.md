@@ -8,7 +8,7 @@ reward: true
 toc: true
 p: Netconf/sysrepo-note
 abbrlink: 63382
-date: 2020-09-22 19:50:28
+date: 2020-09-23 19:50:28
 ---
 
 # sysrepo 
@@ -1233,3 +1233,32 @@ sr_shmmain_add_modules_deps(sr_shm_t *shm_main, char *ext_shm_addr, struct lyd_n
 共享内存间在初始操作，包括信号的创建与初始化，也是在 `sr_connet` 函数中处理。``sr_connet` 是 `plugind` 与 `sysrepo` 的连接入口，`SHM` 是在入口中初始的一种机制，用来保证 `sysrepo` 与 `plugind` 的通信高效，快速。
 
 先用 `sysrepo` 共享内存机制为后面的各类订阅打个底。先了解一下 `sysrepo` 的共享内存机理的实现。
+
+# Reference
+
+> [libyang -- GitHub](https://github.com/CESNET/libyang)
+>
+> [netopeer2 -- GitHub](https://github.com/CESNET/netopeer2)
+>
+> [sysrepo -- GitHub](https://github.com/sysrepo/sysrepo)
+>
+> [pyang -- GitHub](https://github.com/mbj4668/pyang)
+
+> [libyang -- Doc](https://netopeer.liberouter.org/doc/libyang/master/index.html)
+>
+> [libnetconf2 -- Doc](https://netopeer.liberouter.org/doc/libnetconf2/devel/index.html)
+>
+> [sysrepo -- Doc](https://netopeer.liberouter.org/doc/sysrepo/master/index.html)
+>
+> [pyang -- Doc](http://66.218.245.39/doc/html/rn01re08.html)
+>
+> [XPath 教程 -- RUNOOB.COM](https://www.runoob.com/xpath/xpath-tutorial.html)
+>
+> [XPath教程 -- 易百教程](https://www.yiibai.com/xpath)
+
+> [netopeer2 + sysrepo研究总结](https://blog.csdn.net/xuguozheng110/article/details/104043039)
+>
+> [sysrepo简单使用](https://blog.csdn.net/qq_27923047/article/details/108069409)
+>
+> [第三章 sysrepo-plugind源码分析](https://blog.csdn.net/m0_47413019/article/details/105867406)
+

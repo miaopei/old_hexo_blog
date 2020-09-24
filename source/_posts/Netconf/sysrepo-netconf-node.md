@@ -7,7 +7,7 @@ categories:
 reward: true
 toc: true
 abbrlink: 63382
-date: 2020-09-23 19:50:28
+date: 2020-09-22 19:50:28
 ---
 
 # Netopper2 安装
