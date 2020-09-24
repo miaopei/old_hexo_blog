@@ -608,7 +608,6 @@ pre code {
 .highlight {
   border-radius: 1em;
   border-color: #e0dfcc;
-  border-width: 0.3em;
   border-style: solid;
   margin: 1em 1em;
 }
@@ -2016,7 +2015,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #28988f;
+  background: #86ac30;
 }
 .feed-link,
 .chat {

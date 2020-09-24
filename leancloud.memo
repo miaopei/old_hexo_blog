@@ -103,9 +103,12 @@
 {"title":"优秀的Blog链接","url":"/2020/06/17/优秀的Blog链接/"},
 {"title":"Git note","url":"/2020/08/29/Git/GitNote/"},
 {"title":"Vim note","url":"/2020/09/20/Vim/VimNote/"},
+{"title":"netconf note","url":"/2020/09/21/Netconf/netconf-note/"},
 {"title":"netconf note","url":"/2020/09/22/Netconf/netconf-note/"},
 {"title":"","url":"/2020/09/22/Netconf/sysrepo-doc/"},
+{"title":"netopper2 note","url":"/2020/09/22/Netconf/sysrepo-netconf-node/"},
 {"title":"sysrepo-note","url":"/2020/09/22/Netconf/sysrepo-note/"},
 {"title":"sysrepo note","url":"/2020/09/22/Netconf/sysrepo-note/"},
 {"title":"netopper2 note","url":"/2020/09/23/Netconf/sysrepo-netconf-node/"},
+{"title":"sysrepo note","url":"/2020/09/23/Netconf/sysrepo-note/"},
 ]
